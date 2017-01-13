@@ -1,0 +1,31 @@
+{
+  "name": "Bussiaeg",
+  "description": "Vaata bussi, trolli, trammi ja rongi aegu otse telefonist!",
+  "author": "Karl Köörna & Kaur Hendrikson",
+  "version": "1.2.0",
+  "license": "MIT",
+  "keywords": [
+    "estonia",
+    "eesti",
+    "tallinn",
+    "bus",
+    "trol",
+    "tram",
+    "train",
+    "rong"
+  ],
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karlkoorna/Bussiaeg"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "csv-parser": "^1.11.0",
+    "express": "^4.14.0",
+    "request": "^2.75.0"
+  }
+}

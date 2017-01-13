@@ -1,0 +1,8 @@
+# Directories - Generated
+node_modules
+tmp
+
+# Files - SSL certificate
+ca.crt
+ssl.crt
+ssl.key
