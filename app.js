@@ -7,6 +7,7 @@ const express  = require('express'), app = express(),
 	  csv      = require('csv-parser');
 
 const port = {http: 80, https: 443};
+var redirect = true;
 
 var _overrides = new Array(),
 	_stops     = new Array(),
@@ -97,7 +98,8 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, buff
 								});
 								
 							} catch(e) {
-								console.log('HTTPS failed to start listening...');
+								console.log('HTTPS failed to start listening!');
+								redirect = false;
 							}
 							
 						});
@@ -345,7 +347,7 @@ function getStaticData(id) {
 // Endpoints
 
 app.get('/', (req, res) => {
-	if (!req.secure) return res.redirect(['https://', req.get('Host'), req.url].join(''));
+	if (!req.secure && redirect) return res.redirect(['https://', req.get('Host'), req.url].join(''));
 	return res.sendFile(__dirname + '/index.html');
 });
 
