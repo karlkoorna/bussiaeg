@@ -60,13 +60,13 @@ function showSchedule(id, fadeIn) {
 	}
 	
 	$.get('//' + location.host + '/getstop?id=' + id).done(function(data) {
-		var trips   = data.trips,
+		let trips   = data.trips,
 			content = '';
 		
 		live = data.live;
 		
-		for (var i = 0; i < trips.length; i++) {
-			var trip = trips[i];
+		for (let i = 0; i < trips.length; i++) {
+			let trip = trips[i];
 			
 			if (live) {
 				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="type" src="assets/' + trip.type + '.png"><div class="number">' + trip.number + '</div><div class="scheduled">' + toCountdown(trip.scheduled, false) + '</div><div class="expected">' + toCountdown(trip.expected, false) + '</div></div>';
@@ -108,10 +108,10 @@ function init() {
 	});
 	
 	google.maps.event.addListener(map, 'idle', function(e) {
-		var bounds = map.getBounds();
+		let bounds = map.getBounds();
 		
 		if (map.getZoom() <= 15) {
-			for (var i = 0; i < markers.length; i++) {
+			for (let i = 0; i < markers.length; i++) {
 				markers[i].setMap(null);
 			}
 			
@@ -120,10 +120,10 @@ function init() {
 		
 		$.get('//' + location.host + '/getstops?lat_min=' + bounds.f.b + '&lng_min=' + bounds.b.f + '&lat_max=' + bounds.f.f + '&lng_max=' + bounds.b.b, function(stops) {
 			
-			for (var i = 0; i < stops.length; i++) {
-				var stop = stops[i];
+			for (let i = 0; i < stops.length; i++) {
+				let stop = stops[i];
 				
-				var marker = new google.maps.Marker({
+				let marker = new google.maps.Marker({
 					position: {
 						lat: stop.lat,
 						lng: stop.lng
@@ -139,14 +139,13 @@ function init() {
 				});
 				
 				marker.addListener('click', function() {
-					var id = this.stop.id;
 					
-					$('#name').text(this.stop.name);
-					$('#desc').text(this.stop.desc);
+					$('#name').text(stop.name);
+					$('#desc').text(stop.desc);
 					
-					showSchedule(id, true);
+					showSchedule(stop.id, true);
 					updater = setInterval(function() {
-						showSchedule(id, false);
+						showSchedule(stop.id, false);
 					}, 1000);
 					
 				});
