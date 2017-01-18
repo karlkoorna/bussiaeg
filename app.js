@@ -346,7 +346,6 @@ function getStaticData(id) {
 // Endpoints
 
 app.get('/', (req, res) => {
-	if (!req.secure && redirect) return res.redirect(['https://', req.get('Host'), req.url].join(''));
 	return res.sendFile(__dirname + '/index.html');
 });
 
