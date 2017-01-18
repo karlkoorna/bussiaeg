@@ -1,8 +1,9 @@
-# Directories - Generated
+# Generated
+npm-debug.log
 node_modules
 tmp
 
-# Files - SSL certificate
+# SSL certificate
 ca.crt
 ssl.crt
 ssl.key
