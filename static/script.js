@@ -144,6 +144,8 @@ function init() {
 					$('#stop-name').text(stop.name);
 					$('#stop-desc').text(stop.desc);
 					
+					if (updater) return;
+					
 					showStop(stop.id, true);
 					updater = setInterval(function() {
 						showStop(stop.id, false);
