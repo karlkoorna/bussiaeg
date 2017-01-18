@@ -37,7 +37,7 @@ function toTime(seconds) {
 	return time.h + ':' + time.m;
 }
 
-function showSchedule(id, fadeIn) {
+function showStop(id, fadeIn) {
 	if (updater && !live) {
 		
 		$('.scheduled').each(function() {
@@ -143,9 +143,9 @@ function init() {
 					$('#name').text(stop.name);
 					$('#desc').text(stop.desc);
 					
-					showSchedule(stop.id, true);
+					showStop(stop.id, true);
 					updater = setInterval(function() {
-						showSchedule(stop.id, false);
+						showStop(stop.id, false);
 					}, 1000);
 					
 				});
