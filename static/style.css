@@ -102,7 +102,7 @@ img {
 
 /* Overlay - Stop */
 
-#schedule {
+#stop {
 	z-index: 5;
 	display: none;
 	background-color: white;
