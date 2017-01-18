@@ -32,6 +32,26 @@ img {
 	height: 100%;
 }
 
+.bounce {
+	animation: bounce .5s;
+}
+.load {
+	animation: bounce .5s;
+	animation-iteration-count: 999;
+}
+
+@keyframes bounce {
+	25% {
+		transform: translateY(-5%);
+	}
+	50% {
+		transform: translateY(3%);
+	}
+	to {
+		transform: translateY(0%);
+	}
+}
+
 /* Overlay - Help */
 
 #btn-help {
@@ -63,26 +83,6 @@ img {
 	cursor: pointer;
 }
 
-.bounce {
-	animation: bounce .5s;
-}
-.load {
-	animation: bounce .5s;
-	animation-iteration-count: 999;
-}
-
-@keyframes bounce {
-	25% {
-		transform: translateY(-5%);
-	}
-	50% {
-		transform: translateY(3%);
-	}
-	to {
-		transform: translateY(0%);
-	}
-}
-
 #help {
 	z-index: 3;
 	display: none;
@@ -108,8 +108,6 @@ img {
 	background-color: white;
 }
 
-/* Overlay - Stop - Info */
-
 #info {
 	box-sizing: border-box;
 	padding: 8px 12px;
@@ -126,6 +124,11 @@ img {
 	color: #eee;
 	font-size: 24px;
 	font-weight: bold;
+}
+
+#credits {
+	font-size: 18px;
+	color: #ddd;
 }
 
 /* Overlay - Stop - Trips */
