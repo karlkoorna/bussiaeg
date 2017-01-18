@@ -1,10 +1,9 @@
 // Declarations
 
-const express  = require('express'), app = express(),
-	  request  = require('request'),
-	  AdmZip   = require('adm-zip'),
-	  fs       = require('fs'),
-	  csv      = require('csv-parser');
+const express = require('express'), app = express(),
+	  request = require('request'),
+	  csv = require('csv-parser'),
+	  fs = require('fs');
 
 const port = {http: 80, https: 443};
 var redirect = true;
@@ -51,7 +50,7 @@ fs.readFile('overrides.txt', 'utf8', (err, data) => {
 });
 
 console.log('Downloading data...');
-request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, buffer) => {
+request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data) => {
 	if (err) {
 		console.log('Failed to download data!');
 		process.exit();
@@ -60,7 +59,7 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, buff
 	console.log('Extracting data...');
 	try {
 		
-		let zip = new AdmZip(new Buffer(buffer));
+		let zip = new require('adm-zip')(new Buffer(data));
 		
 		zip.extractEntryTo('stops.txt',      'tmp', false, true);
 		zip.extractEntryTo('calendar.txt',   'tmp', false, true);
