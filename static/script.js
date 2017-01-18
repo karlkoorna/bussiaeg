@@ -87,7 +87,7 @@ function showStop(id, fadeIn) {
 
 function init() {
 	
-	map = new google.maps.Map($('#map').get(0), {
+	map = new google.maps.Map(document.getElementById('map'), {
 		center: {
 			lat: parseFloat(getParameter('lat')) || 59.388,
 			lng: parseFloat(getParameter('lng')) || 24.684
@@ -111,6 +111,7 @@ function init() {
 		let bounds = map.getBounds();
 		
 		if (map.getZoom() <= 15) {
+			
 			for (let i = 0; i < markers.length; i++) {
 				markers[i].setMap(null);
 			}
