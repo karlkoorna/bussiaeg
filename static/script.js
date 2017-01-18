@@ -69,13 +69,13 @@ function showStop(id, fadeIn) {
 			let trip = trips[i];
 			
 			if (live) {
-				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="type" src="assets/' + trip.type + '.png"><div class="number">' + trip.number + '</div><div class="scheduled">' + toCountdown(trip.scheduled, false) + '</div><div class="expected">' + toCountdown(trip.expected, false) + '</div></div>';
+				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled, false) + '</div><div class="trip-expected">' + toCountdown(trip.expected, false) + '</div></div>';
 			} else {
-				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="type" src="assets/' + trip.type + '.png"><div class="number">' + trip.number + '</div><div class="scheduled" data-time="' + trip.time + '">' + toCountdown(trip.time, true) + '</div><div class="expected">' + toTime(trip.time) + '</div></div>';
+				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled" data-time="' + trip.time + '">' + toCountdown(trip.time, true) + '</div><div class="trip-expected">' + toTime(trip.time) + '</div></div>';
 			}
 			
 		}
-		$('#trips').html(content);
+		$('#stop-trips').html(content);
 		
 		if (fadeIn) $('#stop').fadeIn(fadeTime);
 	}).fail(function(data) {
@@ -141,8 +141,8 @@ function init() {
 				
 				marker.addListener('click', function() {
 					
-					$('#name').text(stop.name);
-					$('#desc').text(stop.desc);
+					$('#stop-name').text(stop.name);
+					$('#stop-desc').text(stop.desc);
 					
 					showStop(stop.id, true);
 					updater = setInterval(function() {
@@ -170,9 +170,9 @@ $('#info').click(function() {
 	clearInterval(updater); updater = null;
 	
 	$(this).parent().fadeOut(fadeTime, function() {
-		$('#name').text('...');
-		$('#desc').text('...');
-		$('#trips').html('');
+		$('#stop-name').text('...');
+		$('#stop-desc').text('...');
+		$('#stop-trips').html('');
 	});
 	
 });

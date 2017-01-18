@@ -108,18 +108,18 @@ img {
 	background-color: white;
 }
 
-#info {
+#stop-top {
 	padding: 8px 12px;
 	background-color: deepskyblue;
 	box-shadow: 0 0 1px 2px rgba(0,0,0,.3);
 	cursor: pointer;
 }
-#name {
+#stop-name {
 	color: white;
 	font-size: 36px;
 	font-weight: bold;
 }
-#desc {
+#stop-desc {
 	color: #eee;
 	font-size: 24px;
 	font-weight: bold;
@@ -127,7 +127,7 @@ img {
 
 /* Overlay - Stop - Trips */
 
-#trips {
+#stop-trips {
 	position: relative;
 }
 .trip {
@@ -140,26 +140,26 @@ img {
 	line-height: 80px;
 }
 
-.type, .number {
+.trip-type, .trip-number {
 	position: absolute;
 }
-.type {
+.trip-type {
 	width: 80px;
 	height: 80px;
 }
-.number {
+.trip-number {
 	left: 84px;
 }
 
-.scheduled, .expected {
+.trip-scheduled, .trip-expected {
 	position: absolute;
 	right: 12px;
 	text-align: right;
 }
-.scheduled {
+.trip-scheduled {
 	top: -16px;
 }
-.expected {
+.trip-expected {
 	right: 13px;
 	top: 20px;
 	color: #777;
