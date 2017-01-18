@@ -14,14 +14,9 @@ body {
 	margin: 0;
 	font-family: 'Arial';
 	overflow-x: hidden;
-	overflow-y: auto;
 }
 img {
 	-webkit-tap-highlight-color: transparent;
-}
-
-#map {
-	z-index: 1;
 }
 
 .full {
@@ -32,12 +27,41 @@ img {
 	height: 100%;
 }
 
+#map {
+	z-index: 1;
+}
+
+/* Overlay - Help */
+
+.btn {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	background-color: white;
+	border-radius: 32px;
+	box-shadow: 0 0 3px 0px rgba(32,32,32,.6);
+	overflow: hidden;
+	cursor: pointer;
+}
+
 .bounce {
 	animation: bounce .5s;
 }
 .load {
 	animation: bounce .5s;
 	animation-iteration-count: 999;
+}
+
+#btn-help {
+	z-index: 4;
+	right: 16px;
+	top: 16px;
+}
+
+#btn-locate {
+	z-index: 2;
+	bottom: 16px;
+	right: 16px;
 }
 
 @keyframes bounce {
@@ -54,35 +78,6 @@ img {
 
 /* Overlay - Help */
 
-#btn-help {
-	z-index: 4;
-	position: absolute;
-	right: 16px;
-	top: 16px;
-	width: 48px;
-	height: 48px;
-	background-color: white;
-	border-radius: 32px;
-	box-shadow: 0 0 3px 0px rgba(32,32,32,.6);
-	overflow: hidden;
-	cursor: pointer;
-	-webkit-tap-highlight-color: transparent;
-}
-
-#btn-locate {
-	z-index: 2;
-	position: absolute;
-	bottom: 16px;
-	right: 16px;
-	width: 48px;
-	height: 48px;
-	background-color: white;
-	border-radius: 32px;
-	box-shadow: 0 0 3px 0px rgba(32,32,32,.6);
-	overflow: hidden;
-	cursor: pointer;
-}
-
 #help {
 	z-index: 3;
 	display: none;
@@ -98,6 +93,11 @@ img {
 	opacity: .75;
 	overflow-x: hidden;
 	overflow-y: auto;
+}
+
+#credits {
+	font-size: 18px;
+	color: #ddd;
 }
 
 /* Overlay - Stop */
@@ -124,11 +124,6 @@ img {
 	color: #eee;
 	font-size: 24px;
 	font-weight: bold;
-}
-
-#credits {
-	font-size: 18px;
-	color: #ddd;
 }
 
 /* Overlay - Stop - Trips */
