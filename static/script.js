@@ -77,7 +77,7 @@ function showSchedule(id, fadeIn) {
 		}
 		$('#trips').html(content);
 		
-		if (fadeIn) $('#schedule').fadeIn(fadeTime);
+		if (fadeIn) $('#stop').fadeIn(fadeTime);
 	}).fail(function(data) {
 		clearInterval(updater); updater = null;
 	});
