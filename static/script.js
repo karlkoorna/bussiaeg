@@ -1,7 +1,7 @@
 // Declarations
 
 var coords, map, markers = new Array(), updater, live,
-	clickable = {help: true, locate: true};
+	clickable = {locate: true};
 
 const fadeTime = 250;
 
@@ -166,7 +166,7 @@ function init() {
 
 // UI
 
-$('#info').click(function() {
+$('#stop-top').click(function() {
 	clearInterval(updater); updater = null;
 	
 	$(this).parent().fadeOut(fadeTime, function() {
@@ -178,13 +178,16 @@ $('#info').click(function() {
 });
 
 $('#btn-help').click(function() {
-	if (!clickable.help) return;
 	
-	$(this).addClass('bounce'); clickable.help = false;
-	$('#help').fadeToggle(fadeTime, function() {
-		$('#btn-help').removeClass('bounce'); clickable.help = true;
+	$(this).addClass('bounce');
+	$('#help').fadeIn(fadeTime, function() {
+		$('#btn-help').removeClass('bounce');
 	});
 	
+});
+
+$('#help').click(function() {
+	$(this).fadeOut(fadeTime);
 });
 
 $('#btn-locate').click(function() {

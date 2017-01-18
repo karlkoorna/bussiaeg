@@ -54,7 +54,7 @@ img {
 }
 
 #btn-help {
-	z-index: 4;
+	z-index: 2;
 	right: 16px;
 	top: 16px;
 }
@@ -83,12 +83,12 @@ img {
 	z-index: 3;
 	display: none;
 	max-height: 100%;
-	padding: 96px 32px;
+	padding: 32px;
 	background-color: black;
 	color: white;
 	text-align: center;
 	line-height: 36px;
-	font-size: 18pt;
+	font-size: 22px;
 	font-weight: bold;
 	opacity: .75;
 	overflow-x: hidden;
