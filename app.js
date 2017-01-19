@@ -289,8 +289,9 @@ function getLiveData(id, cb) {
 			
 			if (lines.length < 1) return cb(true);
 			
-			for (let i = 0; i < shownTrips; i++) {
-				let line = lines[i];
+			let i = -1;
+			while (i < lines.length - 1 && i < shownTrips) {i++;
+				let line = lines[i]; 
 				
 				trips.push({
 					type:      line.split(',')[0],
