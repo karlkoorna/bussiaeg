@@ -17,7 +17,7 @@ var _overrides = new Array(),
 
 app.use(express.static(__dirname + '/static'));
 
-// Functions
+// A function
 
 function toSeconds(time) {
 	var hours   = time.substring(0, 2),
