@@ -202,15 +202,6 @@ function processRoutes(cb) {
 
 // Functions
 
-function mergeJSON(obj1, obj2) {
-	var result = {};
-	
-	for (let key in obj1) result[key] = obj1[key];
-	for (let key in obj2) result[key] = obj2[key];
-	
-	return result;
-}
-
 function getStopById(id) {
 	for (let i = 0; i < _stops.length; i++) {
 		let stop = _stops[i];
@@ -401,9 +392,9 @@ app.get('/getstop', (req, res) => {
 	stop.desc = override ? override : stop.desc;
 	
 	getLiveData(id, (live, data) => {
-		if (live) return res.json(mergeJSON(stop, data));
+		if (live) return res.json(Object.assign(stop, data));
 		
-		return res.json(mergeJSON(stop, getStaticData(id)));
+		return res.json(Object.assign(stop, getStaticData(id)));
 	});
 	
 });
