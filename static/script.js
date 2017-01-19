@@ -37,7 +37,7 @@ function toTime(seconds) {
 	return time.h + ':' + time.m;
 }
 
-function showStop(id, fadeIn) {
+function showStop(id) {
 	if (updater && !live) {
 		
 		$('.scheduled').each(function() {
@@ -77,10 +77,21 @@ function showStop(id, fadeIn) {
 		}
 		$('#stop-trips').html(content);
 		
-		if (fadeIn) $('#stop').fadeIn(fadeTime);
-	}).fail(function(data) {
-		clearInterval(updater); updater = null;
+		if (updater) return;
+		
+		$('title').text('Bussiaeg - ' + data.name);
+		
+		$('#stop-name').text(data.name);
+		$('#stop-desc').text(data.desc);
+		
+		$('#stop').fadeIn(fadeTime);
+		
+		updater = setInterval(function() {
+			showStop(id);
+		}, 1000);
+		
 	});
+	
 }
 
 // Initialization
@@ -140,17 +151,9 @@ function init() {
 				});
 				
 				marker.addListener('click', function() {
+					history.replaceState(null, 'Bussiaeg - ' + stop.name, '/?stop=' + stop.id);
 					
-					$('#stop-name').text(stop.name);
-					$('#stop-desc').text(stop.desc);
-					
-					if (updater) return;
-					
-					showStop(stop.id, true);
-					updater = setInterval(function() {
-						showStop(stop.id, false);
-					}, 1000);
-					
+					showStop(stop.id);
 				});
 				
 				markers.push(marker);
@@ -166,7 +169,10 @@ function init() {
 	
 }
 
-// UI
+const share = parseInt(getParameter('stop'));
+if (share) if (!isNaN(share)) showStop(share);
+
+// User Interface
 
 $('#stop-top').click(function() {
 	clearInterval(updater); updater = null;

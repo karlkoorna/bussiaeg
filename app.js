@@ -202,14 +202,20 @@ function processRoutes(cb) {
 
 // Functions
 
-function getStopAtPoint(lat, lng) {
+function mergeJSON(obj1, obj2) {
+	var result = {};
+	
+	for (let key in obj1) result[key] = obj1[key];
+	for (let key in obj2) result[key] = obj2[key];
+	
+	return result;
+}
+
+function getStopById(id) {
 	for (let i = 0; i < _stops.length; i++) {
 		let stop = _stops[i];
 		
-		if (Math.abs(lat - stop.lat) > radius / 2.5) continue;
-		if (Math.abs(lng - stop.lng) > radius) continue;
-		
-		return stop;
+		if (stop.id == id) return stop;
 	}
 	return null;
 }
@@ -287,10 +293,10 @@ function getLiveData(id, cb) {
 			
 			lines.shift(); lines.shift();
 			
-			if (lines.length < 1) return cb(true);
+			if (lines.length < 1) return cb(false);
 			
 			let i = -1;
-			while (i < lines.length - 1 && i < shownTrips) {i++;
+			while (i < lines.length - 2 && i < shownTrips) {i++;
 				let line = lines[i]; 
 				
 				trips.push({
@@ -302,7 +308,7 @@ function getLiveData(id, cb) {
 				
 			}
 			
-			return cb(false, {
+			return cb(true, {
 				trips: trips,
 				live:  true
 			});
@@ -310,7 +316,7 @@ function getLiveData(id, cb) {
 		});
 		
 	} catch(e) {
-		return cb(true);
+		return cb(false);
 	}
 }
 
@@ -365,15 +371,10 @@ app.get('/getstops', (req, res) => {
 		if (stop.lat > lat_min || stop.lat < lat_max) continue;
 		if (stop.lng > lng_min || stop.lng < lng_max) continue;
 		
-		let override = getOverrideForStop(stop.id);
-		stop.desc = override ? override : stop.desc;
-		
 		data.push({
 			lat:  stop.lat,
 			lng:  stop.lng,
-			id:   stop.id,
-			name: stop.name,
-			desc: stop.desc
+			id:   stop.id
 		});
 		
 	}
@@ -389,10 +390,20 @@ app.get('/getstop', (req, res) => {
 		return res.status(500).send();
 	}
 	
-	getLiveData(id, (err, data) => {
-		if (!err) return res.json(data);
+	var stop = getStopById(id);
+	
+	if (stop === null) {
+		console.log('Got (404)');
+		return res.status(404).send();
+	}
+	
+	let override = getOverrideForStop(stop.id);
+	stop.desc = override ? override : stop.desc;
+	
+	getLiveData(id, (live, data) => {
+		if (live) return res.json(mergeJSON(stop, data));
 		
-		return res.json(getStaticData(id));
+		return res.json(mergeJSON(stop, getStaticData(id)));
 	});
 	
 });
