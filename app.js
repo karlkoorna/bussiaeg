@@ -6,7 +6,7 @@ const express = require('express'), app = express(),
 	  fs = require('fs');
 
 const port = {http: 80, https: 443};
-var redirect = true;
+const shownTrips = 10;
 
 var _overrides = new Array(),
 	_stops     = new Array(),
@@ -98,7 +98,6 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 								
 							} catch(e) {
 								console.log('HTTPS failed to start listening!');
-								redirect = false;
 							}
 							
 						});
@@ -290,7 +289,7 @@ function getLiveData(id, cb) {
 			
 			if (lines.length < 1) return cb(true);
 			
-			for (let i = 0; i < lines.length - 1; i++) {
+			for (let i = 0; i < shownTrips; i++) {
 				let line = lines[i];
 				
 				trips.push({
@@ -324,7 +323,7 @@ function getStaticData(id) {
 		
 		if (!isDayForTrip(trip)) continue;
 		if (time.time < getSecondsSinceMidnight()) continue;
-		if (trips.length >= 15) break;
+		if (trips.length >= shownTrips) break;
 		
 		let route = getRouteForTrip(trip);
 		
