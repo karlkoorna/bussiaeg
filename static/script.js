@@ -149,7 +149,7 @@ function init() {
 						lng: stop.lng
 					},
 					icon: new google.maps.MarkerImage('assets/stop.png', new google.maps.Size(24, 24), null, null),
-					title: stop.name + ' - ' + stop.desc,
+					title: stop.name + (stop.desc ? ' - ' + stop.desc : ''),
 					map: map,
 					stop: {
 						name: stop.name,
