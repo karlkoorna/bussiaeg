@@ -5,8 +5,8 @@ const express = require('express'), app = express(),
 	  csv = require('csv-parser'),
 	  fs = require('fs');
 
-const port = {http: 80, https: 443};
-const shownTrips = 10;
+const port = {http: 80, https: 443},
+	  shownTrips = 10;
 
 var _overrides = new Array(),
 	_stops     = new Array(),
