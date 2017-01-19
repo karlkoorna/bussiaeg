@@ -37,7 +37,7 @@ function toTime(seconds) {
 	return time.h + ':' + time.m;
 }
 
-function showStop(id) {
+function showStop(id, share) {
 	if (updater && !live) {
 		
 		$('.trip-scheduled').each(function() {
@@ -79,7 +79,15 @@ function showStop(id) {
 		
 		if (updater) return;
 		
-		$('title').text('Bussiaeg - ' + data.name);
+		if (share) {
+			$('title').text('Bussiaeg - ' + data.name);
+			
+			map.panTo({
+				lat: data.lat,
+				lng: data.lng
+			});
+			
+		}
 		
 		$('#stop-name').text(data.name);
 		$('#stop-desc').text(data.desc);
@@ -87,7 +95,7 @@ function showStop(id) {
 		$('#stop').fadeIn(fadeTime);
 		
 		updater = setInterval(function() {
-			showStop(id);
+			showStop(id, false);
 		}, 1000);
 		
 	});
@@ -153,7 +161,7 @@ function init() {
 				marker.addListener('click', function() {
 					history.replaceState(null, 'Bussiaeg - ' + stop.name, '/?stop=' + stop.id);
 					
-					showStop(stop.id);
+					showStop(stop.id, false);
 				});
 				
 				markers.push(marker);
@@ -170,7 +178,9 @@ function init() {
 }
 
 const share = parseInt(getParameter('stop'));
-if (share) if (!isNaN(share)) showStop(share);
+if (share) if (!isNaN(share)) {
+	showStop(share, true);
+}
 
 // User Interface
 
