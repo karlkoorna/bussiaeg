@@ -2,7 +2,6 @@
   "name": "Bussiaeg",
   "description": "Vaata bussi, trolli, trammi ja rongi aegu otse telefonist!",
   "author": "Karl Köörna & Kaur Hendrikson",
-  "version": "1.2.1",
   "license": "MIT",
   "keywords": [
     "estonia",
@@ -14,10 +13,8 @@
     "train",
     "rong"
   ],
+  "version": "1.2.1",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/karlkoorna/Bussiaeg"
@@ -27,5 +24,10 @@
     "csv-parser": "^1.11.0",
     "express": "^4.14.0",
     "request": "^2.75.0"
+  },
+  "scripts": {
+    "start": "forever app.js -f",
+	"stop": "forever stop app.js",
+	"fstop": "taskkill /im node.exe /f"
   }
 }

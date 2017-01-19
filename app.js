@@ -28,6 +28,12 @@ function toSeconds(time) {
 
 // Initialization
 
+setInterval(() => {
+	var hours = new Date().getHours();
+	
+	if (hours > 4 && hours < 6) process.exit();
+}, 1000 * 60 * 60);
+
 console.log('Loading overrides...');
 fs.readFile('overrides.txt', 'utf8', (err, data) => {
 	if (err) {
