@@ -6,7 +6,7 @@ const express = require('express'), app = express(),
 	  fs = require('fs');
 
 const port = {http: 80, https: 443},
-	  shownTrips = 10;
+	  shownTrips = 15;
 
 var _overrides = new Array(),
 	_stops     = new Array(),
