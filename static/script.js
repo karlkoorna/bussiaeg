@@ -178,9 +178,7 @@ function init() {
 }
 
 const share = parseInt(getParameter('stop'));
-if (share) if (!isNaN(share)) {
-	showStop(share, true);
-}
+if (share) if (!isNaN(share)) showStop(share, true);
 
 // User Interface
 
