@@ -268,8 +268,8 @@ function getSecondsSinceMidnight() {
 }
 
 function isDayForTrip(trip) {
-	for (var i = 0; i < _days.length; i++) {
-		var day = _days[i];
+	for (let i = 0; i < _days.length; i++) {
+		let day = _days[i];
 		
 		if (day.service_id !== trip.service_id) continue;
 		if (!day.service[getDay()]) continue;
