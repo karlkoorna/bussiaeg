@@ -40,7 +40,7 @@ function toTime(seconds) {
 function showStop(id) {
 	if (updater && !live) {
 		
-		$('.scheduled').each(function() {
+		$('.trip-scheduled').each(function() {
 			$(this).text(toCountdown($(this).attr('data-time'), true));
 			
 			if ($(this).attr('data-time') > getSecondsSinceMidnight()) return;
