@@ -37,7 +37,7 @@ function toTime(seconds) {
 	return time.h + ':' + time.m;
 }
 
-function showStop(id, share) {
+function showStop(id, panMap, fadeIn) {
 	if (updater && !live) {
 		
 		$('.trip-scheduled').each(function() {
@@ -77,27 +77,15 @@ function showStop(id, share) {
 		}
 		$('#stop-trips').html(content);
 		
-		if (updater) return;
-		
-		if (share) {
-			$('title').text('Bussiaeg - ' + data.name);
-			
-			map.panTo({
-				lat: data.lat,
-				lng: data.lng
-			});
-			
-		}
+		if (panMap) map.panTo({
+			lat: data.lat,
+			lng: data.lng
+		});
 		
 		$('#stop-name').text(data.name);
 		$('#stop-desc').text(data.desc);
 		
-		$('#stop').fadeIn(fadeTime);
-		
-		updater = setInterval(function() {
-			showStop(id, false);
-		}, 1000);
-		
+		if (fadeIn) $('#stop').fadeIn(fadeTime);
 	});
 	
 }
@@ -159,9 +147,16 @@ function init() {
 				});
 				
 				marker.addListener('click', function() {
-					history.replaceState(null, 'Bussiaeg - ' + stop.name, '/?stop=' + stop.id);
 					
-					showStop(stop.id, false);
+					history.pushState(null, document.title, '/?stop=' + stop.id);
+					document.title = 'Bussiaeg - ' + stop.name;
+					if (updater) return;
+					
+					showStop(stop.id, false, true);
+					updater = setInterval(function() {
+						showStop(stop.id, false, false);
+					}, 1000);
+					
 				});
 				
 				markers.push(marker);
@@ -178,7 +173,14 @@ function init() {
 }
 
 const share = parseInt(getParameter('stop'));
-if (share) if (!isNaN(share)) showStop(share, true);
+if (share) if (!isNaN(share)) if (!updater) {
+	
+	showStop(share, true, true);
+	updater = setInterval(function() {
+		showStop(share, false, false);
+	}, 1000);
+	
+}
 
 // User Interface
 
