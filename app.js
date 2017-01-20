@@ -343,14 +343,14 @@ app.get('/getstops', (req, res) => {
 		return res.status(500).send();
 	}
 	
-	var data = new Array();
+	var stops = new Array();
 	for (let i = 0; i < _stops.length; i++) {
 		let stop = _stops[i];
 		
 		if (stop.lat > lat_min || stop.lat < lat_max) continue;
 		if (stop.lng > lng_min || stop.lng < lng_max) continue;
 		
-		data.push({
+		stops.push({
 			lat:  stop.lat,
 			lng:  stop.lng,
 			id:   stop.id,
@@ -360,7 +360,7 @@ app.get('/getstops', (req, res) => {
 		
 	}
 	
-	return res.json(data);
+	return res.json(stops);
 });
 
 app.get('/getstop', (req, res) => {
