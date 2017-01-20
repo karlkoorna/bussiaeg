@@ -37,7 +37,7 @@ function toTime(seconds) {
 	return time.h + ':' + time.m;
 }
 
-function showStop(id, panMap, fadeIn) {
+function showStop(id, settings) {
 	if (updater && !live) {
 		
 		$('.trip-scheduled').each(function() {
@@ -77,7 +77,7 @@ function showStop(id, panMap, fadeIn) {
 		}
 		$('#stop-trips').html(content);
 		
-		if (panMap) map.panTo({
+		if (settings.panMap) map.panTo({
 			lat: data.lat,
 			lng: data.lng
 		});
@@ -85,7 +85,12 @@ function showStop(id, panMap, fadeIn) {
 		$('#stop-name').text(data.name);
 		$('#stop-desc').text(data.desc);
 		
-		if (fadeIn) $('#stop').fadeIn(fadeTime);
+		if (!settings.fadeIn) return;
+		
+		document.title = 'Bussiaeg - ' + data.name + (data.desc ? ' - ' + data.desc : '');
+		history.pushState(null, document.title, '/?stop=' + data.id);
+		
+		$('#stop').fadeIn(fadeTime);
 	});
 	
 }
@@ -137,24 +142,16 @@ function init() {
 						lng: stop.lng
 					},
 					icon: new google.maps.MarkerImage('assets/stop.png', new google.maps.Size(24, 24), null, null),
-					title: stop.name + (stop.desc ? ' - ' + stop.desc : ''),
 					map: map,
-					stop: {
-						name: stop.name,
-						desc: stop.desc,
-						id:   stop.id
-					}
+					stop: {id: stop.id}
 				});
 				
 				marker.addListener('click', function() {
-					
-					history.pushState(null, document.title, '/?stop=' + stop.id);
-					document.title = 'Bussiaeg - ' + stop.name;
 					if (updater) return;
 					
-					showStop(stop.id, false, true);
+					showStop(stop.id, {panMap: false, fadeIn: true});
 					updater = setInterval(function() {
-						showStop(stop.id, false, false);
+						showStop(stop.id, {panMap: false, fadeIn: false});
 					}, 1000);
 					
 				});
@@ -175,9 +172,9 @@ function init() {
 const share = parseInt(getParameter('stop'));
 if (share) if (!isNaN(share)) if (!updater) {
 	
-	showStop(share, true, true);
+	showStop(share, {panMap: true, fadeIn: true});
 	updater = setInterval(function() {
-		showStop(share, false, false);
+		showStop(share, {panMap: false, fadeIn: false});
 	}, 1000);
 	
 }

@@ -353,9 +353,7 @@ app.get('/getstops', (req, res) => {
 		stops.push({
 			lat:  stop.lat,
 			lng:  stop.lng,
-			id:   stop.id,
-			name: stop.name,
-			desc: stop.desc
+			id:   stop.id
 		});
 		
 	}
