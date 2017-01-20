@@ -10,8 +10,8 @@ const port = {http: 80, https: 443},
 
 var _overrides = new Array(),
 	_stops     = new Array(),
-	_days      = new Array(),
 	_times     = new Array(),
+	_days      = new Array(),
 	_trips     = new Array(),
 	_routes    = new Array();
 
@@ -62,9 +62,9 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 		let zip = new require('adm-zip')(new Buffer(data));
 		
 		zip.extractEntryTo('stops.txt',      'tmp', false, true);
-		zip.extractEntryTo('calendar.txt',   'tmp', false, true);
 		zip.extractEntryTo('stop_times.txt', 'tmp', false, true);
 		zip.extractEntryTo('trips.txt',      'tmp', false, true);
+		zip.extractEntryTo('calendar.txt',   'tmp', false, true);
 		zip.extractEntryTo('routes.txt',     'tmp', false, true);
 		
 	} catch(e) {
@@ -77,8 +77,8 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 		
 		processStops(() => {
 			processTimes(() => {
-				processDays(() => {
-					processTrips(() => {
+				processTrips(() => {
+					processDays(() => {
 						processRoutes(() => {
 							
 							require('http').createServer(app).listen(port.http, (err) => {
@@ -147,28 +147,6 @@ function processTimes(cb) {
 		});
 }
 
-function processDays(cb) {
-	fs.createReadStream('tmp/calendar.txt').pipe(csv())
-		.on('data', (line) => {
-			
-			_days.push({
-				service_id: parseInt(line.service_id),
-				service: {
-					mon: line.monday    == true ? true : false,
-					tue: line.tuesday   == true ? true : false,
-					wed: line.wednesday == true ? true : false,
-					thu: line.thursday  == true ? true : false,
-					fri: line.friday    == true ? true : false,
-					sat: line.saturday  == true ? true : false,
-					sun: line.sunday    == true ? true : false
-				}
-			});
-			
-		}).on('end', () => {
-			cb();
-		});
-}
-
 function processTrips(cb) {
 	fs.createReadStream('tmp/trips.txt').pipe(csv())
 		.on('data', (line) => {
@@ -177,6 +155,28 @@ function processTrips(cb) {
 				id:         parseInt(line.trip_id),
 				route_id:   line.route_id,
 				service_id: parseInt(line.service_id)
+			});
+			
+		}).on('end', () => {
+			cb();
+		});
+}
+
+function processDays(cb) {
+	fs.createReadStream('tmp/calendar.txt').pipe(csv())
+		.on('data', (line) => {
+			
+			_days.push({
+				service_id: parseInt(line.service_id),
+				service: [
+					line.monday    == true ? true : false,
+					line.tuesday   == true ? true : false,
+					line.wednesday == true ? true : false,
+					line.thursday  == true ? true : false,
+					line.friday    == true ? true : false,
+					line.saturday  == true ? true : false,
+					line.sunday    == true ? true : false
+				]
 			});
 			
 		}).on('end', () => {
@@ -202,11 +202,15 @@ function processRoutes(cb) {
 
 // Functions
 
+function getSecondsSinceMidnight() {
+	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
+}
+
 function getStopById(id) {
 	for (let i = 0; i < _stops.length; i++) {
 		let stop = _stops[i];
 		
-		if (stop.id == id) return stop;
+		if (stop.id === id) return stop;
 	}
 	return null;
 }
@@ -215,9 +219,7 @@ function getOverrideForStop(id) {
 	for (let i = 0; i < _overrides.length; i++) {
 		let override = _overrides[i];
 		
-		if (override.id !== id) continue;
-		
-		return override.desc.replace(/[\\$'"]/g, '\\$&');
+		if (override.id === id) return override.desc.replace(/[\\$'"]/g, '\\$&');
 	}
 	return null;
 }
@@ -228,9 +230,7 @@ function getTimesForStop(id) {
 	for (let i = 0; i < _times.length; i++) {
 		let time = _times[i];
 		
-		if (time.stop_id !== id) continue;
-		
-		times.push(time);
+		if (time.stop_id === id) times.push(time);
 	}
 	
 	return times;
@@ -240,28 +240,8 @@ function getTripForTime(time) {
 	for (let i = 0; i < _trips.length; i++) {
 		let trip = _trips[i];
 		
-		if (trip.id !== time.trip_id) continue;
-		
-		return trip;
+		if (trip.id === time.trip_id) return trip;
 	}
-}
-
-function getRouteForTrip(trip) {
-	for (let i = 0; i < _routes.length; i++) {
-		let route = _routes[i];
-		
-		if (route.id !== trip.route_id) continue;
-		
-		return route;
-	}
-}
-
-function getDay() {
-    return ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][new Date().getDay()];
-}
-
-function getSecondsSinceMidnight() {
-	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
 }
 
 function isDayForTrip(trip) {
@@ -269,9 +249,17 @@ function isDayForTrip(trip) {
 		let day = _days[i];
 		
 		if (day.service_id !== trip.service_id) continue;
-		if (!day.service[getDay()]) continue;
+		if (!day.service[new Date().getDay()]) continue;
 		
 		return day;
+	}
+}
+
+function getRouteForTrip(trip) {
+	for (let i = 0; i < _routes.length; i++) {
+		let route = _routes[i];
+		
+		if (route.id === trip.route_id) return route;
 	}
 }
 
