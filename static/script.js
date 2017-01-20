@@ -142,8 +142,7 @@ function init() {
 						lng: stop.lng
 					},
 					icon: new google.maps.MarkerImage('assets/stop.png', new google.maps.Size(24, 24), null, null),
-					map: map,
-					stop: {id: stop.id}
+					map: map
 				});
 				
 				marker.addListener('click', function() {
