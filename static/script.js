@@ -1,7 +1,6 @@
 // Declarations
 
-var coords, map, markers = new Array(), updater, live,
-	clickable = {locate: true};
+var coords, map, markers = new Array(), updater, live;
 
 const fadeTime = 250;
 
@@ -189,6 +188,16 @@ $('#stop-top').click(function() {
 		$('#stop-trips').html('');
 	});
 	
+});
+
+$('#map').mousedown(function() {
+	$('#bookmarks').animate({left: '-240px'}, fadeTime);
+});
+
+$('#btn-bookmarks').click(function() {
+	$(this).addClass('bounce');
+	
+	$('#bookmarks').animate({left: '0px'}, fadeTime);
 });
 
 $('#btn-help').click(function() {

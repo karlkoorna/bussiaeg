@@ -115,12 +115,16 @@ img {
 	animation: bounce .5s;
 }
 
+#btn-bookmarks {
+	z-index: 2;
+	left: 16px;
+	top: 16px;
+}
 #btn-help {
 	z-index: 2;
 	right: 16px;
 	top: 16px;
 }
-
 #btn-locate {
 	z-index: 2;
 	bottom: 16px;
@@ -137,6 +141,18 @@ img {
 	to {
 		transform: translateY(0%);
 	}
+}
+
+/* Overlay - Bookmarks */
+
+#bookmarks {
+	z-index: 3;
+	position: absolute;
+	left: -240px;
+	width: 240px;
+	height: 100%;
+	background-color: white;
+	box-shadow: 1px 0 2px 1px rgba(0,0,0,.25);
 }
 
 /* Overlay - Help */
