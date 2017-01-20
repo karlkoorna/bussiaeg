@@ -192,8 +192,8 @@ $('#stop-top').click(function() {
 });
 
 $('#btn-help').click(function() {
-	
 	$(this).addClass('bounce');
+	
 	$('#help').fadeIn(fadeTime, function() {
 		$('#btn-help').removeClass('bounce');
 	});
@@ -205,17 +205,11 @@ $('#help').click(function() {
 });
 
 $('#btn-locate').click(function() {
-	if (!clickable.locate) return;
-	
-	$(this).addClass('load'); clickable.locate = false;
+	$(this).addClass('bounce');
 	
 	map.panTo({
 		lat: coords.latitude,
 		lng: coords.longitude
-	});
-	
-	$(this).on('webkitAnimationIteration', function() {
-		$('#btn-locate').removeClass('load'); clickable.locate = true;
 	});
 	
 });

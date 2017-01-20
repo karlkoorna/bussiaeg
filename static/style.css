@@ -114,10 +114,6 @@ img {
 .bounce {
 	animation: bounce .5s;
 }
-.load {
-	animation: bounce .5s;
-	animation-iteration-count: 999;
-}
 
 #btn-help {
 	z-index: 2;
