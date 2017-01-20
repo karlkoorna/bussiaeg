@@ -82,10 +82,10 @@ function showStop(id, settings) {
 			lng: data.lng
 		});
 		
+		if (!settings.fadeIn) return;
+		
 		$('#stop-name').text(data.name);
 		$('#stop-desc').text(data.desc);
-		
-		if (!settings.fadeIn) return;
 		
 		document.title = 'Bussiaeg - ' + data.name + (data.desc ? ' - ' + data.desc : '');
 		history.pushState(null, document.title, '/?stop=' + data.id);
