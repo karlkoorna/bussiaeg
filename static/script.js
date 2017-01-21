@@ -200,6 +200,21 @@ $('#btn-bookmarks').click(function() {
 	$('#bookmarks').animate({left: '0px'}, fadeTime);
 });
 
+$('#bookmarks-add').click(function() {
+	var bookmarks = localStorage.getItem('bookmarks') || [],
+		name = swal({
+			type: 'input',
+			title: 'Anna asukohale nimi',
+			confirmButtonColor: 'deepskyblue',
+			showCancelButton: true,
+			inputPlaceholder: 'Minu kodu'
+		});
+	
+	
+	
+	localStorage.setItem('bookmarks', bookmarks);
+});
+
 $('#btn-help').click(function() {
 	$(this).addClass('bounce');
 	
@@ -221,4 +236,8 @@ $('#btn-locate').click(function() {
 		lng: coords.longitude
 	});
 	
+});
+
+$('#btn-locate').on('animationend', function() {
+	$(this).removeClass('bounce');
 });
