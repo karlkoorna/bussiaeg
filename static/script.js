@@ -83,23 +83,11 @@ function showStop(id, settings) {
 		
 		if (!settings.fadeIn) return;
 		
-		document.title = 'Bussiaeg - ' + data.name + (data.desc ? ' - ' + data.desc : '');
-		history.pushState(null, document.title, '/?stop=' + data.id);
-		
-		$('#stop').attr('data-id',  data.id);
-		$('#stop').attr('data-lat', data.lat);
-		$('#stop').attr('data-lng', data.lng);
-		
 		$('#stop-name').text(data.name);
 		$('#stop-desc').text(data.desc);
 		
-		if (localStorage.length > 0) {
-			if (JSON.parse(localStorage.getItem('bookmarks')).filter(function(i) {return i.id === data.id ? true : false}).length > 0) {
-				$('#stop-bookmark').addClass('bookmark-filled');
-			} else {
-				$('#stop-bookmark').removeClass('bookmark-filled');
-			}
-		}
+		document.title = 'Bussiaeg - ' + data.name + (data.desc ? ' - ' + data.desc : '');
+		history.pushState(null, document.title, '/?stop=' + data.id);
 		
 		$('#stop').fadeIn(fadeTime);
 	});
@@ -200,30 +188,6 @@ $('#stop-top').click(function() {
 		$('#stop-trips').html('');
 	});
 	
-});
-
-$('#stop-bookmark').click(function() {
-	let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-	
-	if (!$(this).hasClass('bookmark-filled')) {
-		$('#stop-bookmark').addClass('bookmark-filled');
-		
-		bookmarks.push({
-			id:   $('#stop').data('id'),
-			name: $('#stop-name').text(),
-			lat:  $('#stop').data('lat'),
-			lng:  $('#stop').data('lng')
-		});
-		
-	} else {
-		$('#stop-bookmark').removeClass('bookmark-filled');
-		
-		for (let i = 0; i < bookmarks.length; i++)
-			if (bookmarks[i].id !== $('#stop').data('id')) bookmarks.splice(bookmarks[i], 1);
-		
-	}
-	
-	localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 });
 
 $('#map').mousedown(function() {
