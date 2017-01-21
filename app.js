@@ -202,10 +202,6 @@ function processRoutes(cb) {
 
 // Functions
 
-function unifyName(str) {
-	return str.toLowerCase().replace(/[õö]/g, 'o').replace(/ü/g, 'u').replace('ä', 'a');
-}
-
 function getSecondsSinceMidnight() {
 	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
 }
