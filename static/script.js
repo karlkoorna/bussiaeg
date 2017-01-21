@@ -1,6 +1,6 @@
 // Declarations
 
-var coords, map, markers = new Array(), updater, live;
+var coords, map, updater, live;
 
 const fadeTime = 250;
 
@@ -94,78 +94,90 @@ function showStop(id, settings) {
 	
 }
 
-// Initialization
-
-function init() {
+function showStops() {
 	
-	map = new google.maps.Map(document.getElementById('map'), {
-		center: {
-			lat: parseFloat(getParameter('lat')) || 59.388,
-			lng: parseFloat(getParameter('lng')) || 24.684
-		},
-		zoom: 17,
-		minZoom: 10,
-		maxZoom: 20,
-		disableDoubleClickZoom: true,
-		disableDefaultUI: true,
-		clickableIcons: false,
-		styles: [{
-			featureType: 'transit.station',
-			elementType: 'all',
-			stylers: [{
-				visibility: 'off'
-			}]
-		}]
+	if (map.getZoom() <= 15) return map.eachLayer(function(layer) { 
+		if (layer._icon !== undefined) map.removeLayer(layer);
 	});
 	
-	google.maps.event.addListener(map, 'idle', function(e) {
-		let bounds = map.getBounds();
-		
-		if (map.getZoom() <= 15) {
+	const bounds = map.getBounds();
+	$.get('//' + location.host + '/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng, function(stops) {
+	
+		for (let i = 0; i < stops.length; i++) {
+			let stop = stops[i];
 			
-			for (let i = 0; i < markers.length; i++) {
-				markers[i].setMap(null);
-			}
+			L.marker([stop.lat, stop.lng], {
+				icon: L.icon({
+					iconUrl: 'assets/stop.png',
+					iconSize: [24, 24],
+					draggable: true
+				}),
+				type: 'stop'
+			}).addTo(map).on('click', function() {
+				if (updater) return;
+				
+				showStop(stop.id, {panMap: false, fadeIn: true});
+				updater = setInterval(function() {
+					showStop(stop.id, {panMap: false, fadeIn: false});
+				}, 1000);
+				
+			});
 			
-			return;
 		}
-		
-		$.get('//' + location.host + '/getstops?lat_min=' + bounds.f.b + '&lng_min=' + bounds.b.f + '&lat_max=' + bounds.f.f + '&lng_max=' + bounds.b.b, function(stops) {
-			
-			for (let i = 0; i < stops.length; i++) {
-				let stop = stops[i];
-				
-				let marker = new google.maps.Marker({
-					position: {
-						lat: stop.lat,
-						lng: stop.lng
-					},
-					icon: new google.maps.MarkerImage('assets/stop.png', new google.maps.Size(24, 24), null, null),
-					map: map
-				});
-				
-				marker.addListener('click', function() {
-					if (updater) return;
-					
-					showStop(stop.id, {panMap: false, fadeIn: true});
-					updater = setInterval(function() {
-						showStop(stop.id, {panMap: false, fadeIn: false});
-					}, 1000);
-					
-				});
-				
-				markers.push(marker);
-			}
-			
-		});
-		
-	});
 	
-	navigator.geolocation.watchPosition(function(pos) {
-		coords = pos.coords;
 	});
 	
 }
+
+// Initialization
+
+var map = L.map('map', {
+	center: [
+		parseFloat(getParameter('lat')) || 59.388,
+		parseFloat(getParameter('lng')) || 24.684
+	],
+	zoom: 17,
+	minZoom: 10,
+	maxZoom: 18,
+	maxBounds: [[59.874204, 21.396935], [57.290822, 28.838625]],
+	attributionControl: false,
+	bounceAtZoomLimits: false,
+	doubleClickZoom: false,
+	zoomControl: false,
+	keyboard: false,
+	boxZoom: false
+});
+
+L.tileLayer('//{s}.google.com/vt/lyrs=phl=en&x={x}&y={y}&z={z}&pbhttps://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i372053562!3m14!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjY2fHAudjpvZmY!4e0', {
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+}).addTo(map);
+
+L.control.attribution({
+	position: 'bottomleft',
+	prefix: 'Bussiaeg.ee | <a href="https://soiduplaan.tallinn.ee/">Sõiduplaanid</a> | <a href="http://peatus.ee">Peatus</a> | <a href="https://maps.google.com">Google</a> | <a href="http://leafletjs.com">Leaflet</a>'
+}).addTo(map);
+
+showStops()
+map.on('moveend', function() {
+	showStops()
+});
+
+map.locate({
+	enableHighAccuracy: true,
+	setView: true
+});
+
+map.on('locationfound', function() {
+	console.log('asd');
+});
+
+navigator.geolocation.getCurrentPosition(function(pos) {
+	map.panTo([pos.coords.latitude, pos.coords.longitude]);
+});
+
+navigator.geolocation.watchPosition(function(pos) {
+	coords = pos;
+});
 
 const share = parseInt(getParameter('stop'));
 if (share) if (!isNaN(share)) if (!updater) {
@@ -190,7 +202,7 @@ $('#stop-top').click(function() {
 	
 });
 
-$('#map').mousedown(function() {
+map.on('click', function() {
 	$('#bookmarks').animate({left: '-240px'}, fadeTime);
 });
 
@@ -231,11 +243,7 @@ $('#help').click(function() {
 $('#btn-locate').click(function() {
 	$(this).addClass('bounce');
 	
-	map.panTo({
-		lat: coords.latitude,
-		lng: coords.longitude
-	});
-	
+	map.panTo([coords.latitude, coords.longitude]);
 });
 
 $('#btn-locate').on('animationend', function() {
