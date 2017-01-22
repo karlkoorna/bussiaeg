@@ -112,8 +112,7 @@ function showStops() {
 					iconUrl: 'assets/stop.png',
 					iconSize: [24, 24],
 					draggable: true
-				}),
-				type: 'stop'
+				})
 			}).addTo(map).on('click', function() {
 				if (updater) return;
 				
@@ -158,9 +157,9 @@ L.control.attribution({
 	prefix: 'Bussiaeg.ee | <a href="https://soiduplaan.tallinn.ee/">Sõiduplaanid</a> | <a href="http://peatus.ee">Peatus</a> | <a href="https://maps.google.com">Google</a> | <a href="http://leafletjs.com">Leaflet</a>'
 }).addTo(map);
 
-showStops()
+showStops();
 map.on('moveend', function() {
-	showStops()
+	showStops();
 });
 
 map.locate({
