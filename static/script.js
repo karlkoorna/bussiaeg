@@ -16,7 +16,7 @@ function getSecondsSinceMidnight() {
 
 function toHMS(seconds) {
 	var hours   = Math.floor(seconds / 3600),
-		minutes = Math.floor((seconds % 3600) / 60);	
+		minutes = Math.floor((seconds % 3600) / 60);
 	seconds = seconds - (minutes * 60) - (hours * 3600);
 	return {
 		h: ('0' + hours).slice(-2),
@@ -59,13 +59,13 @@ function showStop(id, settings) {
 	}
 	
 	$.get('//' + location.host + '/getstop?id=' + id).done(function(data) {
-		let trips   = data.trips,
+		var trips   = data.trips,
 			content = '';
 		
 		live = data.live;
 		
-		for (let i = 0; i < trips.length; i++) {
-			let trip = trips[i];
+		for (var i = 0; i < trips.length; i++) {
+			var trip = trips[i];
 			
 			if (live) {
 				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled, false) + '</div><div class="trip-expected">' + toCountdown(trip.expected, false) + '</div></div>';
@@ -83,11 +83,11 @@ function showStop(id, settings) {
 		
 		if (!settings.fadeIn) return;
 		
-		$('#stop-name').text(data.name);
-		$('#stop-desc').text(data.desc);
-		
 		document.title = 'Bussiaeg - ' + data.name + (data.desc ? ' - ' + data.desc : '');
 		history.pushState(null, document.title, '/?stop=' + data.id);
+		
+		$('#stop-name').text(data.name);
+		$('#stop-desc').text(data.desc);
 		
 		$('#stop').fadeIn(fadeTime);
 	});
@@ -103,8 +103,8 @@ function showStops() {
 	const bounds = map.getBounds();
 	$.get('//' + location.host + '/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng, function(stops) {
 	
-		for (let i = 0; i < stops.length; i++) {
-			let stop = stops[i];
+		for (var i = 0; i < stops.length; i++) {
+			var stop = stops[i];
 			
 			L.marker([stop.lat, stop.lng], {
 				icon: L.icon({
