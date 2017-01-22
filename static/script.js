@@ -2,7 +2,8 @@
 
 var coords, map, updater, live;
 
-const fadeTime = 250;
+const fadeTime = 250,
+	  updateTime = 2000;
 
 // Functions
 
@@ -119,7 +120,7 @@ function showStops() {
 				showStop(stop.id, {panMap: false, fadeIn: true});
 				updater = setInterval(function() {
 					showStop(stop.id, {panMap: false, fadeIn: false});
-				}, 1000);
+				}, updateTime);
 				
 			});
 			
@@ -185,7 +186,7 @@ if (share) if (!isNaN(share)) if (!updater) {
 	showStop(share, {panMap: true, fadeIn: true});
 	updater = setInterval(function() {
 		showStop(share, {panMap: false, fadeIn: false});
-	}, 1000);
+	}, updateTime);
 	
 }
 
