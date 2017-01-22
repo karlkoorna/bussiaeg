@@ -15,94 +15,7 @@ var _overrides = new Array(),
 	_trips     = new Array(),
 	_routes    = new Array();
 
-// Initialization
-
-app.use(express.static(__dirname + '/static'));
-
-console.log('Loading overrides...');
-fs.readFile('overrides.txt', 'utf8', (err, data) => {
-	if (err) {
-		console.log('Failed to load overrides!');
-		process.exit();
-	}
-	
-	var lines = data.split('\n');
-	
-	for (let i = 0; i < lines.length; i++) {
-		let line = lines[i];
-		
-		_overrides[i] = {
-			id:   parseInt(line.split('¤')[0]),
-			desc: line.split('¤')[1],
-		};
-		
-	}
-	
-});
-
-console.log('Downloading data...');
-request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data) => {
-	if (err) {
-		console.log('Failed to download data!');
-		process.exit();
-	}
-	
-	console.log('Extracting data...');
-	try {
-		
-		let zip = new require('adm-zip')(new Buffer(data));
-		
-		zip.extractEntryTo('stops.txt',      'tmp', false, true);
-		zip.extractEntryTo('stop_times.txt', 'tmp', false, true);
-		zip.extractEntryTo('trips.txt',      'tmp', false, true);
-		zip.extractEntryTo('calendar.txt',   'tmp', false, true);
-		zip.extractEntryTo('routes.txt',     'tmp', false, true);
-		
-	} catch(e) {
-		console.log('Failed to extract data!');
-		process.exit();
-	}
-	
-	console.log('Preparing database...');
-	try {
-		
-		processStops(() => {
-			processTimes(() => {
-				processTrips(() => {
-					processDays(() => {
-						processRoutes(() => {
-							
-							require('http').createServer(app).listen(port.http, (err) => {
-								console.log('HTTP listening on ' + port.http);
-							});
-							
-							try {
-								
-								require('https').createServer({
-									cert: fs.readFileSync('ssl.crt'),
-									key:  fs.readFileSync('ssl.key'),
-									ca:   fs.readFileSync('ca.crt'),
-									rejectUnauthorized: false
-								}, app).listen(port.https, (err) => {
-									console.log('HTTPS listening on ' + port.https);
-								});
-								
-							} catch(e) {
-								console.log('HTTPS failed to start listening!');
-							}
-							
-						});
-					});
-				});
-			});
-		});
-		
-	} catch(e) {
-		console.log('Failed to prepare database!');
-		process.exit();
-	}
-	
-});
+// Functions (Initialization)
 
 function processStops(cb) {
 	fs.createReadStream('tmp/stops.txt').pipe(csv())
@@ -190,8 +103,8 @@ function processRoutes(cb) {
 			cb();
 		});
 }
-
-// Functions
+	
+// Functions (Endpoints)
 
 function toSeconds(time) {
 	var hours   = time.substring(0, 2),
@@ -326,6 +239,97 @@ function getStaticData(id) {
 	
 }
 
+// Initialization
+
+app.use(express.static(__dirname + '/static'));
+
+console.log('Loading overrides...');
+fs.readFile('overrides.txt', 'utf8', (err, data) => {
+	
+	if (err) {
+		console.log('Failed to load overrides!');
+		process.exit();
+	}
+	
+	var lines = data.split('\n');
+	
+	for (let i = 0; i < lines.length; i++) {
+		let line = lines[i];
+		
+		_overrides[i] = {
+			id:   parseInt(line.split('¤')[0]),
+			desc: line.split('¤')[1],
+		};
+		
+	}
+	
+});
+
+console.log('Downloading data...');
+request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data) => {
+	
+	if (err) {
+		console.log('Failed to download data!');
+		process.exit();
+	}
+	
+	console.log('Extracting data...');
+	try {
+		
+		let zip = new require('adm-zip')(new Buffer(data));
+		
+		zip.extractEntryTo('stops.txt',      'tmp', false, true);
+		zip.extractEntryTo('stop_times.txt', 'tmp', false, true);
+		zip.extractEntryTo('trips.txt',      'tmp', false, true);
+		zip.extractEntryTo('calendar.txt',   'tmp', false, true);
+		zip.extractEntryTo('routes.txt',     'tmp', false, true);
+		
+	} catch(e) {
+		console.log('Failed to extract data!');
+		process.exit();
+	}
+	
+	console.log('Preparing database...');
+	try {
+		
+		processStops(() => {
+			processTimes(() => {
+				processTrips(() => {
+					processDays(() => {
+						processRoutes(() => {
+							
+							require('http').createServer(app).listen(port.http, (err) => {
+								console.log('HTTP listening on ' + port.http);
+							});
+							
+							try {
+								
+								require('https').createServer({
+									cert: fs.readFileSync('ssl.crt'),
+									key:  fs.readFileSync('ssl.key'),
+									ca:   fs.readFileSync('ca.crt'),
+									rejectUnauthorized: false
+								}, app).listen(port.https, (err) => {
+									console.log('HTTPS listening on ' + port.https);
+								});
+								
+							} catch(e) {
+								console.log('HTTPS failed to start listening!');
+							}
+							
+						});
+					});
+				});
+			});
+		});
+		
+	} catch(e) {
+		console.log('Failed to prepare database!');
+		process.exit();
+	}
+	
+});
+
 // Endpoints
 
 app.get('/', (req, res) => {
@@ -374,7 +378,7 @@ app.get('/getstop', (req, res) => {
 		return res.status(404).send();
 	}
 	
-	let override = getOverrideForStop(stop.id);
+	var override = getOverrideForStop(stop.id);
 	stop.desc = override ? override : stop.desc;
 	
 	getLiveData(id, (live, data) => {
