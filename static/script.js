@@ -194,6 +194,8 @@ $('#stop-top').click(function() {
 });
 
 map.on('click', function() {
+	$(this).addClass('bounce');
+	
 	$('#bookmarks').animate({left: '-240px'}, fadeTime);
 });
 
@@ -221,6 +223,8 @@ $('#bookmarks-add').click(function() {
 $('#btn-help').click(function() {
 	$(this).addClass('bounce');
 	
+	$('#bookmarks').animate({left: '-240px'}, fadeTime);
+	
 	$('#help').fadeIn(fadeTime, function() {
 		$('#btn-help').removeClass('bounce');
 	});
@@ -234,7 +238,7 @@ $('#help').click(function() {
 $('#btn-locate').click(function() {
 	$(this).addClass('bounce');
 	
-	map.panTo([coords.latitude, coords.longitude]);
+	if (coords) map.panTo([coords.latitude, coords.longitude]);
 });
 
 $('#btn-locate').on('animationend', function() {

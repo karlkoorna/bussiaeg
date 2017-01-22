@@ -17,9 +17,16 @@
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/g/sweetalert@1.1.3(sweetalert.css),leaflet@1.0.2(leaflet.css)">
 		<link rel="stylesheet" href="style.css">
 		<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
-		<script defer src="//code.jquery.com/jquery-3.1.1.min.js"></script>
-		<script defer src="//cdn.jsdelivr.net/g/sweetalert@1.1.3,leaflet@1.0.2"></script>
+		<script defer src="//cdn.jsdelivr.net/g/jquery@3.1.1,leaflet@1.0.2,sweetalert@1.1.3"></script>
 		<script defer src="script.js"></script>
+		<script defer>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-86356656-2', 'auto');
+		ga('send', 'pageview');
+		</script>
 	</head>
 	<body>
 		<div id="stop" class="full">
@@ -48,13 +55,5 @@
 		<img id="btn-help" class="btn" src="assets/help.png" alt="">
 		<img id="btn-locate" class="btn" src="assets/locate.png" alt="">
 		<div id="map" class="full"></div>
-		<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		ga('create', 'UA-86356656-2', 'auto');
-		ga('send', 'pageview');
-		</script>
 	</body>
 </html>
