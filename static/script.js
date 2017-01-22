@@ -153,9 +153,9 @@ function hideBookmarks() {
 var map = L.map('map', {
 	center: [
 		parseFloat(getParameter('lat')) || 59.388,
-		parseFloat(getParameter('lng')) || 24.684
+		parseFloat(getParameter('lng')) || 24.685
 	],
-	zoom: 17,
+	zoom: 16,
 	minZoom: 10,
 	maxZoom: 18,
 	maxBounds: [[59.874204, 21.396935], [57.290822, 28.838625]],
