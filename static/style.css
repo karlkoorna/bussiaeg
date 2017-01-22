@@ -101,21 +101,6 @@ img {
 
 /* Overlay - Buttons */
 
-.btn {
-	position: absolute;
-	width: 55px;
-	height: 55px;
-	background-color: white;
-	border-radius: 32px;
-	box-shadow: 0 0 3px 0px rgba(32,32,32,.6);
-	overflow: hidden;
-	cursor: pointer;
-}
-
-.bounce {
-	animation: bounce .5s;
-}
-
 #btn-bookmarks {
 	z-index: 2;
 	left: 16px;
@@ -130,6 +115,21 @@ img {
 	z-index: 2;
 	bottom: 16px;
 	right: 16px;
+}
+
+.btn {
+	position: absolute;
+	width: 55px;
+	height: 55px;
+	background-color: white;
+	border-radius: 32px;
+	box-shadow: 0 0 3px 0px rgba(32,32,32,.6);
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.bounce {
+	animation: bounce .5s;
 }
 
 @keyframes bounce {
@@ -167,9 +167,20 @@ img {
 	cursor: pointer;
 	transition: background-color .2s linear;
 }
-
 #bookmarks-add:hover {
 	background-color: lightskyblue;
+}
+
+.bookmark {
+	width: 100%;
+	padding: 12px;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+	font-size: 20px;
+	cursor: pointer;
+	transition: background-color .3s linear;
+}
+.bookmark:hover {
+	background-color: rgba(0,0,0,.1);
 }
 
 /* Overlay - Help */

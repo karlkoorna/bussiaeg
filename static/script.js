@@ -129,6 +129,25 @@ function showStops() {
 	
 }
 
+function showBookmarks() {
+	var bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+	
+	var content = '<div id="bookmarks-add">Lisa asukoht</div>';
+	for (var i = 0; i < bookmarks.length; i++) {
+		var bookmark = bookmarks[i];
+		
+		content += '<div class="bookmark" data-lat="' + bookmark.lat + '" data-lng="' + bookmark.lng + '" data-zoom="' + bookmark.zoom + '">' + bookmark.name + '</div>';
+		
+	}
+	$('#bookmarks').html(content);
+	
+	$('#bookmarks').animate({left: '0px'}, fadeTime);
+}
+
+function hideBookmarks() {
+	$('#bookmarks').animate({left: '-240px'}, fadeTime);
+}
+
 // Initialization
 
 var map = L.map('map', {
@@ -196,34 +215,55 @@ $('#stop-top').click(function() {
 map.on('click', function() {
 	$(this).addClass('bounce');
 	
-	$('#bookmarks').animate({left: '-240px'}, fadeTime);
+	hideBookmarks();
 });
 
 $('#btn-bookmarks').click(function() {
 	$(this).addClass('bounce');
 	
-	$('#bookmarks').animate({left: '0px'}, fadeTime);
+	showBookmarks();
 });
 
-$('#bookmarks-add').click(function() {
-	var bookmarks = localStorage.getItem('bookmarks') || [],
+$('#bookmarks').on('click', '#bookmarks-add', function() {
+	var bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [],
 		name = swal({
 			type: 'input',
-			title: 'Anna asukohale nimi',
+			title: 'Anna asukohale nimi...',
 			confirmButtonColor: 'deepskyblue',
+			confirmButtonText: 'Lisa',
 			showCancelButton: true,
-			inputPlaceholder: 'Minu kodu'
+			cancelButtonColor: '#fa5858',
+			cancelButtonText: 'Tagasi',
+			inputPlaceholder: 'Minu kodu',
+			animation: 'slide-from-top'
+		}, function(input) {
+			
+			if (input !== false && $.trim(input) != '') bookmarks.push({
+				name: input,
+				lat:  map.getCenter().lat,
+				lng:  map.getCenter().lng,
+				zoom: map.getZoom()
+			});
+			
+			localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+			
+			hideBookmarks();
 		});
 	
+});
+
+$('#bookmarks').on('click', '.bookmark', function() {
 	
+	map.panTo([$(this).data('lat'), $(this).data('lng')]);
+	map.setZoom($(this).data('zoom'));
 	
-	localStorage.setItem('bookmarks', bookmarks);
+	hideBookmarks();
 });
 
 $('#btn-help').click(function() {
 	$(this).addClass('bounce');
 	
-	$('#bookmarks').animate({left: '-240px'}, fadeTime);
+	hideBookmarks();
 	
 	$('#help').fadeIn(fadeTime, function() {
 		$('#btn-help').removeClass('bounce');
