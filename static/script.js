@@ -282,7 +282,6 @@ $('#stop-top').click(function() {
 
 map.on('click', function() {
 	$(this).addClass('bounce');
-	
 	hideBookmarks();
 });
 
@@ -292,7 +291,6 @@ $('#bookmarks').hammer().on('swipeleft', function() {
 
 $('#btn-bookmarks').click(function() {
 	$(this).addClass('bounce');
-	
 	showBookmarks();
 });
 
@@ -329,7 +327,6 @@ $('#help').click(function() {
 
 $('#btn-locate').click(function() {
 	$(this).addClass('bounce');
-	
 	if (coords) map.panTo([coords.latitude, coords.longitude]);
 });
 
