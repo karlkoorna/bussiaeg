@@ -104,8 +104,8 @@ function showStops() {
 	const bounds = map.getBounds();
 	$.get('//' + location.host + '/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng, function(stops) {
 	
-		for (var i = 0; i < stops.length; i++) {
-			var stop = stops[i];
+		for (let i = 0; i < stops.length; i++) {
+			let stop = stops[i];
 			
 			L.marker([stop.lat, stop.lng], {
 				icon: L.icon({
