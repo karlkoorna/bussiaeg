@@ -15,18 +15,9 @@ var _overrides = new Array(),
 	_trips     = new Array(),
 	_routes    = new Array();
 
-app.use(express.static(__dirname + '/static'));
-
-// Function
-
-function toSeconds(time) {
-	var hours   = time.substring(0, 2),
-		minutes = time.substring(3, 5),
-		seconds = time.substring(6, 8);
-	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60) + parseInt(seconds);
-}
-
 // Initialization
+
+app.use(express.static(__dirname + '/static'));
 
 console.log('Loading overrides...');
 fs.readFile('overrides.txt', 'utf8', (err, data) => {
@@ -201,6 +192,13 @@ function processRoutes(cb) {
 }
 
 // Functions
+
+function toSeconds(time) {
+	var hours   = time.substring(0, 2),
+		minutes = time.substring(3, 5),
+		seconds = time.substring(6, 8);
+	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60) + parseInt(seconds);
+}
 
 function getSecondsSinceMidnight() {
 	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
