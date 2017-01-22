@@ -162,21 +162,12 @@ map.on('moveend', function() {
 	showStops();
 });
 
-map.locate({
-	enableHighAccuracy: true,
-	setView: true
-});
-
-map.on('locationfound', function() {
-	console.log('asd');
-});
-
 navigator.geolocation.getCurrentPosition(function(pos) {
-	map.panTo([pos.coords.latitude, pos.coords.longitude]);
+	if (pos.coords.accuracy < 250) map.panTo([pos.coords.latitude, pos.coords.longitude]);
 });
 
 navigator.geolocation.watchPosition(function(pos) {
-	coords = pos;
+	coords = pos.coords;
 });
 
 const share = parseInt(getParameter('stop'));
