@@ -158,8 +158,9 @@ img {
 
 #bookmarks-add {
 	width: 100%;
-	padding: 12px;
+	padding: 16px;
 	background-color: deepskyblue;
+	border-bottom: 2px solid steelblue;
 	color: white;
 	font-size: 24px;
 	font-weight: bold;

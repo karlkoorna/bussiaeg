@@ -5,7 +5,7 @@ var coords, map, updater, live;
 const fadeTime = 250,
 	  updateTime = 2000;
 
-// Functions
+// Functions (Stops)
 
 function getParameter(name) {
 	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -111,7 +111,7 @@ function showStops() {
 				icon: L.icon({
 					iconUrl: 'assets/stop.png',
 					iconSize: [24, 24],
-					draggable: true
+					iconAnchor: [0, 0],
 				})
 			}).addTo(map).on('click', function() {
 				if (updater) return;
@@ -129,6 +129,66 @@ function showStops() {
 	
 }
 
+// Functions (Bookmarks)
+
+function addBookmark() {
+	
+	swal({
+		type: 'input',
+		title: 'Sisesta nimi',
+		confirmButtonColor: 'deepskyblue',
+		confirmButtonText: 'Lisa',
+		showCancelButton: true,
+		cancelButtonColor: '#fa5858',
+		cancelButtonText: 'Tagasi',
+		inputPlaceholder: 'Minu kodu',
+		animation: 'slide-from-top'
+	}, function(input) {
+		var bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+		
+		if (input !== false && $.trim(input) != '') bookmarks.push({
+			name: input,
+			lat:  map.getCenter().lat,
+			lng:  map.getCenter().lng,
+			zoom: map.getZoom()
+		});
+		
+		localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+		
+		hideBookmarks();
+	});
+	
+}
+
+function deleteBookmark(el) {
+	
+	swal({
+		title: 'Kustuta?',
+		text: el.text(),
+		confirmButtonText: 'Jah',
+		cancelButtonText: 'Ei',
+		showCancelButton: true
+	}, function(isConfirm) {
+		if (!isConfirm) return;
+		
+		var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+		
+		for (var i = 0; i < bookmarks.length; i++) {
+			var bookmark = bookmarks[i];
+			
+			if (bookmark.lat != el.data('lat') || bookmark.lng != el.data('lng')) continue;
+			
+			bookmarks.splice(i, 1);
+			el.remove();
+			
+			break;
+		}
+		
+		localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+	});
+	
+}
+
 function showBookmarks() {
 	var bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
 	
@@ -140,6 +200,12 @@ function showBookmarks() {
 		
 	}
 	$('#bookmarks').html(content);
+	
+	$('.bookmark').each(function() {
+		$(this).hammer().on('swipeleft', function() {
+			deleteBookmark($(this));
+		});
+	});
 	
 	$('#bookmarks').animate({left: '0px'}, fadeTime);
 }
@@ -199,7 +265,7 @@ if (share) if (!isNaN(share)) if (!updater) {
 	
 }
 
-// User Interface
+// User Interface (Stops)
 
 $('#stop-top').click(function() {
 	clearInterval(updater); updater = null;
@@ -212,9 +278,15 @@ $('#stop-top').click(function() {
 	
 });
 
+// User Interface (Bookmarks)
+
 map.on('click', function() {
 	$(this).addClass('bounce');
 	
+	hideBookmarks();
+});
+
+$('#bookmarks').hammer().on('swipeleft', function() {
 	hideBookmarks();
 });
 
@@ -225,40 +297,18 @@ $('#btn-bookmarks').click(function() {
 });
 
 $('#bookmarks').on('click', '#bookmarks-add', function() {
-	var bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [],
-		name = swal({
-			type: 'input',
-			title: 'Anna asukohale nimi...',
-			confirmButtonColor: 'deepskyblue',
-			confirmButtonText: 'Lisa',
-			showCancelButton: true,
-			cancelButtonColor: '#fa5858',
-			cancelButtonText: 'Tagasi',
-			inputPlaceholder: 'Minu kodu',
-			animation: 'slide-from-top'
-		}, function(input) {
-			
-			if (input !== false && $.trim(input) != '') bookmarks.push({
-				name: input,
-				lat:  map.getCenter().lat,
-				lng:  map.getCenter().lng,
-				zoom: map.getZoom()
-			});
-			
-			localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-			
-			hideBookmarks();
-		});
-	
+	addBookmark();
 });
 
 $('#bookmarks').on('click', '.bookmark', function() {
+	hideBookmarks();
 	
 	map.panTo([$(this).data('lat'), $(this).data('lng')]);
 	map.setZoom($(this).data('zoom'));
 	
-	hideBookmarks();
 });
+
+// User Interface (Help)
 
 $('#btn-help').click(function() {
 	$(this).addClass('bounce');
@@ -274,6 +324,8 @@ $('#btn-help').click(function() {
 $('#help').click(function() {
 	$(this).fadeOut(fadeTime);
 });
+
+// User Interface (Locate)
 
 $('#btn-locate').click(function() {
 	$(this).addClass('bounce');
