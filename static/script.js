@@ -276,11 +276,7 @@ navigator.geolocation.watchPosition(function(pos) {
 $('#stop-top').click(function() {
 	clearInterval(updater); updater = null;
 	
-	$(this).parent().fadeOut(fadeTime, function() {
-		$('#stop-name').text('...');
-		$('#stop-desc').text('...');
-		$('#stop-trips').html('');
-	});
+	$(this).parent().fadeOut(fadeTime);
 	
 });
 
