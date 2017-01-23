@@ -118,8 +118,8 @@ function getSecondsSinceMidnight() {
 }
 
 function getStopById(id) {
-	for (let i = 0; i < _stops.length; i++) {
-		let stop = _stops[i];
+	for (var i = 0; i < _stops.length; i++) {
+		var stop = _stops[i];
 		
 		if (stop.id === id) return stop;
 	}
@@ -127,8 +127,8 @@ function getStopById(id) {
 }
 
 function getOverrideForStop(id) {
-	for (let i = 0; i < _overrides.length; i++) {
-		let override = _overrides[i];
+	for (var i = 0; i < _overrides.length; i++) {
+		var override = _overrides[i];
 		
 		if (override.id === id) return override.desc.replace(/[\\$'"]/g, '\\$&');
 	}
@@ -138,8 +138,8 @@ function getOverrideForStop(id) {
 function getTimesForStop(id) {
 	var times = new Array();
 	
-	for (let i = 0; i < _times.length; i++) {
-		let time = _times[i];
+	for (var i = 0; i < _times.length; i++) {
+		var time = _times[i];
 		
 		if (time.stop_id === id) times.push(time);
 	}
@@ -148,16 +148,16 @@ function getTimesForStop(id) {
 }
 
 function getTripForTime(time) {
-	for (let i = 0; i < _trips.length; i++) {
-		let trip = _trips[i];
+	for (var i = 0; i < _trips.length; i++) {
+		var trip = _trips[i];
 		
 		if (trip.id === time.trip_id) return trip;
 	}
 }
 
 function isDayForTrip(trip) {
-	for (let i = 0; i < _days.length; i++) {
-		let day = _days[i];
+	for (var i = 0; i < _days.length; i++) {
+		var day = _days[i];
 		
 		if (day.service_id !== trip.service_id) continue;
 		if (!day.service[new Date().getDay()]) continue;
@@ -167,8 +167,8 @@ function isDayForTrip(trip) {
 }
 
 function getRouteForTrip(trip) {
-	for (let i = 0; i < _routes.length; i++) {
-		let route = _routes[i];
+	for (var i = 0; i < _routes.length; i++) {
+		var route = _routes[i];
 		
 		if (route.id === trip.route_id) return route;
 	}
@@ -178,16 +178,18 @@ function getLiveData(id, cb) {
 	try {
 		
 		request('http://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=' + id + '&trip=' + ~~(new Date().getTime() / 100), (err, _res, data) => {
-			let lines = data.split('\n'),
+			if (err) return cb(false);
+			
+			var lines = data.split('\n'),
 				trips = new Array();
 			
 			lines.shift(); lines.shift();
 			
 			if (lines.length < 1) return cb(false);
 			
-			let i = -1;
+			var i = -1;
 			while (i < lines.length - 2 && i < shownTrips) {i++;
-				let line = lines[i]; 
+				var line = lines[i]; 
 				
 				trips.push({
 					type:      line.split(',')[0],
@@ -214,15 +216,15 @@ function getStaticData(id) {
 	var times = getTimesForStop(id),
 		trips = new Array();
 	
-	for (let i = 0; i < times.length; i++) {
-		let time = times[i],
+	for (var i = 0; i < times.length; i++) {
+		var time = times[i],
 			trip = getTripForTime(time);
 		
 		if (!isDayForTrip(trip)) continue;
 		if (time.time < getSecondsSinceMidnight()) continue;
 		if (trips.length >= shownTrips) break;
 		
-		let route = getRouteForTrip(trip);
+		var route = getRouteForTrip(trip);
 		
 		trips.push({
 			type:   route.color === 'E6FA32' || route.color === 'F55ADC' || route.color === '00933C' ? 'coach' : route.type === 3 ? 'bus' : route.type === 800 ? 'trol' : route.type === 0 ? 'tram' : route.type === 2 ? 'train' : 'error',
@@ -253,8 +255,8 @@ fs.readFile('overrides.txt', 'utf8', (err, data) => {
 	
 	var lines = data.split('\n');
 	
-	for (let i = 0; i < lines.length; i++) {
-		let line = lines[i];
+	for (var i = 0; i < lines.length; i++) {
+		var line = lines[i];
 		
 		_overrides[i] = {
 			id:   parseInt(line.split('¤')[0]),
@@ -276,7 +278,7 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 	console.log('Extracting data...');
 	try {
 		
-		let zip = new require('adm-zip')(new Buffer(data));
+		var zip = new require('adm-zip')(new Buffer(data));
 		
 		zip.extractEntryTo('stops.txt',      'tmp', false, true);
 		zip.extractEntryTo('stop_times.txt', 'tmp', false, true);
@@ -346,8 +348,8 @@ app.get('/getstops', (req, res) => {
 	}
 	
 	var stops = new Array();
-	for (let i = 0; i < _stops.length; i++) {
-		let stop = _stops[i];
+	for (var i = 0; i < _stops.length; i++) {
+		var stop = _stops[i];
 		
 		if (stop.lat > lat_min || stop.lat < lat_max) continue;
 		if (stop.lng > lng_min || stop.lng < lng_max) continue;

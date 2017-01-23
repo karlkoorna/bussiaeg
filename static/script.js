@@ -104,24 +104,28 @@ function showStops() {
 	const bounds = map.getBounds();
 	$.get('//' + location.host + '/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng, function(stops) {
 	
-		for (let i = 0; i < stops.length; i++) {
-			let stop = stops[i];
-			
-			L.marker([stop.lat, stop.lng], {
-				icon: L.icon({
-					iconUrl: 'assets/stop.png',
-					iconSize: [24, 24],
-					iconAnchor: [0, 0],
-				})
-			}).addTo(map).on('click', function() {
-				if (updater) return;
+		for (var i = 0; i < stops.length; i++) {
+		
+			(function() {
+				var stop = stops[i];
 				
-				showStop(stop.id, {panMap: false, fadeIn: true});
-				updater = setInterval(function() {
-					showStop(stop.id, {panMap: false, fadeIn: false});
-				}, updateTime);
+				L.marker([stop.lat, stop.lng], {
+					icon: L.icon({
+						iconUrl: 'assets/stop.png',
+						iconSize: [24, 24],
+						iconAnchor: [0, 0],
+					})
+				}).addTo(map).on('click', function() {
+					if (updater) return;
+					
+					showStop(stop.id, {panMap: false, fadeIn: true});
+					updater = setInterval(function() {
+						showStop(stop.id, {panMap: false, fadeIn: false});
+					}, updateTime);
+					
+				});
 				
-			});
+			})();
 			
 		}
 	
