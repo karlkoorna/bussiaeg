@@ -180,9 +180,6 @@ img {
 	cursor: pointer;
 	transition: background-color .3s linear;
 }
-.bookmark:hover {
-	background-color: rgba(0,0,0,.1);
-}
 
 /* Overlay - Help */
 
