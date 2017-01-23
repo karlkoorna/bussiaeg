@@ -206,7 +206,7 @@ function showBookmarks() {
 	$('#bookmarks').html(content);
 	
 	$('.bookmark').each(function() {
-		$(this).hammer().on('swipeleft', function() {
+		$(this).hammer().on('swiperight', function() {
 			deleteBookmark($(this));
 		});
 	});
