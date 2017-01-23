@@ -59,11 +59,13 @@ function showStop(id, settings) {
 		return;
 	}
 	
-	$.get('//' + location.host + '/getstop?id=' + id).done(function(data) {
-		var trips   = data.trips,
+	$.get('//' + location.host + '/getstop?id=' + id).done(function(stop) {
+		hideBookmarks();
+		
+		var trips   = stop.trips,
 			content = '';
 		
-		live = data.live;
+		live = stop.live;
 		
 		for (var i = 0; i < trips.length; i++) {
 			var trip = trips[i];
@@ -71,24 +73,24 @@ function showStop(id, settings) {
 			if (live) {
 				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled, false) + '</div><div class="trip-expected">' + toCountdown(trip.expected, false) + '</div></div>';
 			} else {
-				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled" data-time="' + trip.time + '">' + toCountdown(trip.time, true) + '</div><div class="trip-expected">' + toTime(trip.time) + '</div></div>';
+				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled" stop-time="' + trip.time + '">' + toCountdown(trip.time, true) + '</div><div class="trip-expected">' + toTime(trip.time) + '</div></div>';
 			}
 			
 		}
 		$('#stop-trips').html(content);
 		
 		if (settings.panMap) map.panTo({
-			lat: data.lat,
-			lng: data.lng
+			lat: stop.lat,
+			lng: stop.lng
 		});
 		
 		if (!settings.fadeIn) return;
 		
-		document.title = 'Bussiaeg - ' + data.name + (data.desc ? ' - ' + data.desc : '');
-		history.pushState(null, document.title, '/?stop=' + data.id);
+		document.title = 'Bussiaeg - ' + stop.name + (stop.desc ? ' - ' + stop.desc : '');
+		history.pushState(null, document.title, '/?stop=' + stop.id);
 		
-		$('#stop-name').text(data.name);
-		$('#stop-desc').text(data.desc);
+		$('#stop-name').text(stop.name);
+		$('#stop-desc').text(stop.desc);
 		
 		$('#stop').fadeIn(fadeTime);
 	});
