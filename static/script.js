@@ -101,7 +101,7 @@ function showStops() {
 		if (layer._icon !== undefined) map.removeLayer(layer);
 	});
 	
-	const bounds = map.getBounds();
+	var bounds = map.getBounds();
 	$.get('//' + location.host + '/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng, function(stops) {
 	
 		for (var i = 0; i < stops.length; i++) {
@@ -220,6 +220,16 @@ function hideBookmarks() {
 
 // Initialization
 
+const share = parseInt(getParameter('stop'));
+if (share) if (!isNaN(share)) if (!updater) {
+	
+	showStop(share, {panMap: true, fadeIn: true});
+	updater = setInterval(function() {
+		showStop(share, {panMap: false, fadeIn: false});
+	}, updateTime);
+	
+}
+
 var map = L.map('map', {
 	center: [
 		parseFloat(getParameter('lat')) || 59.388,
@@ -258,16 +268,6 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 navigator.geolocation.watchPosition(function(pos) {
 	coords = pos.coords;
 });
-
-const share = parseInt(getParameter('stop'));
-if (share) if (!isNaN(share)) if (!updater) {
-	
-	showStop(share, {panMap: true, fadeIn: true});
-	updater = setInterval(function() {
-		showStop(share, {panMap: false, fadeIn: false});
-	}, updateTime);
-	
-}
 
 // User Interface (Stops)
 
