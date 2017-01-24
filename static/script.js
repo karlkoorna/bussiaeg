@@ -278,6 +278,9 @@ $('#stop-top').click(function() {
 	
 	$(this).parent().fadeOut(fadeTime);
 	
+	document.title = 'Bussiaeg';
+	history.pushState(null, document.title, '/');
+	
 });
 
 // User Interface (Bookmarks)
