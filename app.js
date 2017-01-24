@@ -183,6 +183,8 @@ function getLiveData(id, cb) {
 			var lines = data.split('\n'),
 				trips = new Array();
 			
+			if (lines[0].indexOf('ERROR') !== -1) return cb(false);
+			
 			lines.shift(); lines.shift();
 			
 			if (lines.length < 1) return cb(false);
