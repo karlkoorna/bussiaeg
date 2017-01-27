@@ -191,7 +191,7 @@ function getLiveData(id, cb) {
 			
 			var i = -1;
 			while (i < lines.length - 2 && i < shownTrips) {i++;
-				var line = lines[i]; 
+				var line = lines[i];
 				
 				trips.push({
 					type:      line.split(',')[0],
