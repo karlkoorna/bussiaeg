@@ -1,2 +1,2 @@
 # Bussiaeg
-Vaata bussi, trolli, trammi ja rongi aegu otse telefonist!
+Vaata bussi-, trolli-, trammi- ja rongiaegu otse telefonist!
