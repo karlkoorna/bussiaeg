@@ -19,22 +19,18 @@ function toHMS(seconds) {
 	var hours   = Math.floor(seconds / 3600),
 		minutes = Math.floor((seconds % 3600) / 60);
 	seconds = seconds - (minutes * 60) - (hours * 3600);
-	return {
-		h: ('0' + hours).slice(-2),
-		m: ('0' + minutes).slice(-2),
-		s: ('0' + seconds).slice(-2)
-	};
+	return { h: hours, m: minutes, s: seconds };
 }
 
 function toCountdown(seconds, showHours) {
 	seconds = seconds - getSecondsSinceMidnight();
 	var time = toHMS(Math.abs(seconds));
-	return (seconds < 0 ? '-' : '') + (showHours ? time.h + 'h ': '') + time.m + 'm ' + (showHours ? '' : time.s + 's');
+	return (seconds < 0 ? '-' : '') + (showHours && time.h !== 0 ? time.h.toString() + 'h ' : '') + (time.m !== 0 ? time.m.toString() + 'm ' : '') + time.s.toString() + 's';
 }
 
 function toTime(seconds) {
 	var time = toHMS(seconds);
-	return time.h + ':' + time.m;
+	return ('0' + time.h).slice(-2) + ':' + ('0' + time.m).slice(-2);
 }
 
 function showStop(id, settings) {
