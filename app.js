@@ -245,6 +245,12 @@ function getStaticData(id) {
 
 // Initialization
 
+setInterval(() => {
+	if (getSecondsSinceMidnight() > 10800 && getSecondsSinceMidnight() < 18000) {
+		console.log('Redownloading GTFS data: ' + new Date()); process.exit();
+	}
+}, 1000 * 60 * 60 * 2);
+
 app.use(express.static(__dirname + '/static'));
 
 console.log('Loading overrides...');

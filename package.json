@@ -25,5 +25,9 @@
     "express": "^4.14.0",
     "request": "^2.75.0"
   },
-  "scripts": {}
+  "scripts": {
+    "start": "forever app.js -f",
+    "stop": "forever stop app.js",
+    "fstop": "taskkill /im node.exe /f"
+  }
 }
