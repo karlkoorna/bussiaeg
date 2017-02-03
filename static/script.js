@@ -25,7 +25,7 @@ function toHMS(seconds) {
 function toCountdown(seconds, showHours) {
 	seconds = seconds - getSecondsSinceMidnight();
 	var time = toHMS(Math.abs(seconds));
-	return (seconds < 0 ? '-' : '') + (showHours && time.h !== 0 ? time.h.toString() + 'h ' : '') + (time.m !== 0 ? time.m.toString() + 'm ' : '') + time.s.toString() + 's';
+	return (seconds < 0 ? '-' : '') + (showHours && time.h !== 0 ? time.h + 'h ' : '') + (time.m !== 0 ? time.h !== 0 && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (showHours && time.h === 0 && time.m === 0 || !showHours ? (time.m !== 0 ? ('0' + time.s).slice(-2) : time.s) + 's' : '');
 }
 
 function toTime(seconds) {
