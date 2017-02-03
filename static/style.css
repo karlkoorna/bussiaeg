@@ -42,7 +42,7 @@ img {
 #stop-top {
 	padding: 8px 12px;
 	background-color: deepskyblue;
-	border-bottom: 3px solid rgba(0,0,0,.1);
+	border-bottom: 4px solid rgba(0,0,0,.1);
 	cursor: pointer;
 }
 #stop-name {
@@ -51,7 +51,7 @@ img {
 	font-weight: bold;
 }
 #stop-desc {
-	color: #eee;
+	color: #f2f2f2;
 	font-size: 24px;
 	font-weight: bold;
 }
@@ -159,7 +159,7 @@ img {
 	width: 100%;
 	padding: 16px;
 	background-color: deepskyblue;
-	border-bottom: 2px solid steelblue;
+	border-bottom: 3px solid steelblue;
 	color: white;
 	font-size: 24px;
 	font-weight: bold;
