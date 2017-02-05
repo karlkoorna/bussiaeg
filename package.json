@@ -13,12 +13,9 @@
     "train",
     "rong"
   ],
+  "repository": "https://github.com/karlkoorna/Bussiaeg",
   "version": "1.4.2",
   "main": "app.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/karlkoorna/Bussiaeg"
-  },
   "dependencies": {
     "adm-zip": "^0.4.7",
     "csv-parser": "^1.11.0",
