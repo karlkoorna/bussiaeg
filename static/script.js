@@ -22,10 +22,10 @@ function toHMS(seconds) {
 	return { h: hours, m: minutes, s: seconds };
 }
 
-function toCountdown(seconds, showHours) {
+function toCountdown(seconds) {
 	seconds = seconds - getSecondsSinceMidnight();
 	var time = toHMS(Math.abs(seconds));
-	return (seconds < 0 ? '-' : '') + (showHours && time.h !== 0 ? time.h + 'h ' : '') + (time.m !== 0 ? time.h !== 0 && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (showHours && time.h === 0 && time.m === 0 || !showHours ? (time.m !== 0 ? ('0' + time.s).slice(-2) : time.s) + 's' : '');
+	return (seconds < 0 ? '-' : '') + (!live && time.h !== 0 ? time.h + 'h ' : '') + (time.m !== 0 ? time.h !== 0 && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (!live && time.h === 0 && time.m === 0 || live ? (time.m !== 0 ? ('0' + time.s).slice(-2) : time.s) + 's' : '');
 }
 
 function toTime(seconds) {
@@ -45,9 +45,7 @@ function showStop(id, settings) {
 		return;
 	}
 	
-	$.get('//' + location.host + '/getstop?id=' + id).done(function(stop) {
-		hideBookmarks();
-		
+	$.get('//' + location.host + '/getstop?id=' + id).done(function(stop) {hideBookmarks();
 		var trips   = stop.trips,
 			content = '';
 		
