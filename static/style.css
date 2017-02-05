@@ -112,6 +112,7 @@ img {
 }
 #btn-locate {
 	z-index: 2;
+	display: none;
 	right: 16px;
 	bottom: 16px;
 }

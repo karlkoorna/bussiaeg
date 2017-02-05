@@ -7,7 +7,7 @@ const fadeTime = 250,
 	  zoomLevel = 16,
 	  flyTime = 1;
 
-// Functions (Stops)
+// Functions (Time)
 
 function getParameter(name) {
 	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -34,6 +34,8 @@ function toTime(seconds) {
 	var time = toHMS(seconds);
 	return ('0' + time.h).slice(-2) + ':' + ('0' + time.m).slice(-2);
 }
+
+// Functions (Stops)
 
 function showStop(id, settings) {
 	if (updater && !live) {
@@ -252,11 +254,17 @@ map.on('moveend', function() {
 // Initialization (GPS)
 
 navigator.geolocation.getCurrentPosition(function(pos) {
-	if (pos.coords.accuracy < 250) map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
-});
+	if (pos.coords.accuracy > 100) return;
+	
+	map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
+	
+	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
+}, (err) => {}, {timeout: 2500});
 
-navigator.geolocation.watchPosition(function(pos) {
-	coords = pos.coords;
+navigator.geolocation.watchPosition(function(pos) {console.log(pos.coords.accuracy);
+	if (pos.coords.accuracy > 100) return;
+	
+	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
 });
 
 // User Interface (Stops)
