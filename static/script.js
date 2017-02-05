@@ -261,7 +261,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
 }, (err) => {}, {timeout: 2500});
 
-navigator.geolocation.watchPosition(function(pos) {console.log(pos.coords.accuracy);
+navigator.geolocation.watchPosition(function(pos) {
 	if (pos.coords.accuracy > 100) return;
 	
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
