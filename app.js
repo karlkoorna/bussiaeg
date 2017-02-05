@@ -282,7 +282,7 @@ fs.readFile('overrides.txt', 'utf8', (err, data) => {
 });
 
 console.log('Downloading data...');
-request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data) => {
+request({ url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null }, (err, res, data) => {
 	
 	if (err) {
 		console.log('Failed to download data!');
