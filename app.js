@@ -218,6 +218,7 @@ function getStaticData(id) {
 	var times = getTimesForStop(id),
 		trips = new Array();
 	
+	var last = {};
 	for (var i = 0; i < times.length; i++) {
 		var time = times[i],
 			trip = getTripForTime(time);
@@ -227,6 +228,13 @@ function getStaticData(id) {
 		if (trips.length >= shownTrips) break;
 		
 		var route = getRouteForTrip(trip);
+		
+		try {
+			if (time.time === last.time && route.number === last.number) continue;
+		} catch(e) {}
+		
+		last.time = time.time;
+		last.number = route.number;
 		
 		trips.push({
 			type:   route.color === 'E6FA32' || route.color === 'F55ADC' || route.color === '00933C' ? 'coach' : route.type === 3 ? 'bus' : route.type === 800 ? 'trol' : route.type === 0 ? 'tram' : route.type === 2 ? 'train' : 'error',
