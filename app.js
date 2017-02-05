@@ -353,8 +353,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/getstops', (req, res) => {
-	var lat_min = req.query.lat_min, lat_max = req.query.lat_max,
-		lng_min = req.query.lng_min, lng_max = req.query.lng_max;
+	var lat_min = parseFloat(req.query.lat_min), parseFloat(lat_max = req.query.lat_max),
+		lng_min = parseFloat(req.query.lng_min), parseFloat(lng_max = req.query.lng_max);
 	
 	if (isNaN(lat_min) || isNaN(lat_max) || isNaN(lng_min) || isNaN(lng_max)) {
 		console.log('Got (400)');
@@ -380,7 +380,7 @@ app.get('/getstops', (req, res) => {
 });
 
 app.get('/getstop', (req, res) => {
-	var id = req.query.id;
+	var id = parseInt(req.query.id);
 	
 	if (isNaN(id)) {
 		console.log('Got (400)');
