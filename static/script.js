@@ -19,7 +19,7 @@ function toHMS(seconds) {
 	var hours   = Math.floor(seconds / 3600),
 		minutes = Math.floor((seconds % 3600) / 60);
 	seconds = seconds - (minutes * 60) - (hours * 3600);
-	return { h: hours, m: minutes, s: seconds };
+	return {h: hours, m: minutes, s: seconds};
 }
 
 function toCountdown(seconds) {
@@ -98,8 +98,7 @@ function showStops() {
 				L.marker([stop.lat, stop.lng], {
 					icon: L.icon({
 						iconUrl: 'assets/stop.png',
-						iconSize: [24, 24],
-						iconAnchor: [0, 0],
+						iconSize: [24, 24]
 					})
 				}).addTo(map).on('click', function() {
 					if (updater) return;
@@ -128,15 +127,15 @@ function addBookmark() {
 		title: 'Sisesta nimi',
 		confirmButtonColor: 'deepskyblue',
 		confirmButtonText: 'Lisa',
-		showCancelButton: true,
 		cancelButtonColor: '#fa5858',
 		cancelButtonText: 'Tagasi',
+		showCancelButton: true,
 		inputPlaceholder: 'Minu kodu',
 		animation: 'slide-from-top'
 	}, function(input) {
 		var bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
 		
-		if (input !== false && $.trim(input) != '') bookmarks.push({
+		if (input !== false && input.trim() !== '') bookmarks.push({
 			name: input,
 			lat:  map.getCenter().lat,
 			lng:  map.getCenter().lng,
@@ -166,10 +165,9 @@ function deleteBookmark(el) {
 		for (var i = 0; i < bookmarks.length; i++) {
 			var bookmark = bookmarks[i];
 			
-			if (bookmark.lat != el.data('lat') || bookmark.lng != el.data('lng')) continue;
+			if (bookmark.lat !== el.data('lat') || bookmark.lng !== el.data('lng')) continue;
 			
-			bookmarks.splice(i, 1);
-			el.remove();
+			bookmarks.splice(i, 1); el.remove();
 			
 			break;
 		}
@@ -204,7 +202,7 @@ function hideBookmarks() {
 	$('#bookmarks').animate({left: '-240px'}, fadeTime);
 }
 
-// Initialization
+// Initialization (Share)
 
 const share = parseInt(getParameter('stop'));
 if (share) if (!isNaN(share)) if (!updater) {
@@ -215,6 +213,8 @@ if (share) if (!isNaN(share)) if (!updater) {
 	}, updateTime);
 	
 }
+
+// Initialization (Map)
 
 var map = L.map('map', {
 	center: [
@@ -246,6 +246,8 @@ showStops();
 map.on('moveend', function() {
 	showStops();
 });
+
+// Initialization (GPS)
 
 navigator.geolocation.getCurrentPosition(function(pos) {
 	if (pos.coords.accuracy < 250) map.panTo([pos.coords.latitude, pos.coords.longitude]);
