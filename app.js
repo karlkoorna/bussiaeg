@@ -117,7 +117,7 @@ function processRoutes(cb) {
 		});
 }
 
-// Functions (Endpoints)
+// Functions (Stops)
 
 function getStopById(id) {
 	for (var i = 0; i < _stops.length; i++) {
