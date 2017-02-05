@@ -37,19 +37,9 @@ function showStop(id, settings) {
 	if (updater && !live) {
 		
 		$('.trip-scheduled').each(function() {
-			$(this).text(toCountdown($(this).attr('data-time'), true));
+			$(this).text(toCountdown($(this).attr('data-time')));
 			
-			if ($(this).attr('data-time') > getSecondsSinceMidnight()) return;
-				
-			$(this).parent().animate({left: window.innerWidth + 'px'}, 1000, function() {
-				$(this).remove();
-				
-				$('.trip').each(function() {
-					$(this).animate({top: (parseInt($(this).css('top')) - 80) + 'px'}, 500);
-				});
-				
-			});
-			
+			if ($(this).attr('data-time') < getSecondsSinceMidnight()) $(this).parent().remove();
 		});
 		
 		return;
@@ -67,9 +57,9 @@ function showStop(id, settings) {
 			var trip = trips[i];
 			
 			if (live) {
-				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled, false) + '</div><div class="trip-expected">' + toCountdown(trip.expected, false) + '</div></div>';
+				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + toCountdown(trip.expected) + '</div></div>';
 			} else {
-				content += '<div class="trip" style="top:' + i * 80 + 'px;"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled" data-time="' + trip.time + '">' + toCountdown(trip.time, true) + '</div><div class="trip-expected">' + toTime(trip.time) + '</div></div>';
+				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled" data-time="' + trip.time + '">' + toCountdown(trip.time) + '</div><div class="trip-expected">' + toTime(trip.time) + '</div></div>';
 			}
 			
 		}
