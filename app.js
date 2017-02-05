@@ -11,9 +11,22 @@ const port = {http: 80, https: 443},
 var _overrides = new Array(),
 	_stops     = new Array(),
 	_times     = new Array(),
-	_days      = new Array(),
 	_trips     = new Array(),
+	_days      = new Array(),
 	_routes    = new Array();
+
+// Functions (Time)
+
+function toSeconds(time) {
+	var hours   = time.substring(0, 2),
+		minutes = time.substring(3, 5),
+		seconds = time.substring(6, 8);
+	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60) + parseInt(seconds);
+}
+
+function getSecondsSinceMidnight() {
+	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
+}
 
 // Functions (Initialization)
 
@@ -106,17 +119,6 @@ function processRoutes(cb) {
 
 // Functions (Endpoints)
 
-function toSeconds(time) {
-	var hours   = time.substring(0, 2),
-		minutes = time.substring(3, 5),
-		seconds = time.substring(6, 8);
-	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60) + parseInt(seconds);
-}
-
-function getSecondsSinceMidnight() {
-	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
-}
-
 function getStopById(id) {
 	for (var i = 0; i < _stops.length; i++) {
 		var stop = _stops[i];
@@ -130,7 +132,7 @@ function getOverrideForStop(id) {
 	for (var i = 0; i < _overrides.length; i++) {
 		var override = _overrides[i];
 		
-		if (override.id === id) return override.desc.replace(/[\\$'"]/g, '\\$&');
+		if (override.id === id) return override.desc;
 	}
 	return null;
 }
@@ -175,43 +177,39 @@ function getRouteForTrip(trip) {
 }
 
 function getLiveData(id, cb) {
-	try {
+	
+	request('http://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=' + id + '&trip=' + ~~(new Date().getTime() / 100), (err, _res, data) => {
+		if (err) return cb(false);
 		
-		request('http://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=' + id + '&trip=' + ~~(new Date().getTime() / 100), (err, _res, data) => {
-			if (err) return cb(false);
+		var lines = data.split('\n'),
+			trips = new Array();
+		
+		if (lines[0].indexOf('ERROR') !== -1) return cb(false);
+		
+		lines.shift(); lines.shift();
+		
+		if (lines.length < 1) return cb(false);
+		
+		var i = -1;
+		while (i < lines.length - 2 && i < shownTrips) {i++;
+			var line = lines[i];
 			
-			var lines = data.split('\n'),
-				trips = new Array();
-			
-			if (lines[0].indexOf('ERROR') !== -1) return cb(false);
-			
-			lines.shift(); lines.shift();
-			
-			if (lines.length < 1) return cb(false);
-			
-			var i = -1;
-			while (i < lines.length - 2 && i < shownTrips) {i++;
-				var line = lines[i];
-				
-				trips.push({
-					type:      line.split(',')[0],
-					number:    line.split(',')[1],
-					scheduled: parseInt(line.split(',')[3]),
-					expected:  parseInt(line.split(',')[2])
-				});
-				
-			}
-			
-			return cb(true, {
-				trips: trips,
-				live:  true
+			trips.push({
+				type:      line.split(',')[0],
+				number:    line.split(',')[1],
+				scheduled: parseInt(line.split(',')[3]),
+				expected:  parseInt(line.split(',')[2])
 			});
 			
+		}
+		
+		return cb(true, {
+			trips: trips,
+			live:  true
 		});
 		
-	} catch(e) {
-		return cb(false);
-	}
+	});
+	
 }
 
 function getStaticData(id) {
@@ -237,7 +235,7 @@ function getStaticData(id) {
 		last.number = route.number;
 		
 		trips.push({
-			type:   route.color === 'E6FA32' || route.color === 'F55ADC' || route.color === '00933C' ? 'coach' : route.type === 3 ? 'bus' : route.type === 800 ? 'trol' : route.type === 0 ? 'tram' : route.type === 2 ? 'train' : 'error',
+			type:   route.color === 'E6FA32' || route.color === 'F55ADC' || route.color === '00933C' ? 'coach' : route.type === 3 ? 'bus' : route.type === 800 ? 'trol' : route.type === 0 ? 'tram' : route.type === 2 ? 'train' : '',
 			number: route.number,
 			time:   time.time
 		});
@@ -359,8 +357,8 @@ app.get('/getstops', (req, res) => {
 		lng_min = req.query.lng_min, lng_max = req.query.lng_max;
 	
 	if (isNaN(lat_min) || isNaN(lat_max) || isNaN(lng_min) || isNaN(lng_max)) {
-		console.log('Got (500)');
-		return res.status(500).send();
+		console.log('Got (400)');
+		return res.status(400).send();
 	}
 	
 	var stops = new Array();
@@ -382,11 +380,11 @@ app.get('/getstops', (req, res) => {
 });
 
 app.get('/getstop', (req, res) => {
-	var id = parseInt(req.query.id);
+	var id = req.query.id;
 	
 	if (isNaN(id)) {
-		console.log('Got (500)');
-		return res.status(500).send();
+		console.log('Got (400)');
+		return res.status(400).send();
 	}
 	
 	var stop = getStopById(id);
