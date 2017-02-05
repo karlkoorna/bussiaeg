@@ -3,7 +3,9 @@
 var coords, map, updater, live;
 
 const fadeTime = 250,
-	  updateTime = 2000;
+	  updateTime = 2000,
+	  zoomLevel = 16,
+	  flyTime = 1;
 
 // Functions (Stops)
 
@@ -63,10 +65,10 @@ function showStop(id, settings) {
 		}
 		$('#stop-trips').html(content);
 		
-		if (settings.panMap) map.panTo({
+		if (settings.panMap) map.flyTo({
 			lat: stop.lat,
 			lng: stop.lng
-		});
+		}, zoomLevel, {duration: flyTime});
 		
 		if (!settings.fadeIn) return;
 		
@@ -221,7 +223,7 @@ var map = L.map('map', {
 		parseFloat(getParameter('lat')) || 59.388,
 		parseFloat(getParameter('lng')) || 24.685
 	],
-	zoom: 16,
+	zoom: zoomLevel,
 	minZoom: 10,
 	maxZoom: 18,
 	maxBounds: [[59.874204, 21.396935], [57.290822, 28.838625]],
@@ -250,7 +252,7 @@ map.on('moveend', function() {
 // Initialization (GPS)
 
 navigator.geolocation.getCurrentPosition(function(pos) {
-	if (pos.coords.accuracy < 250) map.panTo([pos.coords.latitude, pos.coords.longitude]);
+	if (pos.coords.accuracy < 250) map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
 });
 
 navigator.geolocation.watchPosition(function(pos) {
@@ -292,9 +294,7 @@ $('#bookmarks').on('click', '#bookmarks-add', function() {
 $('#bookmarks').on('click', '.bookmark', function() {
 	hideBookmarks();
 	
-	map.panTo([$(this).data('lat'), $(this).data('lng')]);
-	map.setZoom($(this).data('zoom'));
-	
+	map.flyTo([$(this).data('lat'), $(this).data('lng')], $(this).data('zoom'), {duration: flyTime});
 });
 
 // User Interface (Help)
@@ -318,7 +318,7 @@ $('#help').click(function() {
 
 $('#btn-locate').click(function() {
 	$(this).addClass('bounce');
-	if (coords) map.panTo([coords.latitude, coords.longitude]);
+	if (coords) map.flyTo([coords.latitude, coords.longitude], zoomLevel, {duration: flyTime});
 });
 
 $('#btn-locate').on('animationend', function() {
