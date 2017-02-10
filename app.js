@@ -268,7 +268,6 @@ fs.readFile('overrides.txt', 'utf8', (err, data) => {
 	}
 	
 	var lines = data.split('\n');
-	
 	for (var i = 0; i < lines.length; i++) {
 		var line = lines[i];
 		
