@@ -8,12 +8,15 @@ const express = require('express'), app = express(),
 const port = {http: 80, https: 443},
 	  shownTrips = 15;
 
-var _overrides = new Array(),
-	_stops     = new Array(),
-	_times     = new Array(),
-	_trips     = new Array(),
-	_days      = new Array(),
-	_routes    = new Array();
+var _overrides = {
+		descs: new Array(),
+		types: new Array()
+	},
+	_stops  = new Array(),
+	_times  = new Array(),
+	_trips  = new Array(),
+	_days   = new Array(),
+	_routes = new Array();
 
 // Functions (Time)
 
@@ -39,7 +42,7 @@ function processStops(cb) {
 				name: line.stop_name,
 				desc: line.stop_desc,
 				lat:  parseFloat(line.stop_lat),
-				lng:  parseFloat(line.stop_lon),
+				lng:  parseFloat(line.stop_lon)
 			});
 			
 		}).on('end', () => {
@@ -129,12 +132,21 @@ function getStopById(id) {
 }
 
 function getOverrideForStop(id) {
-	for (var i = 0; i < _overrides.length; i++) {
-		var override = _overrides[i];
+	var data = {};
+	
+	for (var i = 0; i < _overrides.descs.length; i++) {
+		var override = _overrides.descs[i];
 		
-		if (override.id === id) return override.desc;
+		if (override.id === id) data.desc = override.desc;
 	}
-	return null;
+	
+	for (var j = 0; j < _overrides.types.length; j++) {
+		var override = _overrides.types[j];
+		
+		if (override.id === id) data.type = override.type;
+	}
+	
+	return data;
 }
 
 function getTimesForStop(id) {
@@ -260,7 +272,7 @@ setInterval(() => {
 app.use(express.static(__dirname + '/static'));
 
 console.log('Loading overrides...');
-fs.readFile('overrides.txt', 'utf8', (err, data) => {
+fs.readFile('overrides/descs.txt', 'utf8', (err, data) => {
 	
 	if (err) {
 		console.log('Failed to load overrides!');
@@ -271,9 +283,32 @@ fs.readFile('overrides.txt', 'utf8', (err, data) => {
 	for (var i = 0; i < lines.length; i++) {
 		var line = lines[i];
 		
-		_overrides[i] = {
+		if (!line.split('¤')[1]) continue;
+		
+		_overrides.descs[i] = {
 			id:   parseInt(line.split('¤')[0]),
-			desc: line.split('¤')[1],
+			desc: line.split('¤')[1]
+		};
+		
+	}
+	
+});
+fs.readFile('overrides/types.txt', 'utf8', (err, data) => {
+	
+	if (err) {
+		console.log('Failed to load overrides!');
+		process.exit();
+	}
+	
+	var lines = data.split('\n');
+	for (var i = 0; i < lines.length; i++) {
+		var line = lines[i];
+		
+		if (!line.split('¤')[1]) continue;
+		
+		_overrides.types[i] = {
+			id:   parseInt(line.split('¤')[0]),
+			type: line.split('¤')[1]
 		};
 		
 	}
@@ -367,11 +402,14 @@ app.get('/getstops', (req, res) => {
 		if (stop.lat > lat_min || stop.lat < lat_max) continue;
 		if (stop.lng > lng_min || stop.lng < lng_max) continue;
 		
+		var override = getOverrideForStop(stop.id);
+		stop.type = override.type ? override.type : 'bus';
+		
 		stops.push({
 			lat:  stop.lat,
 			lng:  stop.lng,
 			id:   stop.id,
-			type: 'stop'
+			type: stop.type
 		});
 		
 	}
@@ -395,7 +433,7 @@ app.get('/getstop', (req, res) => {
 	}
 	
 	var override = getOverrideForStop(stop.id);
-	stop.desc = override ? override : stop.desc;
+	stop.desc = override.desc ? override.desc : stop.desc;
 	
 	getLiveData(id, (live, data) => {
 		if (live) return res.json(Object.assign(stop, data));
