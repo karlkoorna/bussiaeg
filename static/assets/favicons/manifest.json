@@ -1,4 +1,5 @@
 {
+	"short_name": "Bussiaeg",
     "name": "Bussiaeg",
     "icons": [
         {
@@ -14,5 +15,6 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
+	"start_url": "/",
     "display": "standalone"
 }
