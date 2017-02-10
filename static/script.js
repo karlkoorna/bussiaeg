@@ -101,7 +101,7 @@ function showStops() {
 				
 				L.marker([stop.lat, stop.lng], {
 					icon: L.icon({
-						iconUrl: 'assets/stop.png',
+						iconUrl: 'assets/' + stop.type + '.png',
 						iconSize: [24, 24]
 					})
 				}).addTo(map).on('click', function() {
