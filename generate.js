@@ -164,7 +164,7 @@ function generateTypeOverrides() {
 	
 	process.stdout.write('Generating file... 100%   '); console.log(''); 
 	try {
-		fs.writeFile('./overrides/types.txt', content.substr(1), 'utf8'); console.log('File created!');
+		fs.writeFileSync('./overrides/types.txt', content.substr(1), 'utf8'); console.log('File created!');
 	} catch(e) {
 		console.log('Failed to create file!');
 	}
