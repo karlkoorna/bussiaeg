@@ -21,9 +21,9 @@ var _overrides = {
 // Functions (Time)
 
 function toSeconds(time) {
-	var hours   = time.substring(0, 2),
-		minutes = time.substring(3, 5),
-		seconds = time.substring(6, 8);
+	var hours   = time.substr(0, 2),
+		minutes = time.substr(3, 5),
+		seconds = time.substr(6, 8);
 	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60) + parseInt(seconds);
 }
 
