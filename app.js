@@ -194,7 +194,7 @@ function generateTypeOverrides() {
 			
 		}
 		
-		var type = types.indexOf(800) !== -1 ? 'trol' : types.indexOf(0) !== -1 ? 'tram' : types.indexOf(2) !== -1 ? 'train' : types.indexOf(4) !== -1 ? 'port' : null;
+		var type = types.indexOf(800) !== -1 ? 'trol' : types.indexOf(0) !== -1 ? 'tram' : types.indexOf(2) !== -1 ? 'train' : types.indexOf(4) !== -1 ? 'ship' : types.indexOf(3) === -1 ? 'invalid' : null;
 		
 		if (!type) continue;
 		
@@ -338,7 +338,7 @@ function getStaticData(id) {
 		last.number = route.number;
 		
 		trips.push({
-			type:   route.color === 'E6FA32' || route.color === 'F55ADC' || route.color === '00933C' ? 'coach' : route.type === 3 ? 'bus' : route.type === 800 ? 'trol' : route.type === 0 ? 'tram' : route.type === 2 ? 'train' : '',
+			type:   route.color === 'E6FA32' || route.color === 'F55ADC' || route.color === '00933C' ? 'coach' : route.type === 3 ? 'bus' : route.type === 800 ? 'trol' : route.type === 0 ? 'tram' : route.type === 2 ? 'train' : 'ship',
 			number: route.number,
 			time:   time.time
 		});
