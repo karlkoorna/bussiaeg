@@ -120,6 +120,97 @@ function processRoutes(cb) {
 		});
 }
 
+function processOverrides() {console.log('Loading overrides...');
+	
+	fs.readFile('overrides/descs.txt', 'utf8', (err, data) => {
+		
+		if (err) {
+			console.log('Failed to load overrides!');
+			process.exit();
+		}
+		
+		var lines = data.split('\n');
+		for (var i = 0; i < lines.length; i++) {
+			var line = lines[i];
+			
+			if (!line.split('¤')[1]) continue;
+			
+			_overrides.descs[i] = {
+				id:   parseInt(line.split('¤')[0]),
+				desc: line.split('¤')[1]
+			};
+			
+		}
+		
+	});
+	
+	fs.readFile('overrides/types.txt', 'utf8', (err, data) => {
+		
+		if (err) {
+			console.log('Failed to load overrides!');
+			process.exit();
+		}
+		
+		var lines = data.split('\n');
+		for (var i = 0; i < lines.length; i++) {
+			var line = lines[i];
+			
+			if (!line.split('¤')[1]) continue;
+			
+			_overrides.types[i] = {
+				id:   parseInt(line.split('¤')[0]),
+				type: line.split('¤')[1]
+			};
+			
+		}
+		
+	});
+	
+}
+
+// Functions (Generators)
+
+function generateTypeOverrides() {
+	var content = '';
+	
+	for (var i = 0; i < _stops.length; i++) {
+		var stop = _stops[i];
+		
+		var times = getTimesForStop(stop.id),
+			types = new Array();
+		
+		for (var j = 0; j < times.length; j++) {
+			var time = times[j];
+			
+			var trip = null,
+				route = null;
+			
+			try {
+				trip = getTripForTime(time);
+				route = getRouteForTrip(trip);
+				
+				types.push(route.type);
+			} catch(e) {}
+			
+		}
+		
+		var type = types.indexOf(800) !== -1 ? 'trol' : types.indexOf(0) !== -1 ? 'tram' : types.indexOf(2) !== -1 ? 'train' : types.indexOf(4) !== -1 ? 'port' : null;
+		
+		if (!type) continue;
+		
+		process.stdout.write('Generating type overrides... ' + parseFloat((i * 100) / _stops.length).toFixed(2) + '%\r');
+		content += '\n' + stop.id + '\u00A4' + type;
+	}
+	
+	process.stdout.write('Generating type overrides...         '); console.log(''); 
+	try {
+		fs.writeFileSync('./overrides/types.txt', content.substr(1), 'utf8');
+	} catch(e) {
+		console.log('Failed to create file!'); process.exit();
+	}
+	
+}
+
 // Functions (Stops)
 
 function getStopById(id) {
@@ -271,51 +362,7 @@ setInterval(() => {
 
 app.use(express.static(__dirname + '/static'));
 
-console.log('Loading overrides...');
-fs.readFile('overrides/descs.txt', 'utf8', (err, data) => {
-	
-	if (err) {
-		console.log('Failed to load overrides!');
-		process.exit();
-	}
-	
-	var lines = data.split('\n');
-	for (var i = 0; i < lines.length; i++) {
-		var line = lines[i];
-		
-		if (!line.split('¤')[1]) continue;
-		
-		_overrides.descs[i] = {
-			id:   parseInt(line.split('¤')[0]),
-			desc: line.split('¤')[1]
-		};
-		
-	}
-	
-});
-fs.readFile('overrides/types.txt', 'utf8', (err, data) => {
-	
-	if (err) {
-		console.log('Failed to load overrides!');
-		process.exit();
-	}
-	
-	var lines = data.split('\n');
-	for (var i = 0; i < lines.length; i++) {
-		var line = lines[i];
-		
-		if (!line.split('¤')[1]) continue;
-		
-		_overrides.types[i] = {
-			id:   parseInt(line.split('¤')[0]),
-			type: line.split('¤')[1]
-		};
-		
-	}
-	
-});
-
-console.log('Downloading data...');
+console.log('Downloading GTFS data...');
 request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data) => {
 	
 	if (err) {
@@ -323,7 +370,7 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 		process.exit();
 	}
 	
-	console.log('Extracting data...');
+	console.log('Extracting GTFS data...');
 	try {
 		
 		var zip = new require('adm-zip')(new Buffer(data));
@@ -339,7 +386,7 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 		process.exit();
 	}
 	
-	console.log('Preparing database...');
+	console.log('Loading GTFS data...');
 	try {
 		
 		processStops(() => {
@@ -347,6 +394,9 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 				processTrips(() => {
 					processDays(() => {
 						processRoutes(() => {
+							if (!fs.existsSync('overrides/types.txt')) generateTypeOverrides();
+							
+							processOverrides();
 							
 							require('http').createServer(app).listen(port.http, (err) => {
 								console.log('HTTP listening on ' + port.http);
@@ -374,7 +424,7 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 		});
 		
 	} catch(e) {
-		console.log('Failed to prepare database!');
+		console.log('Failed to load data!');
 		process.exit();
 	}
 	
