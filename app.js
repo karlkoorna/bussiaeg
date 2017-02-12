@@ -455,6 +455,8 @@ app.get('/getstops', (req, res) => {
 		var override = getOverrideForStop(stop.id);
 		stop.type = override.type ? override.type : 'bus';
 		
+		if (stop.type === 'invalid') continue;
+		
 		stops.push({
 			lat:  stop.lat,
 			lng:  stop.lng,

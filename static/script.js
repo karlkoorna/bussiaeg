@@ -87,9 +87,11 @@ function showStop(id, settings) {
 
 function showStops() {
 	
-	if (map.getZoom() <= 15) return map.eachLayer(function(layer) { 
+	map.eachLayer(function(layer) { 
 		if (layer._icon !== undefined) map.removeLayer(layer);
 	});
+	
+	if (map.getZoom() <= 15) return;
 	
 	var bounds = map.getBounds();
 	$.get('//' + location.host + '/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng, function(stops) {
