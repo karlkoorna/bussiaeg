@@ -259,7 +259,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 	map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
 	
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
-}, (err) => {}, {timeout: 2500});
+}, function(err) {}, {timeout: 2500});
 
 navigator.geolocation.watchPosition(function(pos) {
 	if (pos.coords.accuracy > 100) return;
