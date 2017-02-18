@@ -109,10 +109,12 @@ function processRoutes(cb) {
 		.on('data', (line) => {
 			
 			_routes.push({
-				id:      line.route_id,
-				type:    parseInt(line.route_type),
-				number:  line.route_short_name,
-				color:   line.route_color
+				id:     line.route_id,
+				type:   parseInt(line.route_type),
+				short_name: line.route_short_name,
+				long_name:  line.route_long_name,
+				color: line.route_color,
+				owner: line.competent_authority === 'Pärnu LV' ?  'parnu' : line.competent_authority === 'Tartu LV' || line.competent_authority === 'Tartu MV' ? 'tartu' : 'other'
 			});
 			
 		}).on('end', () => {
@@ -331,16 +333,17 @@ function getStaticData(id) {
 		var route = getRouteForTrip(trip);
 		
 		try {
-			if (time.time === last.time && route.number === last.number) continue;
+			if (time.time === last.time && route.short_name === last.short_name) continue;
 		} catch(e) {}
 		
 		last.time = time.time;
-		last.number = route.number;
+		last.short_name = route.short_name;
 		
 		trips.push({
 			type:   route.color === 'E6FA32' || route.color === 'F55ADC' || route.color === '00933C' ? 'coach' : route.type === 3 ? 'bus' : route.type === 800 ? 'trol' : route.type === 0 ? 'tram' : route.type === 2 ? 'train' : 'ship',
-			number: route.number,
-			time:   time.time
+			short_name: route.short_name,
+			time:   time.time,
+			owner:  route.owner
 		});
 		
 	}
