@@ -254,7 +254,7 @@ map.on('moveend', function() {
 // Initialization (GPS)
 
 navigator.geolocation.getCurrentPosition(function(pos) {
-	if (pos.coords.accuracy > 100) return;
+	if (pos.coords.accuracy > 1000) return;
 	
 	map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
 	
@@ -262,7 +262,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 }, function(err) {}, {timeout: 2500});
 
 navigator.geolocation.watchPosition(function(pos) {
-	if (pos.coords.accuracy > 100) return;
+	if (pos.coords.accuracy > 1000) return;
 	
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
 });
