@@ -301,7 +301,6 @@ $('#stop-top').click(function() {
 // User Interface (Bookmarks)
 
 map.on('click dragstart', function() {
-	$(this).addClass('bounce');
 	hideBookmarks();
 });
 
