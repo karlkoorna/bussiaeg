@@ -9,8 +9,8 @@ const port = {http: 80, https: 443},
 	  shownTrips = 15;
 
 var _overrides = {
-		descs: new Array(),
-		types: new Array()
+		types: new Array(),
+		descs: new Array()
 	},
 	_stops  = new Array(),
 	_times  = new Array(),
@@ -124,28 +124,6 @@ function processRoutes(cb) {
 
 function processOverrides() {console.log('Loading overrides...');
 	
-	fs.readFile('overrides/descs.txt', 'utf8', (err, data) => {
-		
-		if (err) {
-			console.log('Failed to load overrides!');
-			process.exit();
-		}
-		
-		var lines = data.split('\n');
-		for (var i = 0; i < lines.length; i++) {
-			var line = lines[i];
-			
-			if (!line.split('¤')[1]) continue;
-			
-			_overrides.descs[i] = {
-				id:   parseInt(line.split('¤')[0]),
-				desc: line.split('¤')[1]
-			};
-			
-		}
-		
-	});
-	
 	fs.readFile('overrides/types.txt', 'utf8', (err, data) => {
 		
 		if (err) {
@@ -162,6 +140,28 @@ function processOverrides() {console.log('Loading overrides...');
 			_overrides.types[i] = {
 				id:   parseInt(line.split('¤')[0]),
 				type: line.split('¤')[1]
+			};
+			
+		}
+		
+	});
+	
+	fs.readFile('overrides/descs.txt', 'utf8', (err, data) => {
+		
+		if (err) {
+			console.log('Failed to load overrides!');
+			process.exit();
+		}
+		
+		var lines = data.split('\n');
+		for (var i = 0; i < lines.length; i++) {
+			var line = lines[i];
+			
+			if (!line.split('¤')[1]) continue;
+			
+			_overrides.descs[i] = {
+				id:   parseInt(line.split('¤')[0]),
+				desc: line.split('¤')[1]
 			};
 			
 		}
@@ -398,7 +398,6 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 					processDays(() => {
 						processRoutes(() => {
 							if (!fs.existsSync('overrides/types.txt')) generateTypeOverrides();
-							
 							processOverrides();
 							
 							require('http').createServer(app).listen(port.http, (err) => {
