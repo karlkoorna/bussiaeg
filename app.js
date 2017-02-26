@@ -109,12 +109,11 @@ function processRoutes(cb) {
 		.on('data', (line) => {
 			
 			_routes.push({
-				id:     line.route_id,
-				type:   parseInt(line.route_type),
-				short_name: line.route_short_name,
-				long_name:  line.route_long_name,
-				color: line.route_color,
-				owner: line.competent_authority === 'Pärnu LV' ?  'parnu' : line.competent_authority === 'Tartu LV' || line.competent_authority === 'Tartu MV' ? 'tartu' : 'other'
+				id:    line.route_id,
+				type:  line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type == 3 ? 'bus' : line.route_type == 800 ? 'trol' : line.route_type == 0 ? 'tram' : line.route_type == 2 ? 'train' : 'ship',
+				name:  line.route_short_name,
+				stops: line.route_long_name,
+				owner: line.competent_authority === 'Pärnu LV' ? 'parnu' : line.competent_authority === 'Tartu LV' || line.competent_authority === 'Tartu MV' ? 'tartu' : 'other'
 			});
 			
 		}).on('end', () => {
@@ -300,8 +299,9 @@ function getLiveData(id, cb) {
 			var line = lines[i];
 			
 			trips.push({
-				type:      line.split(',')[0],
-				number:    line.split(',')[1],
+				type:  line.split(',')[0],
+				name:  line.split(',')[1],
+				stops: line.split(',')[4],
 				scheduled: parseInt(line.split(',')[3]),
 				expected:  parseInt(line.split(',')[2])
 			});
@@ -333,17 +333,18 @@ function getStaticData(id) {
 		var route = getRouteForTrip(trip);
 		
 		try {
-			if (time.time === last.time && route.short_name === last.short_name) continue;
+			if (time.time === last.time && route.name === last.name) continue;
 		} catch(e) {}
 		
 		last.time = time.time;
-		last.short_name = route.short_name;
+		last.name = route.name;
 		
 		trips.push({
-			type:   route.color === 'E6FA32' || route.color === 'F55ADC' || route.color === '00933C' ? 'coach' : route.type === 3 ? 'bus' : route.type === 800 ? 'trol' : route.type === 0 ? 'tram' : route.type === 2 ? 'train' : 'ship',
-			short_name: route.short_name,
-			time:   time.time,
-			owner:  route.owner
+			type:  route.type,
+			name:  route.name,
+			stops: route.stops,
+			time:  time.time,
+			owner: route.owner
 		});
 		
 	}
