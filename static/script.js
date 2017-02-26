@@ -1,6 +1,6 @@
 // Declarations
 
-var coords, map, updater, live;
+var coords, map, marker, updater, live;
 
 const fadeTime = 250,
 	  updateTime = 2000,
@@ -87,8 +87,8 @@ function showStop(id, settings) {
 
 function showStops() {
 	
-	if (map.getZoom() <= 15) return map.eachLayer(function(layer) { 
-		if (layer._icon !== undefined) map.removeLayer(layer);
+	if (map.getZoom() <= 15) return map.eachLayer(function(layer) {
+		if (layer._icon !== undefined) if (layer._icon.currentSrc.indexOf('stop') !== -1) map.removeLayer(layer);
 	});
 	
 	var bounds = map.getBounds();
@@ -270,14 +270,24 @@ map.on('moveend', function() {
 // Initialization (GPS)
 
 navigator.geolocation.getCurrentPosition(function(pos) {
-	map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
-	
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
 	
+	map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
 }, function(err) {}, {timeout: 3000});
 
 navigator.geolocation.watchPosition(function(pos) {
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
+	
+	if (marker) return marker.setLatLng([coords.latitude, coords.longitude]);
+	
+	marker = new L.marker([coords.latitude, coords.longitude], {
+		icon: L.icon({
+			iconUrl: 'assets/marker.png',
+			iconSize: [24, 24]
+		})
+	});
+	
+	marker.addTo(map);
 });
 
 // User Interface
