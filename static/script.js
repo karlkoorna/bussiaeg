@@ -254,16 +254,13 @@ map.on('moveend', function() {
 // Initialization (GPS)
 
 navigator.geolocation.getCurrentPosition(function(pos) {
-	if (pos.coords.accuracy > 1000) return;
-	
 	map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
 	
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
-}, function(err) {}, {timeout: 2500});
+	
+}, function(err) {}, {timeout: 3000});
 
 navigator.geolocation.watchPosition(function(pos) {
-	if (pos.coords.accuracy > 1000) return;
-	
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
 });
 
@@ -326,6 +323,7 @@ $('#help').click(function() {
 
 $('#btn-locate').click(function() {
 	$(this).addClass('bounce');
+	
 	if (coords) map.flyTo([coords.latitude, coords.longitude], zoomLevel, {duration: flyTime});
 });
 
