@@ -59,9 +59,9 @@ function showStop(id, settings) {
 			var trip = trips[i];
 			
 			if (live) {
-				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-number">' + trip.number + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + toCountdown(trip.expected) + '</div></div>';
+				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stops + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + toCountdown(trip.expected) + '</div></div>';
 			} else {
-				content += '<div class="trip"><img class="trip-type" src="assets/' + (trip.type === 'bus' ? trip.owner === 'tartu' ? 'bus_red' : trip.owner === 'parnu' ? 'bus_blue' : 'bus' : trip.type) + '.png"><div class="trip-number">' + trip.short_name + '</div><div class="trip-scheduled" data-time="' + trip.time + '">' + toCountdown(trip.time) + '</div><div class="trip-expected">' + toTime(trip.time) + '</div></div>';
+				content += '<div class="trip"><img class="trip-type" src="assets/' + (trip.type === 'bus' ? trip.owner === 'tartu' ? 'bus_red' : trip.owner === 'parnu' ? 'bus_blue' : 'bus' : trip.type) + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stops[trip.stops.length - 1] + '</div><div class="trip-scheduled" data-time="' + trip.time + '">' + toCountdown(trip.time) + '</div><div class="trip-expected">' + toTime(trip.time) + '</div></div>';
 			}
 			
 		}
@@ -242,7 +242,7 @@ var map = L.map('map', {
 		parseFloat(getParameter('lng')) || 24.685
 	],
 	zoom: zoomLevel,
-	minZoom: 10,
+	minZoom: 7,
 	maxZoom: 18,
 	maxBounds: [[59.874204, 21.396935], [57.290822, 28.838625]],
 	attributionControl: false,

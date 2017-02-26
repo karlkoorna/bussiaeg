@@ -75,20 +75,29 @@ img {
 	width: 100%;
 	height: 80px;
 	border-bottom: 1px solid rgba(0,0,0,.1);
-	color: #555;
-	font-size: 36px;
-	line-height: 80px;
+	color: #444;
+	font-size: 32px;
 }
 
-.trip-type, .trip-number {
-	float: left;
+.trip-type, .trip-name, .trip-stop {
+	position: absolute;
 }
 .trip-type {
+	left: -4px;
 	width: 80px;
 	height: 80px;
 }
-.trip-number {
-	font-size: 42px;
+.trip-name, .trip-stop {
+	left: 74px;
+}
+.trip-name {
+	top: 5px;
+	font-size: 38px;
+}
+.trip-stop {
+	bottom: 8px;
+	color: #777;
+	font-size: 20px;
 }
 
 .trip-scheduled, .trip-expected {
@@ -97,13 +106,12 @@ img {
 	text-align: right;
 }
 .trip-scheduled {
-	top: -16px;
+	top: 5px;
 }
 .trip-expected {
-	right: 11px;
-	top: 19px;
+	bottom: 6px;
 	color: #777;
-	font-size: 28px;
+	font-size: 26px;
 }
 
 /* Overlay - Buttons */

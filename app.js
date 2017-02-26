@@ -112,7 +112,7 @@ function processRoutes(cb) {
 				id:    line.route_id,
 				type:  line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type == 3 ? 'bus' : line.route_type == 800 ? 'trol' : line.route_type == 0 ? 'tram' : line.route_type == 2 ? 'train' : 'ship',
 				name:  line.route_short_name,
-				stops: line.route_long_name,
+				stops: line.route_long_name.split('-'),
 				owner: line.competent_authority === 'Pärnu LV' ? 'parnu' : line.competent_authority === 'Tartu LV' || line.competent_authority === 'Tartu MV' ? 'tartu' : 'other'
 			});
 			
