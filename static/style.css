@@ -259,3 +259,9 @@ img {
 	font-size: 14px;
 	color: gold;
 }
+
+#help-version {
+	color: #dedede;
+	font-size: 16px;
+	font-weight: bold;
+}

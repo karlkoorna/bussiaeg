@@ -339,6 +339,10 @@ $('#btn-help').click(function() {
 	
 	hideBookmarks();
 	
+	if (!$('#help-version').text()) $.get('//' + location.host + '/version').done(function(data) {
+		$('#help-version').text('Bussiaeg.ee ' + data);
+	});
+	
 	$('#help').fadeIn(fadeTime, function() {
 		$('#btn-help').removeClass('bounce');
 	});
