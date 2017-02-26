@@ -15,8 +15,16 @@ body {
 	font-family: 'Arial';
 	overflow-x: hidden;
 }
+
 img {
 	-webkit-tap-highlight-color: transparent;
+}
+
+.sa-button-container .cancel {
+	background-color: #fa5858 !important;
+}
+.sa-button-container .confirm {
+	background-color: #00ace6 !important;
 }
 
 .full {
@@ -222,4 +230,24 @@ img {
 	color: deepskyblue;
 	font-size: 20px;
 	font-weight: bold;
+}
+
+#help-donate {
+	display: inline-block;
+	margin-top: 48px;
+	margin-bottom: 24px;
+	padding: 12px 32px;
+	background-color: rgba(255,255,255,.3);
+	color: white;
+	border-radius: 8px;
+	font-weight: 900;
+	line-height: 20px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#help-donate span {
+	font-weight: 600;
+	font-size: 14px;
+	color: gold;
 }

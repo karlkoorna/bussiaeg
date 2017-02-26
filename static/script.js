@@ -129,9 +129,7 @@ function addBookmark() {
 	swal({
 		type: 'input',
 		title: 'Sisesta nimi',
-		confirmButtonColor: 'deepskyblue',
 		confirmButtonText: 'Lisa',
-		cancelButtonColor: '#fa5858',
 		cancelButtonText: 'Tagasi',
 		showCancelButton: true,
 		inputPlaceholder: 'Minu kodu',
@@ -160,7 +158,8 @@ function deleteBookmark(el) {
 		text: el.text(),
 		confirmButtonText: 'Jah',
 		cancelButtonText: 'Ei',
-		showCancelButton: true
+		showCancelButton: true,
+		animation: 'slide-from-bottom'
 	}, function(isConfirm) {
 		if (!isConfirm) return;
 		
@@ -204,6 +203,23 @@ function showBookmarks() {
 
 function hideBookmarks() {
 	$('#bookmarks').animate({left: '-240px'}, fadeTime);
+}
+
+// Initialization (Donation)
+
+localStorage.setItem('visitCount', parseInt(localStorage.getItem('visitCount')) + 1 || 1);
+if (!getParameter('nodonate') && (parseInt(localStorage.getItem('visitCount')) === 10 || !(parseInt(localStorage.getItem('visitCount')) % 50))) {
+	
+	swal({
+		title: 'Tere!',
+		text: 'Oleme märganud, et teile meeldib Bussiaeg.ee.\nKas soovite tegijaid toetada?',
+		confirmButtonText: 'PayPal',
+		cancelButtonText: 'Ei',
+		showCancelButton: true
+	}, function(isConfirm) {
+		if (isConfirm) window.open('https://www.paypal.me/bussiaeg', '_self');
+	});
+	
 }
 
 // Initialization (Share)
@@ -264,6 +280,12 @@ navigator.geolocation.watchPosition(function(pos) {
 	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
 });
 
+// User Interface
+
+$('#btn-bookmarks, #btn-locate').on('animationend', function() {
+	$(this).removeClass('bounce');
+});
+
 // User Interface (Stops)
 
 $('#stop-top').click(function() {
@@ -298,7 +320,6 @@ $('#bookmarks').on('click', '#bookmarks-add', function() {
 
 $('#bookmarks').on('click', '.bookmark', function() {
 	hideBookmarks();
-	
 	map.flyTo([$(this).data('lat'), $(this).data('lng')], $(this).data('zoom'), {duration: flyTime});
 });
 
@@ -325,8 +346,4 @@ $('#btn-locate').click(function() {
 	$(this).addClass('bounce');
 	
 	if (coords) map.flyTo([coords.latitude, coords.longitude], zoomLevel, {duration: flyTime});
-});
-
-$('#btn-locate').on('animationend', function() {
-	$(this).removeClass('bounce');
 });
