@@ -137,7 +137,9 @@ function addBookmark() {
 	}, function(input) {
 		var bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
 		
-		if (input !== false && input.trim() !== '') bookmarks.push({
+		if (input === false) return;
+		
+		if (input.trim() !== '') bookmarks.push({
 			name: input,
 			lat:  map.getCenter().lat,
 			lng:  map.getCenter().lng,
@@ -151,7 +153,7 @@ function addBookmark() {
 	
 }
 
-function deleteBookmark(el) {
+function deleteBookmark(el) {hideBookmarks();
 	
 	swal({
 		title: 'Kustuta?',
@@ -193,7 +195,7 @@ function showBookmarks() {
 	$('#bookmarks').html(content);
 	
 	$('.bookmark').each(function() {
-		$(this).hammer().on('swiperight', function() {
+		$(this).hammer().on('swiperight press', function() {
 			deleteBookmark($(this));
 		});
 	});
