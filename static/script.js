@@ -207,6 +207,10 @@ function hideBookmarks() {
 	$('#bookmarks').animate({left: '-240px'}, fadeTime);
 }
 
+// Initialization (Options)
+
+if (getParameter('hidescroll')) $('body').css('overflow', 'hidden');
+
 // Initialization (Donation)
 
 localStorage.setItem('visitCount', parseInt(localStorage.getItem('visitCount')) + 1 || 1);
