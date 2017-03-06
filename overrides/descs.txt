@@ -30,3 +30,6 @@
 912¤Mustika keskuse poolne
 873¤Magistrali poolne
 870¤Pannkoogi putka poolne
+1216¤Soo tänaval
+1217¤Tööstuse tänaval
+1303¤Coca Cola Plaza taga
