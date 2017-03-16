@@ -38,12 +38,13 @@ function toTime(seconds) {
 // Functions (Stops)
 
 function showStop(id, settings) {
+	
 	if (updater && !live) {
 		
-		$('.trip-scheduled').each(function() {
-			$(this).text(toCountdown($(this).attr('data-time')));
+		$('.trip').each(function() {
+			$(this).find('.trip-scheduled').text(toCountdown($(this).data('time')));
 			
-			if ($(this).attr('data-time') < getSecondsSinceMidnight()) $(this).parent().remove();
+			if ($(this).data('time') < getSecondsSinceMidnight()) $(this).parent().remove();
 		});
 		
 		return;
@@ -59,9 +60,9 @@ function showStop(id, settings) {
 			var trip = trips[i];
 			
 			if (live) {
-				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stops + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + toCountdown(trip.expected) + '</div></div>';
+				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stop + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + toCountdown(trip.expected) + '</div></div>';
 			} else {
-				content += '<div class="trip"><img class="trip-type" src="assets/' + (trip.type === 'bus' ? trip.owner === 'tartu' ? 'bus_red' : trip.owner === 'parnu' ? 'bus_blue' : 'bus' : trip.type) + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stops[trip.stops.length - 1] + '</div><div class="trip-scheduled" data-time="' + trip.time + '">' + toCountdown(trip.time) + '</div><div class="trip-expected">' + toTime(trip.time) + '</div></div>';
+				content += '<div class="trip" data-time="' + trip.scheduled + '"><img class="trip-type" src="assets/' + (trip.type === 'bus' ? trip.owner === 'tartu' ? 'bus_red' : trip.owner === 'parnu' ? 'bus_blue' : 'bus' : trip.type) + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stop + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + toTime(trip.expected) + '</div></div>';
 			}
 			
 		}
@@ -293,10 +294,11 @@ navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
 		})
 	});
 	
-	marker.getElement().style.pointerEvents = 'none';
-	marker.getElement().style.opacity = '.5';
-	
 	marker.addTo(map);
+	
+	marker.getElement().style.pointerEvents = 'none';
+	marker.getElement().style.opacity = '.8';
+	
 });
 
 // User Interface

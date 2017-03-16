@@ -112,7 +112,7 @@ function processRoutes(cb) {
 				id:    line.route_id,
 				type:  line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type == 3 ? 'bus' : line.route_type == 800 ? 'trol' : line.route_type == 0 ? 'tram' : line.route_type == 2 ? 'train' : 'ship',
 				name:  line.route_short_name,
-				stops: line.route_long_name.split('-'),
+				stop:  line.route_long_name.split('-').slice(-1).pop(),
 				owner: line.competent_authority === 'Pärnu LV' ? 'parnu' : line.competent_authority === 'Tartu LV' || line.competent_authority === 'Tartu MV' ? 'tartu' : 'other'
 			});
 			
@@ -299,9 +299,9 @@ function getLiveData(id, cb) {
 			var line = lines[i];
 			
 			trips.push({
-				type:  line.split(',')[0],
-				name:  line.split(',')[1],
-				stops: line.split(',')[4],
+				type: line.split(',')[0],
+				name: line.split(',')[1],
+				stop: line.split(',')[4],
 				scheduled: parseInt(line.split(',')[3]),
 				expected:  parseInt(line.split(',')[2])
 			});
@@ -340,10 +340,11 @@ function getStaticData(id) {
 		last.name = route.name;
 		
 		trips.push({
-			type:  route.type,
-			name:  route.name,
-			stops: route.stops,
-			time:  time.time,
+			type: route.type,
+			name: route.name,
+			stop: route.stop,
+			scheduled: time.time,
+			expected:  time.time,
 			owner: route.owner
 		});
 		
