@@ -275,14 +275,14 @@ map.on('moveend', function() {
 
 // Initialization (GPS)
 
-navigator.geolocation.getCurrentPosition(function(pos) {
-	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
+navigator.geolocation.getCurrentPosition(function(pos) {coords = pos.coords;
+	$('#btn-locate').fadeIn(fadeTime * 2);
 	
 	map.flyTo([pos.coords.latitude, pos.coords.longitude], zoomLevel, {duration: flyTime});
 }, function(err) {}, {timeout: 3000});
 
-navigator.geolocation.watchPosition(function(pos) {
-	coords = pos.coords; $('#btn-locate').fadeIn(fadeTime * 2);
+navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
+	$('#btn-locate').fadeIn(fadeTime * 2);
 	
 	if (marker) return marker.setLatLng([coords.latitude, coords.longitude]);
 	
@@ -292,6 +292,9 @@ navigator.geolocation.watchPosition(function(pos) {
 			iconSize: [24, 24]
 		})
 	});
+	
+	marker.getElement().style.pointerEvents = 'none';
+	marker.getElement().style.opacity = '.5';
 	
 	marker.addTo(map);
 });
@@ -363,6 +366,5 @@ $('#help').click(function() {
 
 $('#btn-locate').click(function() {
 	$(this).addClass('bounce');
-	
 	if (coords) map.flyTo([coords.latitude, coords.longitude], zoomLevel, {duration: flyTime});
 });
