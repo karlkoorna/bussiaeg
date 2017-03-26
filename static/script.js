@@ -13,8 +13,8 @@ function getParameter(name) {
 	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
 
-function getSecondsSinceMidnight() {
-	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000) - ((new Date()).getTimezoneOffset() + 120) * 60;
+function getSecondsSinceMidnight(dst) {
+	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000) - (dst ? ((new Date()).getTimezoneOffset() + 120) * 60 : 0);
 }
 
 function toHMS(seconds) {
@@ -25,7 +25,7 @@ function toHMS(seconds) {
 }
 
 function toCountdown(seconds) {
-	seconds = seconds - getSecondsSinceMidnight();
+	seconds = seconds - getSecondsSinceMidnight(!live);
 	var time = toHMS(Math.abs(seconds));
 	return (seconds < 0 ? '-' : '') + (!live && time.h !== 0 ? time.h + 'h ' : '') + (time.m !== 0 ? time.h !== 0 && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (!live && time.h === 0 && time.m === 0 || live ? (time.m !== 0 ? ('0' + time.s).slice(-2) : time.s) + 's' : '');
 }
