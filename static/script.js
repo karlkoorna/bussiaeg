@@ -14,7 +14,7 @@ function getParameter(name) {
 }
 
 function getSecondsSinceMidnight() {
-	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
+	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000) - ((new Date()).getTimezoneOffset() + 120) * 60;
 }
 
 function toHMS(seconds) {

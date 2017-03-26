@@ -20,15 +20,15 @@ var _overrides = {
 
 // Functions (Time)
 
+function getSecondsSinceMidnight() {
+	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000) - ((new Date()).getTimezoneOffset() + 120) * 60;
+}
+
 function toSeconds(time) {
 	var hours   = time.substr(0, 2),
 		minutes = time.substr(3, 5),
 		seconds = time.substr(6, 8);
 	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60) + parseInt(seconds);
-}
-
-function getSecondsSinceMidnight() {
-	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
 }
 
 // Functions (Initialization)
