@@ -4,7 +4,7 @@ var coords, map, marker, updater, live;
 
 const fadeTime = 250,
 	  updateTime = 2000,
-	  zoomLevel = 17,
+	  zoomLevel = 16,
 	  flyTime = 1;
 
 // Functions (Time)
