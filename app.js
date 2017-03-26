@@ -499,6 +499,8 @@ app.get('/getstop', (req, res) => {
 	
 });
 
+// Version number updater
+
 const version = JSON.parse(fs.readFileSync('package.json').toString()).version;
 app.get('/version', (req, res) => {
 	return res.send(version);
