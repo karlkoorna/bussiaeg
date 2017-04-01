@@ -110,7 +110,7 @@ function processRoutes(cb) {
 			
 			_routes.push({
 				id:    line.route_id,
-				type:  line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type == 3 ? 'bus' : line.route_type == 800 ? 'trol' : line.route_type == 0 ? 'tram' : line.route_type == 2 ? 'train' : 'ship',
+				type:  line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type == 3 ? 'bus' : line.route_type == 800 ? 'trol' : line.route_type == 0 ? 'tram' : line.route_type == 2 ? 'train' : 'invalid',
 				name:  line.route_short_name,
 				stop:  line.route_long_name.split('-').slice(-1).pop(),
 				owner: line.competent_authority === 'Pärnu LV' ? 'parnu' : line.competent_authority === 'Tartu LV' || line.competent_authority === 'Tartu MV' ? 'tartu' : 'other'
@@ -195,7 +195,7 @@ function generateTypeOverrides() {
 			
 		}
 		
-		var type = types.indexOf(800) !== -1 ? 'trol' : types.indexOf(0) !== -1 ? 'tram' : types.indexOf(2) !== -1 ? 'train' : types.indexOf(4) !== -1 ? 'ship' : types.indexOf(3) === -1 ? 'invalid' : null;
+		var type = types.indexOf(800) !== -1 ? 'trol' : types.indexOf(0) !== -1 ? 'tram' : types.indexOf(2) !== -1 ? 'train' : types.indexOf(3) === -1 ? 'invalid' : null;
 		
 		if (!type) continue;
 		
