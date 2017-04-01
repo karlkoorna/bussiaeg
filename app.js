@@ -394,13 +394,14 @@ request({url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null}, (err, res, data
 	console.log('Loading GTFS data...');
 	try {
 		
+		if (!fs.existsSync('overrides/types.txt')) generateTypeOverrides();
+		processOverrides();
+		
 		processStops(() => {
 			processTimes(() => {
 				processTrips(() => {
 					processDays(() => {
 						processRoutes(() => {
-							if (!fs.existsSync('overrides/types.txt')) generateTypeOverrides();
-							processOverrides();
 							
 							require('http').createServer(app).listen(port.http, (err) => {
 								console.log('HTTP listening on ' + port.http);
