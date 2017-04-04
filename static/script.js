@@ -60,7 +60,6 @@ function showStop(id, settings) {
 			var trip = trips[i];
 			
 			if (live) {
-				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stop + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + (trip.scheduled === trip.expected ? '-' : toCountdown(trip.expected)) + '</div></div>';
 				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stop + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + (trip.scheduled === trip.expected ? '❌' : toCountdown(trip.expected)) + '</div></div>';
 			} else {
 				content += '<div class="trip" data-time="' + trip.scheduled + '"><img class="trip-type" src="assets/' + (trip.type === 'bus' ? trip.owner === 'tartu' ? 'bus_red' : trip.owner === 'parnu' ? 'bus_blue' : 'bus' : trip.type) + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stop + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + toTime(trip.expected) + '</div></div>';
