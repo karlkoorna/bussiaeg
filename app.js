@@ -21,7 +21,7 @@ var _overrides = {
 // Functions (Time)
 
 function getSecondsSinceMidnight() {
-	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000) - ((new Date()).getTimezoneOffset() + 120) * 60;
+	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
 }
 
 function toSeconds(time) {

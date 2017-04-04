@@ -13,8 +13,8 @@ function getParameter(name) {
 	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
 
-function getSecondsSinceMidnight(dst) {
-	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000) - (dst ? ((new Date()).getTimezoneOffset() + 120) * 60 : 0);
+function getSecondsSinceMidnight() {
+	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
 }
 
 function toHMS(seconds) {
@@ -25,7 +25,7 @@ function toHMS(seconds) {
 }
 
 function toCountdown(seconds) {
-	seconds = seconds - getSecondsSinceMidnight(!live);
+	seconds = seconds - getSecondsSinceMidnight();
 	var time = toHMS(Math.abs(seconds));
 	return (seconds < 0 ? '-' : '') + (!live && time.h !== 0 ? time.h + 'h ' : '') + (time.m !== 0 ? time.h !== 0 && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (!live && time.h === 0 && time.m === 0 || live ? (time.m !== 0 ? ('0' + time.s).slice(-2) : time.s) + 's' : '');
 }
@@ -61,6 +61,7 @@ function showStop(id, settings) {
 			
 			if (live) {
 				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stop + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + (trip.scheduled === trip.expected ? '-' : toCountdown(trip.expected)) + '</div></div>';
+				content += '<div class="trip"><img class="trip-type" src="assets/' + trip.type + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stop + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + (trip.scheduled === trip.expected ? '❌' : toCountdown(trip.expected)) + '</div></div>';
 			} else {
 				content += '<div class="trip" data-time="' + trip.scheduled + '"><img class="trip-type" src="assets/' + (trip.type === 'bus' ? trip.owner === 'tartu' ? 'bus_red' : trip.owner === 'parnu' ? 'bus_blue' : 'bus' : trip.type) + '.png"><div class="trip-name">' + trip.name + '</div><div class="trip-stop">' + trip.stop + '</div><div class="trip-scheduled">' + toCountdown(trip.scheduled) + '</div><div class="trip-expected">' + toTime(trip.expected) + '</div></div>';
 			}
