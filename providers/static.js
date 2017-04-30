@@ -49,10 +49,10 @@ function processStops(cb) {
 			
 			_stops.push({
 				id:   stop.peatus,
-				type: 'train',
 				name: stop.peatus,
-				lat:  stop.latitude,
-				lng:  stop.longitude
+				type: 'train',
+				lat:  parseFloat(stop.latitude),
+				lng:  parseFloat(stop.longitude)
 			});
 			
 		}
@@ -61,8 +61,8 @@ function processStops(cb) {
 			
 			_stops.push({
 				id:   line.stop_id,
-				type: null,
 				name: line.stop_name,
+				type: null,
 				lat:  parseFloat(line.stop_lat),
 				lng:  parseFloat(line.stop_lon)
 			});

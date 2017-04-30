@@ -55,7 +55,7 @@ module.exports = (app, s, l) => {
 	});
 	
 	app.get('/version', (req, res) => {
-		return res.send(JSON.parse(require('fs').readFileSync('package.json').toString()).version);
+		res.send(JSON.parse(require('fs').readFileSync('package.json').toString()).version);
 	});
 	
 }

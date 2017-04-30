@@ -53,7 +53,7 @@ function getSiri(id, cb) {
 			
 		}
 		
-		return cb(trips);
+		cb(trips);
 		
 	});
 	
@@ -85,7 +85,7 @@ function getElron(id, cb) {
 			
 		}
 		
-		return cb(trips.splice(0, 15));
+		cb(trips.splice(0, 15));
 		
 	});
 	
