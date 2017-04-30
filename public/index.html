@@ -24,24 +24,14 @@
 		<link rel="mask-icon" href="assets/favicons/safari-pinned-tab.svg" color="#48d457">
 		<link rel="apple-touch-icon" href="assets/favicons/apple-touch-icon.png" sizes="180x180">
 		<link rel="shortcut icon" href="assets/favicons/favicon.ico">
-		<link rel="stylesheet" href="//cdn.jsdelivr.net/g/sweetalert@1.1.3(sweetalert.css),leaflet@1.0.2(leaflet.css)">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/g/sweetalert@1.1.3(sweetalert.css),leaflet@1.0.3(leaflet.css)">
 		<link rel="stylesheet" href="style.css">
-		<script defer src="//cdn.jsdelivr.net/g/jquery@2.1.0,leaflet@1.0.2,sweetalert@1.1.3,hammerjs@2.0.8,jquery.hammerjs@2.0.0"></script>
+		<script defer src="//cdn.jsdelivr.net/g/jquery@3.2.1,leaflet@1.0.3,sweetalert@1.1.3,hammerjs@2.0.8,jquery.hammerjs@2.0.0"></script>
 		<script defer src="script.js"></script>
-		<script defer>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		ga('create', 'UA-86356656-2', 'auto');
-		ga('send', 'pageview');
-		</script>
 	</head>
 	<body>
 		<div id="stop" class="full">
-			<div id="stop-top">
-				<span id="stop-name"></span><br>
-				<span id="stop-desc"></span>
+			<div id="stop-name">
 			</div>
 			<div id="stop-trips">
 			</div>
@@ -50,28 +40,17 @@
 			<div id="bookmarks-add">Lisa asukoht</div>
 		</div>
 		<div id="help" class="full">
-			<span class="help-title">Ühistranspordi aegade vaatamine</span>
-			<br>
-			Peatuse avamiseks vajuta peatuse ikoonile kaardil. Sinisele ribale vajutades saab tagasi kaardile. Tallinna piires on ülemine, plaani aeg (peatuses kirjas saabumisaeg) ja alumine on ühissõiduki GPS-asukoha järgi arvutatud saabumisaeg. Tallinnast väljas, rongi ja pikaliinibusside puhul on mõlemad ajad plaani ajad.
-			<br>
-			<span class="help-title">Oma asukoha leidmine</span>
-			<br>
-			Vajutades kaardivaates all-paremal olevale nupule liigub kaart sinu asukohta. Kui see ei juhtu, pole lehekülg suutnud leida sinu asukohta.
-			<br>
-			<span class="help-title">Lemmikasukohtade lisamine</span>
-			<br>
+			<span class="help-title">Ühistranspordi aegade vaatamine</span><br>
+			Peatuse avamiseks vajuta peatuse ikoonile kaardil. Nimeribale vajutades saab tagasi kaardile.Reaalajad on märgitud kahe kaarega, kõik teised on plaaniajad.
+			<br><span class="help-title">Oma asukoha leidmine</span><br>
+			Vajutades kaardivaates all-paremal olevale nupule liigub kaart sinu asukohta. Kui nupp on hall, pole lehekülg suutnud leida sinu asukohta.
+			<br><span class="help-title">Lemmikasukohtade lisamine</span><br>
 			Praeguse asukoha lisamiseks vajuta kaardivaates üleval-vasakul olevale nupule ja siis nupule 'Lisa asukoht'. Nüüd anna asukohale nimi ja seejärel vajuta nuppu 'Lisa'.
-			<br>
-			<span class="help-title">Lemmikasukohtade kustutamine</span>
-			<br>
+			<br><span class="help-title">Lemmikasukohtade kustutamine</span><br>
 			Asukoha kustutamiseks lohista see paremale.
-			<br>
-			<span class="help-title">Bussiaeg.ee töölauale lisamine (Android)</span>
-			<br>
+			<br><span class="help-title">Bussiaeg.ee töölauale lisamine (Android)</span><br>
 			Vajuta Chrome'i üleval-paremal nurgas olevale kolmele punktile ja vali 'Add to Home Screen'.
-			<br>
-			<span class="help-title">Bussiaeg.ee töölauale lisamine (IOS)</span>
-			<br>
+			<br><span class="help-title">Bussiaeg.ee töölauale lisamine (IOS)</span><br>
 			Vajuta Safari all-keskel olevale nupule (noolega kast) ja vajuta nupule 'Add to Home Screen'.
 			<br>
 			<div id="help-credits">
@@ -83,9 +62,18 @@
 			<br>
 			<span id="help-version"></span>
 		</div>
+		<div id="trigger-bookmarks"></div>
 		<img id="btn-bookmarks" class="btn" src="assets/bookmarks.png" alt="">
 		<img id="btn-help" class="btn" src="assets/help.png" alt="">
 		<img id="btn-locate" class="btn" src="assets/locate.png" alt="">
 		<div id="map" class="full"></div>
+		<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-86356656-2', 'auto');
+		ga('send', 'pageview');
+		</script>
 	</body>
 </html>

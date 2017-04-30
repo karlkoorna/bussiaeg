@@ -3,18 +3,14 @@
   "description": "Vaata bussi, trolli, trammi ja rongi aegu otse telefonist!",
   "author": "Karl Köörna & Kaur Hendrikson",
   "license": "MIT",
-  "version": "1.6.2",
+  "version": "2.0.0",
   "main": "app.js",
   "dependencies": {
-    "adm-zip": "^0.4.7",
-    "csv-parser": "^1.11.0",
-    "express": "^4.14.0",
-    "request": "^2.75.0"
-  },
-  "scripts": {
-    "start": "forever app.js -f",
-    "stop": "forever stop app.js",
-    "fstop": "taskkill /im node.exe /f"
-  },
-  "repository": "https://github.com/karlkoorna/Bussiaeg"
+    "adm-zip": "latest",
+    "asyncawait": "^1.0.6",
+    "csv-parser": "latest",
+    "express": "latest",
+    "request": "latest",
+    "request-promise-native": "latest"
+  }
 }

@@ -1,5 +1,3 @@
-/* Base */
-
 * {
 	box-sizing: border-box;
 	user-select: none;
@@ -47,21 +45,15 @@ img {
 	background-color: white;
 }
 
-#stop-top {
-	padding: 8px 12px;
-	background-color: deepskyblue;
-	border-bottom: 4px solid rgba(0,0,0,.1);
-	cursor: pointer;
-}
 #stop-name {
+	padding: 8px 12px;
+	background: no-repeat right #00bfff url(assets/back.png);
+	background-blend-mode: luminosity;
 	color: white;
+	border-bottom: 6px solid rgba(0,0,0,.2);
 	font-size: 36px;
 	font-weight: bold;
-}
-#stop-desc {
-	color: #f2f2f2;
-	font-size: 24px;
-	font-weight: bold;
+	cursor: pointer;
 }
 
 /* Overlay - Stop - Trips */
@@ -79,42 +71,62 @@ img {
 	font-size: 32px;
 }
 
-.trip-type, .trip-name, .trip-stop {
+.trip-type, .trip-short_name, .trip-long_name {
 	position: absolute;
 }
+
+.trip-short_name, .trip-long_name {
+	left: 74px;
+}
+
 .trip-type {
 	left: -4px;
 	width: 80px;
 	height: 80px;
+	padding: 2px;
 }
-.trip-name, .trip-stop {
-	left: 74px;
-}
-.trip-name {
+.trip-short_name {
 	top: 5px;
 	font-size: 38px;
 }
-.trip-stop {
+.trip-long_name {
 	bottom: 8px;
 	color: #777;
 	font-size: 20px;
 }
 
-.trip-scheduled, .trip-expected {
+.trip-time, .trip-alt_time {
 	position: absolute;
 	right: 10px;
 	text-align: right;
 }
-.trip-scheduled {
+
+.trip-time {
 	top: 5px;
 }
-.trip-expected {
+.trip-alt_time {
 	bottom: 6px;
 	color: #777;
 	font-size: 26px;
 }
 
+.trip-gps {
+	position: absolute;
+	right: -7px;
+	bottom: 16px;
+	width: 24px;
+	height: 24px;
+	background: no-repeat center/24px url(assets/gps.png);
+}
+
 /* Overlay - Buttons */
+
+#trigger-bookmarks {
+	z-index: 2;
+	position: absolute;
+	width: 48px;
+	height: 100%;
+}
 
 #btn-bookmarks {
 	z-index: 2;
@@ -128,9 +140,10 @@ img {
 }
 #btn-locate {
 	z-index: 2;
-	display: none;
 	right: 16px;
 	bottom: 16px;
+	filter: grayscale(90%);
+	transition: filter .3s linear;
 }
 
 .btn {
@@ -175,7 +188,7 @@ img {
 	width: 100%;
 	padding: 16px;
 	background-color: deepskyblue;
-	border-bottom: 3px solid steelblue;
+	border-bottom: 4px solid steelblue;
 	color: white;
 	font-size: 24px;
 	font-weight: bold;
@@ -218,8 +231,7 @@ img {
 
 .help-title {
 	display: inline-block;
-	margin-top: 48px;
-	margin-bottom: 16px;
+	margin: 24px 0;
 	color: #48d457;
 	font-size: 24px;
 	font-weight: bold;
@@ -229,15 +241,15 @@ img {
 }
 
 #help-credits {
-	margin-top: 48px;
-	font-size: 18px;
+	margin-top: 16px;
 	color: #dedede;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .help-role {
 	color: deepskyblue;
 	font-size: 20px;
-	font-weight: bold;
 }
 
 #help-donate {
