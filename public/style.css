@@ -142,7 +142,7 @@ img {
 	z-index: 2;
 	right: 16px;
 	bottom: 16px;
-	filter: grayscale(90%);
+	filter: grayscale(100%);
 	transition: filter .3s linear;
 }
 
