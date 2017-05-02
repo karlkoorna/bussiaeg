@@ -251,18 +251,14 @@ map.on('moveend', function() {
 
 // GPS
 
-navigator.geolocation.getCurrentPosition(function(pos) {coords = pos.coords;
+navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
+	
+	if (marker) return marker.setLatLng([ coords.latitude, coords.longitude ]);
 	
 	map.flyTo([ coords.latitude, coords.longitude ], zoomLevel, { duration: flyTime });
 	
 	$('#btn-locate').css('filter', 'grayscale(0%)');
 	$('#btn-locate').addClass('bounce');
-	
-}, function(err) {}, { timeout: 3000 });
-
-navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
-	
-	if (marker) return marker.setLatLng([ coords.latitude, coords.longitude ]);
 	
 	marker = new L.marker([ coords.latitude, coords.longitude ], {
 		icon: L.icon({
@@ -273,9 +269,29 @@ navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
 	
 	marker.addTo(map);
 	
-	marker._icon.style.pointerEvents = 'none';
-	marker._icon.style.opacity = '.75';
-	marker._icon.style.zIndex = '1';
+	Object.assign(marker._icon.style, {
+		transformOrigin: 'center',
+		pointerEvents: 'none',
+		opacity: '.8'
+	});
+	
+	if (window.DeviceOrientationEvent) {
+		
+		window.addEventListener('deviceorientation', function(e) {
+			
+			if (marker._icon.style.transform.indexOf('rotate') === -1) {
+				
+				marker._icon.style.transform += ' rotate(' + parseInt(e.alpha) + 'deg)';
+				
+			} else {
+				
+				marker._icon.style.transform = marker._icon.style.transform.substr(0, marker._icon.style.transform.lastIndexOf(' ')) + ' rotate(' + (360 - parseInt(e.alpha)) + 'deg)';
+				
+			}
+			
+		}, false);
+		
+	}
 	
 });
 
