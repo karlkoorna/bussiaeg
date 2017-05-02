@@ -263,7 +263,7 @@ navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
 	marker = new L.marker([ coords.latitude, coords.longitude ], {
 		icon: L.icon({
 			iconUrl: 'assets/marker.png',
-			iconSize: [ 24, 24 ]
+			iconSize: [ 32, 32 ]
 		})
 	});
 	
