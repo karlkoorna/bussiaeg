@@ -7,10 +7,8 @@
   "main": "app.js",
   "dependencies": {
     "adm-zip": "latest",
-    "asyncawait": "^1.0.6",
     "csv-parser": "latest",
     "express": "latest",
-    "request": "latest",
-    "request-promise-native": "latest"
+    "request": "latest"
   }
 }
