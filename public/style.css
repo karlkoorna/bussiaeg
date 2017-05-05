@@ -48,7 +48,6 @@ img {
 #stop-name {
 	padding: 8px 12px;
 	background: no-repeat right #00bfff url(assets/back.png);
-	background-blend-mode: luminosity;
 	color: white;
 	border-bottom: 6px solid rgba(0,0,0,.2);
 	font-size: 36px;
