@@ -110,7 +110,7 @@ function showStops() {
 	});
 	
 	var bounds = map.getBounds();
-	$.get('/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng, function(stops) {
+	$.get('/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng).done(function(stops) {
 	
 		for (var i = 0; i < stops.length; i++) {
 		
