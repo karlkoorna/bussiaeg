@@ -25,9 +25,13 @@ function toCountdown(seconds) {
 
 function getSiri(id, cb) {
 	
-	request('http://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=' + id + '&trip=' + ~~(new Date().getTime() / 100), (err, res, data) => {
+	request({ url: 'http://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=' + id + '&trip=' + ~~(new Date().getTime() / 100), timeout: 1000 }, (err, res, data) => {
 		
-		if (err) return cb(null);
+		if (err) if (err.code === 'ESOCKETTIMEDOUT') {
+			return cb([]);
+		} else {
+			return cb(null);
+		}
 		
 		var lines = data.split('\n');
 		var trips = [];
@@ -61,9 +65,13 @@ function getSiri(id, cb) {
 
 function getElron(id, cb) {
 	
-	request('http://elron.ee/api/v1/stop?stop=' + encodeURIComponent(id), (err, res, data) => {
+	request({ url: 'http://elron.ee/api/v1/stop?stop=' + encodeURIComponent(id), timeout: 1000 }, (err, res, data) => {
 		
-		if (err) return cb(null);
+		if (err) if (err.code === 'ESOCKETTIMEDOUT') {
+			return cb([]);
+		} else {
+			return cb(null);
+		}
 		
 		var lines = JSON.parse(data).data;
 		var trips = [];
