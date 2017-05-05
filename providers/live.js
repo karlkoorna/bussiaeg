@@ -68,7 +68,7 @@ function getElron(id, cb) {
 		var lines = JSON.parse(data).data;
 		var trips = [];
 		
-		if (lines.text === 'Pole andmeid') return cb(null);
+		if (lines.text) return cb(null);
 		
 		for (var i = 0; i < lines.length; i++) {
 			var line = lines[i];
