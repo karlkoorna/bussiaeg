@@ -383,7 +383,9 @@ function update(cb) {
 				processTrips(() => {console.log('Processing days...');
 					processDays(() => {console.log('Processing routes...');
 						processRoutes(() => {
-							processTypes(cb);
+							processTypes(() => {
+								if (cb) cb();
+							});
 						});
 					});
 				});

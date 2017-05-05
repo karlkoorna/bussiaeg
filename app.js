@@ -40,9 +40,9 @@ function getSeconds() {
 function scheduleUpdate(s) {
 	
 	setInterval(() => {
-		if (getSeconds() > 14400 && getSeconds() < 18000) {
-			s.update(); console.log('Updating static data: ' + new Date());
-		}
+		if (getSeconds() > 14400 && getSeconds() < 18000) s.update(() => {
+			console.log('Updated static data: ' + new Date());
+		});
 	}, 1000 * 60 * 60 * 1);
 	
 }
