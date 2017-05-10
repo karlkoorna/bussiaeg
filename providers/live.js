@@ -28,7 +28,7 @@ function getSiri(id, cb) {
 	request({ url: 'http://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=' + id + '&trip=' + ~~(new Date().getTime() / 100), timeout: 1000 }, (err, res, data) => {
 		
 		if (err) if (err.code === 'ESOCKETTIMEDOUT') {
-			return cb([]);
+			return cb('timeout');
 		} else {
 			return cb(null);
 		}
@@ -68,7 +68,7 @@ function getElron(id, cb) {
 	request({ url: 'http://elron.ee/api/v1/stop?stop=' + encodeURIComponent(id), timeout: 1000 }, (err, res, data) => {
 		
 		if (err) if (err.code === 'ESOCKETTIMEDOUT') {
-			return cb([]);
+			return cb('timeout');
 		} else {
 			return cb(null);
 		}

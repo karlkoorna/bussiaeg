@@ -20,7 +20,11 @@ module.exports = (app, s, l) => {
 		
 		l.getSiri(id, (data) => {
 			
-			if (data !== null) {
+			if (data === 'timeout') {
+				
+				res.status(504).end();
+				
+			} else if (data !== null) {
 				
 				var trips = s.getTrips(id, true);
 				
@@ -36,7 +40,11 @@ module.exports = (app, s, l) => {
 				
 				l.getElron(id, (data) => {
 					
-					if (data !== null) {
+					if (data === 'timeout') {
+						
+						res.status(504).end();
+						
+					} else if (data !== null) { 
 						
 						res.json(data);
 						
