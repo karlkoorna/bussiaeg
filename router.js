@@ -50,7 +50,7 @@ module.exports = (app, s, l) => {
 						
 					} else {
 						
-						res.json(s.getTrips(id, false));
+						res.status(504).end();
 						
 					}
 					
