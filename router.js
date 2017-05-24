@@ -18,17 +18,13 @@ module.exports = (app, s, l) => {
 		
 		var id = req.query.id;
 		
-		l.getSiri(id, (data) => {
+		l.getSiri(id, (siri) => {
 			
-			if (data === 'timeout') {
-				
-				res.status(504).end();
-				
-			} else if (data !== null) {
+			if (siri !== null) {
 				
 				var trips = s.getTrips(id, true);
 				
-				trips = trips.concat(data);
+				trips = trips.concat(siri);
 				
 				trips = trips.sort((a, b) => {
 					return a.sort - b.sort;
@@ -38,19 +34,25 @@ module.exports = (app, s, l) => {
 				
 			} else {
 				
-				l.getElron(id, (data) => {
+				l.getElron(id, (elron) => {
 					
-					if (data === 'timeout') {
+					if (elron !== null) {
 						
-						res.status(504).end();
-						
-					} else if (data !== null) { 
-						
-						res.json(data);
+						res.json(elron);
 						
 					} else {
 						
-						res.status(504).end();
+						var trips = s.getTrips(id, false);
+						
+						if (trips !== null) {
+							
+							res.json(trips);
+							
+						} else {
+							
+							res.status(503).end();
+							
+						}
 						
 					}
 					

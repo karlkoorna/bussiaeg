@@ -183,6 +183,9 @@ function showStop(id, settings) {
 		
 		$('#stop').fadeIn(fadeTime);
 		
+	}).fail(function() {
+		clearInterval(updater);
+		$('#stop').fadeOut(fadeTime);
 	});
 	
 }
