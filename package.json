@@ -9,6 +9,7 @@
     "adm-zip": "latest",
     "csv-parser": "latest",
     "express": "latest",
-    "request": "latest"
+    "request": "latest",
+    "ws": "^3.0.0"
   }
 }

@@ -1,7 +1,8 @@
+const port = { http: 80, https: 443, ws: 69 };
+
+const wss = new (require('ws')).Server({ port: port.ws });
 const express = require('express'), app = express();
 const fs = require('fs');
-
-const port = { http: 80, https: 443 };
 
 app.use(express.static(__dirname + '/public'));
 
@@ -26,7 +27,7 @@ require('./providers/static.js')((s) => {
 		console.log('HTTPS failed to start listening!');
 	}
 	
-	require('./router.js')(app, s, require('./providers/live.js'));
+	require('./router.js')(app, s, require('./providers/live.js'), wss);
 	
 	scheduleUpdate(s);
 	
