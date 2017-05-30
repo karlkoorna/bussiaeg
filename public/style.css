@@ -257,26 +257,6 @@ img {
 	font-size: 20px;
 }
 
-#help-donate {
-	display: inline-block;
-	margin-top: 16px;
-	margin-bottom: 16px;
-	padding: 12px 32px;
-	background-color: rgba(255,255,255,.4);
-	color: white;
-	border-radius: 8px;
-	font-weight: 900;
-	line-height: 20px;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-#help-donate span {
-	font-weight: 600;
-	font-size: 14px;
-	color: gold;
-}
-
 #help-version {
 	color: #dedede;
 	font-size: 16px;

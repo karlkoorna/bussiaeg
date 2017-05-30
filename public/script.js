@@ -190,23 +190,6 @@ function showStop(id, settings) {
 	
 }
 
-// Donate
-
-localStorage.setItem('visitCount', parseInt(localStorage.getItem('visitCount')) + 1 || 1);
-if (!(parseInt(localStorage.getItem('visitCount')) % 75)) {
-	
-	swal({
-		title: 'Tere!',
-		text: 'Oleme märganud, et teile meeldib Bussiaeg.ee.\nKas soovite tegijaid toetada?',
-		confirmButtonText: 'PayPal',
-		cancelButtonText: 'Ei',
-		showCancelButton: true
-	}, function(isConfirm) {
-		if (isConfirm) window.open('https://www.paypal.me/bussiaeg', '_self');
-	});
-	
-}
-
 // Share
 
 const share = getParameter('stop');
