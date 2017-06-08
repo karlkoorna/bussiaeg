@@ -125,6 +125,8 @@ img {
 	position: absolute;
 	width: 32px;
 	height: 100%;
+	cursor: -webkit-grab;
+    cursor: -moz-grab;
 }
 
 #btn-bookmarks {
