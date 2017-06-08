@@ -36,7 +36,7 @@ function getSeconds() {
 	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
 }
 
-// Update between 4 & 5 pm, check every hour
+// Update between 4 & 5 am, check every hour
 function scheduleUpdate(s) {
 	
 	setInterval(() => {
