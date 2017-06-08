@@ -1,4 +1,4 @@
-module.exports = (app, s, l, wss) => {
+module.exports = (app, s, l) => {
 	
 	app.get('/getstops', (req, res) => {
 		res.json(s.getStops(req.query.lat_min, req.query.lat_max, req.query.lng_min, req.query.lng_max));
@@ -17,10 +17,6 @@ module.exports = (app, s, l, wss) => {
 	app.get('/gettrips', (req, res) => {
 		
 		var id = req.query.id;
-		
-		wss.clients.forEach((ws) => {
-			ws.send(JSON.stringify(s.getStop(id)));
-		});
 		
 		l.getSiri(id, (siri) => {
 			
