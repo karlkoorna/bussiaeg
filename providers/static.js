@@ -57,7 +57,7 @@ function processStops(cb) {
 			
 		}
 		
-		fs.createReadStream('providers/gtfs/stops.txt').pipe(csv()).on('data', (line) => {
+		fs.createReadStream('providers/static/stops.txt').pipe(csv()).on('data', (line) => {
 			
 			_stops.push({
 				id:   line.stop_id,
@@ -77,7 +77,7 @@ function processTimes(cb) {
 	
 	_times = [];
 	
-	fs.createReadStream('providers/gtfs/stop_times.txt').pipe(csv()).on('data', (line) => {
+	fs.createReadStream('providers/static/stop_times.txt').pipe(csv()).on('data', (line) => {
 		
 		_times.push({
 			stop_id: line.stop_id,
@@ -101,7 +101,7 @@ function processTrips(cb) {
 	
 	_trips = [];
 	
-	fs.createReadStream('providers/gtfs/trips.txt').pipe(csv()).on('data', (line) => {
+	fs.createReadStream('providers/static/trips.txt').pipe(csv()).on('data', (line) => {
 		
 		_trips.push({
 			id:         line.trip_id,
@@ -117,7 +117,7 @@ function processDays(cb) {
 	
 	_days = [];
 	
-	fs.createReadStream('providers/gtfs/calendar.txt').pipe(csv()).on('data', (line) => {
+	fs.createReadStream('providers/static/calendar.txt').pipe(csv()).on('data', (line) => {
 		
 		_days.push({
 			service_id: line.service_id,
@@ -132,7 +132,7 @@ function processRoutes(cb) {
 	
 	_routes = [];
 	
-	fs.createReadStream('providers/gtfs/routes.txt').pipe(csv()).on('data', (line) => {
+	fs.createReadStream('providers/static/routes.txt').pipe(csv()).on('data', (line) => {
 		
 		_routes.push({
 			id:         line.route_id,
@@ -148,7 +148,7 @@ function processRoutes(cb) {
 
 function processTypes(cb) {
 	
-	if (!fs.existsSync('./providers/gtfs/types.txt')) {
+	if (!fs.existsSync('./providers/static/types.txt')) {
 		
 		var data = '';
 		
@@ -180,12 +180,12 @@ function processTypes(cb) {
 		process.stdout.write('Generating types...       \n');
 		
 		try {
-			fs.writeFileSync('./providers/gtfs/types.txt', data.substr(1), 'utf8');
+			fs.writeFileSync('./providers/static/types.txt', data.substr(1), 'utf8');
 		} catch(ex) {}
 		
 	}
 	
-	var types = fs.readFileSync('./providers/gtfs/types.txt', 'utf8').toString().split('\n');
+	var types = fs.readFileSync('./providers/static/types.txt', 'utf8').toString().split('\n');
 	
 	for (var i = 0; i < _stops.length; i++) {
 		var stop = _stops[i];
@@ -347,6 +347,8 @@ function getTrips(id, coaches) {
 		
 	}
 	
+	if (trips.length === 0) return null;
+	
 	return trips;
 	
 }
@@ -366,11 +368,11 @@ function update(cb) {
 			
 			var zip = new require('adm-zip')(new Buffer(data));
 			
-			zip.extractEntryTo('stops.txt',      'providers/gtfs', false, true);
-			zip.extractEntryTo('stop_times.txt', 'providers/gtfs', false, true);
-			zip.extractEntryTo('trips.txt',      'providers/gtfs', false, true);
-			zip.extractEntryTo('calendar.txt',   'providers/gtfs', false, true);
-			zip.extractEntryTo('routes.txt',     'providers/gtfs', false, true);
+			zip.extractEntryTo('stops.txt',      'providers/static', false, true);
+			zip.extractEntryTo('stop_times.txt', 'providers/static', false, true);
+			zip.extractEntryTo('trips.txt',      'providers/static', false, true);
+			zip.extractEntryTo('calendar.txt',   'providers/static', false, true);
+			zip.extractEntryTo('routes.txt',     'providers/static', false, true);
 			
 		} catch(ex) {
 			console.log('Failed to extract data!');
