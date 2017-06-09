@@ -1,7 +1,9 @@
-module.exports = (app, s, l) => {
+module.exports = (app, s, l, p) => {
 	
 	app.get('/getstops', (req, res) => {
+		
 		res.json(s.getStops(req.query.lat_min, req.query.lat_max, req.query.lng_min, req.query.lng_max));
+		
 	});
 	
 	app.get('/getstop', (req, res) => {
@@ -50,7 +52,7 @@ module.exports = (app, s, l) => {
 							
 						} else {
 							
-							res.status(503).end();
+							res.status(404).end();
 							
 						}
 						
@@ -61,6 +63,21 @@ module.exports = (app, s, l) => {
 			}
 			
 		});
+		
+	});
+	
+	app.get('/getpanel', (req, res) => {
+		
+		var panel = p.getPanel(req.query.id);
+		
+		if (panel == null) return res.status(404).end();
+		
+		if (!panel.enabled) return res.json({
+			enabled: panel.enabled,
+			unavailable: panel.unavailable
+		});
+		
+		res.json(panel);
 		
 	});
 	

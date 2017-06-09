@@ -1,3 +1,5 @@
-providers/gtfs
+public/panel/assets
+providers/static
 node_modules
 ssl
+providers/panels.json

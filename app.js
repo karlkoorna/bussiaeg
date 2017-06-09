@@ -1,11 +1,15 @@
-const port = { http: 80, https: 443 };
-
 const express = require('express'), app = express();
 const fs = require('fs');
 
-app.use(express.static(__dirname + '/public'));
+const port = { http: 80, https: 443 };
 
 require('./providers/static.js')((s) => {
+	
+	require('./router.js')(app, s,
+	require('./providers/live.js'),
+	require('./providers/panels.js'));
+	
+	app.use(express.static(__dirname + '/public'));
 	
 	require('http').Server(app).listen(port.http, (err) => {
 		console.log('HTTP listening on ' + port.http);
@@ -25,8 +29,6 @@ require('./providers/static.js')((s) => {
 	} catch(ex) {
 		console.log('HTTPS failed to start listening!');
 	}
-	
-	require('./router.js')(app, s, require('./providers/live.js'));
 	
 	scheduleUpdate(s);
 	
