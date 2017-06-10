@@ -23,6 +23,11 @@ function toCountdown(seconds) {
 	return (seconds < 0 ? '-' : '') + (!!time.h ? time.h + 'h ' : '') + (!!time.m ? !!time.h && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (!time.h ? time.s + 's' : '');
 }
 
+function toTime(seconds) {
+	var time = toHMS(seconds);
+	return ('0' + time.h).slice(-2) + ':' + ('0' + time.m).slice(-2);
+}
+
 function getSiri(id, cb) {
 	
 	request('http://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=' + id + '&trip=' + ~~(new Date().getTime() / 100), (err, res, data) => {
@@ -47,8 +52,9 @@ function getSiri(id, cb) {
 				type: line.split(',')[0],
 				short_name: line.split(',')[1],
 				long_name: line.split(',')[4],
-				time: toCountdown(line.split(',')[3]),
-				alt_time: line.split(',')[3] !== line.split(',')[2] ? toCountdown(line.split(',')[2]) + '<img class="trip-gps" src="assets/gps_' + line.split(',')[0] + '.png" alt=""></img>' : '❌'
+				time: line.split(',')[2] !== line.split(',')[3] ? toCountdown(line.split(',')[2]) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps_' + line.split(',')[0] + '.png" alt=""></img>' : toCountdown(line.split(',')[3]) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps.png" alt="">',
+				alt_time: toCountdown(line.split(',')[3]),
+				panel: toTime(line.split(',')[3])
 			});
 			
 		}
@@ -81,7 +87,7 @@ function getElron(id, cb) {
 				type: 'train',
 				short_name: line.reis,
 				long_name: line.liin,
-				time: toCountdown(toSeconds(line.plaaniline_aeg)),
+				time: toCountdown(toSeconds(line.plaaniline_aeg)) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps.png" alt="">',
 				alt_time: line.plaaniline_aeg
 			});
 			

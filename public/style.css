@@ -112,10 +112,9 @@ img {
 .trip-gps {
 	position: absolute;
 	right: -7px;
-	bottom: 16px;
+	bottom: 20px;
 	width: 24px;
 	height: 24px;
-	background: no-repeat center/24px url(assets/gps.png);
 }
 
 /* Overlay - Buttons */

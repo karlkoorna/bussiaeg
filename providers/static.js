@@ -340,7 +340,7 @@ function getTrips(id, coaches) {
 			type: route.type,
 			short_name: route.short_name,
 			long_name: route.long_name,
-			time: toCountdown(time.time),
+			time: toCountdown(time.time) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps.png" alt="">',
 			alt_time: toTime(time.time),
 			owner: route.owner
 		});
