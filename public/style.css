@@ -1,8 +1,5 @@
 * {
 	box-sizing: border-box;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
 }
 
 html, body {
@@ -11,7 +8,8 @@ html, body {
 body {
 	margin: 0;
 	font-family: 'Arial';
-	overflow-x: hidden;
+	user-select: none;
+	-moz-user-select: none;
 }
 
 img {
@@ -56,10 +54,6 @@ img {
 }
 
 /* Overlay - Stop - Trips */
-
-#stop-trips {
-	position: relative;
-}
 
 .trip {
 	position: relative;
