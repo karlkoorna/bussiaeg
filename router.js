@@ -26,6 +26,8 @@ module.exports = (app, s, l, p) => {
 				
 				var trips = s.getTrips(id, true);
 				
+				if (trips == null) return res.json(siri);
+				
 				trips = trips.concat(siri);
 				
 				trips = trips.sort((a, b) => {
@@ -70,12 +72,8 @@ module.exports = (app, s, l, p) => {
 		
 		var panel = p.getPanel(req.query.id);
 		
-		if (panel == null) return res.status(404).end();
-		
-		if (!panel.enabled) return res.json({
-			enabled: panel.enabled,
-			unavailable: panel.unavailable
-		});
+		if (panel == null) return res.status(401).end();
+		if (!panel.enabled) return res.status(402).end();
 		
 		res.json(panel);
 		

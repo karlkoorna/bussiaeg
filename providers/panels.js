@@ -1,19 +1,22 @@
 const fs = require('fs');
 
-var panels = JSON.parse(fs.readFileSync('./providers/panels.json').toString());
+var panels = {};
 
-fs.watch('./providers/panels.json', (e, f) => {
+update();
+function update() {
 	
-	if (e === 'change') try {
+	try {
 		panels = JSON.parse(fs.readFileSync('./providers/panels.json').toString());
 	} catch(ex) {}
 	
+}
+
+fs.watch('./providers/panels.json', (e, f) => {
+	if (e === 'change') update();
 });
 
 function getPanel(id) {
-	
 	return panels[id];
-	
 }
 
 module.exports.getPanel = getPanel;

@@ -1,0 +1,133 @@
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Arial;
+	overflow-y: hidden;
+	user-select: none;
+	-moz-user-select: none;
+}
+
+.full {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#cover {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	object-fit: contain;
+	z-index: 999;
+}
+
+#bar {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	border-top: 5px solid rgba(0,0,0,.2);
+	z-index: 2;
+}
+
+#bar-logo {
+	height: 100%;
+	padding: 16px;
+}
+
+/* Stop */
+
+.stop {
+	float: left;
+	height: 100%;
+	z-index: 1;
+}
+
+.stop-top {
+	padding: 8px 12px;
+	color: white;
+	border-bottom: 6px solid rgba(0,0,0,.2);
+}
+
+.stop-name {
+	font-size: 40px;
+	font-weight: bold;
+}
+.stop-desc {
+	font-size: 26px;
+	font-weight: normal;
+}
+
+.stop-trips {
+	height: 100%;
+	border-left: 1px solid rgba(0,0,0,.1);
+}
+
+/* Stop - Trips */
+
+.trip {
+	position: relative;
+	width: 100%;
+	height: 80px;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+	color: #444;
+	font-size: 32px;
+}
+
+.trip-type, .trip-short_name, .trip-long_name {
+	position: absolute;
+}
+
+.trip-short_name, .trip-long_name {
+	left: 74px;
+}
+
+.trip-type {
+	left: -4px;
+	width: 80px;
+	height: 80px;
+	padding: 2px;
+}
+.trip-short_name {
+	top: 5px;
+	font-size: 38px;
+}
+.trip-long_name {
+	bottom: 8px;
+	color: #777;
+	font-size: 20px;
+}
+
+.trip-time, .trip-alt_time {
+	position: absolute;
+	right: 10px;
+	text-align: right;
+}
+
+.trip-time {
+	top: 5px;
+}
+.trip-alt_time {
+	bottom: 6px;
+	color: #777;
+	font-size: 26px;
+}
+
+.trip-gps {
+	position: absolute;
+	right: -7px;
+	bottom: 20px;
+	width: 24px;
+	height: 24px;
+}
