@@ -3,7 +3,7 @@
   "description": "Vaata bussi, trolli, trammi ja rongi aegu otse telefonist!",
   "author": "Karl Köörna & Kaur Hendrikson",
   "license": "MIT",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "main": "app.js",
   "dependencies": {
     "adm-zip": "latest",
