@@ -1,9 +1,7 @@
 module.exports = (app, s, l, p) => {
 	
 	app.get('/getstops', (req, res) => {
-		
 		res.json(s.getStops(req.query.lat_min, req.query.lat_max, req.query.lng_min, req.query.lng_max));
-		
 	});
 	
 	app.get('/getstop', (req, res) => {

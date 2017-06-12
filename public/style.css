@@ -7,9 +7,10 @@ html, body {
 }
 body {
 	margin: 0;
-	font-family: 'Arial';
+	font-family: Arial;
 	user-select: none;
 	-moz-user-select: none;
+	cursor: default;
 }
 
 img {
