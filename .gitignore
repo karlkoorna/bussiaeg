@@ -1,4 +1,5 @@
-public/panel/assets
+public/panel/assets/*
+!public/panel/assets/bussiaeg.png
 providers/static
 node_modules
 ssl
