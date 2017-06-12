@@ -86,7 +86,7 @@ function getElron(id, cb) {
 			trips.push({
 				type: 'train',
 				short_name: line.reis,
-				long_name: line.liin,
+				long_name: line.liin.split(' - ')[1],
 				time: toCountdown(toSeconds(line.plaaniline_aeg)) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps.png" alt="">',
 				alt_time: line.plaaniline_aeg
 			});
