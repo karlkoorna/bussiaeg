@@ -97,8 +97,10 @@ function check() {
 		
 	}).fail(function(xhr) {
 		
-		if (xhr.status === 401) showCover('invalid');
-		if (xhr.status === 402) showCover('disabled');
+		if (xhr.status === 401) return showCover('invalid');
+		if (xhr.status === 402) return showCover('disabled');
+		
+		showCover('unavailable');
 		
 	});
 	
