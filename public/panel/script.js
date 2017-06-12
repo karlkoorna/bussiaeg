@@ -29,6 +29,8 @@ function hideCover() {
 	
 }
 
+moment.locale('et');
+
 setInterval(check, checkTime);
 
 check();
@@ -43,12 +45,27 @@ function check() {
 		if (JSON.stringify(panel) === JSON.stringify(last)) return;
 		last = panel;
 		
-		$('#stops').css('zoom', 1.6 + panel.zoom);
+		$('#stops').css('zoom', panel.zoom);
 		
-		$('#bar').css('height', 156 + panel.height + 'px');
-		$('#bar').css('background', panel.color);
+		$('#bar').css('height', panel.barHeight + 'px');
+		$('#bar').css('background', panel.barColor);
 		
 		$('#bar-logo').attr('src', 'assets/' + panel.logo + '.png');
+		$('#bar-logo').css('width', panel.logoWidth + 'px');
+		
+		$('#bar-logo').on('load', function() {
+			
+			$('#bar-text').css('left', $('#bar-logo').css('width'));
+			$('#bar-text').css('width', 'calc(100% - ' + $('#bar-logo').css('width') + ')');
+			
+			$('#bar-text').css('font-size', panel.textSize + 'px');
+			$('#bar-text').css('line-height', $('#bar-text').css('height'));
+			
+			setInterval(function() {
+				$('#bar-text').text(moment().format(panel.textFormat));
+			}, 1000);
+			
+		});
 		
 		var content = '';
 		var ids = [];
