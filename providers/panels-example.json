@@ -1,39 +1,39 @@
 {
   "1a2b3c": {
     "name": "abc",
-	"enabled": true,
-	"zoom": 1.6,
-	"logo": "bussiaeg",
-	"logoWidth": 553,
-	"barHeight": 156,
-	"barColor": "#00bfff",
-	"textSize": 80,
-	"textFormat": "HH:mm:ss dddd DD.MM.YYYY",
+    "enabled": true,
+    "zoom": 1.6,
+    "logo": "bussiaeg",
+    "logoWidth": 553,
+    "barHeight": 156,
+    "barColor": "#00bfff",
+    "textSize": 80,
+    "textFormat": "HH:mm:ss dddd DD.MM.YYYY",
     "stops": [
-	  {
-	    "id": 992,
-	    "name": "Nõmme",
-	    "desc": "Turu ees",
-	    "color": "#00bfff"
-	  },
-	  {
-	    "id": 991,
-	    "name": "Nõmme",
-	    "desc": "Apteegi ees",
-	    "color": "#00bfff"
-	  },
-	  {
-	    "id": 990,
-	    "name": "Nõmme",
-	    "desc": "Kesklinna suunas",
-	    "color": "#00bfff"
-	  },
-	  {
-	    "id": "Nõmme",
-	    "name": "Nõmme",
-	    "desc": "Rongipeatus",
-	    "color": "#00bfff"
-	  }
-	]
+      {
+        "id": 992,
+        "name": "Nõmme",
+        "desc": "Turu ees",
+        "color": "#00bfff"
+      },
+      {
+        "id": 991,
+        "name": "Nõmme",
+        "desc": "Apteegi ees",
+        "color": "#00bfff"
+      },
+      {
+        "id": 990,
+        "name": "Nõmme",
+        "desc": "Kesklinna suunas",
+        "color": "#00bfff"
+      },
+      {
+        "id": "Nõmme",
+        "name": "Nõmme",
+        "desc": "Rongipeatus",
+        "color": "#00bfff"
+      }
+    ]
   }
 }
