@@ -249,7 +249,7 @@ navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
 	marker = new L.marker([ coords.latitude, coords.longitude ], {
 		icon: L.icon({
 			iconUrl: 'assets/marker.png',
-			iconSize: [ 32, 32 ]
+			iconSize: [ 24, 24 ]
 		})
 	});
 	
@@ -257,27 +257,8 @@ navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
 	
 	Object.assign(marker._icon.style, {
 		transformOrigin: 'center',
-		pointerEvents: 'none',
-		opacity: '.8'
+		pointerEvents: 'none'
 	});
-	
-	if (window.DeviceOrientationEvent) {
-		
-		window.addEventListener('deviceorientation', function(e) {
-			
-			if (marker._icon.style.transform.indexOf('rotate') === -1) {
-				
-				marker._icon.style.transform += ' rotate(' + parseInt(e.alpha) + 'deg)';
-				
-			} else {
-				
-				marker._icon.style.transform = marker._icon.style.transform.substr(0, marker._icon.style.transform.lastIndexOf(' ')) + ' rotate(' + (360 - parseInt(e.alpha)) + 'deg)';
-				
-			}
-			
-		}, false);
-		
-	}
 	
 });
 
