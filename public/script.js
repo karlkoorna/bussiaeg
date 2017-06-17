@@ -124,8 +124,6 @@ function showStops() {
 					})
 				}).addTo(map).on('click', function() {
 					
-					if (updater) return;
-					
 					showStop(stop.id, { panMap: false, fadeIn: true });
 					updater = setInterval(function() {
 						showStop(stop.id, { panMap: false, fadeIn: false });
@@ -178,15 +176,30 @@ function showStop(id, settings) {
 		document.title = 'Bussiaeg - ' + stop.name;
 		history.pushState(null, document.title, '/?stop=' + stop.id);
 		
-		$('#stop-name').css('background-color', '#' + (stop.type === 'trol' ? '0071e4' : stop.type === 'tram' ? 'ff7b3b' : stop.type === 'train' ? 'ff8222' : '00bfff'));
+		var color = '#' + (stop.type === 'trol' ? '0071e4' : stop.type === 'tram' ? 'ff7b3b' : stop.type === 'train' ? 'ff8222' : '00bfff');
+		
+		$('#stop-name').css('background-color', color);
+		$('meta[name="theme-color"]').attr('content', color);
+		
 		$('#stop-name').text(stop.name);
 		
 		$('#stop').fadeIn(fadeTime);
 		
 	}).fail(function() {
-		clearInterval(updater);
-		$('#stop').fadeOut(fadeTime);
+		hideStop();
 	});
+	
+}
+
+function hideStop() {
+	
+	clearInterval(updater); updater = null;
+	
+	document.title = 'Bussiaeg';
+	history.pushState(null, document.title, '/');
+	
+	$('meta[name="theme-color"]').attr('content', '#00bfff');
+	$('#stop').fadeOut(fadeTime);
 	
 }
 
@@ -275,14 +288,7 @@ $('.btn').click(function() {
 // Interface (Stops)
 
 $('#stop-name').click(function() {
-	
-	clearInterval(updater); updater = null;
-	
-	$(this).parent().fadeOut(fadeTime);
-	
-	document.title = 'Bussiaeg';
-	history.pushState(null, document.title, '/');
-	
+	hideStop();
 });
 
 // Interface (Bookmarks)
