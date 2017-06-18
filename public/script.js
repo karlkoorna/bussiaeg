@@ -124,6 +124,8 @@ function showStops() {
 					})
 				}).addTo(map).on('click', function() {
 					
+					if (updater) return;
+					
 					showStop(stop.id, { panMap: false, fadeIn: true });
 					updater = setInterval(function() {
 						showStop(stop.id, { panMap: false, fadeIn: false });
