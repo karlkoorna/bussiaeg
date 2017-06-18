@@ -200,8 +200,9 @@ function hideStop() {
 	document.title = 'Bussiaeg';
 	history.pushState(null, document.title, '/');
 	
-	$('meta[name="theme-color"]').attr('content', '#00bfff');
-	$('#stop').fadeOut(fadeTime);
+	$('#stop').fadeOut(fadeTime, function() {
+		$('meta[name="theme-color"]').attr('content', '#00bfff');
+	});
 	
 }
 
