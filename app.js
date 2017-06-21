@@ -9,7 +9,7 @@ require('./providers/static.js')((s) => {
 	
 	app.use(express.static(__dirname + '/public'));
 	
-	require('http').Server(app).listen(port.http, (err) => {
+	require('http').Server(app).listen(port.http, () => {
 		console.log('HTTP listening on ' + port.http);
 	});
 	
@@ -20,7 +20,7 @@ require('./providers/static.js')((s) => {
 			key: fs.readFileSync('ssl/ssl.key'),
 			ca: fs.readFileSync('ssl/ca.crt'),
 			rejectUnauthorized: false
-		}, app).listen(port.https, (err) => {
+		}, app).listen(port.https, () => {
 			console.log('HTTPS listening on ' + port.https);
 		});
 		

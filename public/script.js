@@ -41,7 +41,9 @@ function addBookmark() {
 	
 }
 
-function deleteBookmark(el) {hideBookmarks();
+function deleteBookmark(el) {
+	
+	hideBookmarks();
 	
 	swal({
 		title: 'Kustuta?',
@@ -51,6 +53,7 @@ function deleteBookmark(el) {hideBookmarks();
 		showCancelButton: true,
 		animation: 'slide-from-bottom'
 	}, function(isConfirm) {
+		
 		if (!isConfirm) return;
 		
 		var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
@@ -155,7 +158,9 @@ function showStop(id, settings) {
 		
 	}
 	
-	$.get('/gettrips?id=' + id).done(function(trips) {hideBookmarks();
+	$.get('/gettrips?id=' + id).done(function(trips) {
+		
+		hideBookmarks();
 		
 		var content = '';
 		
@@ -255,7 +260,9 @@ map.on('moveend', function() {
 
 // GPS
 
-navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
+navigator.geolocation.watchPosition(function(pos) {
+	
+	coords = pos.coords;
 	
 	if (marker) return marker.setLatLng([ coords.latitude, coords.longitude ]);
 	
@@ -310,8 +317,12 @@ $('#bookmarks').on('click', '#bookmarks-add', function() {
 	addBookmark();
 });
 
-$('#bookmarks').on('click', '.bookmark', function() {hideBookmarks();
+$('#bookmarks').on('click', '.bookmark', function() {
+	
+	hideBookmarks();
+	
 	map.flyTo([ $(this).data('lat'), $(this).data('lng') ], $(this).data('zoom'), { duration: flyTime });
+	
 });
 
 $('#bookmarks').hammer().on('swipeleft', function() {
@@ -324,7 +335,9 @@ map.on('click dragstart', function() {
 
 // Interface (Help)
 
-$('#btn-help').click(function() {hideBookmarks();
+$('#btn-help').click(function() {
+	
+	hideBookmarks();
 	
 	if (!$('#help-version').text()) $.get('/version').done(function(data) {
 		$('#help-version').text('Bussiaeg.ee v' + data);

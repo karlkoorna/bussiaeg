@@ -71,7 +71,7 @@ function check() {
 		});
 		
 		let content = '';
-		let ids = [];
+		const ids = [];
 		
 		for (let i = 0; i < panel.stops.length; i++) {
 			const stop = panel.stops[i];

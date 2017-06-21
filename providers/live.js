@@ -35,7 +35,7 @@ function getSiri(id, cb) {
 		if (err) return cb(null);
 		
 		const lines = data.split('\n');
-		let trips = [];
+		const trips = [];
 		
 		if (lines[0].indexOf('ERROR') >= 0) return cb(null);
 		
@@ -72,7 +72,7 @@ function getElron(id, cb) {
 		if (err) return cb(null);
 		
 		const lines = JSON.parse(data).data;
-		let trips = [];
+		const trips = [];
 		
 		try {
 			if (lines.text) return cb(null);

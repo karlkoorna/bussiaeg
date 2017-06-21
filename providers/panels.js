@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-var panels = {};
+let panels = {};
 
 update();
 function update() {
@@ -11,7 +11,7 @@ function update() {
 	
 }
 
-fs.watch('./providers/panels.json', (e, f) => {
+fs.watch('./providers/panels.json', (e) => {
 	if (e === 'change') update();
 });
 

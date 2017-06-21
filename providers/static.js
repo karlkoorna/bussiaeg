@@ -154,7 +154,7 @@ function processTypes(cb) {
 			if (stop.type !== null) continue;
 			
 			const times = getTimesForStop(stop.id);
-			let types = [];
+			const types = [];
 			
 			for (let j = 0; j < (times.length > 25 ? 25 : times.length); j++) {
 				const time = times[j];
@@ -203,17 +203,6 @@ function processTypes(cb) {
 	
 }
 
-function getTypeForStop(id) {
-	
-	for (let j = 0; j < _types.length; j++) {
-		const type = _types[j];
-		
-		if (type.id === id) return type.type;
-		
-	}
-	
-}
-
 function getStopById(id) {
 	
 	for (let i = 0; i < _stops.length; i++) {
@@ -229,7 +218,7 @@ function getStopById(id) {
 
 function getTimesForStop(id) {
 	
-	let times = [];
+	const times = [];
 	
 	for (let i = 0; i < _times.length; i++) {
 		const time = _times[i];
@@ -280,7 +269,7 @@ function getRouteForTrip(trip) {
 
 function getStops(lat_min, lat_max, lng_min, lng_max) {
 	
-	let stops = [];
+	const stops = [];
 	
 	for (let i = 0; i < _stops.length; i++) {
 		const stop = _stops[i];
@@ -305,8 +294,8 @@ function getStops(lat_min, lat_max, lng_min, lng_max) {
 
 function getTrips(id, coaches) {
 	
-	let trips = [];
-	let last = {};
+	const trips = [];
+	const last = {};
 	
 	const times = getTimesForStop(id);
 	
