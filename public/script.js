@@ -28,8 +28,8 @@ function addBookmark() {
 		
 		if (input.trim() !== '') bookmarks.push({
 			name: input,
-			lat:  map.getCenter().lat,
-			lng:  map.getCenter().lng,
+			lat: map.getCenter().lat,
+			lng: map.getCenter().lng,
 			zoom: map.getZoom()
 		});
 		
@@ -88,9 +88,11 @@ function showBookmarks() {
 	$('#bookmarks').html(content);
 	
 	$('.bookmark').each(function() {
+		
 		$(this).hammer().on('swiperight press', function() {
 			deleteBookmark($(this));
 		});
+		
 	});
 	
 	$('#bookmarks').animate({ left: '0px' }, fadeTime);
@@ -228,7 +230,7 @@ var map = L.map('map', {
 	zoom: zoomLevel,
 	minZoom: 7,
 	maxZoom: 18,
-	maxBounds: [ [59.874204, 21.396935], [57.290822, 28.838625] ],
+	maxBounds: [ [ 59.874204, 21.396935 ], [ 57.290822, 28.838625 ] ],
 	attributionControl: false,
 	bounceAtZoomLimits: false,
 	doubleClickZoom: false,
@@ -324,7 +326,7 @@ map.on('click dragstart', function() {
 
 $('#btn-help').click(function() {hideBookmarks();
 	
-	if (!$('#help-version').text()) $.get('//' + location.host + '/version').done(function(data) {
+	if (!$('#help-version').text()) $.get('/version').done(function(data) {
 		$('#help-version').text('Bussiaeg.ee v' + data);
 	});
 	

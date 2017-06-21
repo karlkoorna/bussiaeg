@@ -5,26 +5,26 @@ function getSeconds() {
 }
 
 function toSeconds(time) {
-	var hours = time.substr(0, 2);
-	var minutes = time.substr(3, 5);
+	const hours = time.substr(0, 2);
+	const minutes = time.substr(3, 5);
 	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60);
 }
 
 function toHMS(seconds) {
-	var hours = ~~(seconds / 3600);
-	var minutes = ~~((seconds % 3600) / 60);
+	const hours = ~~(seconds / 3600);
+	const minutes = ~~((seconds % 3600) / 60);
 	seconds = seconds - (minutes * 60) - (hours * 3600);
 	return { h: hours, m: minutes, s: seconds };
 }
 
 function toCountdown(seconds) {
-	seconds = seconds - getSeconds();
-	var time = toHMS(Math.abs(seconds));
-	return (seconds < 0 ? '-' : '') + (!!time.h ? time.h + 'h ' : '') + (!!time.m ? !!time.h && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (!time.h ? time.s + 's' : '');
+	seconds -= getSeconds();
+	const time = toHMS(Math.abs(seconds));
+	return (seconds < 0 ? '-' : '') + (time.h ? time.h + 'h ' : '') + (time.m ? !!time.h && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (!time.h ? time.s + 's' : '');
 }
 
 function toTime(seconds) {
-	var time = toHMS(seconds);
+	const time = toHMS(seconds);
 	return ('0' + time.h).slice(-2) + ':' + ('0' + time.m).slice(-2);
 }
 
@@ -34,8 +34,8 @@ function getSiri(id, cb) {
 		
 		if (err) return cb(null);
 		
-		var lines = data.split('\n');
-		var trips = [];
+		const lines = data.split('\n');
+		let trips = [];
 		
 		if (lines[0].indexOf('ERROR') !== -1) return cb(null);
 		
@@ -44,8 +44,8 @@ function getSiri(id, cb) {
 		
 		if (lines.length < 1) return cb(null);
 		
-		for (var i = 0; i < (lines.length > 15 ? 15 : lines.length - 1); i++) {
-			var line = lines[i];
+		for (let i = 0; i < (lines.length > 15 ? 15 : lines.length - 1); i++) {
+			const line = lines[i];
 			
 			trips.push({
 				sort: line.split(',')[2],
@@ -71,15 +71,15 @@ function getElron(id, cb) {
 		
 		if (err) return cb(null);
 		
-		var lines = JSON.parse(data).data;
-		var trips = [];
+		const lines = JSON.parse(data).data;
+		let trips = [];
 		
 		try {
 			if (lines.text) return cb(null);
-		} catch(ex) { return cb(null); }
+		} catch (ex) { return cb(null); }
 		
-		for (var i = 0; i < lines.length; i++) {
-			var line = lines[i];
+		for (let i = 0; i < lines.length; i++) {
+			const line = lines[i];
 			
 			if (toSeconds(line.plaaniline_aeg) < getSeconds()) continue;
 			

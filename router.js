@@ -6,53 +6,61 @@ module.exports = (app, s, l, p) => {
 	
 	app.get('/getstop', (req, res) => {
 		
-		var stop = s.getStop(req.query.id);
+		const stop = s.getStop(req.query.id);
 		
-		if (stop == null) return res.status(404).end();
-		
-		res.json(stop);
+		if (stop) {
+			
+			res.json(stop);
+			
+		} else {
+			
+			res.status(500).end();
+			
+		}
 		
 	});
 	
 	app.get('/gettrips', (req, res) => {
 		
-		var id = req.query.id;
+		const id = req.query.id;
 		
 		l.getSiri(id, (siri) => {
 			
-			if (siri !== null) {
+			if (siri) {
 				
-				var trips = s.getTrips(id, true);
+				const trips = s.getTrips(id, true);
 				
-				if (trips == null) return res.json(siri);
-				
-				trips = trips.concat(siri);
-				
-				trips = trips.sort((a, b) => {
-					return a.sort - b.sort;
-				});
-				
-				res.json(trips.splice(0, 15));
+				if (trips) {
+					
+					res.json(trips.concat(siri).sort((a, b) => {
+						return a.sort - b.sort;
+					}).splice(0, 15));
+					
+				} else {
+					
+					res.json(siri);
+					
+				}
 				
 			} else {
 				
 				l.getElron(id, (elron) => {
 					
-					if (elron !== null) {
+					if (elron) {
 						
 						res.json(elron);
 						
 					} else {
 						
-						var trips = s.getTrips(id, false);
+						const trips = s.getTrips(id, false);
 						
-						if (trips !== null) {
+						if (trips) {
 							
 							res.json(trips);
 							
 						} else {
 							
-							res.status(404).end();
+							res.status(502).end();
 							
 						}
 						
@@ -68,17 +76,26 @@ module.exports = (app, s, l, p) => {
 	
 	app.get('/getpanel', (req, res) => {
 		
-		var panel = p.getPanel(req.query.id);
+		const panel = p.getPanel(req.query.id);
 		
-		if (panel == null) return res.status(401).end();
-		if (!panel.enabled) return res.status(402).end();
-		
-		res.json(panel);
+		if (panel) {
+			
+			res.json(panel);
+			
+		} else if (!panel) {
+			
+			res.status(401).end();
+			
+		} else if (!panel.enabled) {
+			
+			res.status(402).end();
+			
+		}
 		
 	});
 	
 	app.get('/version', (req, res) => {
-		res.send(JSON.parse(require('fs').readFileSync('package.json').toString()).version);
+		res.send(require('./package.json').version);
 	});
 	
-}
+};

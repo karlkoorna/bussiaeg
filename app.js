@@ -5,9 +5,7 @@ const port = { http: 80, https: 443 };
 
 require('./providers/static.js')((s) => {
 	
-	require('./router.js')(app, s,
-	require('./providers/live.js'),
-	require('./providers/panels.js'));
+	require('./router.js')(app, s, require('./providers/live.js'), require('./providers/panels.js'));
 	
 	app.use(express.static(__dirname + '/public'));
 	
@@ -26,7 +24,7 @@ require('./providers/static.js')((s) => {
 			console.log('HTTPS listening on ' + port.https);
 		});
 		
-	} catch(ex) {
+	} catch (ex) {
 		console.log('HTTPS failed to start listening!');
 	}
 	

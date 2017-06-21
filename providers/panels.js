@@ -7,7 +7,7 @@ function update() {
 	
 	try {
 		panels = JSON.parse(fs.readFileSync('./providers/panels.json').toString());
-	} catch(ex) {}
+	} catch (ex) {}
 	
 }
 

@@ -2,9 +2,8 @@ const checkTime = 10000;
 const updateTime = 2000;
 const fadeTime = 1000;
 
-var updater, timer;
-
-var last = {};
+let updater, timer;
+let last = {};
 
 function getParameter(name) {
 	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -71,11 +70,11 @@ function check() {
 			
 		});
 		
-		var content = '';
-		var ids = [];
+		let content = '';
+		let ids = [];
 		
-		for (var i = 0; i < panel.stops.length; i++) {
-			var stop = panel.stops[i];
+		for (let i = 0; i < panel.stops.length; i++) {
+			const stop = panel.stops[i];
 			
 			ids.push(stop.id);
 			
@@ -112,14 +111,14 @@ function check() {
 function update(ids) {
 	
 	for (let i = 0; i < ids.length; i++) {
-		let id = ids[i];
+		const id = ids[i];
 		
 		$.get('/gettrips?id=' + id).done(function(trips) {
 			
-			var content = '';
+			let content = '';
 			
-			for (var j = 0; j < trips.length; j++) {
-				var trip = trips[j];
+			for (let j = 0; j < trips.length; j++) {
+				const trip = trips[j];
 				
 				content += '<div class="trip">';
 				content +=   '<img class="trip-type" src="//bussiaeg.ee/assets/' + (trip.type === 'bus' ? trip.owner ? 'bus_' + trip.owner : 'bus' : trip.type) + '.png" alt="">';

@@ -1,6 +1,9 @@
+# Directories
 public/panel/assets/*
+providers/static/
+node_modules/
+ssl/
+
+# Files
 !public/panel/assets/bussiaeg.png
-providers/static
-node_modules
-ssl
 providers/panels.json
