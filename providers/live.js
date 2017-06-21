@@ -37,7 +37,7 @@ function getSiri(id, cb) {
 		const lines = data.split('\n');
 		let trips = [];
 		
-		if (lines[0].indexOf('ERROR') !== -1) return cb(null);
+		if (lines[0].indexOf('ERROR') >= 0) return cb(null);
 		
 		lines.shift();
 		lines.shift();

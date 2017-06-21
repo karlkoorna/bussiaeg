@@ -135,7 +135,7 @@ function processRoutes(cb) {
 			type: line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type == 3 ? 'bus' : line.route_type == 800 ? 'trol' : line.route_type == 0 ? 'tram' : null,
 			short_name: line.route_short_name,
 			long_name: line.route_long_name.split('-').slice(-1).pop(),
-			owner: line.competent_authority === 'Pärnu LV' ? 'parnu' : line.competent_authority.indexOf('Tartu') !== -1 ? 'tartu' : null
+			owner: line.competent_authority === 'Pärnu LV' ? 'parnu' : line.competent_authority.indexOf('Tartu') >= 0 ? 'tartu' : null
 		});
 		
 	}).on('end', cb);
@@ -163,7 +163,7 @@ function processTypes(cb) {
 				
 			}
 			
-			const type = types.indexOf('trol') !== -1 ? 'trol' : types.indexOf('tram') !== -1 ? 'tram' : types.indexOf('bus') !== -1 || types.indexOf('coach') !== -1 ? 'bus' : null;
+			const type = types.indexOf('trol') >= 0 ? 'trol' : types.indexOf('tram') >= 0 ? 'tram' : types.indexOf('bus') >= 0 || types.indexOf('coach') >= 0 ? 'bus' : null;
 			
 			process.stdout.write('Generating types... ' + parseFloat((i * 100) / _stops.length).toFixed(2) + '%\r');
 			

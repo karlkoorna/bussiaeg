@@ -108,7 +108,7 @@ function hideBookmarks() {
 function showStops() {
 	
 	if (map.getZoom() <= 15) return map.eachLayer(function(layer) {
-		if (layer._icon) if (layer._icon.currentSrc.indexOf('stop') !== -1) map.removeLayer(layer);
+		if (layer._icon) if (layer._icon.currentSrc.indexOf('stop') >= 0) map.removeLayer(layer);
 	});
 	
 	var bounds = map.getBounds();
