@@ -14,7 +14,7 @@ module.exports = (app, s, l, p) => {
 			
 		} else {
 			
-			res.status(500).end();
+			res.status(418).end();
 			
 		}
 		
