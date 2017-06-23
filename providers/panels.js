@@ -16,7 +16,7 @@ fs.watch('./providers/panels.json', (e) => {
 });
 
 function getPanel(id) {
-	return panels[id];
+	return panels[id] || null;
 }
 
 module.exports.getPanel = getPanel;

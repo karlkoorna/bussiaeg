@@ -1,9 +1,9 @@
 var coords, map, marker, stop, updater;
 
-const fadeTime = 250;
-const updateTime = 2000;
-const zoomLevel = 16;
-const flyTime = 1;
+var fadeTime = 250;
+var updateTime = 2000;
+var zoomLevel = 16;
+var flyTime = 1;
 
 function getParameter(name) {
 	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -22,6 +22,7 @@ function addBookmark() {
 		inputPlaceholder: 'Minu kodu',
 		animation: 'slide-from-top'
 	}, function(input) {
+		
 		if (!input) return;
 		
 		var bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
@@ -216,6 +217,7 @@ function hideStop() {
 // Share
 
 const share = getParameter('stop');
+
 if (share) {
 	
 	showStop(share, { panMap: true, fadeIn: true });
@@ -260,9 +262,7 @@ map.on('moveend', function() {
 
 // GPS
 
-navigator.geolocation.watchPosition(function(pos) {
-	
-	coords = pos.coords;
+navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
 	
 	if (marker) return marker.setLatLng([ coords.latitude, coords.longitude ]);
 	

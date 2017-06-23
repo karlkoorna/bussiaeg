@@ -60,7 +60,7 @@ module.exports = (app, s, l, p) => {
 							
 						} else {
 							
-							res.status(502).end();
+							res.json([]);
 							
 						}
 						
