@@ -1,17 +1,14 @@
 root = true
 
-# All files
 [*]
 charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 
-# HTML, CSS, JS
 [*.{html,css,js}]
 indent_style = tab
 indent_size = 4
 
-# JSON
 [*.json]
 indent_style = space
 indent_size = 2
