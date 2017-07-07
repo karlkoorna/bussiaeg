@@ -22,55 +22,77 @@ module.exports = (app, s, l, p) => {
 	
 	app.get('/gettrips', (req, res) => {
 		
-		const id = req.query.id;
+		const ids = req.query.id.split(',');
+		const tripz = [];
 		
-		l.getSiri(id, (siri) => {
+		check();
+		function check() {
 			
-			if (siri) {
+			if (tripz.length !== ids.length) {
 				
-				const trips = s.getTrips(id, true);
-				
-				if (trips) {
-					
-					res.json(trips.concat(siri).sort((a, b) => {
-						return a.sort - b.sort;
-					}).splice(0, 15));
-					
-				} else {
-					
-					res.json(siri);
-					
-				}
-				
-			} else {
-				
-				l.getElron(id, (elron) => {
-					
-					if (elron) {
-						
-						res.json(elron);
-						
-					} else {
-						
-						const trips = s.getTrips(id, false);
-						
-						if (trips) {
-							
-							res.json(trips);
-							
-						} else {
-							
-							res.json([]);
-							
-						}
-						
-					}
-					
+				next(ids[tripz.length], (trips) => {
+					tripz.push(trips);
 				});
+				
+				return;
 				
 			}
 			
-		});
+			res.json(tripz.length > 1 ? tripz : tripz[0]);
+			
+		}
+		
+		function next(id, cb) {
+			
+			l.getSiri(id, (siri) => {
+				
+				if (siri) {
+					
+					const trips = s.getTrips(id, true);
+					
+					if (trips) {
+						
+						cb(trips.concat(siri).sort((a, b) => {
+							return a.sort - b.sort;
+						}).splice(0, 15)); check();
+						
+					} else {
+						
+						cb(siri); check();
+						
+					}
+					
+				} else {
+					
+					l.getElron(id, (elron) => {
+						
+						if (elron) {
+							
+							cb(elron); check();
+							
+						} else {
+							
+							const trips = s.getTrips(id, false);
+							
+							if (trips) {
+								
+								cb(trips); check();
+								
+							} else {
+								
+								cb([]); check();
+								
+							}
+							
+						}
+						
+					});
+					
+				}
+				
+			});
+			
+		}
 		
 	});
 	

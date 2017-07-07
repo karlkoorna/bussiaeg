@@ -71,17 +71,17 @@ function check() {
 		});
 		
 		let content = '';
-		const ids = [];
+		let ids = '';
 		
 		for (let i = 0; i < panel.stops.length; i++) {
 			const stop = panel.stops[i];
 			
-			ids.push(stop.id);
+			ids += ',' + stop.id;
 			
 			content += '<div id="stop-' + i + '" class="stop">';
 			content +=   '<div class="stop-top" style="background: ' + stop.color + ';">';
-			content +=     '<span class="stop-name">' + stop.name + '</span><br>';
-			content +=     '<span class="stop-desc">' + stop.desc + '</span>';
+			content +=     '<div class="stop-name">' + stop.name + '</div>';
+			content +=     '<div class="stop-desc">' + stop.desc + '</div>';
 			content +=   '</div>';
 			content +=   '<div class="stop-trips"></div>';
 			content += '</div>';
@@ -94,7 +94,7 @@ function check() {
 		
 		clearInterval(updater);
 		updater = setInterval(function() {
-			update(ids);
+			update(ids.substr(1));
 		}, updateTime);
 		
 	}).fail(function(xhr) {
@@ -109,11 +109,11 @@ function check() {
 }
 
 function update(ids) {
-	
-	for (let i = 0; i < ids.length; i++) {
-		const id = ids[i];
 		
-		$.get('/gettrips?id=' + id).done(function(trips) {
+	$.get('/gettrips?id=' + ids).done(function(tripz) {
+		
+		for (let i = 0; i < tripz.length; i++) {
+			const trips = tripz[i];			
 			
 			let content = '';
 			
@@ -132,8 +132,8 @@ function update(ids) {
 			
 			$('#stop-' + i + ' .stop-trips').html(content);
 			
-		});
+		}
 		
-	}
+	});
 	
 }
