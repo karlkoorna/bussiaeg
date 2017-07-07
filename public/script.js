@@ -177,7 +177,7 @@ function showStop(id, settings) {
 		for (var i = 0; i < trips.length; i++) {
 			var trip = trips[i];
 			
-			content += '<div class="trip">';
+			content += '<div class="trip" style="color:' + (trip.type === 'bus' ? trip.owner === 'parnu' ? '#3794fb' : trip.owner === 'tartu' ? '#fb3b37' : '#48d457' : trip.type === 'coach' ? '#7e11db' : trip.type === 'trol' ? '#0263d4' : trip.type === 'tram' ? '#ff7b3b' : trip.type === 'train' ? '#f2740e' : '') + ';">';
 			content +=   '<img class="trip-type" src="assets/' + (trip.type === 'bus' ? trip.owner ? 'bus_' + trip.owner : 'bus' : trip.type) + '.png" alt="">';
 			content +=   '<div class="trip-short_name">' + trip.short_name + '</div>';
 			content +=   '<div class="trip-long_name">' + trip.long_name + '</div>';
@@ -205,7 +205,7 @@ function showStop(id, settings) {
 		document.title = 'Bussiaeg - ' + stop.name;
 		history.pushState(null, document.title, '/?stop=' + stop.id);
 		
-		$('#stop-name').css('background-color', '#' + (stop.type === 'trol' ? '0071e4' : stop.type === 'tram' ? 'ff7b3b' : stop.type === 'train' ? 'ff8222' : '00bfff'));
+		$('#stop-name').css('background-color', stop.type === 'bus' ? '#48d457' : stop.type === 'coach' ? '#7e11db' : stop.type === 'trol' ? '#0263d4' : stop.type === 'tram' ? '#ff7b3b' : stop.type === 'train' ? '#f2740e' : stop.type === 'parnu' ? '#3794fb' : stop.type === 'tartu' ? '#fb3b37' : '');
 		$('#stop-name').text(stop.name);
 		
 		$('#stop').fadeIn(fadeTime);

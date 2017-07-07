@@ -135,7 +135,7 @@ function processRoutes(cb) {
 			type: line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type == 3 ? 'bus' : line.route_type == 800 ? 'trol' : line.route_type == 0 ? 'tram' : null,
 			short_name: line.route_short_name,
 			long_name: line.route_long_name.split('-').slice(-1).pop(),
-			owner: line.competent_authority === 'Pärnu LV' ? 'parnu' : line.competent_authority.indexOf('Tartu') >= 0 ? 'tartu' : null
+			owner: line.competent_authority.indexOf('Pärnu') >= 0 ? 'parnu' : line.competent_authority.indexOf('Tartu') >= 0 ? 'tartu' : null
 		});
 		
 	}).on('end', cb);
@@ -157,13 +157,14 @@ function processTypes(cb) {
 			const types = [];
 			
 			for (let j = 0; j < (times.length > 25 ? 25 : times.length); j++) {
-				const time = times[j];
 				
-				types.push(getRouteForTrip(getTripForTime(time)).type);
+				const route = getRouteForTrip(getTripForTime(times[j]));
+				
+				types.push(route.owner ? route.owner : route.type);
 				
 			}
 			
-			const type = types.indexOf('trol') >= 0 ? 'trol' : types.indexOf('tram') >= 0 ? 'tram' : types.indexOf('bus') >= 0 || types.indexOf('coach') >= 0 ? 'bus' : null;
+			const type = types.indexOf('trol') >= 0 ? 'trol' : types.indexOf('tram') >= 0 ? 'tram' : types.indexOf('parnu') >= 0 ? 'parnu' : types.indexOf('tartu') >= 0 ? 'tartu' : types.indexOf('bus') >= 0 ? 'bus' : types.indexOf('coach') >= 0 ? 'coach' : null;
 			
 			process.stdout.write('Generating types... ' + parseFloat((i * 100) / _stops.length).toFixed(2) + '%\r');
 			
@@ -207,6 +208,8 @@ function getStopById(id) {
 	
 	for (let i = 0; i < _stops.length; i++) {
 		const stop = _stops[i];
+		
+		if (!stop.type) continue;
 		
 		if (stop.id === id) return stop;
 		

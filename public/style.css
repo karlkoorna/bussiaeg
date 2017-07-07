@@ -62,8 +62,10 @@ img {
 	width: 100%;
 	height: 80px;
 	border-bottom: 1px solid rgba(0,0,0,.1);
-	color: #444;
 	font-size: 32px;
+}
+.trip:nth-child(even) {
+	background-color: rgba(0,0,0,.03);
 }
 
 .trip-type, .trip-short_name, .trip-long_name {
@@ -71,25 +73,26 @@ img {
 }
 
 .trip-short_name, .trip-long_name {
-	left: 74px;
+	font-weight: bold;
 }
 
 .trip-type {
-	left: -4px;
-	width: 80px;
-	height: 80px;
-	padding: 2px;
+	top: 2px;
+	width: 48px;
+	height: 48px;
 }
 
 .trip-short_name {
+	left: 48px;
 	top: 5px;
 	font-size: 38px;
 }
 
 .trip-long_name {
-	bottom: 8px;
-	color: #777;
+	left: 10px;
+	bottom: 5px;
 	font-size: 20px;
+	filter: brightness(.8);
 }
 
 .trip-time, .trip-alt_time {
