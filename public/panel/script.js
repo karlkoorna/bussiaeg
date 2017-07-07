@@ -125,7 +125,7 @@ function update(ids) {
 				content +=   '<div class="trip-short_name">' + trip.short_name + '</div>';
 				content +=   '<div class="trip-long_name">' + trip.long_name + '</div>';
 				content +=   '<div class="trip-time">' + trip.time + '</div>';
-				content +=   '<div class="trip-alt_time">' + (trip.panel || trip.alt_time) + '</div>';
+				content +=   '<div class="trip-alt_time">' + trip.alt_time + '</div>';
 				content += '</div>';
 				
 			}

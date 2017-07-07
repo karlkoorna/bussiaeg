@@ -53,8 +53,7 @@ function getSiri(id, cb) {
 				short_name: line.split(',')[1],
 				long_name: line.split(',')[4],
 				time: line.split(',')[2] !== line.split(',')[3] ? toCountdown(line.split(',')[2]) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps_' + line.split(',')[0] + '.png" alt=""></img>' : toCountdown(line.split(',')[3]) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps.png" alt="">',
-				alt_time: toCountdown(line.split(',')[3]),
-				panel: toTime(line.split(',')[3])
+				alt_time: toTime(line.split(',')[2])
 			});
 			
 		}
