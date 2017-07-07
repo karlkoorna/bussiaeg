@@ -232,14 +232,19 @@ img {
 	overflow-y: auto;
 }
 
+#help a {
+	color: inherit;
+}
+
 #help-logo {
 	width: 100%;
 	max-width: 512px;
+	margin-bottom: 24px;
 }
 
 .help-title {
-	display: inline-block;
-	margin: 24px 0;
+	margin: 12px 0;
+	margin-top: 24px;
 	color: #48d457;
 	font-size: 24px;
 	font-weight: bold;
@@ -248,16 +253,31 @@ img {
 	margin-top: 0;
 }
 
-#help-credits {
-	margin-top: 32px;
-	color: #dedede;
+.help-category {
+	padding: 24px 0;
+	border-top: 1px solid rgba(255,255,255,.5);
 	font-size: 18px;
 	font-weight: bold;
 }
 
+.help-role, .help-provider {
+	margin-top: 24px;
+	margin-bottom: 12px;
+	font-size: 28px;
+}
+
 .help-role {
 	color: deepskyblue;
-	font-size: 20px;
+}
+.help-role:first-child {
+	margin-top: 0;
+}
+
+.help-provider {
+	color: #ff7b3b;
+}
+.help-provider:first-child {
+	margin-top: 0;
 }
 
 #help-version {
