@@ -186,11 +186,7 @@ function showStop(id, settings) {
 		document.title = 'Bussiaeg - ' + stop.name;
 		history.pushState(null, document.title, '/?stop=' + stop.id);
 		
-		var color = '#' + (stop.type === 'trol' ? '0071e4' : stop.type === 'tram' ? 'ff7b3b' : stop.type === 'train' ? 'ff8222' : '00bfff');
-		
-		$('#stop-name').css('background-color', color);
-		$('meta[name="theme-color"]').attr('content', color);
-		
+		$('#stop-name').css('background-color', '#' + (stop.type === 'trol' ? '0071e4' : stop.type === 'tram' ? 'ff7b3b' : stop.type === 'train' ? 'ff8222' : '00bfff'));
 		$('#stop-name').text(stop.name);
 		
 		$('#stop').fadeIn(fadeTime);
@@ -208,9 +204,7 @@ function hideStop() {
 	document.title = 'Bussiaeg';
 	history.pushState(null, document.title, '/');
 	
-	$('#stop').fadeOut(fadeTime, function() {
-		$('meta[name="theme-color"]').attr('content', '#00bfff');
-	});
+	$('#stop').fadeOut(fadeTime);
 	
 }
 
