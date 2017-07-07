@@ -32,17 +32,17 @@ require('./providers/static.js')((s) => {
 	
 });
 
-function getSeconds() {
-	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
-}
-
-// Update between 4 & 5 am, check every hour
+// Update at 6:15 am, check every minute
 function scheduleUpdate(s) {
 	
 	setInterval(() => {
-		if (getSeconds() > 14400 && getSeconds() < 18000) s.update(() => {
-			console.log('Updated static data: ' + new Date());
+		
+		const time = new Date();
+		
+		if (time.getHours() === 6 && time.getMinutes() === 15) s.update(() => {
+			console.log('Updated static data: ' + time);
 		});
-	}, 1000 * 60 * 60 * 1);
+		
+	}, 60000);
 	
 }
