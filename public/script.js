@@ -1,9 +1,9 @@
 var coords, map, marker, stop, updater;
+var markers = [];
 
 var fadeTime = 250;
 var updateTime = 2000;
 var zoomLevel = 16;
-var flyTime = 1;
 
 function getParameter(name) {
 	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -29,8 +29,8 @@ function addBookmark() {
 		
 		if (input.trim() !== '') bookmarks.push({
 			name: input,
-			lat: map.getCenter().lat,
-			lng: map.getCenter().lng,
+			lat: map.getCenter().lat(),
+			lng: map.getCenter().lng(),
 			zoom: map.getZoom()
 		});
 		
@@ -111,24 +111,37 @@ function hideBookmarks() {
 
 function showStops() {
 	
-	if (map.getZoom() <= 15) return map.eachLayer(function(layer) {
-		if (layer._icon) if (layer._icon.currentSrc.indexOf('stop') >= 0) map.removeLayer(layer);
-	});
+	if (map.getZoom() <= 15) {
+		
+		for (var i = 0; i < markers.length; i++) markers[i].setMap(null);
+		
+		markers = [];
+		
+		return;
+		
+	}
 	
 	var bounds = map.getBounds();
-	$.get('/getstops?lat_min=' + bounds._northEast.lat + '&lng_min=' + bounds._northEast.lng + '&lat_max=' + bounds._southWest.lat + '&lng_max=' + bounds._southWest.lng).done(function(stops) {
-	
+	$.get('/getstops?lat_min=' + bounds.f.f + '&lng_min=' + bounds.b.f + '&lat_max=' + bounds.f.b + '&lng_max=' + bounds.b.b).done(function(stops) {
+		
 		for (var i = 0; i < stops.length; i++) {
 		
 			(function() {
 				var stop = stops[i];
 				
-				L.marker([ stop.lat, stop.lng ], {
-					icon: L.icon({
-						iconUrl: 'assets/stop_' + stop.type + '.png',
-						iconSize: [ 24, 24 ]
-					})
-				}).addTo(map).on('click', function() {
+				var marker = new google.maps.Marker({
+					position: {
+						lat: stop.lat,
+						lng: stop.lng
+					},
+					icon: {
+						url: 'assets/stop_' + stop.type + '.png',
+						scaledSize: new google.maps.Size(24, 24)
+					},
+					map: map
+				});
+				
+				marker.addListener('click', function() {
 					
 					if (updater) return;
 					
@@ -138,6 +151,8 @@ function showStops() {
 					}, updateTime);
 					
 				});
+				
+				markers.push(marker);
 				
 			})();
 			
@@ -149,15 +164,9 @@ function showStops() {
 
 function showStop(id, settings) {
 	
-	if (!updater) {
-		
-		$.get('/getstop?id=' + id).done(function(data) {
-			
-			stop = data;
-			
-		});
-		
-	}
+	if (!updater) $.get('/getstop?id=' + id).done(function(data) {
+		stop = data;
+	});
 	
 	$.get('/gettrips?id=' + id).done(function(trips) {
 		
@@ -180,7 +189,17 @@ function showStop(id, settings) {
 		
 		$('#stop-trips').html(content);
 		
-		if (settings.panMap) map.flyTo({ lat: stop.lat, lng: stop.lng }, zoomLevel, { duration: flyTime });
+		if (settings.panMap) {
+			
+			map.panTo({
+				lat: stop.lat,
+				lng: stop.lng
+			});
+			
+			map.setZoom(zoomLevel);
+			
+		}
+		
 		if (!settings.fadeIn) return;
 		
 		document.title = 'Bussiaeg - ' + stop.name;
@@ -223,61 +242,78 @@ if (share) {
 
 // Map
 
-var map = L.map('map', {
-	center: [
-		parseFloat(getParameter('lat')) || 59.388,
-		parseFloat(getParameter('lng')) || 24.685
-	],
-	zoom: zoomLevel,
-	minZoom: 7,
-	maxZoom: 18,
-	maxBounds: [ [ 59.874204, 21.396935 ], [ 57.290822, 28.838625 ] ],
-	attributionControl: false,
-	bounceAtZoomLimits: false,
-	doubleClickZoom: false,
-	zoomControl: false,
-	keyboard: false,
-	boxZoom: false
-});
-
-L.tileLayer('//{s}.google.com/vt/lyrs=phl=en&x={x}&y={y}&z={z}&pbhttps://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i372053562!3m14!2sen-US!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!12m4!1e26!2m2!1sstyles!2zcy50OjY2fHAudjpvZmY!4e0', {
-    subdomains: [ 'mt0', 'mt1', 'mt2', 'mt3' ]
-}).addTo(map);
-
-L.control.attribution({
-	position: 'bottomleft',
-	prefix: 'Bussiaeg.ee | <a href="https://soiduplaan.tallinn.ee/">Sõiduplaanid</a> | <a href="http://peatus.ee">Peatus.ee</a> | <a href="http://elron.ee">Elron</a> | <a href="https://maps.google.com">Google</a>'
-}).addTo(map);
-
-showStops();
-map.on('moveend', function() {
-	showStops();
-});
+function map() {
+	
+	map = new google.maps.Map(document.getElementById('map'), {
+		center: {
+			lat: parseFloat(getParameter('lat')) || 59.388,
+			lng: parseFloat(getParameter('lng')) || 24.685
+		},
+		zoom: zoomLevel,
+		minZoom: 7,
+		maxZoom: 18,
+		disableDefaultUI: true,
+		clickableIcons: false,
+		styles: [{
+			featureType: 'transit.station',
+			elementType: 'all',
+			stylers: [{
+				visibility: 'off'
+			}]
+		}]
+	});
+	
+	map.addListener('idle', function() {
+		showStops();
+	});
+	
+	map.addListener('mousedown', function() {
+		hideBookmarks();
+	});
+	
+}
 
 // GPS
 
 navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
 	
-	if (marker) return marker.setLatLng([ coords.latitude, coords.longitude ]);
+	if (marker) {
+		
+		marker.setPosition({
+			lat: coords.latitude,
+			lng: coords.longitude
+		});
+		
+		return;
+		
+	}
 	
-	map.flyTo([ coords.latitude, coords.longitude ], zoomLevel, { duration: flyTime });
-	
-	$('#btn-locate').css('filter', 'grayscale(0%)');
-	$('#btn-locate').addClass('bounce');
-	
-	marker = new L.marker([ coords.latitude, coords.longitude ], {
-		icon: L.icon({
-			iconUrl: 'assets/marker.png',
-			iconSize: [ 24, 24 ]
-		})
+	map.panTo({
+		lat: coords.latitude,
+		lng: coords.longitude
 	});
 	
-	marker.addTo(map);
+	map.setZoom(zoomLevel);
+	
+	marker = new google.maps.Marker({
+		position: {
+			lat: coords.latitude,
+			lng: coords.longitude
+		},
+		icon: {
+			url: 'assets/marker.png',
+			scaledSize: new google.maps.Size(24, 24)
+		},
+		map: map
+	});
 	
 	Object.assign(marker._icon.style, {
 		transformOrigin: 'center',
 		pointerEvents: 'none'
 	});
+	
+	$('#btn-locate').css('filter', 'grayscale(0%)');
+	$('#btn-locate').addClass('bounce');
 	
 });
 
@@ -315,15 +351,16 @@ $('#bookmarks').on('click', '.bookmark', function() {
 	
 	hideBookmarks();
 	
-	map.flyTo([ $(this).data('lat'), $(this).data('lng') ], $(this).data('zoom'), { duration: flyTime });
+	map.panTo({
+		lat: $(this).data('lat'),
+		lng: $(this).data('lng')
+	});
+	
+	map.setZoom($(this).data('zoom'));
 	
 });
 
 $('#bookmarks').hammer().on('swipeleft', function() {
-	hideBookmarks();
-});
-
-map.on('click dragstart', function() {
 	hideBookmarks();
 });
 
@@ -348,5 +385,14 @@ $('#help').click(function() {
 // Interface (Locate)
 
 $('#btn-locate').click(function() {
-	if (coords) map.flyTo([ coords.latitude, coords.longitude ], zoomLevel, { duration: flyTime });
+	
+	if (!coords) return;
+	
+	map.panTo({
+		lat: coords.latitude,
+		lng: coords.longitude
+	});
+	
+	map.setZoom(zoomLevel);	
+	
 });
