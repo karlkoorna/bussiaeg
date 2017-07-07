@@ -20,6 +20,7 @@ img {
 .sa-button-container .cancel {
 	background-color: #fa5858 !important;
 }
+
 .sa-button-container .confirm {
 	background-color: #00ace6 !important;
 }
@@ -79,10 +80,12 @@ img {
 	height: 80px;
 	padding: 2px;
 }
+
 .trip-short_name {
 	top: 5px;
 	font-size: 38px;
 }
+
 .trip-long_name {
 	bottom: 8px;
 	color: #777;
@@ -97,10 +100,12 @@ img {
 
 .trip-time {
 	top: 5px;
+	color: #444;
 }
+
 .trip-alt_time {
 	bottom: 6px;
-	color: #777;
+	color: #666;
 	font-size: 26px;
 }
 
@@ -128,11 +133,13 @@ img {
 	left: 16px;
 	top: 16px;
 }
+
 #btn-help {
 	z-index: 2;
 	right: 16px;
 	top: 16px;
 }
+
 #btn-locate {
 	z-index: 2;
 	right: 16px;

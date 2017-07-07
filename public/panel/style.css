@@ -8,7 +8,7 @@ html, body {
 body {
 	margin: 0;
 	font-family: Arial;
-	overflow-y: hidden;
+	overflow: hidden;
 	user-select: none;
 	-moz-user-select: none;
 	cursor: default;
@@ -47,6 +47,7 @@ body {
 	padding: 16px;
 	object-fit: contain;
 }
+
 #bar-text {
 	position: absolute;
 	top: 0;
@@ -74,6 +75,7 @@ body {
 	font-size: 40px;
 	font-weight: bold;
 }
+
 .stop-desc {
 	font-size: 26px;
 	font-weight: normal;
@@ -109,10 +111,12 @@ body {
 	height: 80px;
 	padding: 2px;
 }
+
 .trip-short_name {
 	top: 5px;
 	font-size: 38px;
 }
+
 .trip-long_name {
 	bottom: 8px;
 	color: #777;
@@ -128,6 +132,7 @@ body {
 .trip-time {
 	top: 5px;
 }
+
 .trip-alt_time {
 	bottom: 6px;
 	color: #777;
