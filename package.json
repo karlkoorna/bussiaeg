@@ -3,7 +3,7 @@
   "description": "Vaata bussi-, trolli-, trammi- ja rongiaegu üle terve Eesti!",
   "author": "Karl Köörna & Kaur Hendrikson",
   "license": "MIT",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "main": "app.js",
   "dependencies": {
     "adm-zip": "latest",
