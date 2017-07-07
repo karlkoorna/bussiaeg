@@ -11,12 +11,8 @@ function update() {
 	
 }
 
-fs.watch('./providers/panels.json', (e) => {
+if (fs.existsSync('./providers/panels.json')) fs.watch('./providers/panels.json', (e) => {
 	if (e === 'change') update();
 });
 
-function getPanel(id) {
-	return panels[id] || null;
-}
-
-module.exports.getPanel = getPanel;
+module.exports.getPanel = (id) => panels[id] || null;

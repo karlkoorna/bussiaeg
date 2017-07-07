@@ -176,7 +176,7 @@ function processTypes(cb) {
 		process.stdout.write('Generating types...       \n');
 		
 		try {
-			fs.writeFileSync('./providers/static/types.txt', data.substr(1), 'utf8');
+			fs.writeFileSync('./providers/static/types.txt', data.substr(1));
 		} catch (ex) {}
 		
 	}
@@ -332,7 +332,7 @@ function getTrips(id, coaches) {
 		
 	}
 	
-	if (trips.length === 0) return null;
+	if (!trips.length) return null;
 	
 	return trips;
 	
