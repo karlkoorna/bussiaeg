@@ -22,6 +22,8 @@ module.exports = (app, s, l, p) => {
 	
 	app.get('/gettrips', (req, res) => {
 		
+		if (!req.query.id) { res.status(418).end(); return; }
+		
 		const ids = req.query.id.split(',');
 		const tripz = [];
 		

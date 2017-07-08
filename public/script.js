@@ -307,10 +307,7 @@ navigator.geolocation.watchPosition(function(pos) {coords = pos.coords;
 		map: map
 	});
 	
-	Object.assign(marker._icon.style, {
-		transformOrigin: 'center',
-		pointerEvents: 'none'
-	});
+	marker.setClickable(false);
 	
 	$('#btn-locate').css('filter', 'grayscale(0%)');
 	$('#btn-locate').addClass('bounce');
