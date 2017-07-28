@@ -1,0 +1,39 @@
+[
+  {
+    "bookmarks_add": "Add stop",
+    "help_title_intro": "Viewing transport times",
+    "help_text_intro": "To open a stop, click on its icon on the map. Clicking on the top bar in a stop brings you back to the map. Live times have two colourful stripes. 'X' on the stripes means live times aren't available for the vehicle.",
+    "help_title_pos": "Locating yourself",
+    "help_text_pos": "Pressing on the button in the bottom-right corner of the map brings it to your location. If the button is gray, the page hasn't got your location.",
+    "help_title_add": "Adding favorite stops",
+    "help_text_add": "To add a stop, press the button in the top-left corner of the map and then press 'Add stop'. Following that click on the stop you want to add on the map. Now give it a name and press Add.",
+    "help_title_delete": "Deleting favorite stops",
+    "help_text_delete": "To delete a favorite stop, long press on it in the favorite stops menu, then click the 'X' button and confirm the deletion.",
+    "help_title_edit": "Editing favorite stops",
+    "help_text_edit": "To edit a favorite stop, long press on it in the favorite stops menu, then you can move the stop up and down using the arrow buttons and rename it using the pencil button.",
+    "help_title_android": "Adding Bussiaeg.ee on your home screen (Android)",
+    "help_text_android": "Press the three dots in the top-right corner in Chrome and choose 'Add to Home Screen'",
+    "help_title_ios": "Adding Bussiaeg.ee on your home screen (IOS)",
+    "help_text_ios": "Press the button (a box with an arrow) in the bottom-centre in Safari and choose 'Add to Home Screen'.",
+    "role_programmer": "Programmer",
+    "role_designer": "Designer",
+    "provider_live": "Live times",
+    "provider_static": "Plan times",
+    "provider_train": "Train times"
+  },
+  {
+    "okay": "Okay",
+    "yes": "Yes",
+    "no": "No",
+    "setstart_title": "Confirm starting position?",
+    "bookmark_add_title1": "Choose stop",
+    "bookmark_add_title2": "Enter name",
+    "bookmark_add_placeholder": "Home stop",
+    "bookmark_add_confirm": "Add",
+    "bookmark_add_cancel": "Back",
+    "bookmark_rename_title": "Edit name",
+    "bookmark_rename_confirm": "Change",
+    "bookmark_rename_cancel": "Back",
+    "bookmark_delete_title": "Delete?"
+  }
+]

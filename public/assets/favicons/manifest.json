@@ -1,6 +1,6 @@
 {
-  "short_name": "Bussiaeg",
-  "name": "Bussiaeg",
+  "display": "standalone",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "android-chrome-192x192.png",
@@ -8,13 +8,9 @@
       "type": "image/png"
     },
     {
-        "src": "assets/favicons/android-chrome-512x512.png",
-        "sizes": "512x512",
-        "type": "image/png"
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
-  ],
-  "theme_color": "#00bfff",
-  "background_color": "#ffffff",
-  "start_url": "/",
-  "display": "standalone"
+  ]
 }
