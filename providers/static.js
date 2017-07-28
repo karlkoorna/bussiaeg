@@ -1,69 +1,71 @@
 const request = require('request');
+const AdmZip = require('adm-zip');
 const csv = require('csv-parser');
 const fs = require('fs');
 
 let _stops, _times, _trips, _days, _routes;
 
 function getSeconds() {
-	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
+	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
 }
 
 function toSeconds(time) {
-	const hours = time.substr(0, 2);
-	const minutes = time.substr(3, 5);
-	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60);
+	return (time.substr(0, 2) * 60 * 60) + (time.substr(3, 2) * 60);
 }
 
 function toHMS(seconds) {
-	const hours = ~~(seconds / 3600);
-	const minutes = ~~((seconds % 3600) / 60);
-	seconds = seconds - (minutes * 60) - (hours * 3600);
-	return { h: hours, m: minutes, s: seconds };
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	return [ hours, minutes, seconds - (minutes * 60) - (hours * 3600) ];
 }
 
 function toCountdown(seconds) {
-	seconds -= getSeconds();
-	const time = toHMS(Math.abs(seconds));
-	return (seconds < 0 ? '-' : '') + (time.h ? time.h + 'h ' : '') + (time.m ? !!time.h && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (!time.h ? time.s + 's' : '');
+	const diff = seconds - getSeconds();
+	const hms = toHMS(Math.abs(diff));
+	return (diff < 0 ? '-' : '') + (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m ` : '') + (hms[0] ? '' : `${hms[2]}s`);
 }
 
 function toTime(seconds) {
-	const time = toHMS(seconds);
-	return ('0' + time.h).slice(-2) + ':' + ('0' + time.m).slice(-2);
+	const hms = toHMS(seconds);
+	return `${hms[0].toString().padStart(2, '0')}:${hms[1].toString().padStart(2, '0')}`;
 }
 
 function processStops(cb) {
 	
 	_stops = [];
 	
-	request('http://elron.ee/api/v1/stops', (err, res, data) => {
+	fs.createReadStream('providers/static/stops.txt').pipe(csv()).on('data', (line) => {
 		
-		const stops = JSON.parse(data).data;
+		_stops.push({
+			id: line.stop_id,
+			type: null,
+			name: line.stop_name,
+			lat: parseFloat(line.stop_lat),
+			lng: parseFloat(line.stop_lon)
+		});
 		
-		for (let i = 0; i < stops.length; i++) {
-			const stop = stops[i];
+	}).on('end', () => {
+		
+		request('http://elron.ee/api/v1/stops', (err, res, data) => {
 			
-			_stops.push({
+			if (err) return void cb();
+			
+			const stops = JSON.parse(data).data;
+			
+			if (!stops) return void cb();
+			if (stops.text) return void cb();
+			
+			for (const stop of stops) _stops.push({
 				id: stop.peatus,
-				name: stop.peatus,
 				type: 'train',
+				name: stop.peatus,
 				lat: parseFloat(stop.latitude),
 				lng: parseFloat(stop.longitude)
 			});
 			
-		}
-		
-		fs.createReadStream('providers/static/stops.txt').pipe(csv()).on('data', (line) => {
+			cb();
 			
-			_stops.push({
-				id: line.stop_id,
-				name: line.stop_name,
-				type: null,
-				lat: parseFloat(line.stop_lat),
-				lng: parseFloat(line.stop_lon)
-			});
-			
-		}).on('end', cb);
+		});
 		
 	});
 	
@@ -76,16 +78,14 @@ function processTimes(cb) {
 	fs.createReadStream('providers/static/stop_times.txt').pipe(csv()).on('data', (line) => {
 		
 		_times.push({
-			stop_id: line.stop_id,
-			trip_id: line.trip_id,
+			stopId: line.stop_id,
+			tripId: line.trip_id,
 			time: toSeconds(line.arrival_time)
 		});
 		
 	}).on('end', () => {
 		
-		_times = _times.sort((a, b) => {
-			return a.time - b.time;
-		});
+		_times = _times.sort((a, b) => a.time - b.time);
 		
 		cb();
 		
@@ -101,8 +101,8 @@ function processTrips(cb) {
 		
 		_trips.push({
 			id: line.trip_id,
-			route_id: line.route_id,
-			service_id: line.service_id
+			routeId: line.route_id,
+			serviceId: line.service_id
 		});
 		
 	}).on('end', cb);
@@ -116,7 +116,7 @@ function processDays(cb) {
 	fs.createReadStream('providers/static/calendar.txt').pipe(csv()).on('data', (line) => {
 		
 		_days.push({
-			service_id: line.service_id,
+			serviceId: line.service_id,
 			service: [ line.monday, line.tuesday, line.wednesday, line.thursday, line.friday, line.saturday, line.sunday ]
 		});
 		
@@ -132,10 +132,9 @@ function processRoutes(cb) {
 		
 		_routes.push({
 			id: line.route_id,
-			type: line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type == 3 ? 'bus' : line.route_type == 800 ? 'trol' : line.route_type == 0 ? 'tram' : null,
-			short_name: line.route_short_name,
-			long_name: line.route_long_name.split('-').slice(-1).pop(),
-			owner: line.competent_authority.indexOf('Pärnu') >= 0 ? 'parnu' : line.competent_authority.indexOf('Tartu') >= 0 ? 'tartu' : null
+			type: line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type === '800' ? 'trol' : line.route_type === '0' ? 'tram' : line.competent_authority.indexOf('Pärnu') > -1 ? 'parnu' : line.competent_authority.indexOf('Tartu') > -1 ? 'tartu' : line.route_type === '3' ? 'bus' : null,
+			shortName: line.route_short_name,
+			longName: line.route_long_name.split('-').slice(-1).pop()
 		});
 		
 	}).on('end', cb);
@@ -144,74 +143,85 @@ function processRoutes(cb) {
 
 function processTypes(cb) {
 	
-	if (!fs.existsSync('./providers/static/types.txt')) {
+	if (!fs.existsSync('providers/static/types.txt')) {
 		
 		let data = '';
 		
-		for (let i = 0; i < _stops.length; i++) {
+		for (const i in _stops) {
 			const stop = _stops[i];
 			
-			if (stop.type !== null) continue;
+			if (stop.type) continue;
 			
 			const times = getTimesForStop(stop.id);
 			const types = [];
 			
-			for (let j = 0; j < (times.length > 25 ? 25 : times.length); j++) {
-				
-				const route = getRouteForTrip(getTripForTime(times[j]));
-				
-				types.push(route.owner ? route.owner : route.type);
-				
-			}
+			for (const time of times) types.push(getRouteForTrip(getTripForTime(time)).type);
 			
-			const type = types.indexOf('trol') >= 0 ? 'trol' : types.indexOf('tram') >= 0 ? 'tram' : types.indexOf('parnu') >= 0 ? 'parnu' : types.indexOf('tartu') >= 0 ? 'tartu' : types.indexOf('bus') >= 0 ? 'bus' : types.indexOf('coach') >= 0 ? 'coach' : null;
+			const type = types.indexOf('trol') > -1 ? 'trol' : types.indexOf('tram') > -1 ? 'tram' : types.indexOf('parnu') > -1 ? 'parnu' : types.indexOf('tartu') > -1 ? 'tartu' : types.indexOf('bus') > -1 ? 'bus' : types.indexOf('coach') > -1 ? 'coach' : null;
 			
-			process.stdout.write('Generating types... ' + parseFloat((i * 100) / _stops.length).toFixed(2) + '%\r');
+			if (type) data += `\n${stop.id},${type}`;
 			
-			if (!type) continue;
-			
-			data += '\n' + stop.id + '\u00A4' + type;
+			process.stdout.write(`Generating types... ${(i * 100 / _stops.length).toFixed(2)}%\r`);
 			
 		}
+		
+		fs.writeFileSync('providers/static/types.txt', data.substr(1));
 		
 		process.stdout.write('Generating types...       \n');
 		
-		try {
-			fs.writeFileSync('./providers/static/types.txt', data.substr(1));
-		} catch (ex) {}
-		
 	}
 	
-	const types = fs.readFileSync('./providers/static/types.txt', 'utf8').toString().split('\n');
+	const types = fs.readFileSync('providers/static/types.txt').toString().split('\n');
 	
-	for (let i = 0; i < _stops.length; i++) {
-		const stop = _stops[i];
+	for (const i in types) {
+		const type = types[i];
 		
-		for (let j = 0; j < types.length; j++) {
-			const type = types[j];
+		for (const stop of _stops) {
 			
-			if (stop.id === type.split('¤')[0]) stop.type = type.split('¤')[1];
+			if (stop.type) continue;
+			if (stop.id !== type.split(',')[0]) continue;
+			
+			stop.type = type.split(',')[1];
+			delete types[i];
+			
+			break;
 			
 		}
 		
-		process.stdout.write('Processing types... ' + parseFloat((i * 100) / _stops.length).toFixed(2) + '%\r');
-		
 	}
 	
-	process.stdout.write('Processing types...       \n');
+	console.log('Processing types...');
 	
 	cb();
 	
 }
 
-function getStopById(id) {
+function getStops(latMin, latMax, lngMin, lngMax) {
 	
-	for (let i = 0; i < _stops.length; i++) {
-		const stop = _stops[i];
+	const stops = [];
+	
+	for (const stop of _stops) {
 		
+		if (stop.lat > latMin || stop.lat < latMax) continue;
+		if (stop.lng > lngMin || stop.lng < lngMax) continue;
 		if (!stop.type) continue;
 		
-		if (stop.id === id) return stop;
+		stops.push(stop);
+		
+	}
+	
+	return stops;
+	
+}
+
+function getStop(id) {
+	
+	for (const stop of _stops) {
+		
+		if (stop.id !== id) continue;
+		if (!stop.type) continue;
+		
+		return stop;
 		
 	}
 	
@@ -223,10 +233,13 @@ function getTimesForStop(id) {
 	
 	const times = [];
 	
-	for (let i = 0; i < _times.length; i++) {
-		const time = _times[i];
+	for (const time of _times) {
 		
-		if (time.stop_id === id) times.push(time);
+		if (time.stopId !== id) continue;
+		if (times.length === 15) break;
+		if (time.time < getSeconds()) continue;
+		
+		times.push(time);
 		
 	}
 	
@@ -235,23 +248,15 @@ function getTimesForStop(id) {
 }
 
 function getTripForTime(time) {
-	
-	for (let i = 0; i < _trips.length; i++) {
-		const trip = _trips[i];
-		
-		if (trip.id === time.trip_id) return trip;
-		
-	}
-	
+	for (const trip of _trips) if (trip.id === time.tripId) return trip;
 }
 
 function isDayForTrip(trip) {
 	
-	for (let i = 0; i < _days.length; i++) {
-		const day = _days[i];
+	for (const day of _days) {
 		
-		if (day.service_id !== trip.service_id) continue;
-		if (day.service[new Date().getDay()] == false) continue;
+		if (day.serviceId !== trip.serviceId) continue;
+		if (!day.service[new Date().getDay()]) continue;
 		
 		return day;
 		
@@ -260,82 +265,38 @@ function isDayForTrip(trip) {
 }
 
 function getRouteForTrip(trip) {
-	
-	for (let i = 0; i < _routes.length; i++) {
-		const route = _routes[i];
-		
-		if (route.id === trip.route_id) return route;
-		
-	}
-	
-}
-
-function getStops(lat_min, lat_max, lng_min, lng_max) {
-	
-	const stops = [];
-	
-	for (let i = 0; i < _stops.length; i++) {
-		const stop = _stops[i];
-		
-		if (stop.lat > lat_min || stop.lat < lat_max) continue;
-		if (stop.lng > lng_min || stop.lng < lng_max) continue;
-		
-		if (!stop.type) continue;
-		
-		stops.push({
-			id: stop.id,
-			type: stop.type,
-			lat: stop.lat,
-			lng: stop.lng
-		});
-		
-	}
-	
-	return stops;
-	
+	for (const route of _routes) if (route.id === trip.routeId) return route;
 }
 
 function getTrips(id, coaches) {
 	
 	const trips = [];
-	const last = {};
+	let last = '';
 	
-	const times = getTimesForStop(id);
-	
-	for (let i = 0; i < times.length; i++) {
-		const time = times[i];
+	for (const time of getTimesForStop(id)) {
 		
 		const trip = getTripForTime(time);
 		
 		if (!isDayForTrip(trip)) continue;
-		if (time.time < getSeconds()) continue;
-		
-		if (trips.length >= 15) break;
 		
 		const route = getRouteForTrip(trip);
 		
 		if (coaches && route.type !== 'coach') continue;
 		
-		try {
-			if (time.time === last.time && route.name === last.name) continue;
-		} catch (ex) {}
-		
-		last.time = time.time;
-		last.name = route.name;
+		if (last === route.shortName + time.time) continue;
+		last = route.shortName + time.time;
 		
 		trips.push({
 			sort: time.time,
 			type: route.type,
-			short_name: route.short_name,
-			long_name: route.long_name,
-			time: toCountdown(time.time) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps.png" alt="">',
-			alt_time: toTime(time.time),
-			owner: route.owner
+			shortName: route.shortName,
+			longName: route.longName,
+			time: toCountdown(time.time),
+			altTime: toTime(time.time),
+			gps: 'off'
 		});
 		
 	}
-	
-	if (!trips.length) return null;
 	
 	return trips;
 	
@@ -346,32 +307,34 @@ function update(cb) {
 	console.log('Downloading static data...');
 	request({ url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null }, (err, res, data) => {
 		
-		if (err) {
-			console.log('Failed to download data!');
-			process.exit();
-		}
+		if (err) console.log('Failed to download data!');
 		
 		console.log('Extracting static data...');
 		try {
 			
-			const zip = new require('adm-zip')(new Buffer(data));
+			const zip = new AdmZip(new Buffer(data));
 			
-			zip.extractEntryTo('stops.txt',      'providers/static', false, true);
+			zip.extractEntryTo('stops.txt', 'providers/static', false, true);
 			zip.extractEntryTo('stop_times.txt', 'providers/static', false, true);
-			zip.extractEntryTo('trips.txt',      'providers/static', false, true);
-			zip.extractEntryTo('calendar.txt',   'providers/static', false, true);
-			zip.extractEntryTo('routes.txt',     'providers/static', false, true);
+			zip.extractEntryTo('trips.txt', 'providers/static', false, true);
+			zip.extractEntryTo('calendar.txt', 'providers/static', false, true);
+			zip.extractEntryTo('routes.txt', 'providers/static', false, true);
 			
 		} catch (ex) {
 			console.log('Failed to extract data!');
-			process.exit();
 		}
 		
+		for (const file of [ 'stops', 'stop_times', 'trips', 'calendar', 'routes' ]) if (!fs.existsSync(`providers/static/${file}.txt`)) throw new Error(`Missing providers/static/${file}.txt`);
+		
 		console.log('Processing stops...');
-		processStops(() => {console.log('Processing times...');
-			processTimes(() => {console.log('Processing trips...');
-				processTrips(() => {console.log('Processing days...');
-					processDays(() => {console.log('Processing routes...');
+		processStops(() => {
+			console.log('Processing times...');
+			processTimes(() => {
+				console.log('Processing trips...');
+				processTrips(() => {
+					console.log('Processing days...');
+					processDays(() => {
+						console.log('Processing routes...');
 						processRoutes(() => {
 							processTypes(() => {
 								if (cb) cb();
@@ -389,7 +352,7 @@ function update(cb) {
 module.exports = (cb) => {
 	
 	update(() => {
-		cb({ getStops: getStops, getStop: getStopById, getTrips: getTrips, update: update });
+		cb({ getStops, getStop, getTrips, update });
 	});
 	
 };

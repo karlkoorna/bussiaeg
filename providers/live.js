@@ -1,102 +1,86 @@
 const request = require('request');
 
 function getSeconds() {
-	return ~~((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
+	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
 }
 
 function toSeconds(time) {
-	const hours = time.substr(0, 2);
-	const minutes = time.substr(3, 5);
-	return (parseInt(hours) * 60 * 60) + (parseInt(minutes) * 60);
+	return (time.substr(0, 2) * 60 * 60) + (time.substr(3, 2) * 60) + time.substr(6, 2);
 }
 
 function toHMS(seconds) {
-	const hours = ~~(seconds / 3600);
-	const minutes = ~~((seconds % 3600) / 60);
-	seconds = seconds - (minutes * 60) - (hours * 3600);
-	return { h: hours, m: minutes, s: seconds };
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	return [ hours, minutes, seconds - (minutes * 60) - (hours * 3600) ];
 }
 
 function toCountdown(seconds) {
-	seconds -= getSeconds();
-	const time = toHMS(Math.abs(seconds));
-	return (seconds < 0 ? '-' : '') + (time.h ? time.h + 'h ' : '') + (time.m ? !!time.h && time.m < 10 ? ('0' + time.m).slice(-2) + 'm ' : time.m + 'm ' : '') + (!time.h ? time.s + 's' : '');
+	const diff = seconds - getSeconds();
+	const hms = toHMS(Math.abs(diff));
+	return (diff < 0 ? '-' : '') + (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m ` : '') + (hms[0] ? '' : `${hms[2]}s`);
 }
 
 function toTime(seconds) {
-	const time = toHMS(seconds);
-	return ('0' + time.h).slice(-2) + ':' + ('0' + time.m).slice(-2);
+	const hms = toHMS(seconds);
+	return `${hms[0].toString().padStart(2, '0')}:${hms[1].toString().padStart(2, '0')}`;
 }
 
-function getSiri(id, cb) {
+module.exports.getSiri = (id, cb) => {
 	
-	request('http://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=' + id + '&trip=' + ~~(new Date().getTime() / 100), (err, res, data) => {
+	request(`https://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=${id}`, (err, res, data) => {
 		
-		if (err) return cb(null);
+		if (err) return void cb();
 		
 		const lines = data.split('\n');
 		const trips = [];
 		
-		if (lines[0].indexOf('ERROR') >= 0) return cb(null);
+		if (lines[0].indexOf('ERROR') > -1) return void cb();
 		
 		lines.shift();
 		lines.shift();
+		lines.pop();
 		
-		if (lines.length < 1) return cb(null);
+		if (!lines.length) return void cb();
 		
-		for (let i = 0; i < (lines.length > 15 ? 15 : lines.length - 1); i++) {
-			const line = lines[i];
-			
-			trips.push({
-				sort: line.split(',')[2],
-				type: line.split(',')[0],
-				short_name: line.split(',')[1],
-				long_name: line.split(',')[4],
-				time: line.split(',')[2] !== line.split(',')[3] ? toCountdown(line.split(',')[2]) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps_' + line.split(',')[0] + '.png" alt=""></img>' : toCountdown(line.split(',')[3]) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps.png" alt="">',
-				alt_time: toTime(line.split(',')[2])
-			});
-			
-		}
+		for (const line of lines) trips.push({
+			sort: line.split(',')[2],
+			type: line.split(',')[0],
+			shortName: line.split(',')[1],
+			longName: line.split(',')[4],
+			time: toCountdown(line.split(',')[2]),
+			altTime: toTime(line.split(',')[2]),
+			gps: line.split(',')[2] === line.split(',')[3] ? 'off' : line.split(',')[0]
+		});
 		
 		cb(trips);
 		
 	});
 	
-}
+};
 
-function getElron(id, cb) {
+module.exports.getElron = (id, cb) => {
 	
-	request('http://elron.ee/api/v1/stop?stop=' + encodeURIComponent(id), (err, res, data) => {
+	request(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`, (err, res, data) => {
 		
-		if (err) return cb(null);
+		if (err) return void cb();
 		
 		const lines = JSON.parse(data).data;
 		const trips = [];
 		
-		try {
-			if (lines.text) return cb(null);
-		} catch (ex) { return cb(null); }
+		if (!lines) return void cb();
+		if (lines.text) return void cb();
 		
-		for (let i = 0; i < lines.length; i++) {
-			const line = lines[i];
-			
-			if (toSeconds(line.plaaniline_aeg) < getSeconds()) continue;
-			
-			trips.push({
-				type: 'train',
-				short_name: line.reis,
-				long_name: line.liin.split(' - ')[1],
-				time: toCountdown(toSeconds(line.plaaniline_aeg)) + '<img class="trip-gps" src="//bussiaeg.ee/assets/gps.png" alt="">',
-				alt_time: line.plaaniline_aeg
-			});
-			
-		}
+		for (const line of lines) if (toSeconds(line.plaaniline_aeg) >= getSeconds()) trips.push({
+			type: 'train',
+			shortName: line.reis,
+			longName: line.liin.split(' - ')[1],
+			time: toCountdown(toSeconds(line.plaaniline_aeg)),
+			altTime: line.plaaniline_aeg,
+			gps: 'off'
+		});
 		
-		cb(trips.splice(0, 15));
+		cb(trips.slice(0, 15));
 		
 	});
 	
-}
-
-module.exports.getSiri = getSiri;
-module.exports.getElron = getElron;
+};

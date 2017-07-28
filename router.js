@@ -8,91 +8,41 @@ module.exports = (app, s, l, p) => {
 		
 		const stop = s.getStop(req.query.id);
 		
-		if (stop) {
-			
-			res.json(stop);
-			
-		} else {
-			
-			res.status(418).end();
-			
-		}
+		if (!stop) return void res.status(418).end();
+		
+		res.json(stop);
 		
 	});
 	
 	app.get('/gettrips', (req, res) => {
 		
-		if (!req.query.id) { res.status(418).end(); return; }
+		if (!req.query.id) return void res.status(418).end();
 		
 		const ids = req.query.id.split(',');
 		const tripz = [];
 		
-		check();
-		function check() {
+		next();
+		function next(trips) {
+			
+			if (trips) tripz.push(trips);
 			
 			if (tripz.length !== ids.length) {
 				
-				next(ids[tripz.length], (trips) => {
-					tripz.push(trips);
-				});
+				const id = ids[tripz.length];
 				
-				return;
+				return void l.getSiri(id, (siri) => {
+					
+					if (siri) return void next(s.getTrips(id, true).concat(siri).sort((a, b) => a.sort - b.sort).splice(0, 15));
+					
+					l.getElron(id, (elron) => {
+						next(elron || s.getTrips(id, false));
+					});
+					
+				});
 				
 			}
 			
 			res.json(tripz.length > 1 ? tripz : tripz[0]);
-			
-		}
-		
-		function next(id, cb) {
-			
-			l.getSiri(id, (siri) => {
-				
-				if (siri) {
-					
-					const trips = s.getTrips(id, true);
-					
-					if (trips) {
-						
-						cb(trips.concat(siri).sort((a, b) => {
-							return a.sort - b.sort;
-						}).splice(0, 15)); check();
-						
-					} else {
-						
-						cb(siri); check();
-						
-					}
-					
-				} else {
-					
-					l.getElron(id, (elron) => {
-						
-						if (elron) {
-							
-							cb(elron); check();
-							
-						} else {
-							
-							const trips = s.getTrips(id, false);
-							
-							if (trips) {
-								
-								cb(trips); check();
-								
-							} else {
-								
-								cb([]); check();
-								
-							}
-							
-						}
-						
-					});
-					
-				}
-				
-			});
 			
 		}
 		
@@ -102,24 +52,15 @@ module.exports = (app, s, l, p) => {
 		
 		const panel = p.getPanel(req.query.id);
 		
-		if (panel) {
-			
-			res.json(panel);
-			
-		} else if (!panel) {
-			
-			res.status(401).end();
-			
-		} else if (!panel.enabled) {
-			
-			res.status(402).end();
-			
-		}
+		if (!panel) return void res.status(401).end();
+		if (!panel.enabled) return void res.status(402).end();
+		
+		res.json(panel);
 		
 	});
 	
 	app.get('/version', (req, res) => {
-		res.send(require('./package.json').version);
+		res.send(JSON.parse(require('fs').readFileSync('package.json').toString()).version);
 	});
 	
 };
