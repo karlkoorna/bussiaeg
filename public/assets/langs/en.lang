@@ -23,17 +23,19 @@
   },
   {
     "okay": "Okay",
-    "yes": "Yes",
-    "no": "No",
     "setstart_title": "Confirm starting position?",
+    "setstart_confirm": "Yes",
+    "setstart_cancel": "No",
     "bookmark_add_title1": "Choose stop",
     "bookmark_add_title2": "Enter name",
     "bookmark_add_placeholder": "Home stop",
     "bookmark_add_confirm": "Add",
-    "bookmark_add_cancel": "Back",
+    "bookmark_add_cancel": "Cancel",
     "bookmark_rename_title": "Edit name",
-    "bookmark_rename_confirm": "Change",
-    "bookmark_rename_cancel": "Back",
-    "bookmark_delete_title": "Delete?"
+    "bookmark_rename_confirm": "Rename",
+    "bookmark_rename_cancel": "Cancel",
+    "bookmark_delete_title": "Delete?",
+    "bookmark_delete_confirm": "Yes",
+    "bookmark_delete_cancel": "No"
   }
 ]

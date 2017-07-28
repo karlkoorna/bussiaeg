@@ -167,8 +167,8 @@ function map() {
 				title: lang.setstart_title || 'Kinnita alguskoht?',
 				animation: 'slide-from-bottom',
 				showCancelButton: true,
-				confirmButtonText: lang.yes || 'Jah',
-				cancelButtonText: lang.no || 'Ei'
+				confirmButtonText: lang.setstart_confirm || 'Jah',
+				cancelButtonText: lang.setstart_cancel || 'Ei'
 			}, function(isConfirm) {
 				
 				if (isConfirm) localStorage.setItem('start', JSON.stringify({
@@ -284,7 +284,7 @@ function showStops() {
 						type: 'input',
 						animation: 'slide-from-top',
 						showCancelButton: true,
-						title: lang.bookmark_add_title || 'Sisesta nimi',
+						title: lang.bookmark_add_title2 || 'Sisesta nimi',
 						inputPlaceholder: lang.bookmark_add_placeholder || 'Kodupeatus',
 						inputValue: stop.name,
 						confirmButtonText: lang.bookmark_add_confirm || 'Lisa',
@@ -478,8 +478,8 @@ function editBookmark(el) {
 			title: lang.bookmark_delete_title || 'Kustuta?',
 			showCancelButton: true,
 			text: el.innerText,
-			confirmButtonText: lang.yes || 'Jah',
-			cancelButtonText: lang.no || 'Ei'
+			confirmButtonText: lang.bookmark_delete_confirm || 'Jah',
+			cancelButtonText: lang.bookmark_delete_cancel || 'Ei'
 		}, function(isConfirm) {
 			
 			if (!isConfirm) return;
