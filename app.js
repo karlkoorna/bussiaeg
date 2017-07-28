@@ -7,21 +7,21 @@ require('./providers/static.js')((s) => {
 	
 	require('./router.js')(app, s, require('./providers/live.js'), require('./providers/panels.js'));
 	
-	app.use(express.static(__dirname + '/public'));
+	app.use(express.static(`${__dirname}/public`));
 	
-	require('http').Server(app).listen(port.http, () => {
-		console.log('HTTP listening on ' + port.http);
+	require('http').createServer(app).listen(port.http, () => {
+		console.log(`HTTP listening on ${port.http}`);
 	});
 	
 	try {
 		
-		require('https').Server({
+		require('https').createServer({
 			cert: fs.readFileSync('ssl/ssl.crt'),
 			key: fs.readFileSync('ssl/ssl.key'),
 			ca: fs.readFileSync('ssl/ca.crt'),
 			rejectUnauthorized: false
 		}, app).listen(port.https, () => {
-			console.log('HTTPS listening on ' + port.https);
+			console.log(`HTTPS listening on ${port.https}`);
 		});
 		
 	} catch (ex) {
@@ -40,7 +40,7 @@ function scheduleUpdate(s) {
 		const time = new Date();
 		
 		if (time.getHours() === 6 && time.getMinutes() === 15) s.update(() => {
-			console.log('Updated static data: ' + time);
+			console.log(`Updated static data: ${time}`);
 		});
 		
 	}, 60000);

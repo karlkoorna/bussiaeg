@@ -1,5 +1,5 @@
 # Directories
-public/panel/assets/*
+public/panel/assets/logos/*
 providers/static/
 node_modules/
 ssl/
