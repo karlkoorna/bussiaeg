@@ -463,7 +463,7 @@ function editBookmark(el) {
 			if (input === false) return;
 			if (!input.trim()) return;
 			
-			el.innerText = input.trim();
+			el.innerHTML = input.trim();
 			
 			updateBookmarks();
 			
