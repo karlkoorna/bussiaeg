@@ -200,7 +200,7 @@ navigator.geolocation.watchPosition(function(pos) {
 		lng: coords.longitude
 	});
 	
-	if (!share || !getParameter('lat') || !getParameter('lng')) {
+	if (!params.stop && !params.lat && !params.lng) {
 		
 		map.panTo({
 			lat: coords.latitude,
@@ -229,7 +229,7 @@ navigator.geolocation.watchPosition(function(pos) {
 	
 });
 
-document.getElementById('btn-locate').addEventListener('click', function() {
+$btnLocate.addEventListener('click', function() {
 	
 	if (!coords) return;
 	
