@@ -305,7 +305,7 @@ function getTrips(id, coaches) {
 function update(cb) {
 	
 	console.log('Downloading static data...');
-	request({ url: 'http://peatus.ee/gtfs/gtfs.zip', encoding: null }, (err, res, data) => {
+	request({ url: 'http://www.peatus.ee/gtfs/gtfs.zip', encoding: null }, (err, res, data) => {
 		
 		if (err) console.log('Failed to download data!');
 		

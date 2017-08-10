@@ -60,7 +60,7 @@ module.exports.getSiri = (id, cb) => {
 
 module.exports.getElron = (id, cb) => {
 	
-	request(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`, (err, res, data) => {
+	request(`http://www.elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`, (err, res, data) => {
 		
 		if (err) return void cb();
 		
