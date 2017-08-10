@@ -1,16 +1,3 @@
-if (!localStorage.getItem('bookmarksv2')) {
-	
-	localStorage.removeItem('bookmarks');
-	localStorage.setItem('bookmarksv2', true);
-	
-	swal({
-		title: 'Vabandame',
-		text: 'Bussiaeg.ee ei toeta enam lemmikasukohti.\nNende asemel on nüüd lemmikpeatused.',
-		confirmButtonText: 'Olgu'
-	});
-	
-}
-
 var coords, map, marker, stop, updater, booking;
 var params = {}, lang = [ {}, {} ], markers = [];
 
@@ -179,7 +166,7 @@ function map() {
 				
 			});
 			
-		}, 251);
+		}, 1004);
 		
 	});
 	
