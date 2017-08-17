@@ -1,7 +1,8 @@
-const express = require('express'), app = express();
 const fs = require('fs');
+const express = require('express');
+const app = express();
 
-const port = { http: 80, https: 443 };
+const ports = { http: 80, https: 443 };
 
 require('./providers/static.js')((s) => {
 	
@@ -9,8 +10,8 @@ require('./providers/static.js')((s) => {
 	
 	app.use(express.static(`${__dirname}/public`));
 	
-	require('http').createServer(app).listen(port.http, () => {
-		console.log(`HTTP listening on ${port.http}`);
+	require('http').createServer(app).listen(ports.http, () => {
+		console.log(`HTTP listening on ${ports.http}`);
 	});
 	
 	try {
@@ -20,8 +21,8 @@ require('./providers/static.js')((s) => {
 			key: fs.readFileSync('ssl/ssl.key'),
 			ca: fs.readFileSync('ssl/ca.crt'),
 			rejectUnauthorized: false
-		}, app).listen(port.https, () => {
-			console.log(`HTTPS listening on ${port.https}`);
+		}, app).listen(ports.https, () => {
+			console.log(`HTTPS listening on ${ports.https}`);
 		});
 		
 	} catch (ex) {

@@ -1,7 +1,7 @@
+const fs = require('fs');
 const request = require('request');
 const AdmZip = require('adm-zip');
 const csv = require('csv-parser');
-const fs = require('fs');
 
 let _stops, _times, _trips, _days, _routes;
 
