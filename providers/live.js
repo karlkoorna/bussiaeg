@@ -1,7 +1,7 @@
 const request = require('request');
 
 function getSeconds() {
-	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
+	return Math.floor((new Date() - (new Date()).setHours(0, 0, 0, 0)) / 1000);
 }
 
 function toSeconds(time) {

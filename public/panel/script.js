@@ -2,9 +2,19 @@ const params = {}, last = { panel: {}, version: '' };
 let updater, timer;
 
 const $cover = document.getElementById('cover');
+const $stops = document.getElementById('stops');
+const $bar = document.getElementById('bar');
+const $barLogo = document.getElementById('bar-logo');
+const $barText = document.getElementById('bar-text');
 
 const checkTime = 5000;
 const updateTime = 2000;
+
+moment.locale('et');
+
+(location.search.match(/[^?&]{3,}/g) || [ '=' ]).forEach((match) => {
+	if (match.split('=')[0]) params[match.split('=')[0]] = match.split('=')[1] || true;
+});
 
 function get(url, cb) {
 	
@@ -56,12 +66,6 @@ function hideCover() {
 	$cover.classList.remove('is-visible');
 }
 
-(location.search.match(/[^?&]{3,}/g) || [ '=' ]).forEach((match) => {
-	if (match.split('=')[0]) params[match.split('=')[0]] = match.split('=')[1] || true;
-});
-
-moment.locale('et');
-
 check();
 setInterval(check, checkTime);
 function check() {
@@ -92,23 +96,23 @@ function check() {
 			
 			ids.push(stop.id);
 			
-			content += `<div id="stop-${i}" class="stop">`;
-			content +=   `<div class="stop-top" style="background-color:${stop.color};">`;
-			content +=   `<div class="stop-name">${stop.name}</div>`;
-			content +=   `<div class="stop-desc">${stop.desc}</div>`;
-			content +=   '</div>';
-			content +=   '<div class="stop-trips"></div>';
-			content += '</div>';
+			content += `
+				<div id="stop-${i}" class="stop">
+					<div class="stop-top" style="background-color:${stop.color};">
+					<div class="stop-name">${stop.name}</div>
+					<div class="stop-desc">${stop.desc}</div>
+					</div>
+					<div class="stop-trips"></div>
+				</div>
+			`;
 			
 		}
 		
-		document.getElementById('stops').innerHTML = content;
+		$stops.innerHTML = content;
+		$bar.style.background = panel.color;
+		$barLogo.setAttribute('src', `assets/logos/${panel.logo}.png`);
 		
-		document.getElementById('bar').style.background = panel.color;
-		
-		document.getElementById('bar-logo').setAttribute('src', `assets/logos/${panel.logo}.png`);
-		
-		document.getElementById('bar-logo').addEventListener('load', () => {
+		$barLogo.addEventListener('load', () => {
 			for (const el of document.querySelectorAll('.stop-trips')) el.style.zoom = (window.innerHeight - (document.getElementsByClassName('stop-top')[0].clientHeight + document.getElementById('bar').clientHeight)) / panel.trips / 81.2;
 		});
 		
@@ -118,7 +122,7 @@ function check() {
 		
 		clearInterval(timer);
 		timer = setInterval(() => {
-			document.getElementById('bar-text').innerText = moment().format(panel.text);
+			$barText.innerText = moment().format(panel.text);
 		}, 1000);
 		
 		clearInterval(updater);
@@ -143,13 +147,15 @@ function update(ids) {
 			
 			for (const trip of trips) {
 				
-				content += `<div class="trip" style="color:${trip.type === 'parnu' ? '#3794fb' : trip.type === 'tartu' ? '#fb3b37' : trip.type === 'bus' ? '#48d457' : trip.type === 'coach' ? '#7e11db' : trip.type === 'trol' ? '#0263d4' : trip.type === 'tram' ? '#ff7b3b' : trip.type === 'train' ? '#f2740e' : ''};">`;
-				content +=   `<img class="trip-type" src="../assets/vehicles/${trip.type}.png" alt="">`;
-				content +=   `<div class="trip-short_name">${trip.shortName}</div>`;
-				content +=   `<div class="trip-long_name">${trip.longName}</div>`;
-				content +=   `<div class="trip-time">${trip.time}<img class="trip-gps" src="../assets/gps/${trip.gps}.png" alt=""></div>`;
-				content +=   `<div class="trip-alt_time">${trip.altTime}</div>`;
-				content += '</div>';
+				content += `
+					<div class="trip" style="color:${trip.type === 'parnu' ? '#3794fb' : trip.type === 'tartu' ? '#fb3b37' : trip.type === 'bus' ? '#48d457' : trip.type === 'coach' ? '#7e11db' : trip.type === 'trol' ? '#0263d4' : trip.type === 'tram' ? '#ff7b3b' : trip.type === 'train' ? '#f2740e' : ''};">
+						<img class="trip-type" src="../assets/vehicles/${trip.type}.png" alt="">
+						<div class="trip-short_name">${trip.shortName}</div>
+						<div class="trip-long_name">${trip.longName}</div>
+						<div class="trip-time">${trip.time}<img class="trip-gps" src="../assets/gps/${trip.gps}.png" alt=""></div>
+						<div class="trip-alt_time">${trip.altTime}</div>
+					</div>
+				`;
 				
 			}
 			

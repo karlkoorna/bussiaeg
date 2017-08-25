@@ -15,6 +15,10 @@ var zoomLevel = 16;
 
 if (!NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.forEach;
 
+(location.search.match(/[^?&]{3,}/g) || [ '=' ]).forEach(function(match) {
+	if (match.split('=')[0]) params[match.split('=')[0]] = match.split('=')[1] || true;
+});
+
 function get(url, cb) {
 	
 	var http = new XMLHttpRequest();
@@ -47,9 +51,7 @@ function get(url, cb) {
 	
 }
 
-(location.search.match(/[^?&]{3,}/g) || [ '=' ]).forEach(function(match) {
-	if (match.split('=')[0]) params[match.split('=')[0]] = match.split('=')[1] || true;
-});
+// UI
 
 document.querySelectorAll('.btn').forEach(function(el) {
 	
@@ -83,7 +85,7 @@ if (params.stop) {
 	
 }
 
-// Languages
+// Language
 
 get('assets/langs/' + (params.lang || localStorage.getItem('lang')) + '.lang', function(err, code, data) {
 	
