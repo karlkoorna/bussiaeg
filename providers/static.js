@@ -3,10 +3,10 @@ const request = require('request');
 const AdmZip = require('adm-zip');
 const csv = require('csv-parser');
 
-let _stops, _times, _trips, _days, _routes;
+let _stops, _times, _trips, _services, _routes;
 
 function getSeconds() {
-	return Math.floor((new Date() - new Date().setHours(0, 0, 0, 0)) / 1000);
+	return Math.floor((new Date() - (new Date()).setHours(0, 0, 0, 0)) / 1000);
 }
 
 function toSeconds(time) {
@@ -28,6 +28,10 @@ function toCountdown(seconds) {
 function toTime(seconds) {
 	const hms = toHMS(seconds);
 	return `${hms[0].toString().padStart(2, '0')}:${hms[1].toString().padStart(2, '0')}`;
+}
+
+function toDate(time) {
+	return new Date(time.substr(0, 4), time.substr(4, 2) - 1, time.substr(6, 2));
 }
 
 function processStops(cb) {
@@ -109,15 +113,17 @@ function processTrips(cb) {
 	
 }
 
-function processDays(cb) {
+function processServices(cb) {
 	
-	_days = [];
+	_services = [];
 	
 	fs.createReadStream('providers/static/calendar.txt').pipe(csv()).on('data', (line) => {
 		
-		_days.push({
-			serviceId: line.service_id,
-			service: [ line.monday, line.tuesday, line.wednesday, line.thursday, line.friday, line.saturday, line.sunday ]
+		_services.push({
+			id: line.service_id,
+			days: [ line.monday, line.tuesday, line.wednesday, line.thursday, line.friday, line.saturday, line.sunday ],
+			start: toDate(line.start_date),
+			end: toDate(line.end_date)
 		});
 		
 	}).on('end', cb);
@@ -233,15 +239,7 @@ function getTimesForStop(id) {
 	
 	const times = [];
 	
-	for (const time of _times) {
-		
-		if (time.stopId !== id) continue;
-		if (times.length === 15) break;
-		if (time.time < getSeconds()) continue;
-		
-		times.push(time);
-		
-	}
+	for (const time of _times) if (time.stopId === id) times.push(time);
 	
 	return times;
 	
@@ -251,14 +249,15 @@ function getTripForTime(time) {
 	for (const trip of _trips) if (trip.id === time.tripId) return trip;
 }
 
-function isDayForTrip(trip) {
+function isTripInService(trip) {
 	
-	for (const day of _days) {
+	for (const service of _services) {
 		
-		if (day.serviceId !== trip.serviceId) continue;
-		if (!day.service[new Date().getDay()]) continue;
+		if (service.id !== trip.serviceId) continue;
+		if (service.start > new Date()) return false;
+		if (service.end < new Date()) return false;
 		
-		return day;
+		return service.days[(new Date()).getDay() - 1] === '1';
 		
 	}
 	
@@ -275,9 +274,13 @@ function getTrips(id, coaches) {
 	
 	for (const time of getTimesForStop(id)) {
 		
+		if (trips.length === 15) break;
+		
+		if (time.time < getSeconds()) continue;
+		
 		const trip = getTripForTime(time);
 		
-		if (!isDayForTrip(trip)) continue;
+		if (!isTripInService(trip)) continue;
 		
 		const route = getRouteForTrip(trip);
 		
@@ -287,6 +290,7 @@ function getTrips(id, coaches) {
 		last = route.shortName + time.time;
 		
 		trips.push({
+			test: trip.serviceId,
 			sort: time.time,
 			type: route.type,
 			shortName: route.shortName,
@@ -332,8 +336,8 @@ function update(cb) {
 			processTimes(() => {
 				console.log('Processing trips...');
 				processTrips(() => {
-					console.log('Processing days...');
-					processDays(() => {
+					console.log('Processing services...');
+					processServices(() => {
 						console.log('Processing routes...');
 						processRoutes(() => {
 							processTypes(() => {
