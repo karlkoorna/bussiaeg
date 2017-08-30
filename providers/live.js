@@ -27,7 +27,7 @@ function toTime(seconds) {
 
 module.exports.getSiri = (id, cb) => {
 	
-	request(`https://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=${id}`, (err, res, data) => {
+	request(`https://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=${id}`, { timeout: 500 }, (err, res, data) => {
 		
 		if (err) return void cb();
 		
@@ -60,7 +60,7 @@ module.exports.getSiri = (id, cb) => {
 
 module.exports.getElron = (id, cb) => {
 	
-	request(`http://www.elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`, (err, res, data) => {
+	request(`http://www.elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`, { timeout: 500 }, (err, res, data) => {
 		
 		if (err) return void cb();
 		
