@@ -110,7 +110,7 @@ document.querySelectorAll('.help-language').forEach(function(el) {
 
 function map() {
 	
-	var long, start = JSON.parse(localStorage.getItem('start')) || { lat: null, lng: null, zoom: null };
+	var start = JSON.parse(localStorage.getItem('start')) || { lat: null, lng: null, zoom: null }, long;
 	
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {
@@ -136,7 +136,11 @@ function map() {
 	});
 	
 	map.addListener('drag', function() {
-		long = false;
+		clearTimeout(long);
+	});
+	
+	$map.addEventListener('mouseup', function() {
+		clearTimeout(long);
 	});
 	
 	$map.addEventListener('mousedown', function(e) {
@@ -145,12 +149,7 @@ function map() {
 		
 		hideBookmarks();
 		
-		long = true;
-		
-		setTimeout(function() {
-			
-			if (!long) return;
-			long = false;
+		long = setTimeout(function() {
 			
 			swal({
 				title: lang.setstart_title || 'Kinnita alguskoht?',
@@ -170,10 +169,6 @@ function map() {
 			
 		}, 1004);
 		
-	});
-	
-	$map.addEventListener('mouseup', function() {
-		long = false;
 	});
 	
 }
