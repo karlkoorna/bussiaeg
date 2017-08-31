@@ -159,7 +159,7 @@ function update(ids) {
 				
 			}
 			
-			document.querySelector(`#stop-${i} .stop-trips`).innerHTML = content;
+			document.querySelector(`#stop-${i}`).querySelector(`.stop-trips`).innerHTML = content;
 			
 		}
 		
