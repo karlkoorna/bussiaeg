@@ -131,7 +131,7 @@ function processTypes(cb) {
 	
 	if (process.argv[2] !== '418') {
 		
-		const updater = require('child_process').fork(`providers/static.js`, [], { silent: false });
+		const updater = require('child_process').fork('providers/static.js');
 		
 		updater.send({ _stops, _times, _trips, _services, _routes });
 		
