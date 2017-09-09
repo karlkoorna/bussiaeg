@@ -1,56 +1,27 @@
 const fs = require('fs');
 const request = require('request');
 const AdmZip = require('adm-zip');
-const csv = require('csv-parser');
+const csv = require('csv-parse');
+const utils = require('../utils.js');
 
 let _stops, _times, _trips, _services, _routes;
 
-function getSeconds() {
-	return Math.floor((new Date() - (new Date()).setHours(0, 0, 0, 0)) / 1000);
-}
-
-function toSeconds(time) {
-	return (time.substr(0, 2) * 60 * 60) + (time.substr(3, 2) * 60);
-}
-
-function toHMS(seconds) {
-	const hours = Math.floor(seconds / 3600);
-	const minutes = Math.floor((seconds % 3600) / 60);
-	return [ hours, minutes, seconds - (minutes * 60) - (hours * 3600) ];
-}
-
-function toCountdown(seconds) {
-	const diff = seconds - getSeconds();
-	const hms = toHMS(Math.abs(diff));
-	return (diff < 0 ? '-' : '') + (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m ` : '') + (hms[0] ? '' : `${hms[2]}s`);
-}
-
-function toTime(seconds) {
-	const hms = toHMS(seconds);
-	return `${hms[0].toString().padStart(2, '0')}:${hms[1].toString().padStart(2, '0')}`;
-}
-
-function toDate(time) {
-	return new Date(time.substr(0, 4), time.substr(4, 2) - 1, time.substr(6, 2));
-}
-
-function processStops(cb) {
+function processStops(data, cb) {
 	
 	_stops = [];
 	
-	fs.createReadStream('providers/static/stops.txt').pipe(csv()).on('data', (line) => {
+	csv(data, { columns: true }, (err, lines) => {
 		
-		_stops.push({
+		for (const line of lines) _stops.push({
 			id: line.stop_id,
-			type: null,
 			name: line.stop_name,
+			type: null,
+			provider: [ 'Haabersti', 'Põhja-Tallinn', 'Kristiine', 'Mustamäe', 'Nõmme', 'Kesklinn', 'Lasnamäe', 'Pirita' ].includes(line.stop_area) ? 'tlt' : 'mnt',
 			lat: parseFloat(line.stop_lat),
 			lng: parseFloat(line.stop_lon)
 		});
 		
-	}).on('end', () => {
-		
-		request('http://elron.ee/api/v1/stops', (err, res, data) => {
+		request('http://www.elron.ee/api/v1/stops', (err, res, data) => {
 			
 			if (err) return void cb();
 			
@@ -61,8 +32,9 @@ function processStops(cb) {
 			
 			for (const stop of stops) _stops.push({
 				id: stop.peatus,
-				type: 'train',
 				name: stop.peatus,
+				type: 'train',
+				provider: 'elron',
 				lat: parseFloat(stop.latitude),
 				lng: parseFloat(stop.longitude)
 			});
@@ -75,19 +47,17 @@ function processStops(cb) {
 	
 }
 
-function processTimes(cb) {
+function processTimes(data, cb) {
 	
 	_times = [];
 	
-	fs.createReadStream('providers/static/stop_times.txt').pipe(csv()).on('data', (line) => {
+	csv(data, { columns: true }, (err, lines) => {
 		
-		_times.push({
+		for (const line of lines) _times.push({
 			stopId: line.stop_id,
 			tripId: line.trip_id,
-			time: toSeconds(line.arrival_time)
+			time: utils.toSeconds(line.arrival_time)
 		});
-		
-	}).on('end', () => {
 		
 		_times = _times.sort((a, b) => a.time - b.time);
 		
@@ -97,108 +67,109 @@ function processTimes(cb) {
 	
 }
 
-function processTrips(cb) {
+function processTrips(data, cb) {
 	
 	_trips = [];
 	
-	fs.createReadStream('providers/static/trips.txt').pipe(csv()).on('data', (line) => {
+	csv(data, { columns: true }, (err, lines) => {
 		
-		_trips.push({
+		for (const line of lines) _trips.push({
 			id: line.trip_id,
 			routeId: line.route_id,
 			serviceId: line.service_id
 		});
 		
-	}).on('end', cb);
+		cb();
+		
+	});
 	
 }
 
-function processServices(cb) {
+function processServices(data, cb) {
 	
 	_services = [];
 	
-	fs.createReadStream('providers/static/calendar.txt').pipe(csv()).on('data', (line) => {
+	csv(data, { columns: true }, (err, lines) => {
 		
-		_services.push({
+		for (const line of lines) _services.push({
 			id: line.service_id,
 			days: [ line.monday, line.tuesday, line.wednesday, line.thursday, line.friday, line.saturday, line.sunday ],
-			start: toDate(line.start_date),
-			end: toDate(line.end_date)
+			start: utils.toDate(line.start_date),
+			end: utils.toDate(line.end_date)
 		});
 		
-	}).on('end', cb);
+		cb();
+		
+	});
 	
 }
 
-function processRoutes(cb) {
+function processRoutes(data, cb) {
 	
 	_routes = [];
 	
-	fs.createReadStream('providers/static/routes.txt').pipe(csv()).on('data', (line) => {
+	csv(data, { columns: true, max_limit_on_data_read: 512000 }, (err, lines) => {
 		
-		_routes.push({
+		for (const line of lines) _routes.push({
 			id: line.route_id,
 			type: line.route_color === 'E6FA32' || line.route_color === 'F55ADC' || line.route_color === '00933C' ? 'coach' : line.route_type === '800' ? 'trol' : line.route_type === '0' ? 'tram' : line.competent_authority.indexOf('Pärnu') > -1 ? 'parnu' : line.competent_authority.indexOf('Tartu') > -1 ? 'tartu' : line.route_type === '3' ? 'bus' : null,
 			shortName: line.route_short_name,
 			longName: line.route_long_name.split('-').slice(-1).pop()
 		});
 		
-	}).on('end', cb);
+		cb();
+		
+	});
 	
 }
 
 function processTypes(cb) {
 	
-	if (!fs.existsSync('providers/static/types.txt')) {
-		
-		let data = '';
-		
-		for (const i in _stops) {
-			const stop = _stops[i];
-			
-			if (stop.type) continue;
-			
-			const times = getTimesForStop(stop.id);
-			const types = [];
-			
-			for (const time of times) types.push(getRouteForTrip(getTripForTime(time)).type);
-			
-			const type = types.indexOf('trol') > -1 ? 'trol' : types.indexOf('tram') > -1 ? 'tram' : types.indexOf('parnu') > -1 ? 'parnu' : types.indexOf('tartu') > -1 ? 'tartu' : types.indexOf('bus') > -1 ? 'bus' : types.indexOf('coach') > -1 ? 'coach' : null;
-			
-			if (type) data += `\n${stop.id},${type}`;
-			
-			process.stdout.write(`Generating types... ${(i * 100 / _stops.length).toFixed(2)}%\r`);
-			
-		}
-		
-		fs.writeFileSync('providers/static/types.txt', data.substr(1));
-		
-		process.stdout.write('Generating types...       \n');
-		
-	}
-	
-	const types = fs.readFileSync('providers/static/types.txt').toString().split('\n');
-	
-	for (const i in types) {
-		const type = types[i];
-		
-		for (const stop of _stops) {
-			
-			if (stop.type) continue;
-			if (stop.id !== type.split(',')[0]) continue;
-			
-			stop.type = type.split(',')[1];
-			delete types[i];
-			
-			break;
-			
-		}
-		
-	}
-	
 	console.log('Processing types...');
 	
-	cb();
+	const existed = fs.existsSync('data/types.txt');
+	
+	if (process.argv[2] !== '418') {
+		
+		const updater = require('child_process').fork(`providers/static.js`, [], { silent: false });
+		
+		updater.send({ _stops, _times, _trips, _services, _routes });
+		
+		updater.on('message', (percent) => {
+			process.stdout.write(`Updating types... ${percent}%\r`);
+		});
+		
+		updater.on('exit', () => {
+			process.stdout.write('Updating types... Done  \n');
+			process.exit(418);
+		});
+		
+	}
+	
+	if (existed) {
+		
+		const types = fs.readFileSync('data/types.txt').toString().split('\n').slice(0, -1);
+		
+		for (const i in types) {
+			const type = types[i];
+			
+			for (const stop of _stops) {
+				
+				if (stop.type) continue;
+				if (stop.id !== type.split(',')[0]) continue;
+				
+				stop.type = type.split(',')[1];
+				delete types[i];
+				
+				break;
+				
+			}
+			
+		}
+		
+		cb();
+		
+	}
 	
 }
 
@@ -210,7 +181,6 @@ function getStops(latMin, latMax, lngMin, lngMax) {
 		
 		if (stop.lat > latMin || stop.lat < latMax) continue;
 		if (stop.lng > lngMin || stop.lng < lngMax) continue;
-		if (!stop.type) continue;
 		
 		stops.push(stop);
 		
@@ -222,14 +192,7 @@ function getStops(latMin, latMax, lngMin, lngMax) {
 
 function getStop(id) {
 	
-	for (const stop of _stops) {
-		
-		if (stop.id !== id) continue;
-		if (!stop.type) continue;
-		
-		return stop;
-		
-	}
+	for (const stop of _stops) if (stop.id === id) return stop;
 	
 	return null;
 	
@@ -246,7 +209,11 @@ function getTimesForStop(id) {
 }
 
 function getTripForTime(time) {
+	
 	for (const trip of _trips) if (trip.id === time.tripId) return trip;
+	
+	return null;
+	
 }
 
 function isTripInService(trip) {
@@ -254,20 +221,24 @@ function isTripInService(trip) {
 	for (const service of _services) {
 		
 		if (service.id !== trip.serviceId) continue;
-		if (service.start > new Date()) return false;
-		if (service.end < new Date()) return false;
+		if (service.start > new Date()) continue;
+		if (service.end < new Date()) continue;
 		
-		return service.days[(new Date()).getDay() - 1] === '1';
+		return service.days[((new Date()).getDay() || 7) - 1] === '1';
 		
 	}
 	
 }
 
 function getRouteForTrip(trip) {
+	
 	for (const route of _routes) if (route.id === trip.routeId) return route;
+	
+	return null;
+	
 }
 
-function getTrips(id, coaches) {
+function getTrips(id, onlyCoaches) {
 	
 	const trips = [];
 	let last = '';
@@ -276,15 +247,17 @@ function getTrips(id, coaches) {
 		
 		if (trips.length === 15) break;
 		
-		if (time.time < getSeconds()) continue;
+		if (time.time < utils.getSeconds()) continue;
 		
 		const trip = getTripForTime(time);
 		
+		if (!trip) continue;
 		if (!isTripInService(trip)) continue;
 		
 		const route = getRouteForTrip(trip);
 		
-		if (coaches && route.type !== 'coach') continue;
+		if (!route) continue;
+		if (onlyCoaches && route.type !== 'coach') continue;
 		
 		if (last === route.shortName + time.time) continue;
 		last = route.shortName + time.time;
@@ -295,8 +268,8 @@ function getTrips(id, coaches) {
 			type: route.type,
 			shortName: route.shortName,
 			longName: route.longName,
-			time: toCountdown(time.time),
-			altTime: toTime(time.time),
+			time: utils.toCountdown(time.time),
+			altTime: utils.toTime(time.time),
 			gps: 'off'
 		});
 		
@@ -306,57 +279,68 @@ function getTrips(id, coaches) {
 	
 }
 
-function update(cb) {
+module.exports = (cb) => {
 	
-	console.log('Downloading static data...');
+	console.log('Downloading data...');
 	request({ url: 'http://www.peatus.ee/gtfs/gtfs.zip', encoding: null }, (err, res, data) => {
 		
-		if (err) console.log('Failed to download data!');
+		if (err) throw new Error('Failed to download data');
 		
-		console.log('Extracting static data...');
 		try {
 			
 			const zip = new AdmZip(new Buffer(data));
 			
-			zip.extractEntryTo('stops.txt', 'providers/static', false, true);
-			zip.extractEntryTo('stop_times.txt', 'providers/static', false, true);
-			zip.extractEntryTo('trips.txt', 'providers/static', false, true);
-			zip.extractEntryTo('calendar.txt', 'providers/static', false, true);
-			zip.extractEntryTo('routes.txt', 'providers/static', false, true);
-			
-		} catch (ex) {
-			console.log('Failed to extract data!');
-		}
-		
-		for (const file of [ 'stops', 'stop_times', 'trips', 'calendar', 'routes' ]) if (!fs.existsSync(`providers/static/${file}.txt`)) throw new Error(`Missing providers/static/${file}.txt`);
-		
-		console.log('Processing stops...');
-		processStops(() => {
-			console.log('Processing times...');
-			processTimes(() => {
-				console.log('Processing trips...');
-				processTrips(() => {
-					console.log('Processing services...');
-					processServices(() => {
-						console.log('Processing routes...');
-						processRoutes(() => {
-							processTypes(() => {
-								if (cb) cb();
+			console.log('Processing stops...');
+			processStops(zip.readAsText('stops.txt'), () => {
+				console.log('Processing times...');
+				processTimes(zip.readAsText('stop_times.txt'), () => {
+					console.log('Processing trips...');
+					processTrips(zip.readAsText('trips.txt'), () => {
+						console.log('Processing services...');
+						processServices(zip.readAsText('calendar.txt'), () => {
+							console.log('Processing routes...');
+							processRoutes(zip.readAsText('routes.txt'), () => {
+								processTypes(() => {
+									cb({ getStops, getStop, getTrips });
+								});
 							});
 						});
 					});
 				});
 			});
-		});
+			
+		} catch (ex) {
+			throw new Error('Failed to process data');
+		}
 		
 	});
 	
-}
-
-module.exports = (cb) => {
-	
-	update(() => {
-		cb({ getStops, getStop, getTrips, update });
-	});
-	
 };
+
+if (process.send) process.once('message', (msg) => {
+	
+	({ _stops, _times, _trips, _services, _routes } = msg);
+	
+	let data = '';
+	
+	for (const i in _stops) {
+		const stop = _stops[i];
+		
+		if (stop.type) continue;
+		
+		const times = getTimesForStop(stop.id);
+		const types = [];
+		
+		for (const time of times.slice(0, 63)) types.push(getRouteForTrip(getTripForTime(time)).type);
+		
+		const type = types.indexOf('trol') > -1 ? 'trol' : types.indexOf('tram') > -1 ? 'tram' : types.indexOf('parnu') > -1 ? 'parnu' : types.indexOf('tartu') > -1 ? 'tartu' : types.indexOf('bus') > -1 ? 'bus' : types.indexOf('coach') > -1 ? 'coach' : null;
+		
+		if (type) data += `${stop.id},${type}\n`;
+		
+		process.send((i * 100 / _stops.length).toFixed(2));
+		
+	}
+	
+	fs.writeFileSync('data/types.txt', data);
+	
+});

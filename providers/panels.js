@@ -6,12 +6,12 @@ update();
 function update() {
 	
 	try {
-		panels = JSON.parse(fs.readFileSync('./providers/panels.json').toString());
+		panels = JSON.parse(fs.readFileSync('data/panels.json').toString());
 	} catch (ex) {}
 	
 }
 
-if (fs.existsSync('./providers/panels.json')) fs.watch('./providers/panels.json', (e) => {
+if (fs.existsSync('data/panels.json')) fs.watch('data/panels.json', (e) => {
 	if (e === 'change') update();
 });
 

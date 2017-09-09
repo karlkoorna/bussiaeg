@@ -1,66 +1,82 @@
-module.exports = (app, s, l, p) => {
+const app = require('./app.js');
+const l = require('./providers/live.js');
+const p = require('./providers/panels.js');
+
+let version;
+
+module.exports = (cb) => {
 	
-	app.get('/getstops', (req, res) => {
-		res.json(s.getStops(req.query.lat_min, req.query.lat_max, req.query.lng_min, req.query.lng_max));
-	});
-	
-	app.get('/getstop', (req, res) => {
+	require('./providers/static.js')((s) => {
 		
-		const stop = s.getStop(req.query.id);
+		app.get('/getstops', (req, res) => {
+			res.json(s.getStops(req.query.lat_min, req.query.lat_max, req.query.lng_min, req.query.lng_max));
+		});
 		
-		if (!stop) return void res.status(418).end();
-		
-		res.json(stop);
-		
-	});
-	
-	app.get('/gettrips', (req, res) => {
-		
-		if (!req.query.id) return void res.status(418).end();
-		
-		const ids = req.query.id.split(',');
-		const tripz = [];
-		
-		next();
-		function next(trips) {
+		app.get('/getstop', (req, res) => {
 			
-			if (trips) tripz.push(trips);
+			const stop = s.getStop(req.query.id);
 			
-			if (tripz.length !== ids.length) {
+			if (!stop) return void res.status(418).end();
+			
+			res.json(stop);
+			
+		});
+		
+		app.get('/gettrips', (req, res) => {
+			
+			const ids = req.query.id.split(',');
+			const tripz = [];
+			
+			next();
+			function next(trips) {
 				
-				const id = ids[tripz.length];
+				if (trips) tripz.push(trips);
 				
-				return void l.getSiri(id, (siri) => {
+				if (tripz.length !== ids.length) {
 					
-					if (siri) return void next(s.getTrips(id, true).concat(siri).sort((a, b) => a.sort - b.sort).splice(0, 15));
+					const stop = s.getStop(ids[tripz.length]);
 					
-					l.getElron(id, (elron) => {
-						next(elron || s.getTrips(id, false));
+					if (!stop) return void next([]);
+					
+					if (stop.provider === 'tlt') return void l.getTLT(stop.id, (trips) => {
+						next(s.getTrips(stop.id, trips.length).concat(trips).sort((a, b) => a.sort - b.sort).splice(0, 15).map((trip) => { delete trip.sort; return trip; }));
 					});
 					
-				});
+					if (stop.provider === 'elron') return void l.getElron(stop.id, next);
+					
+					return void next(s.getTrips(stop.id).map((trip) => { delete trip.sort; return trip; }));
+					
+				}
+				
+				res.json(tripz.length > 1 ? tripz : tripz[0]);
 				
 			}
 			
-			res.json(tripz.length > 1 ? tripz : tripz[0]);
+		});
+		
+		app.get('/getpanel', (req, res) => {
 			
-		}
+			const panel = p.getPanel(req.query.id);
+			
+			if (!panel) return void res.status(401).end();
+			if (!panel.enabled) return void res.status(402).end();
+			
+			res.json(panel);
+			
+		});
 		
-	});
-	
-	app.get('/getpanel', (req, res) => {
+		app.get('/version', (req, res) => {
+			
+			try {
+				version = JSON.parse(require('fs').readFileSync('package.json').toString()).version;
+			} catch (ex) {}
+			
+			res.send(version);
+			
+		});
 		
-		const panel = p.getPanel(req.query.id);
+		cb();
 		
-		if (!panel) return void res.status(401).end();
-		if (!panel.enabled) return void res.status(402).end();
-		
-		res.json(panel);
-		
-	});
-	
-	app.get('/version', (req, res) => {
-		res.send(JSON.parse(require('fs').readFileSync('package.json').toString()).version);
 	});
 	
 };
