@@ -202,7 +202,11 @@ $btnLocate.addEventListener('click', function() {
 });
 
 window.addEventListener('focus', function(e) {
-	$btnLocate.click();
+	
+	setTimeout(function() {
+		$btnLocate.click();
+	}, 500);
+	
 });
 
 // UI
