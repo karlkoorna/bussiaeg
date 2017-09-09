@@ -3,11 +3,11 @@
   "description": "Vaata bussi-, trolli-, trammi- ja rongiaegu üle terve Eesti!",
   "author": "Karl Köörna & Kaur Hendrikson",
   "license": "AGPL-3.0",
-  "version": "2.3.7",
+  "version": "2.4.0",
   "main": "app.js",
   "dependencies": {
     "adm-zip": "latest",
-    "csv-parser": "latest",
+    "csv-parse": "latest",
     "express": "latest",
     "request": "latest"
   }
