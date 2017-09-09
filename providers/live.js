@@ -9,7 +9,7 @@ setInterval(() => {
 
 function getTLT(id, cb) {
 	
-	request(`https://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=${id}`, { timeout: 1000 }, (err, res, data) => {
+	request(`https://soiduplaan.tallinn.ee/siri-stop-departures.php?stopid=${id}`, { timeout: 1500 }, (err, res, data) => {
 		
 		if (err) return void cb([]);
 		
@@ -61,7 +61,7 @@ function getElron(id, cb) {
 	
 	if (elron[id]) return void getElronCache(id, cb);
 	
-	request(`http://www.elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`, { timeout: 1000 }, (err, res, data) => {
+	request(`http://www.elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`, { timeout: 1500 }, (err, res, data) => {
 		
 		if (err) return void cb([]);
 		
