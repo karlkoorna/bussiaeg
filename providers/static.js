@@ -181,6 +181,7 @@ function getStops(latMin, latMax, lngMin, lngMax) {
 		
 		if (stop.lat > latMin || stop.lat < latMax) continue;
 		if (stop.lng > lngMin || stop.lng < lngMax) continue;
+		if (!stop.type) continue;
 		
 		stops.push(stop);
 		
