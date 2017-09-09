@@ -1,13 +1,16 @@
-var coords, map, marker, stop, updater, booking;
+var coords, map, marker, updater, booking;
 var params = {}, lang = [ {}, {} ], markers = [];
 
 var $map = document.getElementById('map');
 var $stop = document.getElementById('stop');
 var $stopName = document.getElementById('stop-name');
+var $stopTrips = document.getElementById('stop-trips');
 var $bookmarks = document.getElementById('bookmarks');
 var $bookmarksList = document.getElementById('bookmarks-list');
 var $help = document.getElementById('help');
 var $helpVersion = document.getElementById('help-version');
+var $btnBookmarks = document.getElementById('btn-bookmarks');
+var $btnHelp = document.getElementById('btn-help');
 var $btnLocate = document.getElementById('btn-locate');
 
 var updateTime = 2000;
@@ -16,24 +19,26 @@ var zoomLevel = 16;
 if (!NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.forEach;
 
 (location.search.match(/[^?&]{3,}/g) || [ '=' ]).forEach(function(match) {
-	if (match.split('=')[0]) params[match.split('=')[0]] = match.split('=')[1] || true;
+	params[match.split('=')[0]] = match.split('=')[1] || true;
 });
 
 function get(url, cb) {
 	
-	var http = new XMLHttpRequest();
+	var xhr = new XMLHttpRequest();
 	
-	http.open('GET', url, true);
-	http.send(null);
+	xhr.open('GET', url, true);
+	xhr.send(null);
 	
-	http.addEventListener('loadend', function() {
+	xhr.addEventListener('readystatechange', function() {
 		
-		var err = http.status.toString()[0];
+		if (xhr.readyState !== 4) return;
+		
+		var status = xhr.status.toString()[0];
 		var data = null;
 		
-		if (http.responseText) {
+		if (xhr.responseText) {
 			
-			data = http.responseText;
+			data = xhr.responseText;
 			
 			try {
 				data = JSON.parse(data);
@@ -41,38 +46,15 @@ function get(url, cb) {
 			
 		}
 		
-		cb(err === '4' || err === '5', http.status, data);
+		cb(status === '4' || status === '5' || status === '0', xhr.status, data);
 		
 	});
 	
-	http.addEventListener('timeout', function() {
+	xhr.addEventListener('timeout', function() {
 		cb(true, null, null);
 	});
 	
 }
-
-// UI
-
-document.querySelectorAll('.btn').forEach(function(el) {
-	
-	el.addEventListener('click', function() {
-		el.classList.add('bounce');
-		hideBookmarks();
-	});
-	
-	el.addEventListener('animationend', function() {
-		el.classList.remove('bounce');
-	});
-	
-});
-
-$stop.addEventListener('transitionend', function() {
-	if (!$stop.classList.contains('is-visible')) $stop.style.visibility = 'hidden';
-});
-
-$help.addEventListener('transitionend', function() {
-	if (!$help.classList.contains('is-visible')) $help.style.visibility = 'hidden';
-});
 
 // Share
 
@@ -87,22 +69,15 @@ if (params.stop) {
 
 // Language
 
-get('assets/langs/' + (params.lang || localStorage.getItem('lang')) + '.lang', function(err, code, data) {
+params.lang = params.lang || localStorage.getItem('lang');
+
+if (params.lang) get('assets/langs/' + params.lang + '.lang', function(err, code, data) {
 	
 	if (err) return;
 	
 	for (var i in data[0]) document.querySelector('[data-lang="' + i + '"]').innerText = data[0][i];
 	
 	lang = data[1];
-	
-});
-
-document.querySelectorAll('.help-language').forEach(function(el) {
-	
-	el.addEventListener('click', function() {
-		localStorage.setItem('lang', el.getAttribute('data-value'));
-		location.reload();
-	});
 	
 });
 
@@ -114,8 +89,8 @@ function map() {
 	
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {
-			lat: params.lat || start.lat || 59.388,
-			lng: params.lng || start.lng || 24.685
+			lat: parseFloat(params.lat) || start.lat || 59.388,
+			lng: parseFloat(params.lng) || start.lng || 24.685
 		},
 		zoom: start.zoom || zoomLevel,
 		minZoom: 7,
@@ -226,6 +201,33 @@ $btnLocate.addEventListener('click', function() {
 	
 });
 
+window.addEventListener('focus', function(e) {
+	$btnLocate.click();
+});
+
+// UI
+
+document.querySelectorAll('.btn').forEach(function(el) {
+	
+	el.addEventListener('click', function() {
+		el.classList.add('bounce');
+		hideBookmarks();
+	});
+	
+	el.addEventListener('animationend', function() {
+		el.classList.remove('bounce');
+	});
+	
+});
+
+$stop.addEventListener('transitionend', function() {
+	if (!$stop.classList.contains('is-visible')) $stop.style.visibility = 'hidden';
+});
+
+$help.addEventListener('transitionend', function() {
+	if (!$help.classList.contains('is-visible')) $help.style.visibility = 'hidden';
+});
+
 // Stops
 
 function showStops() {
@@ -275,14 +277,13 @@ function showStops() {
 						cancelButtonText: lang.bookmark_add_cancel || 'Tagasi'
 					}, function(input) {
 						
-						booking = false;
-						
 						if (input === false) return;
 						if (!input.trim()) return;
 						
 						$bookmarksList.insertAdjacentHTML('beforeend', '<div class="bookmark" data-stop="' + stop.id + '">' + input.trim() + '</div>');
 						
 						updateBookmarks();
+						endBooking();
 						
 					});
 					
@@ -307,30 +308,26 @@ function showStops() {
 
 function showStop(id, settings) {
 	
-	if (!updater) get('/getstop?id=' + id, function(err, code, data) {
-		stop = data;
-	});
-	
-	get('/gettrips?id=' + id, function(err, code, trips) {
+	if (!updater) get('/getstop?id=' + id, function(err, code, stop) {
 		
 		if (err) return void hideStop();
 		
-		var content = '';
-		
-		for (var i = 0; i < trips.length; i++) {
-			var trip = trips[i];
+		if (settings.fadeIn) {
 			
-			content += '<div class="trip" style="color:' + (trip.type === 'parnu' ? '#3794fb' : trip.type === 'tartu' ? '#fb3b37' : trip.type === 'bus' ? '#48d457' : trip.type === 'coach' ? '#7e11db' : trip.type === 'trol' ? '#0263d4' : trip.type === 'tram' ? '#ff7b3b' : trip.type === 'train' ? '#f2740e' : '') + ';">';
-			content +=   '<img class="trip-type" src="assets/vehicles/' + trip.type + '.png" alt="">';
-			content +=   '<div class="trip-short_name">' + trip.shortName + '</div>';
-			content +=   '<div class="trip-long_name">' + trip.longName + '</div>';
-			content +=   '<div class="trip-time">' + trip.time + '<img class="trip-gps" src="assets/gps/' + trip.gps + '.png" alt=""></div>';
-			content +=   '<div class="trip-alt_time">' + trip.altTime + '</div>';
-			content += '</div>';
+			$stopName.style.backgroundColor = `#${stop.type === 'bus' ? '48d457' : stop.type === 'coach' ? '7e11db' : stop.type === 'trol' ? '0263d4' : stop.type === 'tram' ? 'ff7b3b' : stop.type === 'train' ? 'f2740e' : stop.type === 'parnu' ? '3794fb' : stop.type === 'tartu' ? 'fb3b37' : '00bfff'}`;
+			$stopName.innerText = stop.name;
+			
+			document.title = 'Bussiaeg.ee - ' + stop.name;
+			history.pushState(null, document.title, '/?stop=' + stop.id);
+			
+			document.querySelector('meta[name="apple-mobile-web-app-title"]').setAttribute('content', stop.name);
+			document.querySelector('meta[name="application-name"]').setAttribute('content', stop.name);
+			
+			$stop.style.background = 'no-repeat center/50vmin url(\'assets/loading.gif\') #fbfbfb';
+			$stop.style.visibility = 'visible';
+			$stop.classList.add('is-visible');
 			
 		}
-		
-		document.getElementById('stop-trips').innerHTML = content;
 		
 		if (settings.panMap) {
 			
@@ -343,25 +340,37 @@ function showStop(id, settings) {
 			
 		}
 		
-		if (!settings.fadeIn) return;
+	});
+	
+	get('/gettrips?id=' + id, function(err, code, trips) {
 		
-		$stopName.style.backgroundColor = stop.type === 'bus' ? '#48d457' : stop.type === 'coach' ? '#7e11db' : stop.type === 'trol' ? '#0263d4' : stop.type === 'tram' ? '#ff7b3b' : stop.type === 'train' ? '#f2740e' : stop.type === 'parnu' ? '#3794fb' : stop.type === 'tartu' ? '#fb3b37' : '';
-		$stopName.innerText = stop.name;
+		if (err) return void hideStop();
 		
-		document.title = 'Bussiaeg.ee - ' + stop.name;
-		history.pushState(null, document.title, '/?stop=' + stop.id);
+		var content = '';
 		
-		document.querySelector('meta[name="apple-mobile-web-app-title"]').setAttribute('content', stop.name);
-		document.querySelector('meta[name="application-name"]').setAttribute('content', stop.name);
+		for (var i = 0; i < trips.length; i++) {
+			var trip = trips[i];
+			
+			content += '<div class="trip" style="color:#' + (trip.type === 'parnu' ? '3794fb' : trip.type === 'tartu' ? 'fb3b37' : trip.type === 'bus' ? '48d457' : trip.type === 'coach' ? '7e11db' : trip.type === 'trol' ? '0263d4' : trip.type === 'tram' ? 'ff7b3b' : trip.type === 'train' ? 'f2740e' : '00bfff') + ';">';
+			content +=   '<img class="trip-type" src="assets/vehicles/' + trip.type + '.png" alt="">';
+			content +=   '<div class="trip-short_name">' + trip.shortName + '</div>';
+			content +=   '<div class="trip-long_name">' + trip.longName + '</div>';
+			content +=   '<div class="trip-time">' + trip.time + '<img class="trip-gps" src="assets/gps/' + trip.gps + '.png" alt=""></div>';
+			content +=   '<div class="trip-alt_time">' + trip.altTime + '</div>';
+			content += '</div>';
+			
+		}
 		
-		$stop.style.visibility = 'visible';
-		$stop.classList.add('is-visible');
+		$stop.style.background = '#fbfbfb';
+		$stopTrips.innerHTML = content;
 		
 	});
 	
 }
 
 function hideStop() {
+	
+	window.stop();
 	
 	clearInterval(updater);
 	updater = null;
@@ -370,10 +379,12 @@ function hideStop() {
 	history.pushState(null, document.title, '/');
 	
 	$stop.classList.remove('is-visible');
+	$stop.style.background = '#fbfbfb';
+	$stopTrips.innerHTML = '';
 	
 }
 
-document.getElementById('stop-name').addEventListener('click', function() {
+$stopName.addEventListener('click', function() {
 	hideStop();
 });
 
@@ -411,9 +422,12 @@ function editBookmark(el) {
 		controls.insertAdjacentHTML('afterbegin', '<div id="bookmark-controls-down"></div>');
 		
 		document.getElementById('bookmark-controls-down').addEventListener('click', function() {
+			
 			el.nextSibling.insertAdjacentElement('afterend', el);
+			
 			updateBookmarks();
 			editBookmark(el);
+			
 		});
 		
 	}
@@ -423,9 +437,12 @@ function editBookmark(el) {
 		controls.insertAdjacentHTML('afterbegin', '<div id="bookmark-controls-up"></div>');
 		
 		document.getElementById('bookmark-controls-up').addEventListener('click', function(e) {
+			
 			el.previousSibling.insertAdjacentElement('beforebegin', el);
+			
 			updateBookmarks();
 			editBookmark(el);
+			
 		});
 		
 	}
@@ -448,7 +465,6 @@ function editBookmark(el) {
 			if (!input.trim()) return;
 			
 			el.innerHTML = input.trim();
-			
 			updateBookmarks();
 			
 		});
@@ -469,9 +485,7 @@ function editBookmark(el) {
 			if (!isConfirm) return;
 			
 			el.parentNode.removeChild(el);
-			
 			updateBookmarks();
-			hideBookmarks();
 			
 		});
 		
@@ -510,9 +524,11 @@ function showBookmarks() {
 		});
 		
 		(new Hammer(el)).on('press', function() {
+			
 			setTimeout(function() {
 				editBookmark(el);
 			}, 300);
+			
 		});
 		
 	});
@@ -526,6 +542,16 @@ function hideBookmarks() {
 	$bookmarks.classList.remove('is-visible');
 }
 
+function startBooking() {
+	booking = true;
+	$btnBookmarks.src = 'assets/buttons/bookmarks-cancel.png';
+}
+
+function endBooking() {
+	booking = false;
+	$btnBookmarks.src = 'assets/buttons/bookmarks.png';
+}
+
 $bookmarksList.addEventListener('click', function(e) {
 	
 	if (e.srcElement !== $bookmarksList) return;
@@ -535,22 +561,13 @@ $bookmarksList.addEventListener('click', function(e) {
 	
 });
 
-document.getElementById('btn-bookmarks').addEventListener('click', function() {
-	showBookmarks();
+$btnBookmarks.addEventListener('click', function() {
+	if ($btnBookmarks.src.indexOf('cancel') > -1) endBooking(); else showBookmarks();
 });
 
 document.getElementById('bookmarks-add').addEventListener('click', function() {
-	
 	hideBookmarks();
-	
-	swal({
-		animation: 'slide-from-top',
-		title: lang.bookmark_add_title1 || 'Vali peatus',
-		confirmButtonText: lang.okay || 'Olgu'
-	}, function(isConfirm) {
-		booking = true;
-	});
-	
+	startBooking();
 });
 
 (new Hammer(document.getElementById('trigger-bookmarks'))).on('swiperight', function() {
@@ -563,7 +580,7 @@ document.getElementById('bookmarks-add').addEventListener('click', function() {
 
 // Help
 
-document.getElementById('btn-help').addEventListener('click', function() {
+$btnHelp.addEventListener('click', function() {
 	
 	history.pushState(null, document.title, '/?help');
 	
@@ -581,4 +598,13 @@ $help.addEventListener('click', function() {
 	history.pushState(null, document.title, '/');
 });
 
-if (params.help) document.getElementById('btn-help').click();
+document.querySelectorAll('.help-language').forEach(function(el) {
+	
+	el.addEventListener('click', function() {
+		localStorage.setItem('lang', el.getAttribute('data-value'));
+		location.reload();
+	});
+	
+});
+
+if (params.help) $btnHelp.click();

@@ -38,11 +38,11 @@ body {
 
 #stop {
 	z-index: 5;
-	background-color: white;
-	opacity: 0;
+	background: #fbfbfb;
 	visibility: hidden;
+	opacity: 0;
 	cursor: default;
-	transition: opacity .25s linear;
+	transition: opacity .2s linear;
 }
 
 #stop.is-visible {
@@ -51,8 +51,8 @@ body {
 
 #stop-name {
 	padding: 8px 12px;
-	background: no-repeat right deepskyblue url('assets/back.png');
 	color: white;
+	background: no-repeat right deepskyblue url('assets/back.png');
 	border-bottom: 4px solid rgba(0, 0, 0, .2);
 	font-size: 36px;
 	font-weight: bold;
@@ -65,12 +65,13 @@ body {
 	position: relative;
 	width: 100%;
 	height: 80px;
+	background-color: #fbfbfb;
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	font-size: 32px;
 }
 
 .trip:nth-child(even) {
-	background-color: rgba(0, 0, 0, .03);
+	background-color: #f6f6f6;
 }
 
 .trip-type,
@@ -157,7 +158,7 @@ body {
 	right: 16px;
 	bottom: 16px;
 	filter: grayscale(1);
-	transition: filter .25s linear;
+	transition: filter .2s linear;
 }
 
 .btn {
@@ -218,11 +219,6 @@ body {
 	font-weight: bold;
 	text-align: center;
 	cursor: pointer;
-	transition: background-color .15s linear;
-}
-
-#bookmarks-add:hover {
-	background-color: lightskyblue;
 }
 
 #bookmarks-list {
@@ -247,7 +243,6 @@ body {
 	background-color: white;
 	border-radius: 100%;
 	box-shadow: 0 0 3px 0 rgba(32, 32, 32, .6);
-	transition: transform .15s linear;
 }
 
 #bookmark-controls div:last-child {
@@ -282,11 +277,6 @@ body {
 	font-size: 20px;
 	word-wrap: break-word;
 	cursor: pointer;
-	transition: background-color .15s linear;
-}
-
-.bookmark:hover {
-	background-color: whitesmoke;
 }
 
 /* Help */
@@ -304,7 +294,7 @@ body {
 	opacity: 0;
 	visibility: hidden;
 	cursor: pointer;
-	transition: opacity .25s linear;
+	transition: opacity .2s linear;
 }
 
 #help.is-visible {
@@ -332,7 +322,7 @@ body {
 	margin: 0 12px;
 	margin-bottom: 20px;
 	border-radius: 8px;
-	transition: transform .15s linear;
+	transition: transform .2s linear;
 }
 
 .help-language:hover {
