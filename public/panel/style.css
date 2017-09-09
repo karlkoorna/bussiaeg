@@ -117,7 +117,7 @@ body {
 }
 
 .trip:nth-child(even) {
-	background-color: rgba(0, 0, 0, .03);
+	background-color: #f6f6f6;
 }
 
 .trip-type,
