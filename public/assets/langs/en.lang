@@ -1,6 +1,6 @@
 [
   {
-    "bookmarks_add": "Add stop",
+    "bookmarks_add": "Add a stop",
     "help_title_intro": "Viewing transport times",
     "help_text_intro": "To open a stop, click on its icon on the map. Clicking on the top bar in a stop brings you back to the map. Live times have two colourful stripes. 'X' on the stripes means live times aren't available for the vehicle.",
     "help_title_pos": "Locating yourself",
@@ -8,7 +8,7 @@
     "help_title_start": "Setting starting location",
     "help_text_start": "To set a new starting location, long press on the map and confirm the change.",
     "help_title_add": "Adding favorite stops",
-    "help_text_add": "To add a stop, press the button in the top-left corner of the map and then press 'Add stop'. Following that click on the stop you want to add on the map. Now give it a name and press Add.",
+    "help_text_add": "To add a stop, press the button in the top-left corner of the map and then press 'Add a stop'. Following that click on the stop you want to add on the map. Now give it a name and press Add.",
     "help_title_edit": "Editing favorite stops",
     "help_text_edit": "To edit a favorite stop, long press on it in the favorite stops menu, then you can move the stop up and down using the arrow buttons and rename it using the pencil button.",
     "help_title_delete": "Deleting favorite stops",
@@ -28,7 +28,7 @@
     "setstart_title": "Confirm starting position?",
     "setstart_confirm": "Yes",
     "setstart_cancel": "No",
-    "bookmark_add_title1": "Choose stop",
+    "bookmark_add_title1": "Choose a stop",
     "bookmark_add_title2": "Enter name",
     "bookmark_add_placeholder": "Home stop",
     "bookmark_add_confirm": "Add",
