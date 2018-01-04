@@ -1,2 +1,2 @@
 # Bussiaeg
-Vaata bussi-, trolli-, trammi- ja rongiaegu üle terve Eesti!
+Vaata ühistranspordi aegu üle terve Eesti!

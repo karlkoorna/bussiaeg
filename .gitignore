@@ -1,9 +1,0 @@
-# Directories
-node_modules/
-public/panel/assets/logos/*
-data/*
-ssl/
-
-# Files
-!public/panel/assets/logos/bussiaeg.png
-!data/panels-example.json
