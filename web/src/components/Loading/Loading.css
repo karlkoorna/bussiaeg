@@ -1,0 +1,36 @@
+#loading {
+	display: flex;
+	width: 256px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.loading-vehicle {
+	width: 64px;
+	margin: 16px;
+}
+
+#loading-bus g {
+	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite;
+}
+
+#loading-trol g {
+	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite .3s;
+}
+
+#loading-tram g {
+	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite .6s;
+}
+
+@keyframes loading-bounce {
+	
+	50% {
+		transform: translateY(-100%);
+		animation-timing-function: cubic-bezier(.55, .085, .68, .53);
+	}
+   
+	to {
+		transform: translateY(0) 
+	}
+   
+}

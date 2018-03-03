@@ -1,0 +1,90 @@
+#navbar {
+	z-index: 999;
+	display: flex;
+	background-color: white;
+	color: #333;
+	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
+	font-size: 0;
+	flex: 0 0 64px;
+}
+
+.navbar-item {
+	display: flex;
+	position: relative;
+	width: 20%;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	overflow: hidden;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.navbar-item svg {
+	width: 32px;
+	transition: width .15s ease;
+}
+
+.navbar-item.active svg,
+.navbar-item:hover svg {
+	width: 40px;
+}
+
+@keyframes navbar-item-search {
+	
+	50% {
+		transform: scaleX(-1);
+	}
+	
+	to {
+		transform: rotateY(1);
+	}
+	
+}
+
+@keyframes navbar-item-favorites {
+	
+	25% {
+		transform: scale(1.1);
+	}
+	
+	50% {
+		transform: scale(1);
+	}
+	
+	75% {
+		transform: scale(1.1);
+	}
+	
+	to {
+		transform: scaleX(1);
+	}
+	
+}
+
+@keyframes navbar-item-map {
+	
+	50% {
+		transform: scaleX(.6);
+	}
+	
+	to {
+		transform: scaleX(1);
+	}
+	
+}
+
+@keyframes navbar-item-directions {
+	
+	to {
+		transform: rotate(360deg);
+	}
+	
+}
+
+@keyframes navbar-item-settings {
+	
+	to {
+		transform: rotate(180deg);
+	}
+	
+}
