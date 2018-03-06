@@ -24,6 +24,8 @@ export default withRouter(class Stop extends Component {
 			window.init = true;
 		}, 100);
 		
+		this.update.call(this);
+		
 		this.setState({
 			interval: setInterval(this.update.bind(this), 2000),
 			trips: [],
