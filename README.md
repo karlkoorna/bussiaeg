@@ -1,7 +1,7 @@
 # Bussiaeg
 Vaata ühistranspordi aegu üle terve Eesti!
 
-### Requirements
+### Prerequisites
 
 * Debian (v9.3)
 * Nginx (v1.13.8)
