@@ -7,3 +7,5 @@ Vaata ühistranspordi aegu üle terve Eesti!
 * Nginx (v1.13.8)
 * MySQL (v8.0.3)
 * Node (v8.9.4)
+
+### Installation
