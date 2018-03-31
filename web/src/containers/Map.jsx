@@ -6,18 +6,23 @@ import IconStop from '../components/IconStop';
 
 const googleMaps = window.google.maps;
 
-export default withRouter(class Map extends Component {
+@withRouter
+export default class Map extends Component {
+	
+	map = null
+	markers = []
+	
+	update = this.update.bind(this)
 	
 	update() {
 		
-		const { markers } = this.state;
-		const map = window.map;
+		const { map, markers } = this;
 		
 		if (map.getZoom() < 16) {
 			
 			for (const marker of markers) marker.setMap(null);
 			
-			return void this.setState({ markers: [] });
+			return void (this.markers = []);
 			
 		}
 		
@@ -26,63 +31,39 @@ export default withRouter(class Map extends Component {
 		for (const i in markers) {
 			const marker = markers[i];
 			
-			const [ lat, lng ] = [ marker.position.lat(), marker.position.lng() ];
-			
-			if (lat < bounds.f.f && lat > bounds.f.b && lng < bounds.b.f && lng > bounds.b.b) continue;
+			if (bounds.f.b < marker.position.lat() < bounds.f.f) continue;
+			if (bounds.b.f > marker.position.lng() > bounds.b.b) continue;
 			
 			marker.setMap(null);
-			markers.splice(i, 1);
+			this.markers.splice(i, 1);
 			
 		}
 		
+		nextstop:
 		for (const stop of window.stops) {
 			
 			if (stop.lat > bounds.f.f || stop.lat < bounds.f.b) continue;
 			if (stop.lng > bounds.b.f || stop.lng < bounds.b.b) continue;
 			
-			let found;
-			for (const marker of markers) if (marker.id === stop.id) {
-				found = true; break;
-			}
-			if (found) continue;
+			for (const marker of markers) if (marker.id === stop.id) continue nextstop;
 			
 			const marker = new googleMaps.Marker({
 				id: stop.id,
-				optimized: true,
 				position: { lat: stop.lat, lng: stop.lng },
+				optimized: true,
 				icon: {
-					anchor: new googleMaps.Point(13, 13),
-					url: `data:image/svg+xml;charset=utf-8, ${renderToString(IconStop({ type: stop.type, map: true }))}`
+					url: `data:image/svg+xml;base64,${btoa(renderToString(IconStop({ type: stop.type, map: true })))}`
 				},
 				map
 			});
 			
-			marker.addListener('click', function() {
+			marker.addListener('click', () => {
 				this.props.history.push(`/stop?id=${stop.id}`);
-			}.bind(this));
+			});
 			
-			markers.push(marker);
+			this.markers.push(marker);
 			
 		}
-		
-		this.setState({ markers });
-		
-	}
-	
-	locate(e) {
-		
-		const [ lat, lng, accuracy ] = [ e.coords.latitude, e.coords.longitude, e.coords.accuracy ];
-		const { init, marker, circle } = this.state.gps;
-		const map = window.map;
-		const bounds = map.getBounds();
-		
-		marker.setPosition({ lat, lng });
-		circle.setCenter({ lat, lng });
-		circle.setRadius(accuracy);
-		
-		if (bounds) if (init || (lat < bounds.f.f && lat > bounds.f.b && lng < bounds.b.f && lng > bounds.b.b)) map.setCenter({ lat, lng });
-		
-		this.setState({ gps: { init: false, marker, circle } });
 		
 	}
 	
@@ -97,14 +78,12 @@ export default withRouter(class Map extends Component {
 			minZoom: 7,
 			maxZoom: 18,
 			disableDefaultUI: true,
-			clickableIcons: false,
 			styles: [
 				{
 					featureType: 'transit.station',
 					elementType: 'all',
 					stylers: [
 						{
-					
 							visibility: 'off'
 						}
 					]
@@ -112,40 +91,8 @@ export default withRouter(class Map extends Component {
 			]
 		});
 		
-		window.map = map;
-		
-		this.setState({
-			markers: [],
-			gps: {
-				init: true,
-				marker: new googleMaps.Marker({
-					optimized: true,
-					clickable: false,
-					icon: {
-						anchor: new googleMaps.Point(12, 12),
-						url: `data:image/svg+xml;charset=utf-8, ${renderToString((
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24">
-								<circle fill="#fff" cx="512" cy="512" r="512" />
-								<circle fill="#00bfff" cx="512" cy="512" r="400" />
-							</svg>
-						))}`
-					},
-					map
-				}),
-				circle: new googleMaps.Circle({
-					clickable: false,
-					fillColor: '#00bfff',
-					fillOpacity: 0.15,
-					strokeWeight: 0,
-					map
-				})
-			}
-		}, () => {
-			
-			map.addListener('bounds_changed', this.update.bind(this));
-			navigator.geolocation.watchPosition(this.locate.bind(this));
-			
-		});
+		map.addListener('bounds_changed', this.update);
+		this.map = map;
 		
 	}
 	
@@ -153,4 +100,4 @@ export default withRouter(class Map extends Component {
 		return <div id="map" ref="map"></div>;
 	}
 	
-});
+}
