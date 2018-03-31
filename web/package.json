@@ -1,20 +1,27 @@
 {
   "name": "bussiaeg-web",
-  "description": "Bussiaeg Web",
+  "description": "Bussiaeg (Web)",
+  "version": "3.0.0",
+  "contributors": [
+    "Karl Köörna",
+    "Kaur Hendrikson"
+  ],
   "dependencies": {
+    "mobx": "^4.1.1",
+    "mobx-react": "^5.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-transition-group": "^2.2.1",
-    "redux": "^3.7.2"
+    "react-transition-group": "^2.2.1"
   },
   "devDependencies": {
+    "babel-plugin-transform-decorators": "^6.24.1",
+    "react-app-rewired": "^1.5.0",
     "react-scripts": "1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build"
   }
 }
