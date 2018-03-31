@@ -10,12 +10,12 @@ body,
 
 body {
 	margin: 0;
-	color: #333;
-	font-family: Lato, Arial, sans-serif;
 }
 
 #root {
 	display: flex;
+	color: #333;
+	font-family: Lato, Arial, sans-serif;
 	flex-direction: column;
 }
 
