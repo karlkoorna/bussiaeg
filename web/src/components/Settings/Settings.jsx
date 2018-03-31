@@ -4,8 +4,6 @@ export default class Settings extends PureComponent {
 	
 	componentWillMount() {
 		
-		
-		
 	}
 	
 	render() {

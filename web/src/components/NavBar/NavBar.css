@@ -1,22 +1,21 @@
 #navbar {
 	z-index: 999;
 	display: flex;
-	background-color: white;
 	color: #333;
 	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
-	font-size: 0;
 	flex: 0 0 64px;
+	overflow: hidden;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .navbar-item {
 	display: flex;
 	position: relative;
-	width: 20%;
+	background-color: white;
+	outline: none;
 	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	overflow: hidden;
-	-webkit-tap-highlight-color: transparent;
+	flex: 1;
 }
 
 .navbar-item svg {
@@ -24,9 +23,16 @@
 	transition: width .15s ease;
 }
 
-.navbar-item.active svg,
-.navbar-item:hover svg {
+.navbar-item.active svg {
 	width: 40px;
+}
+
+@media (pointer: fine) {
+	
+	.navbar-item:hover svg {
+		width: 40px;
+	}
+	
 }
 
 @keyframes navbar-item-search {
@@ -69,14 +75,6 @@
 	
 	to {
 		transform: scaleX(1);
-	}
-	
-}
-
-@keyframes navbar-item-directions {
-	
-	to {
-		transform: rotate(360deg);
 	}
 	
 }

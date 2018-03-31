@@ -1,6 +1,7 @@
 import React from 'react';
 
 import IconVehicle from '../IconVehicle';
+
 import './Loading.css';
 
 export default function Loading() {

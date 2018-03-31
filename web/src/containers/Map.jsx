@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { renderToString } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
 
-import IconStop from './IconStop';
+import IconStop from '../components/IconStop';
 
 const googleMaps = window.google.maps;
 
@@ -23,7 +23,7 @@ export default withRouter(class Map extends Component {
 		
 		const bounds = map.getBounds();
 		
-		for (let i in markers) {
+		for (const i in markers) {
 			const marker = markers[i];
 			
 			const [ lat, lng ] = [ marker.position.lat(), marker.position.lng() ];
@@ -41,7 +41,9 @@ export default withRouter(class Map extends Component {
 			if (stop.lng > bounds.b.f || stop.lng < bounds.b.b) continue;
 			
 			let found;
-			for (const marker of markers) if (marker.id === stop.id) { found = true; break; }
+			for (const marker of markers) if (marker.id === stop.id) {
+				found = true; break;
+			}
 			if (found) continue;
 			
 			const marker = new googleMaps.Marker({
@@ -50,13 +52,13 @@ export default withRouter(class Map extends Component {
 				position: { lat: stop.lat, lng: stop.lng },
 				icon: {
 					anchor: new googleMaps.Point(13, 13),
-					url: 'data:image/svg+xml;charset=utf-8, ' + renderToString(IconStop({ type: stop.type, map: true })),
+					url: `data:image/svg+xml;charset=utf-8, ${renderToString(IconStop({ type: stop.type, map: true }))}`
 				},
 				map
 			});
 			
 			marker.addListener('click', function() {
-				this.props.history.push('/stop?id=' + stop.id);
+				this.props.history.push(`/stop?id=${stop.id}`);
 			}.bind(this));
 			
 			markers.push(marker);
@@ -96,13 +98,18 @@ export default withRouter(class Map extends Component {
 			maxZoom: 18,
 			disableDefaultUI: true,
 			clickableIcons: false,
-			styles: [{
-				featureType: 'transit.station',
-				elementType: 'all',
-				stylers: [{
-					visibility: 'off'
-				}]
-			}]
+			styles: [
+				{
+					featureType: 'transit.station',
+					elementType: 'all',
+					stylers: [
+						{
+					
+							visibility: 'off'
+						}
+					]
+				}
+			]
 		});
 		
 		window.map = map;
@@ -116,12 +123,12 @@ export default withRouter(class Map extends Component {
 					clickable: false,
 					icon: {
 						anchor: new googleMaps.Point(12, 12),
-						url: 'data:image/svg+xml;charset=utf-8, ' + renderToString((
+						url: `data:image/svg+xml;charset=utf-8, ${renderToString((
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24">
 								<circle fill="#fff" cx="512" cy="512" r="512" />
 								<circle fill="#00bfff" cx="512" cy="512" r="400" />
 							</svg>
-						))
+						))}`
 					},
 					map
 				}),
