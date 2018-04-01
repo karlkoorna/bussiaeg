@@ -18,6 +18,7 @@ export default function NavBar() {
 class NavBarItem extends PureComponent {
 	
 	state = {}
+	
 	animate = this.animate.bind(this)
 	
 	animate() {
