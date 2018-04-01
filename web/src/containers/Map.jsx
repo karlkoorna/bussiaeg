@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { renderToString } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
 
-import IconStop from '../components/IconStop';
+import IconStop from 'components/IconStop';
 
 const googleMaps = window.google.maps;
 
 @withRouter
-export default class Map extends Component {
+export default class Map extends PureComponent {
 	
 	map = null
 	markers = []
@@ -39,20 +39,26 @@ export default class Map extends Component {
 			
 		}
 		
-		nextstop:
+		stops:
 		for (const stop of window.stops) {
 			
 			if (stop.lat > bounds.f.f || stop.lat < bounds.f.b) continue;
 			if (stop.lng > bounds.b.f || stop.lng < bounds.b.b) continue;
 			
-			for (const marker of markers) if (marker.id === stop.id) continue nextstop;
+			for (const marker of markers) if (marker.id === stop.id) continue stops;
 			
 			const marker = new googleMaps.Marker({
 				id: stop.id,
-				position: { lat: stop.lat, lng: stop.lng },
 				optimized: true,
+				position: {
+					lat: stop.lat,
+					lng: stop.lng
+				},
 				icon: {
-					url: `data:image/svg+xml;base64,${btoa(renderToString(IconStop({ type: stop.type, map: true })))}`
+					url: `data:image/svg+xml;base64,${btoa(renderToString(IconStop({
+						type: stop.type,
+						map: true
+					})))}`
 				},
 				map
 			});
