@@ -7,22 +7,33 @@ import IconVehicle from 'components/IconVehicle';
 
 import './Stop.css';
 
-export default withRouter(class Stop extends Component {
+@withRouter
+export default class Stop extends Component {
+	
+	state = {
+		stop: {}
+	}
 	
 	async update() {
-		this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/gettrips?id=${this.state.stop.id}`)).json() });
+		
+		this.setState({
+			trips: await (await fetch(`${process.env['REACT_APP_API']}/gettrips?id=${this.state.stop.id}`)).json()
+		});
+		
 	}
 	
 	componentWillMount() {
 		
-		const stop = window.stops.find((stop) => stop.id === (new URLSearchParams(window.location.search).get('stop')));
+		const stop = window.stops.find((stop) => stop.id === (new URLSearchParams(window.location.search).get('id')));
 		
 		if (!stop) return void this.props.history.push('/');
 		
+		/* TODO: Replace with MobX
 		if (!window.init) setTimeout(() => {
 			window.map.setCenter({ lat: stop.lat, lng: stop.lng });
 			window.init = true;
 		}, 100);
+		*/
 		
 		this.update.call(this);
 		
@@ -93,4 +104,4 @@ export default withRouter(class Stop extends Component {
 		
 	}
 	
-});
+}
