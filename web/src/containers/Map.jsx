@@ -83,6 +83,7 @@ export default class Map extends PureComponent {
 			zoom: 16,
 			minZoom: 7,
 			maxZoom: 18,
+			clickableIcons: false,
 			disableDefaultUI: true,
 			styles: [
 				{
