@@ -27,7 +27,7 @@ export default class Stop extends Component {
 		
 		if (!stop) return void this.props.history.push('/');
 		
-		/* TODO: Replace with MobX
+		/* TODO: Replace with ???
 		if (!window.init) setTimeout(() => {
 			window.map.setCenter({ lat: stop.lat, lng: stop.lng });
 			window.init = true;
