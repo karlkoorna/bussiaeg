@@ -9,14 +9,14 @@ const googleMaps = window.google.maps;
 @withRouter
 export default class Map extends PureComponent {
 	
-	map = null
 	markers = []
 	
 	update = this.update.bind(this)
 	
 	update() {
 		
-		const { map, markers } = this;
+		const map = window.map;
+		const { markers } = this;
 		
 		if (map.getZoom() < 16) {
 			
@@ -99,7 +99,7 @@ export default class Map extends PureComponent {
 		});
 		
 		map.addListener('bounds_changed', this.update);
-		this.map = map;
+		window.map = map;
 		
 	}
 	
