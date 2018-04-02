@@ -2,8 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import Loading from 'components/Loading/Loading';
-import IconStop from 'components/IconStop';
-import IconVehicle from 'components/IconVehicle';
+import Icon from 'components/Icon';
 
 import './Stop.css';
 
@@ -58,7 +57,7 @@ export default class Stop extends Component {
 		return (
 			<Fragment>
 				<div id="stop-bar">
-					{IconStop({ type: stop.type })}
+					{Icon({ type: stop.type, shape: 'stop' })}
 					<span id="stop-bar-name">{stop.name}</span>
 					<span id="stop-bar-extra">{stop.name}</span>
 				</div>
@@ -76,7 +75,7 @@ export default class Stop extends Component {
 					
 							return (
 								<div className="stop-trips-trip" key={trip.shortName + trip.altTime}>
-									{IconVehicle({ type: trip.type, className: 'stop-trips-trip-icon' })}
+									{Icon({ type: trip.type, className: 'stop-trips-trip-icon' })}
 									<div className="stop-trips-trip-shortname" style={{ color: secondaryColor }}>{trip.shortName}</div>
 									<div className="stop-trips-trip-longname" style={{ color: secondaryColor }}>
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill={primaryColor}>
