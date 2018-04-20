@@ -74,8 +74,8 @@ export default class Map extends PureComponent {
 		
 		const map = new googleMaps.Map(this.refs.map, {
 			center: {
-				lat: 59.388,
-				lng: 24.685
+				lat: 59.436,
+				lng: 24.753
 			},
 			zoom: 16,
 			minZoom: 7,
