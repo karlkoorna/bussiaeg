@@ -10,10 +10,8 @@
 	cursor: default;
 }
 
-#stop-bar svg {
-	display: inline-block;
+#stop-bar-icon {
 	width: 40px;
-	margin-right: 12px;
 }
 
 #stop-bar-name,
@@ -58,7 +56,7 @@
 	position: absolute;
 }
 
-.stop-trips-trip-icon {
+.stop-trips-trip-vehicle {
 	width: 48px;
 	margin-top: 3px;
 }

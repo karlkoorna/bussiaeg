@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { renderToString } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
 
-import Icon from 'components/Icon';
+import Vehicle from 'components/Vehicle';
 
 const googleMaps = window.google.maps;
 
@@ -55,7 +55,7 @@ export default class Map extends PureComponent {
 					lng: stop.lng
 				},
 				icon: {
-					url: `data:image/svg+xml;base64,${btoa(renderToString(Icon({ type: stop.type, shape: 'stop', size: 26 })))}`
+					url: `data:image/svg+xml;base64,${btoa(renderToString(Vehicle({ type: stop.type, silhouette: true, size: 26 })))}`
 				},
 				map
 			});
@@ -80,7 +80,7 @@ export default class Map extends PureComponent {
 			zoom: 16,
 			minZoom: 7,
 			maxZoom: 18,
-			clickableIcons: false,
+			clickableIcon: false,
 			disableDefaultUI: true,
 			styles: [
 				{

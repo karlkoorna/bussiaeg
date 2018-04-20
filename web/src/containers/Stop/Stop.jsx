@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import Loading from 'components/Loading/Loading';
-import Icon from 'components/Icon';
+import Vehicle from 'components/Vehicle';
 
 import './Stop.css';
 
@@ -57,14 +57,14 @@ export default class Stop extends Component {
 		return (
 			<Fragment>
 				<div id="stop-bar">
-					{Icon({ type: stop.type, shape: 'stop' })}
+					{Vehicle({ id: 'stop-bar-icon', type: stop.type, silhouette: true })}
 					<span id="stop-bar-name">{stop.name}</span>
 					<span id="stop-bar-extra">{stop.name}</span>
 				</div>
 				<div id="stop-trips">
 					{
 						trips.length ? trips.map((trip) => {
-					
+							
 							const [ primaryColor, secondaryColor ] = {
 								bus: [ '#00e1b4', '#00a181' ],
 								trol: [ '#3682ce', '#255a8e' ],
@@ -72,10 +72,10 @@ export default class Stop extends Component {
 								train: [ '#f69b4c', '#b67338' ],
 								coach: [ '#b552ba', '#79377c' ]
 							}[trip.type];
-					
+							
 							return (
 								<div className="stop-trips-trip" key={trip.shortName + trip.altTime}>
-									{Icon({ type: trip.type, className: 'stop-trips-trip-icon' })}
+									{Vehicle({ className: 'stop-trips-trip-vehicle', type: trip.type })}
 									<div className="stop-trips-trip-shortname" style={{ color: secondaryColor }}>{trip.shortName}</div>
 									<div className="stop-trips-trip-longname" style={{ color: secondaryColor }}>
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill={primaryColor}>
@@ -94,7 +94,7 @@ export default class Stop extends Component {
 									<div className="stop-trips-trip-time">{trip.altTime}</div>
 								</div>
 							);
-					
+							
 						}) : <Loading />
 					}
 				</div>
