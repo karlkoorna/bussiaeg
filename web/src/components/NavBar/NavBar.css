@@ -18,22 +18,26 @@
 	flex: 1;
 }
 
-.navbar-item svg {
+.navbar-item > svg {
 	width: 32px;
 	transition: width .15s ease;
 }
 
-.navbar-item.active svg {
+.navbar-item.active > svg {
 	width: 40px;
 }
 
+/* Queries */
+
 @media (pointer: fine) {
 	
-	.navbar-item:hover svg {
+	.navbar-item:hover > svg {
 		width: 40px;
 	}
 	
 }
+
+/* Animations */
 
 @keyframes navbar-item-search {
 	
