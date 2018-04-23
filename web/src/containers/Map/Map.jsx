@@ -104,11 +104,11 @@ export default class Map extends PureComponent {
 		});
 		
 		const circle = new googleMaps.Circle({
-			clickable: false,	
+			clickable: false,
 			optimized: true,
-			fillColor: '#00bfff',	
-			fillOpacity: .15,	
-			strokeWeight: 0,	
+			fillColor: '#00bfff',
+			fillOpacity: .15,
+			strokeWeight: 0,
 			map
 		});
 		
