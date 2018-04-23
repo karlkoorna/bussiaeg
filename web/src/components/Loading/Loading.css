@@ -6,19 +6,19 @@
 }
 
 .loading-vehicle {
-	width: 64px;
-	margin: 16px;
+	width: 33.333%;
+	margin: 0 16px;
 }
 
-#loading-bus g {
+#loading-bus > g {
 	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite;
 }
 
-#loading-trol g {
+#loading-trol > g {
 	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite .3s;
 }
 
-#loading-tram g {
+#loading-tram > g {
 	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite .6s;
 }
 
