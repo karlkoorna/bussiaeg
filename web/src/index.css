@@ -17,7 +17,6 @@ body {
 	color: #333;
 	font-family: Lato, Arial, sans-serif;
 	flex-direction: column;
-	-webkit-tap-highlight-color: transparent;
 }
 
 #pages {
@@ -46,15 +45,15 @@ body {
 }
 
 .page-enter {
-	animation: fade-in .25s ease;
+	animation: fadeIn .25s ease;
 }
 
 .page-exit {
 	opacity: 0;
-	animation: fade-out .25s ease;
+	animation: fadeOut .25s ease;
 }
 
-@keyframes fade-in {
+@keyframes fadeIn {
 	
 	from {
 		opacity: 0;
@@ -66,7 +65,7 @@ body {
 	
 }
 
-@keyframes fade-out {
+@keyframes fadeOut {
 	
 	from {
 		opacity: 1;
