@@ -16,7 +16,7 @@ export default class Map extends PureComponent {
 	update() {
 		
 		const map = window.map;
-		const { markers } = this;
+		const markers = this.markers;
 		
 		if (map.getZoom() < 16) {
 			
@@ -31,21 +31,21 @@ export default class Map extends PureComponent {
 		for (const i in markers) {
 			const marker = markers[i];
 			
-			if (bounds.f.b < marker.position.lat() < bounds.f.f) continue;
-			if (bounds.b.f > marker.position.lng() > bounds.b.b) continue;
+			if (bounds.f.f > marker.position.lat() > bounds.f.b) continue;
+			if (bounds.b.b < marker.position.lng() < bounds.b.f) continue;
 			
 			marker.setMap(null);
 			this.markers.splice(i, 1);
 			
 		}
 		
-		stops:
+		nextstop:
 		for (const stop of window.stops) {
 			
 			if (stop.lat > bounds.f.f || stop.lat < bounds.f.b) continue;
 			if (stop.lng > bounds.b.f || stop.lng < bounds.b.b) continue;
 			
-			for (const marker of markers) if (marker.id === stop.id) continue stops;
+			for (const marker of markers) if (marker.id === stop.id) continue nextstop;
 			
 			const marker = new googleMaps.Marker({
 				id: stop.id,
@@ -54,14 +54,12 @@ export default class Map extends PureComponent {
 					lat: stop.lat,
 					lng: stop.lng
 				},
-				icon: {
-					url: `data:image/svg+xml;base64,${btoa(renderToString(Vehicle({ type: stop.type, silhouette: true, size: 26 })))}`
-				},
+				icon: `data:image/svg+xml;base64,${btoa(renderToString(Vehicle({ type: stop.type, silhouette: true, size: 26 })))}`,
 				map
 			});
 			
 			marker.addListener('click', () => {
-				this.props.history.push(`/stop?id=${stop.id}`);
+				this.props.history.push(`stop?id=${stop.id}`);
 			});
 			
 			this.markers.push(marker);
