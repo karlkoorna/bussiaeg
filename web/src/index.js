@@ -6,7 +6,7 @@ import Loadable from 'react-loadable';
 
 import NavBar from 'components/NavBar/NavBar';
 import Loading from 'components/Loading/Loading';
-import Map from 'containers/Map';
+import Map from 'containers/Map/Map';
 import Stop from 'containers/Stop/Stop';
 
 import './index.css';

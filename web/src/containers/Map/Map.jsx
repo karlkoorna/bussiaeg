@@ -4,14 +4,18 @@ import { withRouter } from 'react-router-dom';
 
 import Vehicle from 'components/Vehicle';
 
+import './Map.css';
+
 const googleMaps = window.google.maps;
 
 @withRouter
 export default class Map extends PureComponent {
 	
 	markers = []
+	coords = {}
 	
 	update = this.update.bind(this)
+	locate = this.locate.bind(this)
 	
 	update() {
 		
@@ -78,7 +82,7 @@ export default class Map extends PureComponent {
 			zoom: 16,
 			minZoom: 7,
 			maxZoom: 18,
-			clickableIcon: false,
+			clickableIcons: false,
 			disableDefaultUI: true,
 			styles: [
 				{
@@ -93,13 +97,59 @@ export default class Map extends PureComponent {
 			]
 		});
 		
+		const marker = new googleMaps.Marker({
+			clickable: false,
+			optimized: true,
+			map
+		});
+		
+		const circle = new googleMaps.Circle({
+			clickable: false,	
+			optimized: true,
+			fillColor: '#00bfff',	
+			fillOpacity: .15,	
+			strokeWeight: 0,	
+			map
+		});
+		
 		map.addListener('bounds_changed', this.update);
 		window.map = map;
 		
+		navigator.geolocation.watchPosition((e) => {
+			
+			const { latitude, longitude, accuracy } = e.coords;
+			
+			const coords = {
+				lat: latitude,
+				lng: longitude
+			};
+			
+			marker.setPosition(coords);
+			circle.setCenter(coords);	
+			circle.setRadius(accuracy);
+			
+			if (!this.coords.lat) map.panTo(coords);
+			
+			this.coords = coords;
+			
+		}, (err) => {}, {
+			enableHighAccuracy: true,
+			timeout: 100
+		});
+		
+	}
+	
+	locate() {
+		if (this.coords.lat) window.map.panTo(this.coords);
 	}
 	
 	render() {
-		return <div id="map" ref="map"></div>;
+		return (
+			<div id="map">
+				<div id="map-container" ref="map"></div>
+				<div id="map-locate" onClick={this.locate}></div>
+			</div>
+		);
 	}
 	
 }
