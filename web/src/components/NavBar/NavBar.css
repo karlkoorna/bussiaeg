@@ -39,7 +39,7 @@
 
 /* Animations */
 
-@keyframes navbar-item-search {
+@keyframes navbar-search {
 	
 	50% {
 		transform: scaleX(-1);
@@ -51,7 +51,7 @@
 	
 }
 
-@keyframes navbar-item-favorites {
+@keyframes navbar-favorites {
 	
 	25% {
 		transform: scale(1.1);
@@ -71,7 +71,7 @@
 	
 }
 
-@keyframes navbar-item-map {
+@keyframes navbar-map {
 	
 	50% {
 		transform: scaleX(.6);
@@ -83,7 +83,7 @@
 	
 }
 
-@keyframes navbar-item-settings {
+@keyframes navbar-settings {
 	
 	to {
 		transform: rotate(180deg);

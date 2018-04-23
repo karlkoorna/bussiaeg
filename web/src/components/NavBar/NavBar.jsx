@@ -25,7 +25,7 @@ class NavBarItem extends PureComponent {
 		
 		if (this.state.animation) return;
 		
-		this.setState({ animation: `navbar-item-${this.props.children} .75s ease` });
+		this.setState({ animation: `navbar-${this.props.children} .75s ease` });
 		
 		setTimeout(() => {
 			this.setState({ animation: '' });
