@@ -6,7 +6,6 @@
 	flex: 0 0 64px;
 	overflow: hidden;
 	cursor: pointer;
-	-webkit-tap-highlight-color: transparent;
 }
 
 .navbar-item {
