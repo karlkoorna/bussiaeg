@@ -4,9 +4,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Loadable from 'react-loadable';
 
-import Map from 'containers/Map';
 import NavBar from 'components/NavBar/NavBar';
 import Loading from 'components/Loading/Loading';
+import Map from 'containers/Map';
+import Stop from 'containers/Stop/Stop';
 
 import './index.css';
 
@@ -22,11 +23,6 @@ const Favorites = Loadable({
 
 const Settings = Loadable({
 	loader: () => import('containers/Settings/Settings'),
-	loading: Loading
-});
-
-const Stop = Loadable({
-	loader: () => import('containers/Stop/Stop'),
 	loading: Loading
 });
 
