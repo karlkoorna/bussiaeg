@@ -17,20 +17,21 @@ body {
 	color: #333;
 	font-family: Lato, Arial, sans-serif;
 	flex-direction: column;
+	-webkit-tap-highlight-color: transparent;
 }
 
 #pages {
 	z-index: 2;
 	position: relative;
 	background-color: #f5f5f5;
-	animation: fadeIn .25s ease;
+	animation: page-fadeIn .25s ease;
 	flex: 1;
 	pointer-events: none;
 }
 
 #pages.is-empty {
 	opacity: 0;
-	animation: fadeOut .25s ease;
+	animation: page-fadeOut .25s ease;
 }
 
 #page {
@@ -45,15 +46,15 @@ body {
 }
 
 .page-enter {
-	animation: fadeIn .25s ease;
+	animation: page-fadeIn .25s ease;
 }
 
 .page-exit {
 	opacity: 0;
-	animation: fadeOut .25s ease;
+	animation: page-fadeOut .25s ease;
 }
 
-@keyframes fadeIn {
+@keyframes page-fadeIn {
 	
 	from {
 		opacity: 0;
@@ -65,7 +66,7 @@ body {
 	
 }
 
-@keyframes fadeOut {
+@keyframes page-fadeOut {
 	
 	from {
 		opacity: 1;
