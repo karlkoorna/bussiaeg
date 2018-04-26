@@ -1,8 +1,8 @@
 #map {
-	z-index: 1;
 	position: absolute;
 	width: 100%;
 	height: calc(100% - 64px);
+	overflow: hidden;
 }
 
 #map-container {
@@ -10,14 +10,48 @@
 	height: 100%;
 }
 
+#map-message {
+	position: absolute;
+	top: 24px;
+	width: 100%;
+	padding: 8px;
+	background-color: rgba(0, 0, 0, .3);
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	pointer-events: none;
+}
+
+#map-message:empty {
+	visibility: hidden;
+}
+
 #map-locate {
 	position: absolute;
-	right: 16px;
+	right: -48px;
 	bottom: 16px;
 	width: 48px;
 	height: 48px;
+	padding: 8px;
 	background-color: white;
 	border-radius: 100%;
 	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
+	transition: right .5s ease;
 	cursor: pointer;
+}
+
+#map-locate.is-visible {
+	right: 16px;
+}
+
+@keyframes map-bounce {
+	
+	50% {
+		transform: translateY(-25%);
+	}
+	
+	to {
+		transform: translateY(0);
+	}
+	
 }
