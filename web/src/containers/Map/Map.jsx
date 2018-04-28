@@ -1,18 +1,23 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { renderToString } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
 
 import Vehicle from 'components/Vehicle';
+import Modal from 'components/Modal/Modal';
 
 import './Map.css';
 
 const googleMaps = window.google.maps;
 
 @withRouter
-export default class Map extends PureComponent {
+export default class Map extends Component {
+	
+	state = {
+		coords: {},
+		message: '',
+	}
 	
 	markers = []
-	coords = {}
 	
 	update = this.update.bind(this)
 	locate = this.locate.bind(this)
@@ -26,9 +31,13 @@ export default class Map extends PureComponent {
 			
 			for (const marker of markers) marker.setMap(null);
 			
+			this.setState({ message: 'Suumi lähemale, et näha peatuseid' });
+			
 			return void (this.markers = []);
 			
 		}
+		
+		this.setState({ message: '' });
 		
 		const bounds = map.getBounds();
 		
@@ -77,36 +86,24 @@ export default class Map extends PureComponent {
 	
 	locate() {
 		
-		const { coords, refs: { $locate } } = this;
+		const { coords } = this.state;
 		
-		if (!coords.lat) return;
-		
-		window.map.panTo(coords);
-		
-		$locate.style.animation = 'map-bounce .4s';
-		
-		setTimeout(() => {
-			$locate.style.animation = '';
-		}, 400);
-		
-	}
-	
-	message(str) {
-		
-		const { $message } = this.refs;
-		
-		if ($message.innerText !== str) $message.innerText = str;
+		if (coords.lat) window.map.panTo(coords);
 		
 	}
 	
 	componentDidMount() {
 		
+		const start = JSON.parse(localStorage.getItem('start') || '{}');
+		const time = new Date();
+		let timeout;
+		
 		const map = new googleMaps.Map(this.refs.$map, {
 			center: {
-				lat: 59.436,
-				lng: 24.753
+				lat: start.lat || 59.436,
+				lng: start.lng || 24.753
 			},
-			zoom: 16,
+			zoom: start.zoom || 16,
 			minZoom: 7,
 			maxZoom: 18,
 			clickableIcons: false,
@@ -148,7 +145,6 @@ export default class Map extends PureComponent {
 			map
 		});
 		
-		const time = new Date();
 		
 		map.addListener('bounds_changed', this.update);
 		window.map = map;
@@ -159,7 +155,6 @@ export default class Map extends PureComponent {
 			navigator.geolocation.watchPosition((e) => {
 				
 				const { latitude: lat, longitude: lng, accuracy } = e.coords;
-				
 				const coords = { lat, lng };
 				
 				marker.setPosition(coords);
@@ -167,22 +162,13 @@ export default class Map extends PureComponent {
 				circle.setRadius(accuracy);
 				
 				if (new Date() - time < 3000) map.panTo(coords);
-				if (!this.coords.lat) this.refs.$locate.classList.add('is-visible');
-				this.message('');
-				
-				this.coords = coords;
+				this.setState({ coords });
 				
 			}, (err) => {
-				
-				if (err.code === 3) return;
-				
-				this.message(err.code === 1 ? 'GPS on välja lülitatud' : err.code === 2 ? 'Seade ei toeta GPSi' : '');
-				
-				if (err.code === 1) setTimeout(watchPosition.bind(this), 1000);
-				
+				if (err.code !== 3) setTimeout(watchPosition.bind(this), 3000);
 			}, {
 				enableHighAccuracy: true,
-				timeout: 100
+				timeout: 1000
 			});
 			
 		}
@@ -193,8 +179,8 @@ export default class Map extends PureComponent {
 		return (
 			<div id="map">
 				<div id="map-container" ref="$map"></div>
-				<span id="map-message" ref="$message"></span>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" onClick={this.locate} ref="$locate">
+				<span id="map-message">{this.state.message}</span>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" className={this.state.coords.lat ? 'is-visible' : null} onClick={this.locate}>
 					<path fill="#4285f4" d="M512 .1C246.2.1 172.6 219.7 172.6 344.7c0 274.6 270 679.3 339.4 679.3s339.4-404.6 339.4-679.3C851.4 219.6 777.8.1 512 .1zm0 471.1c-71.3 0-129-57.8-129-129s57.7-129.1 129-129.1 129 57.8 129 129-57.7 129.1-129 129.1z" />
 				</svg>
 			</div>
