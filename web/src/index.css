@@ -45,11 +45,11 @@ body {
 	pointer-events: none;
 }
 
-.page-enter {
+.page.is-entering {
 	animation: page-fadeIn .25s ease;
 }
 
-.page-exit {
+.page.is-exiting {
 	opacity: 0;
 	animation: page-fadeOut .25s ease;
 }

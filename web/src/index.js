@@ -22,7 +22,7 @@ async function init() {
 			<Fragment>
 				<Route render={({ location }) => (
 					<TransitionGroup id="pages" className={location.pathname === '/' ? 'is-empty' : ''}>
-						<CSSTransition key={location.pathname} classNames="page" timeout={250}>
+						<CSSTransition key={location.pathname} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250}>
 							<div id="page">
 								<Switch location={location}>
 									<Route path="/search" component={Search} />
