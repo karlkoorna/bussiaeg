@@ -2,29 +2,15 @@ import React, { Fragment } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import Loadable from 'react-loadable';
 
 import NavBar from 'components/NavBar/NavBar';
-import Loading from 'components/Loading/Loading';
 import Map from 'containers/Map/Map';
+import Search from 'containers/Search/Search';
+import Favorites from 'containers/Favorites/Favorites';
+import Settings from 'containers/Settings/Settings';
 import Stop from 'containers/Stop/Stop';
 
 import './index.css';
-
-const Search = Loadable({
-	loader: () => import('containers/Search/Search'),
-	loading: Loading
-});
-
-const Favorites = Loadable({
-	loader: () => import('containers/Favorites/Favorites'),
-	loading: Loading
-});
-
-const Settings = Loadable({
-	loader: () => import('containers/Settings/Settings'),
-	loading: Loading
-});
 
 init();
 async function init() {
