@@ -10,22 +10,22 @@
 	margin: 0 16px;
 }
 
-#loading-bus > g {
+#loading-bus {
 	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite;
 }
 
-#loading-trol > g {
+#loading-trol {
 	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite .3s;
 }
 
-#loading-tram > g {
+#loading-tram {
 	animation: loading-bounce 1s cubic-bezier(.25, .46, .45, .94) infinite .6s;
 }
 
 @keyframes loading-bounce {
 	
 	50% {
-		transform: translateY(-100%);
+		transform: translateY(-10%);
 		animation-timing-function: cubic-bezier(.55, .085, .68, .53);
 	}
    

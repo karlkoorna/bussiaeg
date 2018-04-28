@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { renderToString } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
 
-import Vehicle from 'components/Vehicle';
+import StopIcon from 'components/StopIcon';
 import Modal from 'components/Modal/Modal';
 
 import './Map.css';
@@ -72,7 +72,7 @@ export default class Map extends Component {
 				},
 				icon: {
 					anchor: new googleMaps.Point(13, 13),
-					url: `data:image/svg+xml;base64,${btoa(renderToString(Vehicle({ type: stop.type, silhouette: true, size: 26 })))}`
+					url: `data:image/svg+xml;base64,${btoa(renderToString(StopIcon({ type: stop.type, size: 26 })))}`
 				},
 				map
 			});
