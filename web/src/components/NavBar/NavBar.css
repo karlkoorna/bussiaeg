@@ -26,8 +26,6 @@
 	width: 40px;
 }
 
-/* Queries */
-
 @media (pointer: fine) {
 	
 	.navbar-item:hover > svg {
@@ -35,8 +33,6 @@
 	}
 	
 }
-
-/* Animations */
 
 @keyframes navbar-search {
 	
