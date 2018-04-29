@@ -34,13 +34,13 @@ export default class Map extends Component {
 			
 			for (const marker of markers) marker.setMap(null);
 			
-			this.setState({ message: 'Suumi lähemale, et näha peatuseid' });
+			if (!this.state.message) this.setState({ message: 'Suumi lähemale, et näha peatuseid' });
 			
 			return void (this.markers = []);
 			
 		}
 		
-		this.setState({ message: '' });
+		if (this.state.message) this.setState({ message: '' });
 		
 		const bounds = map.getBounds();
 		
