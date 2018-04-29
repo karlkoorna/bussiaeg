@@ -12,11 +12,11 @@
 }
 
 #modal.is-entering {
-	animation: page-fadeIn .3s ease;
+	animation: modal-fadeIn .3s ease;
 }
 
 #modal.is-exiting {
-	animation: page-fadeOut .3s ease;
+	animation: modal-fadeOut .3s ease;
 }
 
 #modal-panel {
