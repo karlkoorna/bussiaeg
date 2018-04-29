@@ -167,18 +167,20 @@ export default class Map extends Component {
 		
 		map.addListener('mousedown', (e) => {
 			
-			hold = setTimeout(() => {
-				this.setState({ showModal: true });
+			hold = true;
+			
+			setTimeout(() => {
+				if (hold) this.setState({ showModal: true });
 			}, 500);
 			
 		});
 		
 		map.addListener('mouseup', () => {
-			clearInterval(hold);
+			hold = false;
 		});
 		
 		map.addListener('drag', () => {
-			clearInterval(hold);
+			hold = false;
 		})
 		
 		map.addListener('bounds_changed', this.update);
