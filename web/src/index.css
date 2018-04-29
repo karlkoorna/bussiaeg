@@ -13,16 +13,18 @@ body {
 }
 
 #root {
-	color: #333;
+	display: flex;
+	color: #383838;
 	font-family: Lato, Arial, Helvetica, sans-serif;
+	flex-direction: column;
+	cursor: default;
 	-webkit-tap-highlight-color: transparent;
 }
 
 #pages {
-	position: absolute;
-	width: 100%;
-	height: calc(100% - 64px);
+	position: relative;
 	background-color: #f5f5f5;
+	flex: 1;
 	animation: page-fadeIn .25s ease;
 	pointer-events: none;
 }
