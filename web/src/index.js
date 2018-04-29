@@ -4,11 +4,11 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import NavBar from 'components/NavBar/NavBar';
-import Map from 'containers/Map/Map';
-import Search from 'containers/Search/Search';
-import Favorites from 'containers/Favorites/Favorites';
-import Settings from 'containers/Settings/Settings';
-import Stop from 'containers/Stop/Stop';
+import Map from 'pages/Map/Map';
+import Search from 'pages/Search/Search';
+import Favorites from 'pages/Favorites/Favorites';
+import Settings from 'pages/Settings/Settings';
+import Stop from 'pages/Stop/Stop';
 
 import './index.css';
 
