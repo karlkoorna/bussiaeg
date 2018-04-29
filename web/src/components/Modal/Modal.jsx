@@ -14,9 +14,12 @@ export default class Model extends PureComponent {
 	
 	onClick(e) {
 		
+		const { onCancel, onConfirm } = this.props;
 		const action = e.target.id.substr(27);
 		
-		this.props[`on${action[0].toUpperCase() + action.substr(1)}`]();
+		if (action === 'cancel') onCancel();
+		else if (action === 'confirm') onConfirm();
+		
 		this.setState({ action });
 		
 	}
@@ -28,6 +31,7 @@ export default class Model extends PureComponent {
 	render() {
 		
 		const { isVisible, title, text, onCancel } = this.props;
+		const { action } = this.state;
 		
 		return (
 			<CSSTransition in={isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250} onExited={this.onExited} unmountOnExit>
@@ -37,8 +41,8 @@ export default class Model extends PureComponent {
 						<div id="modal-panel-title">{title}</div>
 						<div id="modal-panel-text">{text}</div>
 						<div id="modal-panel-buttons">
-							<div id="modal-panel-buttons-button-cancel" onClick={this.onClick}>Tühista</div>
-							<div id="modal-panel-buttons-button-confirm" onClick={this.onClick}>Kinnita</div>
+							<div id="modal-panel-buttons-button-cancel" className={action === 'cancel' ? 'is-active' : null} onClick={this.onClick}>Tühista</div>
+							<div id="modal-panel-buttons-button-confirm" className={action === 'confirm' ? 'is-active' : null} onClick={this.onClick}>Kinnita</div>
 						</div>
 					</div>
 				</div>

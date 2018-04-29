@@ -74,8 +74,8 @@
 	background-color: #3680d3;
 }
 
-#modal-panel.cancel #modal-panel-buttons-button-cancel,
-#modal-panel.confirm #modal-panel-buttons-button-confirm {
+#modal-panel-buttons-button-cancel.is-active,
+#modal-panel-buttons-button-confirm.is-active {
 	transform: scale(1.15);
 }
 
