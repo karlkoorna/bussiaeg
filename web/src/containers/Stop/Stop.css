@@ -1,38 +1,53 @@
-#stop-bar {
+#stop {
 	display: flex;
+	flex-direction: column;
+}
+
+#stop-info {
 	position: relative;
-	padding: 12px;
+	height: 64px;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	font-size: 24px;
 	font-weight: bold;
-	align-items: center;
-	cursor: default;
+	overflow: hidden;
 }
 
-#stop-bar-icon {
-	width: 40px;
-}
-
-#stop-bar-name,
-#stop-bar-extra {
+#stop-info > * {
 	position: absolute;
 }
 
-#stop-bar-name {
-	left: 64px;
-	top: 8px;
+#stop-info-icon {
+	height: 100%;
+	padding: 10px;
 }
 
-#stop-bar-extra {
+#stop-info-name {
+	left: 64px;
+	top: 7px;
+}
+
+#stop-info-extra {
 	left: 65px;
-	bottom: 9px;
-	color: #999;
+	bottom: 11px;
+	color: #aaa;
 	font-size: 14px;
 }
 
+#stop-info-favorite {
+	right: 0;
+	height: 100%;
+	padding: 16px;
+	transition: transform .15s ease;
+	cursor: pointer;
+}
+
+#stop-info-favorite.is-active {
+	animation: navbar-favorites .75s ease;
+}
+
 #stop-trips {
-	height: calc(100% - 64px);
+	flex: 1;
 	overflow-y: scroll;
 }
 
@@ -43,7 +58,6 @@
 
 .stop-trips-trip:not(:first-child):after {
 	content: '';
-	box-sizing: border-box;
 	display: block;
 	position: absolute;
 	width: calc(100% - 16px);
@@ -56,12 +70,12 @@
 	position: absolute;
 }
 
-.stop-trips-trip-vehicle {
+.stop-trips-trip-icon {
 	width: 48px;
 	margin-top: 3px;
 }
 
-.stop-trips-trip-countdown,
+.stop-trips-trip-time,
 .stop-trips-trip-shortname {
 	font-size: 28px;
 }
@@ -73,7 +87,7 @@
 
 .stop-trips-trip-shortname {
 	left: 48px;
-	top: 9px;
+	top: 10px;
 }
 
 .stop-trips-trip-longname {
@@ -87,20 +101,20 @@
 	margin-bottom: -2px;
 }
 
-.stop-trips-trip-countdown,
-.stop-trips-trip-time {
+.stop-trips-trip-time,
+.stop-trips-trip-alttime {
 	right: 8px;
 }
 
-.stop-trips-trip-countdown {
-	top: 9px;
+.stop-trips-trip-time {
+	top: 8px;
 }
 
-.stop-trips-trip-countdown > span {
+.stop-trips-trip-time > span {
 	font-size: 18px;
 }
 
-.stop-trips-trip-countdown > svg {
+.stop-trips-trip-time > svg {
 	position: absolute;
 	right: 2px;
 	top: 3px;
@@ -108,8 +122,16 @@
 	transform: rotate(-15deg);
 }
 
-.stop-trips-trip-time {
+.stop-trips-trip-alttime {
 	bottom: 10px;
 	color: #999;
 	font-size: 18px;
+}
+
+@media (pointer: fine) {
+	
+	#stop-info-favorite:hover {
+		transform: scale(1);
+	}
+	
 }
