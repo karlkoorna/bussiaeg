@@ -48,8 +48,8 @@
 	justify-content: center;
 }
 
-#modal-panel-buttons-cancel,
-#modal-panel-buttons-confirm {
+#modal-panel-buttons-button-cancel,
+#modal-panel-buttons-button-confirm {
 	display: flex;
 	position: relative;
 	width: 96px;
@@ -61,17 +61,22 @@
 	font-weight: bold;
 	justify-content: center;
 	align-items: center;
-	transition: background-color .5s ease;
+	transition: transform .3s ease;
 	cursor: pointer;
 	user-select: none;
 }
 
-#modal-panel-buttons-cancel {
+#modal-panel-buttons-button-cancel {
 	background-color: #ce4444;
 }
 
-#modal-panel-buttons-confirm {
+#modal-panel-buttons-button-confirm {
 	background-color: #3680d3;
+}
+
+#modal-panel.cancel #modal-panel-buttons-button-cancel,
+#modal-panel.confirm #modal-panel-buttons-button-confirm {
+	transform: scale(1.15);
 }
 
 @keyframes modal-fadeIn {
