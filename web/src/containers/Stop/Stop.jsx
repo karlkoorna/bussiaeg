@@ -56,7 +56,7 @@ export default class Stop extends Component {
 		const { stop, trips } = this.state;
 		
 		return (
-			<Fragment>
+			<div id="stop" className="page">
 				<div id="stop-bar">
 					{StopIcon({ id: 'stop-bar-icon', type: stop.type })}
 					<span id="stop-bar-name">{stop.name}</span>
@@ -99,7 +99,7 @@ export default class Stop extends Component {
 						}) : <Loading />
 					}
 				</div>
-			</Fragment>
+			</div>
 		);
 		
 	}

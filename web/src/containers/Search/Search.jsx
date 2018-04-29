@@ -4,8 +4,10 @@ export default class Search extends Component {
     
 	render() {
 		return (
-			<div>Search</div>
+			<div id="search" className="page">
+				Search
+			</div>
 		);
 	}
-
+	
 }

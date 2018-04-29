@@ -20,21 +20,19 @@ async function init() {
 	render((
 		<BrowserRouter>
 			<Fragment>
+				<Map />
 				<Route render={({ location }) => (
 					<TransitionGroup id="pages" className={location.pathname === '/' ? 'is-empty' : ''}>
 						<CSSTransition key={location.pathname} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250}>
-							<div id="page">
-								<Switch location={location}>
-									<Route path="/search" component={Search} />
-									<Route path="/favorites" component={Favorites} />
-									<Route path="/settings" component={Settings} />
-									<Route path="/stop" component={Stop} />
-								</Switch>
-							</div>
+							<Switch location={location}>
+								<Route path="/search" component={Search} />
+								<Route path="/favorites" component={Favorites} />
+								<Route path="/settings" component={Settings} />
+								<Route path="/stop" component={Stop} />
+							</Switch>
 						</CSSTransition>
 					</TransitionGroup>
 				)} />
-				<Map />
 				<NavBar />
 			</Fragment>
 		</BrowserRouter>
