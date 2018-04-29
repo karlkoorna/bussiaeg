@@ -95,6 +95,23 @@ export default class Map extends Component {
 		
 	}
 	
+	modalHide() {
+		this.setState({ showModal: false });
+	}
+	
+	modalConfirm() {
+		this.modalHide();
+		
+		const { map } = window;
+		
+		localStorage.setItem('start', JSON.stringify({
+			lat: map.center.lat(),
+			lng: map.center.lng(),
+			zoom: map.getZoom()
+		}));
+		
+	}
+	
 	componentDidMount() {
 		
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
@@ -190,23 +207,6 @@ export default class Map extends Component {
 			});
 			
 		}
-		
-	}
-	
-	modalHide() {
-		this.setState({ showModal: false });
-	}
-	
-	modalConfirm() {
-		this.modalHide();
-		
-		const { map } = window;
-		
-		localStorage.setItem('start', JSON.stringify({
-			lat: map.center.lat(),
-			lng: map.center.lng(),
-			zoom: map.getZoom()
-		}));
 		
 	}
 	
