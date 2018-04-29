@@ -99,7 +99,7 @@ export default class Map extends Component {
 		
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
 		const time = new Date();
-		let timeout;
+		let hold = false;
 		
 		const map = new googleMaps.Map(this.refs.$map, {
 			center: {
@@ -150,18 +150,20 @@ export default class Map extends Component {
 		
 		map.addListener('mousedown', (e) => {
 			
-			timeout = setTimeout(() => {
-				this.setState({ showModal: true });
+			hold = true;
+			
+			setTimeout(() => {
+				if (hold) this.setState({ showModal: true });
 			}, 500);
 			
 		});
 		
 		map.addListener('mouseup', () => {
-			clearTimeout(timeout);
+			hold = false;
 		});
 		
 		map.addListener('drag', () => {
-			clearTimeout(timeout);
+			hold = false;
 		})
 		
 		map.addListener('bounds_changed', this.update);
