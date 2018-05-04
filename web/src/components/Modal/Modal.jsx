@@ -11,6 +11,7 @@ export default class Model extends PureComponent {
 	
 	onClick = this.onClick.bind(this)
 	onExited = this.onExited.bind(this)
+	onKeyDown = this.onKeyDown.bind(this)
 	
 	onClick(e) {
 		
@@ -24,31 +25,41 @@ export default class Model extends PureComponent {
 		
 	}
 	
+	onKeyDown(e) {
+		if (e.which === 27) this.props.onCancel();
+	}
+	
 	onExited() {
 		this.setState({ action: '' });
 	}
 	
+	componentDidUpdate() {
+		
+		if (this.state.isVisible) return void document.addEventListener('keydown', this.onKeyDown);
+		
+		document.removeEventListener('keydown', this.onKeyDown);
+		
+	}
+	
+	componentWillUnmount() {
+		document.removeEventListener('keydown', this.onKeyDown);
+	}
+	
 	render() {
-		
-		const { isVisible, title, text, onCancel } = this.props;
-		const { action } = this.state;
-		
 		return (
-			<CSSTransition in={isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250} onExited={this.onExited} unmountOnExit>
-				<div id="modal" onClick={onCancel}>
+			<CSSTransition in={this.props.isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250} onExited={this.onExited} unmountOnExit>
+				<div id="modal" onClick={this.onCancel}>
 					<div id="modal-panel" className={this.state.action} onClick={(e) => { e.stopPropagation() }}>
-						<div id="modal-panel-"></div>
-						<div id="modal-panel-title">{title}</div>
-						<div id="modal-panel-text">{text}</div>
+						<div id="modal-panel-title">{this.props.title}</div>
+						<div id="modal-panel-text">{this.props.text}</div>
 						<div id="modal-panel-buttons">
-							<div id="modal-panel-buttons-button-cancel" className={action === 'cancel' ? 'is-active' : null} onClick={this.onClick}>Tühista</div>
-							<div id="modal-panel-buttons-button-confirm" className={action === 'confirm' ? 'is-active' : null} onClick={this.onClick}>Kinnita</div>
+							<div id="modal-panel-buttons-button-cancel" className={this.state.action === 'cancel' ? 'is-active' : null} onClick={this.onClick}>Tühista</div>
+							<div id="modal-panel-buttons-button-confirm" className={this.state.action === 'confirm' ? 'is-active' : null} onClick={this.onClick}>Kinnita</div>
 						</div>
 					</div>
 				</div>
 			</CSSTransition>
 		);
-		
 	}
 	
 }
