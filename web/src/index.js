@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import NavBar from 'components/NavBar/NavBar';
-import Map from 'pages/Map/Map';
+import Map from 'components/Map/Map';
 import Search from 'pages/Search/Search';
 import Favorites from 'pages/Favorites/Favorites';
 import Settings from 'pages/Settings/Settings';
