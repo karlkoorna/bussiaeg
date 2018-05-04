@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { renderToString } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
+import Leaflet from 'leaflet';
 
 import StopIcon from 'components/StopIcon';
 import Modal from 'components/Modal/Modal';
 
 import './Map.css';
-
-const googleMaps = window.google.maps;
+import 'leaflet/dist/leaflet.css';
 
 @withRouter
 export default class Map extends Component {
@@ -32,7 +32,7 @@ export default class Map extends Component {
 		
 		if (map.getZoom() < 16) {
 			
-			for (const marker of markers) marker.setMap(null);
+			for (const marker of markers) marker.remove();
 			
 			if (!this.state.message) this.setState({ message: 'Suumi lähemale, et näha peatuseid' });
 			
@@ -47,37 +47,33 @@ export default class Map extends Component {
 		for (const i in markers) {
 			const marker = markers[i];
 			
-			if (bounds.f.f > marker.position.lat() > bounds.f.b) continue;
-			if (bounds.b.b < marker.position.lng() < bounds.b.f) continue;
+			const position = marker.getLatLng();
 			
-			marker.setMap(null);
+			if (bounds._northEast.lat > position.lat > bounds._southWest.lat) continue;
+			if (bounds._northEast.lng > position.lng > bounds._southWest.lng) continue;
+			
+			marker.remove();
 			this.markers.splice(i, 1);
 			
 		}
 		
-		nextstop:
+		nextStop:
 		for (const stop of window.stops) {
 			
-			if (stop.lat > bounds.f.f || stop.lat < bounds.f.b) continue;
-			if (stop.lng > bounds.b.f || stop.lng < bounds.b.b) continue;
+			if (stop.lat > bounds._northEast.lat || stop.lat < bounds._southWest.lat) continue;
+			if (stop.lng > bounds._northEast.lng || stop.lng < bounds._southWest.lng) continue;
 			
-			for (const marker of markers) if (marker.id === stop.id) continue nextstop;
+			for (const marker of markers) if (marker.id === stop.id) continue nextStop;
 			
-			const marker = new googleMaps.Marker({
-				id: stop.id,
-				optimized: true,
-				position: {
-					lat: stop.lat,
-					lng: stop.lng
-				},
-				icon: {
-					anchor: new googleMaps.Point(13, 13),
-					url: `data:image/svg+xml;base64,${btoa(renderToString(StopIcon({ type: stop.type, size: 26 })))}`
-				},
-				map
-			});
+			const marker = new Leaflet.Marker([ stop.lat, stop.lng ], {
+				icon: new Leaflet.Icon({
+					iconSize: [ 26, 26 ],
+					iconAnchor: [ 13, 13 ],
+					iconUrl: `data:image/svg+xml;base64,${btoa(renderToString(StopIcon({ type: stop.type })))}`
+				})
+			}).addTo(map);
 			
-			marker.addListener('click', () => {
+			marker.addEventListener('click', () => {
 				this.props.history.push(`stop?id=${stop.id}`);
 			});
 			
@@ -103,10 +99,11 @@ export default class Map extends Component {
 		this.modalHide();
 		
 		const { map } = window;
+		const center = map.getCenter();
 		
 		localStorage.setItem('start', JSON.stringify({
-			lat: map.center.lat(),
-			lng: map.center.lng(),
+			lat: center.lat,
+			lng: center.lng,
 			zoom: map.getZoom()
 		}));
 		
@@ -115,75 +112,65 @@ export default class Map extends Component {
 	componentDidMount() {
 		
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
-		const time = new Date();
-		let hold = false;
 		
-		const map = new googleMaps.Map(this.refs.$map, {
-			center: {
-				lat: start.lat || 59.436,
-				lng: start.lng || 24.753
-			},
+		const map = new Leaflet.Map('map-container', {
+			center: [
+				start.lat || 59.436,
+				start.lng || 24.753
+			],
 			zoom: start.zoom || 16,
-			minZoom: 7,
-			maxZoom: 18,
-			clickableIcons: false,
-			disableDefaultUI: true,
-			styles: [
-				{
-					featureType: 'transit.station',
-					elementType: 'all',
-					stylers: [
-						{
-							visibility: 'off'
-						}
-					]
-				}
-			]
+			minZoom: 8,
+			maxZoom: 17,
+			zoomControl: false,
+			attributionControl: false,
+			boxZoom: false,
+			keyboard: false,
+			preferCanvas: true
 		});
 		
-		const marker = new googleMaps.Marker({
-			clickable: false,
-			optimized: true,
-			icon: {
-				anchor: new googleMaps.Point(10, 10),
-				url: `data:image/svg+xml;base64,${btoa(renderToString(
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="20" height="20">
+		const attribution = Leaflet.control.attribution({
+			position: 'topright',
+			prefix: ''
+		});
+		
+		attribution.addAttribution('<a href="https://openstreetmap.org">OpenStreetMap</a>');
+		attribution.addAttribution('<a href="https://mapbox.com/about/maps">Mapbox</a>');
+		attribution.addAttribution('<a href="https://mapbox.com/feedback">Improve this map</a>');
+		
+		map.addControl(attribution);
+		
+		Leaflet.tileLayer(`https://api.mapbox.com/styles/v1/${process.env['REACT_APP_MAPBOX_STYLE']}/tiles/256/{z}/{x}/{y}?access_token=${process.env['REACT_APP_MAPBOX_KEY']}`).addTo(map);
+		
+		const marker = new Leaflet.Marker([ 0, 0 ], {
+			interactive: false,
+			icon: new Leaflet.Icon({
+				iconSize: [ 20, 20 ],
+				iconAnchor: [ 10, 10 ],
+				iconUrl: `data:image/svg+xml;base64,${btoa(renderToString(
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 						<circle fill="#fff" cx="512" cy="512" r="512" />
-						<circle fill="#4285f4" cx="512" cy="512" r="400" />
+						<circle fill="#4285f4" cx="512" cy="512" r="350" />
 					</svg>
 				))}`
-			},
-			map
-		});
+			}),
+		}).addTo(map);
 		
-		const circle = new googleMaps.Circle({
-			clickable: false,
-			optimized: true,
-			fillColor: '#00bfff',
+		const circle = new Leaflet.Circle([ 0, 0 ], {
+			renderer: new Leaflet.Canvas({ padding: 1 }),
+			interactive: false,
+			fillColor: '#4285f4',
 			fillOpacity: .15,
-			strokeWeight: 0,
-			map
+			color: '#4285f4',
+			weight: 2
+		}).addTo(map);
+		
+		const timestamp = new Date();
+		
+		map.addEventListener('contextmenu', (e) => {
+			this.setState({ showModal: true });
 		});
 		
-		map.addListener('mousedown', (e) => {
-			
-			hold = true;
-			
-			setTimeout(() => {
-				if (hold) this.setState({ showModal: true });
-			}, 500);
-			
-		});
-		
-		map.addListener('mouseup', () => {
-			hold = false;
-		});
-		
-		map.addListener('drag', () => {
-			hold = false;
-		})
-		
-		map.addListener('bounds_changed', this.update);
+		map.addEventListener('move', this.update);
 		window.map = map;
 		
 		watchPosition.call(this);
@@ -194,11 +181,12 @@ export default class Map extends Component {
 				const { latitude: lat, longitude: lng, accuracy } = e.coords;
 				const coords = { lat, lng };
 				
-				marker.setPosition(coords);
-				circle.setCenter(coords);
+				marker.setLatLng(coords);
+				circle.setLatLng(coords);
 				circle.setRadius(accuracy);
 				
-				if (new Date() - time < 3000) map.panTo(coords);
+				if (new Date() - timestamp < 3000) map.panTo(coords);
+				
 				this.setState({ coords });
 				
 			}, (err) => {
