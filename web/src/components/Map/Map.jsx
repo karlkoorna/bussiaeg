@@ -139,7 +139,7 @@ export default class Map extends Component {
 		
 		map.addControl(attribution);
 		
-		Leaflet.tileLayer(`https://api.mapbox.com/styles/v1/${process.env['REACT_APP_MAPBOX_STYLE']}/tiles/256/{z}/{x}/{y}?access_token=${process.env['REACT_APP_MAPBOX_KEY']}`).addTo(map);
+		Leaflet.tileLayer(process.env['REACT_APP_MAP']).addTo(map);
 		
 		const marker = new Leaflet.Marker([ 0, 0 ], {
 			interactive: false,
