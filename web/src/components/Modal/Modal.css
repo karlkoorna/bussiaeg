@@ -19,6 +19,8 @@
 	animation: modal-fadeOut .3s ease;
 }
 
+/* Panel */
+
 #modal-panel {
 	width: 80%;
 	max-width: 384px;
@@ -42,6 +44,8 @@
 	margin-bottom: 28px;
 	text-align: center;
 }
+
+/* Panel - Buttons */
 
 #modal-panel-buttons {
 	display: flex;
@@ -78,6 +82,8 @@
 #modal-panel-buttons-button-confirm.is-active {
 	transform: scale(1.15);
 }
+
+/* Animations */
 
 @keyframes modal-fadeIn {
 	
