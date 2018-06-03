@@ -1,5 +1,5 @@
 #modal {
-	z-index: 998;
+	z-index: 999;
 	display: flex;
 	position: absolute;
 	left: 0;
@@ -32,8 +32,7 @@
 }
 
 #modal-panel-title {
-	margin-top: 8px;
-	margin-bottom: 16px;
+	margin: 8px 0;
 	font-size: 24px;
 	font-weight: bold;
 	text-align: center;
@@ -55,7 +54,6 @@
 #modal-panel-buttons-button-cancel,
 #modal-panel-buttons-button-confirm {
 	display: flex;
-	position: relative;
 	width: 96px;
 	height: 32px;
 	margin: 0 8px;
