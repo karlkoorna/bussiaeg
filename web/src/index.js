@@ -12,30 +12,23 @@ import Stop from 'pages/Stop/Stop';
 
 import './index.css';
 
-init();
-async function init() {
-	
-	window.stops = await (await fetch('https://bussiaeg.ee/getstops?lat_min=60.0&lng_min=60.0&lat_max=20.0&lng_max=20.0')).json();
-	
-	render((
-		<BrowserRouter>
-			<Fragment>
-				<Map />
-				<Route render={({ location }) => (
-					<TransitionGroup id="pages" className={location.pathname === '/' ? 'is-empty' : ''}>
-						<CSSTransition key={location.pathname} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250}>
-							<Switch location={location}>
-								<Route path="/search" component={Search} />
-								<Route path="/favorites" component={Favorites} />
-								<Route path="/settings" component={Settings} />
-								<Route path="/stop" component={Stop} />
-							</Switch>
-						</CSSTransition>
-					</TransitionGroup>
-				)} />
-				<NavBar />
-			</Fragment>
-		</BrowserRouter>
-	), document.getElementById('root'));
-	
-}
+render((
+	<BrowserRouter>
+		<Fragment>
+			<Map />
+			<Route render={({ location }) => (
+				<TransitionGroup id="pages" className={location.pathname === '/' ? 'is-empty' : ''}>
+					<CSSTransition key={location.pathname} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250}>
+						<Switch location={location}>
+							<Route path="/search" component={Search} />
+							<Route path="/favorites" component={Favorites} />
+							<Route path="/settings" component={Settings} />
+							<Route path="/stop" component={Stop} />
+						</Switch>
+					</CSSTransition>
+				</TransitionGroup>
+			)} />
+			<NavBar />
+		</Fragment>
+	</BrowserRouter>
+), document.getElementById('root'));
