@@ -21,6 +21,8 @@ body {
 	-webkit-tap-highlight-color: transparent;
 }
 
+/* Pages */
+
 #pages {
 	position: relative;
 	background-color: #f5f5f5;
@@ -53,6 +55,8 @@ body {
 	opacity: 0;
 	animation: page-fadeOut .25s ease;
 }
+
+/* Animations */
 
 @keyframes page-fadeIn {
 	
