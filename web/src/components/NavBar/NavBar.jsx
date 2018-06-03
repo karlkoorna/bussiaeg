@@ -17,11 +17,12 @@ export default function NavBar() {
 
 class NavBarItem extends PureComponent {
 	
-	state = {}
+	state = {
+		animation: ''
+	}
 	
-	animate = this.animate.bind(this)
-	
-	animate() {
+	// Animate icon on click.
+	onClick =()=> {
 		
 		if (this.state.animation) return;
 		
@@ -39,8 +40,8 @@ class NavBarItem extends PureComponent {
 		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ '#bfbfbf', '#b3b3b3' ];
 		
 		return (
-			<NavLink className="navbar-item" title={children} to={to} exact onClick={this.animate}>
-				<svg xmlns="http://www.w3.org/2000/svg" style={this.state} viewBox="0 0 1024 1024">
+			<NavLink className="navbar-item" title={children} to={to} exact onClick={this.onClick}>
+				<svg xmlns="http://www.w3.org/2000/svg" style={this.state} viewBox="0 0 1024 1024" className="navbar-item-icon">
 					{{
 						search: (
 							<Fragment>

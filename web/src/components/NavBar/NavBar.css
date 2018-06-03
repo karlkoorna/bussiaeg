@@ -2,6 +2,7 @@
 	z-index: 999;
 	display: flex;
 	height: 64px;
+	background-color: white;
 	color: #333;
 	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
 	cursor: pointer;
@@ -11,28 +12,32 @@
 .navbar-item {
 	display: flex;
 	position: relative;
-	background-color: white;
-	outline: none;
 	justify-content: center;
+	align-items: center;
+	align-items: center;
 	flex: 1;
 }
 
-.navbar-item > svg {
+.navbar-item-icon {
 	width: 32px;
 	transition: width .15s ease;
 }
 
-.navbar-item.active > svg {
-	width: 40px;
+.navbar-item.active .navbar-item-icon {
+	width: 38px;
 }
+
+/* Queries */
 
 @media (pointer: fine) {
 	
 	.navbar-item:hover > svg {
-		width: 40px;
+		width: 38px;
 	}
 	
 }
+
+/* Animations */
 
 @keyframes navbar-search {
 	
