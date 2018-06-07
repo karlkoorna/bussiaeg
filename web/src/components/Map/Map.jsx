@@ -5,6 +5,7 @@ import Leaflet from 'leaflet';
 
 import StopIcon from 'components/StopIcon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
+import doubleTapDrag from './doubleTapDrag.js';
 
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
@@ -126,6 +127,9 @@ export default class Map extends Component {
 		map.on('contextmenu', () => {
 			this.setState({ showModal: true });
 		});
+		
+		// Register double tap drag handler (mobile zoom).
+		doubleTapDrag(map);
 		
 		// Setup attribution.
 		
