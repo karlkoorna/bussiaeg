@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import Loading from 'components/Loading/Loading.js';
-import VehicleIcon, { colors } from 'components/VehicleIcon.js';
-import StopIcon from 'components/StopIcon.js';
+import Loading from 'components/Loading/Loading.jsx';
+import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
+import StopIcon from 'components/StopIcon.jsx';
 
 import './Stop.css';
 

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import { colors } from './VehicleIcon.js';
+import { colors } from './VehicleIcon.jsx';
 
 export default function StopIcon({ id, className, type, size }) {
 	

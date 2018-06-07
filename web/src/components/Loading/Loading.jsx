@@ -1,6 +1,6 @@
 import React from 'react';
 
-import VehicleIcon from 'components/VehicleIcon.js';
+import VehicleIcon from 'components/VehicleIcon.jsx';
 
 import './Loading.css';
 

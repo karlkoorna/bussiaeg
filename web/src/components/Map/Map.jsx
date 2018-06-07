@@ -3,8 +3,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
 import Leaflet from 'leaflet';
 
-import StopIcon from 'components/StopIcon.js';
-import Modal from 'components/Modal/Modal.js';
+import StopIcon from 'components/StopIcon.jsx';
+import Modal from 'components/Modal/Modal.jsx';
 
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
