@@ -20,7 +20,6 @@ export default class Map extends Component {
 		showLocate: false
 	}
 	
-	stops = []
 	markers = []
 	
 	// Redraw stops based on viewport.
@@ -41,7 +40,7 @@ export default class Map extends Component {
 		
 		const bounds = map.getBounds();
 		
-		for (const stop of this.stops) {
+		for (const stop of window.stops) {
 			
 			if (stop.lat < bounds._southWest.lat || stop.lat > bounds._northEast.lat) continue;
 			if (stop.lng < bounds._southWest.lng || stop.lng > bounds._northEast.lng) continue;
@@ -88,11 +87,6 @@ export default class Map extends Component {
 			zoom: map.getZoom()
 		}));
 		
-	}
-	
-	// Preload stops before mount.
-	async componentWillMount() {
-		this.stops = await (await fetch(`${process.env['REACT_APP_API']}/getstops?lat_min=60.0&lng_min=60.0&lat_max=20.0&lng_max=20.0`)).json();
 	}
 	
 	// Initialize map after mount.
