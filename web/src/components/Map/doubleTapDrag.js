@@ -37,6 +37,7 @@ export default function doubleTapDrag(map) {
 	
 	$map.addEventListener('touchmove', (e) => {
 		
+		if (e.touches.length > 1) return;
 		if (!isDragging) return;
 		
 		// Calculate vertical distance from start to finger.
