@@ -3,12 +3,12 @@ import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import NavBar from 'components/NavBar/NavBar';
-import Map from 'components/Map/Map';
-import Search from 'pages/Search/Search';
-import Favorites from 'pages/Favorites/Favorites';
-import Settings from 'pages/Settings/Settings';
-import Stop from 'pages/Stop/Stop';
+import NavBar from 'components/NavBar/NavBar.js';
+import Map from 'components/Map/Map.js';
+import Search from 'pages/Search/Search.js';
+import Favorites from 'pages/Favorites/Favorites.js';
+import Settings from 'pages/Settings/Setting.jss';
+import Stop from 'pages/Stop/Stop.js';
 
 import './index.css';
 
