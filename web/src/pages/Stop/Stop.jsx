@@ -4,13 +4,11 @@ import { withRouter } from 'react-router-dom';
 import Loading from 'components/Loading/Loading.jsx';
 import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
+import favorites from 'stores/favorites.js';
 
 import './Stop.css';
 
-function checkFavorite(stopId) {
-	return Boolean((JSON.parse(localStorage.getItem('favorites')) || {})[stopId]);
-}
-
+// If first page loaded.
 let init = window.location.pathname === '/stop';
 
 @withRouter
@@ -18,15 +16,14 @@ export default class Stop extends Component {
 	
 	state = {
 		isFavorite: false,
-		interval: null,
 		trips: [],
 		stop: {}
 	}
 	
-	update = this.update.bind(this)
-	favorite = this.favorite.bind(this)
+	interval = 0
 	
-	update() {
+	// Update trips if mounted.
+	update = () => {
 		
 		fetch(`${process.env['REACT_APP_API']}/gettrips?id=${this.state.stop.id}`)
 			.then((res) => res.json())
@@ -36,23 +33,9 @@ export default class Stop extends Component {
 		
 	}
 	
-	favorite() {
-		
-		const { stop } = this.state;
-		
-		const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-		
-		if (checkFavorite(stop.id)) delete favorites[stop.id];
-		else favorites[stop.id] = {
-			id: stop.id,
-			name: stop.name,
-			extra: stop.extra
-		};
-		
-		localStorage.setItem('favorites', JSON.stringify(favorites));
-		
-		this.setState((prevState) => ({ isFavorite: !prevState.isFavorite }));
-		
+	// Toggle favorite stop.
+	favorite = () => {
+		this.setState({ isFavorite: favorites.toggle(this.state.stop.id) });
 	}
 	
 	componentWillMount() {
@@ -61,23 +44,18 @@ export default class Stop extends Component {
 		
 		if (!stop) return void this.props.history.push('/');
 		
-		this.update();
-		
 		this.setState({
-			isFavorite: checkFavorite(stop.id),
-			interval: setInterval(this.update, 2000),
-			trips: [],
+			isFavorite: favorites.is(stop.id),
 			stop
 		});
 		
-		setTimeout(() => {
-			
-			if (!init) return;
-			
-			window.map.setCenter({ lat: stop.lat, lng: stop.lng });
+		this.update();
+		this.interval = setInterval(this.update, 2000);
+		
+		if (init) setTimeout(() => {
+			window.map.panTo({ lat: stop.lat, lng: stop.lng });
 			init = false;
-			
-		}, 250);
+		}, 300);
 		
 	}
 	
@@ -87,7 +65,7 @@ export default class Stop extends Component {
 	
 	componentWillUnmount() {
 		this._isMounted = false;
-		clearInterval(this.state.interval);
+		clearInterval(this.interval);
 	}
 	
 	render() {

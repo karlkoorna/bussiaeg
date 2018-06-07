@@ -3,12 +3,13 @@
 	flex-direction: column;
 }
 
+/* Stop - Info */
+
 #stop-info {
 	position: relative;
 	height: 64px;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
-	font-size: 24px;
 	font-weight: bold;
 	overflow: hidden;
 }
@@ -18,13 +19,15 @@
 }
 
 #stop-info-icon {
-	height: 100%;
+	width: 64px;
+	height: 64px;
 	padding: 10px;
 }
 
 #stop-info-name {
 	left: 64px;
 	top: 7px;
+	font-size: 24px;
 }
 
 #stop-info-extra {
@@ -36,7 +39,8 @@
 
 #stop-info-favorite {
 	right: 0;
-	height: 100%;
+	width: 64px;
+	height: 64px;
 	padding: 16px;
 	transition: transform .15s ease;
 	cursor: pointer;
@@ -45,6 +49,8 @@
 #stop-info-favorite.is-active {
 	animation: navbar-favorites .75s ease;
 }
+
+/* Stop - Trips */
 
 #stop-trips {
 	flex: 1;
@@ -126,12 +132,4 @@
 	bottom: 10px;
 	color: #999;
 	font-size: 18px;
-}
-
-@media (pointer: fine) {
-	
-	#stop-info-favorite:hover {
-		transform: scale(1);
-	}
-	
 }
