@@ -23,7 +23,7 @@ export default class Map extends Component {
 	markers = []
 	
 	// Redraw stops based on viewport.
-	update =()=> {
+	update = () => {
 		
 		const { map } = window;
 		
@@ -60,7 +60,7 @@ export default class Map extends Component {
 	}
 	
 	// Pan map to current location.
-	locate =()=> {
+	locate = () => {
 		
 		const { coords } = this.state;
 		
@@ -69,12 +69,12 @@ export default class Map extends Component {
 	}
 	
 	// Hide modal.
-	modalHide =()=> {
+	modalHide = () => {
 		this.setState({ showModal: false });
 	}
 	
 	// Set map center to start location.
-	modalConfirm =()=> {
+	modalConfirm = () => {
 		
 		this.modalHide();
 		

@@ -22,7 +22,7 @@ class NavBarItem extends PureComponent {
 	}
 	
 	// Animate icon on click.
-	onClick =()=> {
+	onClick = () => {
 		
 		if (this.state.animation) return;
 		
