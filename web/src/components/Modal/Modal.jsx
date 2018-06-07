@@ -6,13 +6,13 @@ import './Modal.css';
 export default class Model extends PureComponent {
 	
 	// Add animation class to button and call function.
-	onClick =(e, cb)=> {
+	onClick = (e, cb) => {
 		e.nativeEvent.target.classList.add('is-active');
 		cb();
 	}
 	
 	// Cancel modal on escape key.
-	onKeyDown =(e)=> {
+	onKeyDown = (e) => {
 		if (e.which === 27) this.props.onCancel();
 	}
 	
