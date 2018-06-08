@@ -22,10 +22,20 @@ export default class Map extends Component {
 	
 	markers = []
 	
-	// Redraw stops based on viewport.
+	// Redraw stops and update message based on viewport.
 	update = () => {
 		
 		const { map } = window;
+		
+		// Handle message cases.
+		
+		if (!(new Leaflet.LatLngBounds(new Leaflet.LatLng(57.57, 21.84), new Leaflet.LatLng(59.7, 28))).contains(map.getCenter())) {
+			this.setState({ message: 'Bussiaeg.ee ei toimi väljaspool Eestit' });
+		} else if (map.getZoom() < 16) {
+			this.setState({ message: 'Suumige sisse, et näha peatusi' });
+		} else {
+			this.setState({ message: '' });
+		}
 		
 		// Remove all stops.
 		
@@ -35,8 +45,7 @@ export default class Map extends Component {
 		
 		// Add stops in viewport if zoomed in.
 		
-		if (map.getZoom() < 16) return this.setState({ message: 'Suumige sisse, et näha peatusi' });
-		else this.setState({ message: '' });
+		if (map.getZoom() < 16) return;
 		
 		const bounds = map.getBounds();
 		
