@@ -35,6 +35,7 @@ export default function dragZoom(map) {
 	
 	$map.addEventListener('touchend', (e) => {
 		isDragging = false;
+		map.dragging.enable();
 	});
 	
 	$map.addEventListener('touchmove', (e) => {
