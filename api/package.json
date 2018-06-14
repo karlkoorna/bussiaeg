@@ -1,0 +1,20 @@
+{
+  "name": "bussiaeg-api",
+  "description": "Bussiaeg (API)",
+  "contributors": [
+    "Karl Köörna",
+    "Kaur Hendrikson"
+  ],
+  "license": "AGPL-3.0",
+  "version": "3.0.0",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "got": "^8.3.1",
+    "moment": "^2.22.2",
+    "mysql2": "^1.5.3",
+    "ora": "^2.1.0",
+    "unzipper": "^0.8.14"
+  }
+}
