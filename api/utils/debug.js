@@ -4,9 +4,9 @@ const moment = require('moment');
 
 const timers = {};
 
-// Display info message with time.
-function info(text, time) {
-	console.log(chalk`{blueBright ℹ} {cyan ${text}}`, chalk.gray(`(${moment().format('HH:mm:ss - DD.MM.YYYY')})`));
+// Display info message with current time.
+function info(text) {
+	console.log(chalk`{cyan ℹ} {cyan ${text}}`, chalk.gray(`(${moment().format('HH:mm:ss - DD.MM.YYYY')})`));
 }
 
 // Start timing and display spinner if text provided.
@@ -18,6 +18,7 @@ function time(id, text) {
 	
 	if (text) timer.spinner = ora({
 		text: chalk.yellow(`${text}...`),
+		color: 'yellow',
 		spinner: {
 			interval: 80,
 			frames: [ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' ]
@@ -44,4 +45,4 @@ module.exports = {
 	info,
 	time,
 	timeEnd
-}
+};
