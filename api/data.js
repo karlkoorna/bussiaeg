@@ -10,7 +10,7 @@ const db = require('./db.js');
 // Update GTFS data.
 async function update(cb) {
 	
-	debug.info(`Starting data update`);
+	debug.info('Starting data update');
 	debug.time('update');
 	debug.time('data', 'Downloading data');
 	
@@ -20,7 +20,7 @@ async function update(cb) {
 	debug.timeEnd('data', 'Downloaded data');
 	debug.time('extract', 'Extracting data');
 	
-	// Extract GTFS ZIP file into tmp folder.
+	// Extract GTFS ZIP file into temporary folder.
 	await res.pipe(unzipper.Extract({ path: 'tmp' })).promise();
 	
 	debug.timeEnd('extract', 'Extracted data');
@@ -32,11 +32,8 @@ async function update(cb) {
 		function next(i) {
 			
 			if (i > files.length - 1) {
-				
 				debug.timeEnd('update', 'Data update completed');
-				
 				return void (cb ? cb() : null);
-				
 			}
 			
 			const file = files[i];
@@ -47,10 +44,8 @@ async function update(cb) {
 			fs.readFile(`sql/importers/${file}`, (err, data) => {
 				
 				db.query(data.toString(), (err) => {
-					
 					debug.timeEnd(name, `Imported ${name}`);
 					next(i + 1);
-					
 				});
 				
 			});
