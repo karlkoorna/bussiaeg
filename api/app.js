@@ -20,14 +20,12 @@ const app = fastify();
 for (const file of fs.readdirSync('routes')) app.use(require(`./routes/${file}`));
 
 // Update data and start listening on port.
-data.update(() => {
-	
+const port = process.env['PORT'];
+
+data.update().then(async () => {
 	const port = process.env['PORT'];
-	
-	app.listen(port, () => {
-		debug.info(`Started listening on port ${chalk.blue(port)}`);
-	});
-	
+	await app.listen(port);
+	debug.info(`Started listening on port ${chalk.blue(port)}`);
 });
 
 // Schedule data update at 6 AM.

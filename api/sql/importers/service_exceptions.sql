@@ -1,0 +1,5 @@
+LOAD DATA LOCAL INFILE 'tmp/calendar_dates.txt' INTO TABLE service_exceptions FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES
+(@service_id, @date, @exception_type) SET
+service_id = @service_id,
+date =  @date,
+active = -@exception_type + 2;

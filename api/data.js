@@ -7,53 +7,103 @@ const debug = require('./utils/debug.js');
 
 const db = require('./db.js');
 
-// Update GTFS data.
-async function update(cb) {
-	
-	debug.info('Starting data update');
-	debug.time('update');
-	debug.time('data', 'Downloading data');
-	
-	// Download GTFS ZIP file.
-	const res = await got.stream('http://peatus.ee/gtfs/gtfs.zip');
-	
-	debug.timeEnd('data', 'Downloaded data');
-	debug.time('extract', 'Extracting data');
-	
-	// Extract GTFS ZIP file into temporary folder.
-	await res.pipe(unzipper.Extract({ path: 'tmp' })).promise();
-	
-	debug.timeEnd('extract', 'Extracted data');
-	
-	// Import data from files.
-	fs.readdir('sql/importers', (err, files) => {
+// Download data.
+function downloadData() {
+	return new Promise(async (resolve) => {
 		
-		next(0);
-		function next(i) {
-			
-			if (i > files.length - 1) {
-				debug.timeEnd('update', 'Data update completed');
-				return void (cb ? cb() : null);
-			}
-			
-			const file = files[i];
-			const name = file.slice(0, -4);
-			
-			debug.time(name, `Importing ${name}`);
-			
-			fs.readFile(`sql/importers/${file}`, (err, data) => {
-				
-				db.query(data.toString(), (err) => {
-					debug.timeEnd(name, `Imported ${name}`);
-					next(i + 1);
-				});
-				
-			});
-			
-		}
+		debug.info('Starting data update');
+		debug.time('data-update');
+		debug.time('data-download', 'Downloading data');
+		
+		// Download and extract GTFS ZIP file to temporary folder.
+		const res = await got.stream('http://peatus.ee/gtfs/gtfs.zip').pipe(unzipper.Extract({ path: 'tmp' })).promise();
+		
+		debug.timeEnd('data-download', 'Downloaded data');
+		
+		resolve();
 		
 	});
-	
 };
 
-module.exports.update = update;
+// Import data to database.
+function importData() {
+	return new Promise((resolve) => {
+			
+		// Enumerate importers.
+		fs.readdir('sql/importers', (err, files) => {
+			
+			next(0);
+			function next(i) {
+				
+				// Return early if finished.
+				if (i > files.length - 1) return void resolve();
+				
+				const file = files[i];
+				const name = file.slice(0, -4);
+				
+				debug.time(`data-import-${name}`, `Importing ${chalk.blue(name)}`);
+				
+				// Run importer.
+				fs.readFile(`sql/importers/${file}`, (err, data) => {
+					db.query(data.toString(), () => {
+						debug.timeEnd(`data-import-${name}`, `Imported ${chalk.blue(name)}`);
+						next(i + 1);
+					});
+				});
+				
+			}
+			
+		});
+		
+	});
+}
+
+// Generate additional data from imported data.
+function generateData() {
+	return new Promise((resolve) => {
+		
+		// Enumerate generators.
+		fs.readdir('sql/generators', (err, files) => {
+			
+			next(0);
+			function next(i) {
+				
+				// Return early if finished.
+				if (i > files.length - 1) return void resolve();
+				
+				const file = files[i];
+				const name = file.slice(0, -4);
+				
+				debug.time(`data-generate-${name}`, `Generating ${chalk.blue(name)}`);
+				
+				// Run importer.
+				fs.readFile(`sql/generators/${file}`, (err, data) => {
+					db.query(data.toString(), () => {
+						debug.timeEnd(`data-generate-${name}`, `Generated ${chalk.blue(name)}`);
+						next(i + 1);
+					});
+				});
+				
+			}
+			
+		});
+		
+	});
+}
+
+function update() {
+	return new Promise(async (resolve) => {
+		
+		await downloadData();
+		await importData();
+		await generateData();
+		
+		debug.timeEnd('data-update', 'Data update completed');
+		resolve();
+		
+	});
+};
+
+module.exports = {
+	update
+};

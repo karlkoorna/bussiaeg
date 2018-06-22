@@ -13,6 +13,6 @@ const db = mysql.createConnection({
 });
 
 // Setup tables.
-db.query(fs.readFileSync('sql/init.sql').toString());
+db.query(fs.readFileSync('sql/tables.sql').toString());
 
 module.exports = db;
