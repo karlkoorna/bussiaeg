@@ -10,7 +10,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3",
+    "fastify": "^1.6.0",
     "got": "^8.3.1",
     "moment": "^2.22.2",
     "mysql2": "^1.5.3",

@@ -1,24 +1,20 @@
 const fs = require('fs');
 const dotenv = require('dotenv');
-const express = require('express');
+const fastify = require('fastify');
 const chalk = require('chalk');
 
 const package = require('./package.json');
 
 // Show splash.
-console.log(chalk`
-{yellow ${package.description}} {blue v${package.version}} {gray (${package.license})}
-`);
+console.log(chalk`\n{yellow ${package.description}} {blue v${package.version}} {gray (${package.license})}\n`);
 
 // Setup environmental variables from file.
 dotenv.config();
 
-// Setup database singleton.
-require('./db.js');
-
+const debug = require('./utils/debug.js');
 const data = require('./data.js');
 
-const app = express();
+const app = fastify();
 
 // Load routes dynamically from folder.
 for (const file of fs.readdirSync('routes')) app.use(require(`./routes/${file}`));
@@ -28,17 +24,14 @@ data.update(() => {
 	
 	const port = process.env['PORT'];
 	
-	console.log(chalk`{green Started listening on port} {blueBright ${port}}`);
-	
-	app.listen(port);
+	app.listen(port, () => {
+		debug.info(`Started listening on port ${chalk.blue(port)}`);
+	});
 	
 });
 
 // Schedule data update at 6 AM.
 setInterval(() => {
-	
 	const date = new Date();
-	
 	if (date.getHours() === 6 && date.getMinutes() === 0 && date.getSeconds === 0) data.update();
-	
 }, 1000);
