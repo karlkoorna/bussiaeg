@@ -21,8 +21,7 @@ CREATE TABLE stop_times (
 	stop_id INT(16) NOT NULL,
 	trip_id INT(16) NOT NULL,
 	arrival TIME NOT NULL,
-	departure TIME NOT NULL,
-	PRIMARY KEY (stop_id, trip_id)
+	departure TIME NOT NULL
 );
 
 CREATE TABLE trips (
@@ -37,7 +36,7 @@ CREATE TABLE trips (
 CREATE TABLE routes (
 	id CHAR(32) NOT NULL,
 	type NVARCHAR(16) NOT NULL,
-	authority NVARCHAR(32) NOT NULL,
+	region NVARCHAR(32) NOT NULL,
 	PRIMARY KEY (id),
 	UNIQUE (id)
 );
@@ -54,8 +53,7 @@ CREATE TABLE services (
 CREATE TABLE service_exceptions (
 	service_id INT(16) NOT NULL,
 	date DATE NOT NULL,
-	active BIT NOT NULL,
-	PRIMARY KEY (service_id)
+	active BIT NOT NULL
 );
 
 CREATE TABLE favorites (
