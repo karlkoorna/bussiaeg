@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS trips;
 DROP TABLE IF EXISTS routes;
 DROP TABLE IF EXISTS services;
 DROP TABLE IF EXISTS service_exceptions;
+DROP TABLE IF EXISTS favorites;
 
 CREATE TABLE stops (
 	id NVARCHAR(32) NOT NULL,
@@ -55,4 +56,11 @@ CREATE TABLE service_exceptions (
 	date DATE NOT NULL,
 	active BIT NOT NULL,
 	PRIMARY KEY (service_id)
+);
+
+CREATE TABLE favorites (
+	id CHAR(4) NOT NULL,
+	data JSON NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (id)
 );

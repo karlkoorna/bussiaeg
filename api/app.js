@@ -11,16 +11,14 @@ console.log(chalk`\n{yellow ${package.description}} {blue v${package.version}} {
 // Setup environmental variables from file.
 dotenv.config();
 
+const db = require('./db.js');
 const debug = require('./utils/debug.js');
 const data = require('./data.js');
 
 const app = fastify();
 
 // Load routes dynamically from folder.
-for (const file of fs.readdirSync('routes')) app.use(require(`./routes/${file}`));
-
-// Update data and start listening on port.
-const port = process.env['PORT'];
+for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${file}`));
 
 data.update().then(async () => {
 	const port = process.env['PORT'];
@@ -28,8 +26,15 @@ data.update().then(async () => {
 	debug.info(`Started listening on port ${chalk.blue(port)}`);
 });
 
-// Schedule data update at 6 AM.
+// Schedule data update.
 setInterval(() => {
+	
 	const date = new Date();
-	if (date.getHours() === 6 && date.getMinutes() === 0 && date.getSeconds === 0) data.update();
+	const time = date.getHours().toFixed(0, 2) + date.getMinutes().toFixed(0, 2) + date.getSeconds().toFixed(0, 2);
+	
+	switch (time) {
+		case '060000': return void data.update();
+		case '000000': return void db.query('DELETE FROM favorites');
+	}
+	
 }, 1000);
