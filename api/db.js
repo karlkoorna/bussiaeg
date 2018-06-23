@@ -1,5 +1,5 @@
 const fs = require('fs');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const chalk = require('chalk');
 
 // Open database connection.
