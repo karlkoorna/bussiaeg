@@ -4,7 +4,6 @@ const unzipper = require('unzipper');
 const chalk = require('chalk');
 
 const debug = require('./utils/debug.js');
-
 const db = require('./db.js');
 
 // Download data.
