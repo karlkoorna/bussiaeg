@@ -43,7 +43,7 @@ CREATE TABLE routes (
 
 CREATE TABLE services (
 	id INT(16) NOT NULL,
-	days VARCHAR(32) NOT NULL,
+	days BIT(7) NOT NULL,
 	start DATE NOT NULL,
 	end DATE NOT NULL,
 	PRIMARY KEY (id),
@@ -53,7 +53,7 @@ CREATE TABLE services (
 CREATE TABLE service_exceptions (
 	service_id INT(16) NOT NULL,
 	date DATE NOT NULL,
-	active BIT NOT NULL
+	active BOOL NOT NULL
 );
 
 CREATE TABLE favorites (
