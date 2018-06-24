@@ -28,7 +28,7 @@ CREATE TABLE trips (
 	id INT(16) NOT NULL,
 	route_id CHAR(32) NOT NULL,
 	service_id INT(16) NOT NULL,
-	wheelchair TEXT NOT NULL,
+	wheelchair BOOL,
 	PRIMARY KEY (id),
 	UNIQUE (id)
 );
