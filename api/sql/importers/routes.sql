@@ -2,10 +2,21 @@ LOAD DATA LOCAL INFILE 'tmp/routes.txt' INTO TABLE routes FIELDS TERMINATED BY '
 (@route_id, @agency_id, @route_short_name, @route_long_name, @route_type, @route_color, @competent_authority) SET
 id = @route_id,
 type = (
-	IF (@route_color = 'E6FA32' OR @route_color = 'F55ADC', 'coach',
-		IF (@route_type = 0, 'tram',
-			IF (@route_type = 2, 'train',
-				IF (@route_type = 3, 'bus',
-					IF (@route_type = 800, 'trol', NULL)))))
+    CASE
+        WHEN @route_color = 'F55ADC' THEN 'coach-c'
+        WHEN @route_color = 'E6FA32' THEN 'coach-cc'
+        WHEN @route_type = 0 THEN 'tram'
+        WHEN @route_type = 2 THEN 'train'
+        WHEN @route_type = 3 THEN 'bus'
+        WHEN @route_type = 800 THEN 'trol'
+        ELSE NULL
+    END
 ),
-region = @competent_authority;
+region = (
+    CASE
+        WHEN LOCATE('Tallinn', @competent_authority) > 0 THEN 'tallinn'
+        WHEN LOCATE('Tartu', @competent_authority) > 0 THEN 'tartu'
+        WHEN LOCATE('Pärnu', @competent_authority) > 0 THEN 'parnu'
+        ELSE NULL
+    END
+);
