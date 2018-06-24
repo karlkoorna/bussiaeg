@@ -11,17 +11,20 @@ CREATE TABLE stops (
 	name NVARCHAR(32) NOT NULL,
 	lat DECIMAL(10, 8) NOT NULL,
 	lng DECIMAL(11, 8) NOT NULL,
-	region NVARCHAR(16),
+	direction NVARCHAR(32),
+	region NVARCHAR(32),
 	type VARCHAR(32),
 	PRIMARY KEY (id),
-	UNIQUE (id)
+	KEY (lat),
+	KEY (lng)
 );
 
 CREATE TABLE stop_times (
-	stop_id INT(16) NOT NULL,
+	stop_id NVARCHAR(32) NOT NULL,
 	trip_id INT(16) NOT NULL,
 	arrival TIME NOT NULL,
-	departure TIME NOT NULL
+	departure TIME NOT NULL,
+	sequence TINYINT(3) NOT NULL
 );
 
 CREATE TABLE trips (
@@ -30,15 +33,15 @@ CREATE TABLE trips (
 	service_id INT(16) NOT NULL,
 	wheelchair BOOL NOT NULL,
 	PRIMARY KEY (id),
-	UNIQUE (id)
+	KEY (route_id),
+	KEY (service_id)
 );
 
 CREATE TABLE routes (
 	id CHAR(32) NOT NULL,
-	type VARCHAR(16),
 	region VARCHAR(16),
-	PRIMARY KEY (id),
-	UNIQUE (id)
+	type VARCHAR(16),
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE services (
@@ -46,19 +49,17 @@ CREATE TABLE services (
 	days BIT(7) NOT NULL,
 	start DATE NOT NULL,
 	end DATE NOT NULL,
-	PRIMARY KEY (id),
-	UNIQUE (id)
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE service_exceptions (
 	service_id INT(16) NOT NULL,
 	date DATE NOT NULL,
-	active BOOL NOT NULL
+	type BOOL NOT NULL
 );
 
 CREATE TABLE favorites (
 	id CHAR(4) NOT NULL,
 	data JSON NOT NULL,
-	PRIMARY KEY (id),
-	UNIQUE (id)
+	PRIMARY KEY (id)
 );

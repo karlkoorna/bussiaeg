@@ -3,4 +3,5 @@ LOAD DATA LOCAL INFILE 'tmp/stop_times.txt' INTO TABLE stop_times FIELDS TERMINA
 stop_id = @stop_id,
 trip_id = @trip_id,
 arrival = @arrival_time,
-departure = @departure_time;
+departure = @departure_time,
+sequence = @stop_sequence;
