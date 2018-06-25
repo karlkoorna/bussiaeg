@@ -15,11 +15,16 @@ function downloadData() {
 		debug.time('data-download', 'Downloading data');
 		
 		// Download and extract GTFS ZIP file to temporary folder.
-		const res = await got.stream('http://peatus.ee/gtfs/gtfs.zip').pipe(unzipper.Extract({ path: 'tmp' })).promise();
+		await got.stream('http://peatus.ee/gtfs/gtfs.zip').pipe(unzipper.Extract({ path: 'tmp' })).promise();
 		
-		debug.timeEnd('data-download', 'Downloaded data');
+		let data = 'name,lat,lng\n';
 		
-		resolve();
+		for (const stop of JSON.parse((await got('https://elron.ee/api/v1/stops')).body).data) data += `${stop.peatus},${stop.latitude},${stop.longitude}\n`;
+		
+		fs.writeFile('tmp/elron.txt', data, () => {
+			debug.timeEnd('data-download', 'Downloaded data');
+			resolve();
+		});
 		
 	});
 };
@@ -57,7 +62,7 @@ function importData() {
 	});
 }
 
-// Generate additional data from imported data.
+// Generate additional data.
 function generateData() {
 	return new Promise((resolve) => {
 		
