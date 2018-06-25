@@ -4,4 +4,5 @@ id = @stop_id,
 name = @stop_name,
 lat = @stop_lat,
 lng = @stop_lon,
+area = REPLACE(REPLACE(@stop_area, ' linn', ''), ' vald', ''),
 region = @zone_name;

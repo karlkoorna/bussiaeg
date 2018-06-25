@@ -2,4 +2,4 @@ LOAD DATA LOCAL INFILE 'tmp/calendar_dates.txt' INTO TABLE service_exceptions FI
 (@service_id, @date, @exception_type) SET
 service_id = @service_id,
 date =  @date,
-active = -@exception_type + 2;
+type = -@exception_type + 2;

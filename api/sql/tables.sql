@@ -12,6 +12,7 @@ CREATE TABLE stops (
 	lat DECIMAL(10, 8) NOT NULL,
 	lng DECIMAL(11, 8) NOT NULL,
 	direction NVARCHAR(32),
+	area NVARCHAR(32),
 	region NVARCHAR(32),
 	type VARCHAR(32),
 	PRIMARY KEY (id),
@@ -24,7 +25,9 @@ CREATE TABLE stop_times (
 	trip_id INT(16) NOT NULL,
 	arrival TIME NOT NULL,
 	departure TIME NOT NULL,
-	sequence TINYINT(3) NOT NULL
+	sequence TINYINT(3) NOT NULL,
+	KEY (stop_id),
+	KEY (trip_id)
 );
 
 CREATE TABLE trips (
@@ -39,6 +42,8 @@ CREATE TABLE trips (
 
 CREATE TABLE routes (
 	id CHAR(32) NOT NULL,
+	short_name NVARCHAR(255) NOT NULL,
+	long_name NVARCHAR(255) NOT NULL,
 	region VARCHAR(16),
 	type VARCHAR(16),
 	PRIMARY KEY (id)
