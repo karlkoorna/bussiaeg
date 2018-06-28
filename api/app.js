@@ -3,9 +3,8 @@ const dotenv = require('dotenv');
 const fastify = require('fastify');
 const chalk = require('chalk');
 
-const package = require('./package.json');
-
 // Show splash.
+const package = require('./package.json');
 console.log(chalk`\n{yellow ${package.description}} {blue v${package.version}} {gray (${package.license})}\n`);
 
 // Setup environmental variables from file.
@@ -15,6 +14,7 @@ const db = require('./db.js');
 const debug = require('./utils/debug.js');
 const data = require('./data.js');
 
+// Initialize HTTP server.
 const app = fastify();
 
 // Load routes dynamically from folder.

@@ -1,4 +1,4 @@
-LOAD DATA LOCAL INFILE 'tmp/routes.txt' INTO TABLE routes FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES
+LOAD DATA LOCAL INFILE 'tmp/routes.csv' INTO TABLE routes FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES
 (@route_id, @agency_id, @route_short_name, @route_long_name, @route_type, @route_color, @competent_authority) SET
 id = @route_id,
 short_name = @route_short_name,

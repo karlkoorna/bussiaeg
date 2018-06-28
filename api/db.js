@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { promisify } = require('util');
 const mysql = require('mysql');
 const chalk = require('chalk');
 
@@ -14,5 +15,8 @@ const db = mysql.createConnection({
 
 // Setup tables.
 db.query(fs.readFileSync('sql/tables.sql').toString());
+
+// Promisify for async/await.
+db.query = promisify(db.query);
 
 module.exports = db;
