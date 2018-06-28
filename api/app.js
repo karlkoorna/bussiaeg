@@ -11,8 +11,8 @@ console.log(chalk`\n{yellow ${package.description}} {blue v${package.version}} {
 dotenv.config();
 
 const db = require('./db.js');
-const debug = require('./utils/debug.js');
 const data = require('./data.js');
+const debug = require('./utils/debug.js');
 
 // Initialize HTTP server.
 const app = fastify();
