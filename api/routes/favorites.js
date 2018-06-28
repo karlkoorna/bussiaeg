@@ -1,36 +1,26 @@
 const db = require('../db.js');
 
 // Get favorites by id.
-function getFavorites(req, res) {
+async function getFavorites(req, res) {
 	
-	db.query('SELECT data FROM favorites WHERE id = ?', [ req.query.id ], (err, rows) => {
-		
-		if (err) return void res.code(500).send(err);
-		if (rows.length === 0) return void res.send([]);
-		
-		res.send(rows[0].data);
-		
-	});
+	try {
+		const rows = await db.query('SELECT data FROM favorites WHERE id = ?', [ req.query.id ]);
+		res.send(rows.length ? rows[0].data : []);
+	} catch (ex) {
+		res.code(500).send(ex);
+	}
 	
 }
 
 // Post favorites and return id.
 async function postFavorites(req, res) {
 	
-	next();
-	function next() {
-		
+	try {
 		const id = Math.random().toString(36).substr(2, 4).toUpperCase();
-	
-		db.query('INSERT INTO favorites (id, data) VALUES (?, ?)', [ id, JSON.stringify(req.body) ], (err, rows) => {
-			
-			if (err) if (err.message.includes('Duplicate')) return void next();
-			if (err) return void res.code(500).send(err);
-			
-			res.send(id);
-			
-		});
-		
+		await db.query('INSERT INTO favorites (id, data) VALUES (?, ?)', [ id, JSON.stringify(req.body) ]);
+		res.send(id);
+	} catch (ex) {
+		res.code(500).send(err);
 	}
 	
 }
