@@ -2,7 +2,7 @@ LOAD DATA LOCAL INFILE 'tmp/routes.csv' INTO TABLE routes FIELDS TERMINATED BY '
 (@route_id, @agency_id, @route_short_name, @route_long_name, @route_type, @route_color, @competent_authority) SET
 id = @route_id,
 short_name = @route_short_name,
-long_name = @route_long_name,
+long_name = SUBSTRING_INDEX(@route_long_name, ' - ', -1),
 type = (
     CASE
         WHEN @route_color = 'F55ADC' OR @route_color = '00933C' THEN 'coach-c'
