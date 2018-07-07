@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 });
 
 // Setup tables.
-db.query(fs.readFileSync('sql/tables.sql').toString());
+if (process.env['NODE_ENV'] !== 'development') db.query(fs.readFileSync('sql/tables.sql').toString());
 
 // Promisify for async/await.
 db.query = promisify(db.query);

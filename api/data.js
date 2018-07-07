@@ -68,11 +68,16 @@ function prepare(path, msgIncomplete, msgComplete) {
 function update() {
 	return new Promise(async (resolve) => {
 		
-		await download();
-		await prepare('sql/importers', 'Importing', 'Imported');
-		await prepare('sql/generators', 'Generating', 'Generated');
+		if (process.env['NODE_ENV'] !== 'development') {
+			
+			await download();
+			await prepare('sql/importers', 'Importing', 'Imported');
+			await prepare('sql/generators', 'Generating', 'Generated');
+			
+			debug.timeEnd('data-update', 'Data update completed');
+			
+		}
 		
-		debug.timeEnd('data-update', 'Data update completed');
 		resolve();
 		
 	});
