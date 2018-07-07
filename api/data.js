@@ -10,8 +10,6 @@ const db = require('./db.js');
 function download() {
 	return new Promise(async (resolve) => {
 		
-		debug.info('Starting data update');
-		debug.time('data-update');
 		debug.time('data-download', 'Downloading data');
 		
 		// Download and extract GTFS data into temporary folder.
@@ -69,6 +67,9 @@ function update() {
 	return new Promise(async (resolve) => {
 		
 		if (process.env['NODE_ENV'] !== 'development') {
+			
+			debug.info('Starting data update');
+			debug.time('data-update');
 			
 			await download();
 			await prepare('sql/importers', 'Importing', 'Imported');
