@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const package = require('./package.json');
 console.log(chalk`\n{yellow ${package.description}} {blue v${package.version}} {gray (${package.license})}\n`);
 
-// Setup environmental variables from file.
+// Load environmental variables from file.
 dotenv.config();
 
 const db = require('./db.js');
@@ -20,6 +20,7 @@ const app = fastify();
 // Load routes dynamically from folder.
 for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${file}`));
 
+// Update data and start listening on port.
 data.update().then(async () => {
 	const port = process.env['PORT'];
 	await app.listen(port);
