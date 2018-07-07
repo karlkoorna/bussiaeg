@@ -37,10 +37,24 @@ function prepare(path, msgIncomplete, msgComplete) {
 		
 		for (const file of await fse.readdir(path)) {
 			
-			const name = file.slice(0, -4);
+			const name = file.split('.')[0];
 			
 			debug.time(`data-prepare-${name}`, `${msgIncomplete} ${chalk.blue(name)}`);
-			await db.query((await fse.readFile(`${path}/${file}`)).toString());
+			
+			switch (file.split('.')[1]) {
+				
+				case 'sql': {
+					await db.query((await fse.readFile(`${path}/${file}`)).toString());
+					break;
+				}
+				
+				case 'js': {
+					await (require(`./${path}/${file}`))();
+					break;
+				}
+				
+			}
+			
 			debug.timeEnd(`data-prepare-${name}`, `${msgComplete} ${chalk.blue(name)}`);
 			
 		}
