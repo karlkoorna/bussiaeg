@@ -24,7 +24,8 @@ CREATE TABLE stop_times (
 	trip_id INT(16) NOT NULL,
 	time TIME NOT NULL,
 	sequence TINYINT(3) NOT NULL,
-	PRIMARY KEY (stop_id, trip_id, sequence)
+	PRIMARY KEY (stop_id, trip_id, time),
+	KEY (trip_id, sequence)
 );
 
 CREATE TABLE trips (
@@ -32,8 +33,7 @@ CREATE TABLE trips (
 	route_id CHAR(32) NOT NULL,
 	service_id INT(16) NOT NULL,
 	wheelchair BOOL NOT NULL,
-	PRIMARY KEY (id),
-	KEY (route_id, service_id)
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE routes (
