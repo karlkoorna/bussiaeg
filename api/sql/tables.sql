@@ -13,8 +13,8 @@ CREATE TABLE stops (
 	lng DECIMAL(11, 8) NOT NULL,
 	direction NVARCHAR(32),
 	area NVARCHAR(32),
-	region NVARCHAR(32),
 	type VARCHAR(32),
+	region NVARCHAR(32),
 	PRIMARY KEY (id),
 	KEY (lat, lng)
 );
@@ -38,10 +38,9 @@ CREATE TABLE trips (
 
 CREATE TABLE routes (
 	id CHAR(32) NOT NULL,
-	short_name NVARCHAR(255) NOT NULL,
-	long_name NVARCHAR(255) NOT NULL,
-	region VARCHAR(16),
+	name NVARCHAR(255) NOT NULL,
 	type VARCHAR(16),
+	region VARCHAR(16),
 	PRIMARY KEY (id)
 );
 
