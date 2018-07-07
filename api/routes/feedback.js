@@ -7,8 +7,14 @@ const email = require('../utils/email.js');
 async function postFeedback(req, res) {
 	
 	try {
-		await email.send('Tagasiside', req.body['contact'], req.body['message']);
+		
+		await email.send('Tagasiside', `
+			<b>${req.body['contact']}</b>
+			<p>${req.body['message']}</p>
+		`);
+		
 		res.send();
+		
 	} catch (ex) {
 		res.code(500).send(ex);
 	}
