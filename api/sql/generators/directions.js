@@ -5,9 +5,9 @@ module.exports = () => {
 		
 		const terminuses = await db.query(`
 			SELECT time.stop_id, GROUP_CONCAT(terminus.area) AS areas FROM stop_times AS time
-				LEFT OUTER JOIN (
+				INNER JOIN (
 					SELECT trip_id, area FROM stop_times
-					LEFT OUTER JOIN stops ON id = stop_id
+					INNER JOIN stops ON id = stop_id
 					WHERE (trip_id, sequence) IN (
 						SELECT trip_id, MAX(sequence) FROM stop_times GROUP BY trip_id
 					)
@@ -15,7 +15,7 @@ module.exports = () => {
 			GROUP BY stop_id
 		`);
 		
-		let query = '';
+		let query = 'START TRANSACTION;';
 		
 		for (const terminus of terminuses) {
 			
@@ -29,7 +29,7 @@ module.exports = () => {
 			
 		}
 		
-		await db.query(query);
+		await db.query(`${query}COMMIT;`);
 		resolve();
 		
 	});
