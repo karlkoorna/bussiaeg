@@ -33,6 +33,7 @@ CREATE TABLE trips (
 	route_id CHAR(32) NOT NULL,
 	service_id INT(16) NOT NULL,
 	wheelchair BOOL NOT NULL,
+	terminus NVARCHAR(32),
 	PRIMARY KEY (id)
 );
 
