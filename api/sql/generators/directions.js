@@ -5,9 +5,9 @@ module.exports = () => {
 		
 		const terminuses = await db.query(`
 			SELECT time.stop_id, GROUP_CONCAT(terminus.area) AS areas FROM stop_times AS time
-				INNER JOIN (
+				JOIN (
 					SELECT trip_id, area FROM stop_times
-					INNER JOIN stops ON id = stop_id
+					JOIN stops ON id = stop_id
 					WHERE (trip_id, sequence) IN (
 						SELECT trip_id, MAX(sequence) FROM stop_times GROUP BY trip_id
 					)

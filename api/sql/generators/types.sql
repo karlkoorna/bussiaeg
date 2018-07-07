@@ -13,8 +13,8 @@ LEFT JOIN (
 		) AS type
 	FROM (
 		SELECT stop_id, GROUP_CONCAT(type) AS types FROM stop_times
-		LEFT OUTER JOIN trips AS trip ON trip.id = trip_id
-		LEFT OUTER JOIN routes AS route ON route.id = route_id
+		JOIN trips AS trip ON trip.id = trip_id
+		JOIN routes AS route ON route.id = route_id
 		GROUP BY stop_id
 	) AS types
 ) AS types ON stop_id = id
