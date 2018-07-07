@@ -19,7 +19,7 @@ function send(subject, html) {
 			to: process.env['EMAIL_TO'],
 			subject,
 			html
-		}, (err, info) => {
+		}, (err) => {
 			if (err) return void reject(err);
 			resolve();
 		});

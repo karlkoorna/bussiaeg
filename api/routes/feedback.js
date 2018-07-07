@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 const db = require('../db.js');
-const email = require('./utils/email.js');
+const email = require('../utils/email.js');
 
 // Post feedback with message and contact info.
 async function postFeedback(req, res) {
