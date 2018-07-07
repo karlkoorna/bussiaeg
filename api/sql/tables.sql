@@ -16,18 +16,15 @@ CREATE TABLE stops (
 	region NVARCHAR(32),
 	type VARCHAR(32),
 	PRIMARY KEY (id),
-	KEY (lat),
-	KEY (lng)
+	KEY (lat, lng)
 );
 
 CREATE TABLE stop_times (
 	stop_id NVARCHAR(32) NOT NULL,
 	trip_id INT(16) NOT NULL,
-	arrival TIME NOT NULL,
-	departure TIME NOT NULL,
+	time TIME NOT NULL,
 	sequence TINYINT(3) NOT NULL,
-	KEY (stop_id),
-	KEY (trip_id)
+	PRIMARY KEY (stop_id, trip_id, sequence)
 );
 
 CREATE TABLE trips (
@@ -36,8 +33,7 @@ CREATE TABLE trips (
 	service_id INT(16) NOT NULL,
 	wheelchair BOOL NOT NULL,
 	PRIMARY KEY (id),
-	KEY (route_id),
-	KEY (service_id)
+	KEY (route_id, service_id)
 );
 
 CREATE TABLE routes (
@@ -51,16 +47,19 @@ CREATE TABLE routes (
 
 CREATE TABLE services (
 	id INT(16) NOT NULL,
-	days BIT(7) NOT NULL,
+	days CHAR(7) NOT NULL,
 	start DATE NOT NULL,
 	end DATE NOT NULL,
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	KEY (days, start, end)
 );
 
 CREATE TABLE service_exceptions (
 	service_id INT(16) NOT NULL,
 	date DATE NOT NULL,
-	type BOOL NOT NULL
+	type BOOL NOT NULL,
+	PRIMARY KEY (service_id, date),
+	KEY (date, type)
 );
 
 CREATE TABLE favorites (
