@@ -1,12 +1,16 @@
+const got = require('got');
+
 const db = require('../db.js');
 
 // Get trips.
 async function getTrips(req, res) {
 	
+	const id = req.query['id'];
+	
 	try {
 		
 		const trips = await db.query(`
-			SELECT time, wheelchair, short_name, long_name FROM stops AS stop
+			SELECT TIME_TO_SEC(time) AS time, short_name, long_name, wheelchair, route.type, route.region, trip_id FROM stops AS stop
 				JOIN stop_times ON stop_id = id
 				JOIN trips AS trip ON trip.id = trip_id
 				JOIN routes AS route ON route.id = route_id
@@ -25,7 +29,9 @@ async function getTrips(req, res) {
 						SELECT service_id FROM service_exceptions WHERE type = 1 AND date = CURDATE()
 				)
 			ORDER BY time
-		`, [ req.query['id'] ]);
+		`, [ id ]);
+		
+		res.send(trips);
 		
 	} catch (ex) {
 		res.code(500).send(ex);
