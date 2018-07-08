@@ -1,7 +1,7 @@
 # Bussiaeg
 Ühistranspordi ajad üle kogu Eesti.
 
-### Prerequisites
+## Prerequisites
 
 Latest stable versions of all prerequisites are recommended.
 
@@ -81,7 +81,7 @@ Latest stable versions of all prerequisites are recommended.
 	$ ulimit -n 8192
 	```
 	
-### Installation and updates
+## Installation and updates
 
 Update and start app.
 
