@@ -11,7 +11,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 	Install additional required tools.
 	
-	```
+	```bash
 	$ apt install curl git
 	```
 	
@@ -19,7 +19,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 	Install and configure MySQL.
 	
-	```
+	```bash
 	$ curl -o mysql https://repo.mysql.com/mysql-apt-config_0.8.10-1_all.deb
 	$ dpkg -i mysql
 	$ rm mysql
@@ -30,7 +30,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 	Create the database and the user.
 	
-	```
+	```bash
 	$ mysql --password=password
 	```
 	
@@ -42,7 +42,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 	Configure the database engine.
 	
-	```
+	```bash
 	$ nano /etc/mysql/mysql.cnf
 	```
 	
@@ -59,7 +59,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 	Restart the server.
 	
-	```
+	```bash
 	$ systemctl restart mysql
 	```
 	
@@ -67,20 +67,25 @@ Latest stable versions of all prerequisites are recommended.
 	
 	Install Node.js.
 	
-	```
+	```bash
 	$ curl https://deb.nodesource.com/setup_8.x | bash
 	$ apt install nodejs
 	```
 	
 4) **Caddy**
 	
-	Install Caddy.
+	Install Caddy with CORS plugin.
 	
-	```
-	$ curl https://getcaddy.com | bash -s personal
+	```bash
+	$ curl https://getcaddy.com | bash -s personal http.cors
 	$ ulimit -n 8192
 	```
 	
-### Installation
+### Installation and updates
 
+Update and start app.
 
+```bash
+$ ./update.sh
+$ ./start.sh
+```
