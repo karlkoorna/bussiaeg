@@ -6,7 +6,7 @@ async function getStops(req, res) {
 	const id = req.query['id'];
 	
 	try {
-		res.send(await db.query(`SELECT * FROM stops ${id ? `WHERE id = ${id}` : ''}`));
+		res.send(await db.query(`SELECT * FROM stops WHERE type IS NOT NULL ${id ? `AND id = ${id}` : ''}`));
 	} catch (ex) {
 		res.code(500).send(ex);
 	}
