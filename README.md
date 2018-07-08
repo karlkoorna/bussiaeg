@@ -7,7 +7,7 @@ Latest stable versions of all prerequisites are recommended.
 
 1) **Debian**
 	
-	[Download](https://www.debian.org/distrib/) and install the operating system with SSH and without a desktop environment.
+	[Download](https://www.debian.org/distrib/) and install Debian with SSH and without a desktop environment.
 	
 	Install additional required tools.
 	
