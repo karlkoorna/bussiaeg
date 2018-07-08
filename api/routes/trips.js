@@ -10,7 +10,7 @@ async function getTrips(req, res) {
 	try {
 		
 		const trips = await db.query(`
-			SELECT TIME_TO_SEC(time) AS time, short_name, long_name, wheelchair, route.type, route.region, trip_id FROM stops AS stop
+			SELECT TIME_TO_SEC(time) AS time, route.name, terminus, wheelchair, route.type, route.region FROM stops AS stop
 				JOIN stop_times ON stop_id = id
 				JOIN trips AS trip ON trip.id = trip_id
 				JOIN routes AS route ON route.id = route_id
@@ -30,6 +30,12 @@ async function getTrips(req, res) {
 				)
 			ORDER BY time
 		`, [ id ]);
+		
+		const data = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id}`)).body;
+		
+		console.log(data);
+		
+		
 		
 		res.send(trips);
 		
