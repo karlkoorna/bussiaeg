@@ -1,2 +1,7 @@
+# Kill processes
+killall node
+killall caddy
+
+# Start servers
 cd web && npm run build && cd ..
-cd api && npm start & caddy -conf caddy.conf
+cd api && npm start & cd .. && caddy
