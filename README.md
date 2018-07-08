@@ -1,4 +1,4 @@
-![Bussiaeg.ee logo](https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/logo.svg?sanitize=true)
+![Bussiaeg.ee logo](https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/banner.svg?sanitize=true)
 
 Placeholder...
 
