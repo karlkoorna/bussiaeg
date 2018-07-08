@@ -1,7 +1,6 @@
 ![Bussiaeg.ee logo](https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/logo.svg?sanitize=true)
 
-# Bussiaeg
-Ühistranspordi ajad üle kogu Eesti.
+Placeholder...
 
 ## Prerequisites
 
