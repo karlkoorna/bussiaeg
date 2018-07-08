@@ -18,5 +18,8 @@
     "nodemailer": "^4.6.7",
     "ora": "^2.1.0",
     "unzipper": "^0.8.14"
+  },
+  "scripts": {
+    "start": "node app.js"
   }
 }
