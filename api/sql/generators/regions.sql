@@ -7,6 +7,7 @@ LEFT JOIN (
 				WHEN LOCATE('tallinn', regions) > 0 THEN 'tallinn'
 				WHEN LOCATE('tartu', regions) > 0 THEN 'tartu'
 				WHEN LOCATE('parnu', regions) > 0 THEN 'parnu'
+				ELSE 'other'
 			END
 		) AS region
 	FROM (
