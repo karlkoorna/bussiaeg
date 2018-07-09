@@ -18,4 +18,5 @@ LEFT JOIN (
 		GROUP BY stop_id
 	) AS types
 ) AS types ON stop_id = id
-SET stop.type = types.type;
+SET stop.type = types.type
+WHERE stop.type IS NULL;
