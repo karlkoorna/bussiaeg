@@ -13,7 +13,7 @@ const db = mysql.createConnection({
 	multipleStatements: true
 });
 
-// Setup tables.
+// Recreate tables in production only.
 if (process.env['NODE_ENV'] !== 'development') db.query(fs.readFileSync('sql/tables.sql').toString());
 
 // Promisify for async/await.

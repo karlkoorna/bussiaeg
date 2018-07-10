@@ -66,6 +66,7 @@ function prepare(path, msgIncomplete, msgComplete) {
 function update() {
 	return new Promise(async (resolve) => {
 		
+		// Update data in production only.
 		if (process.env['NODE_ENV'] !== 'development') {
 			
 			debug.info('Starting data update');
