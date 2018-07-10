@@ -11,7 +11,7 @@ async function getTrips(id) {
 		
 		const data = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
 		
-		if (!data) throw new Error("Provider 'Elron' is not responding");
+		if (!data) throw new Error("Provider 'Elron' is not returning data");
 		if (data.text) throw new Error(data.text);
 		
 		stops[id] = data.filter((trip) => time.toSeconds(trip.plaaniline_aeg) > time.getSeconds()).map((trip) => ({
