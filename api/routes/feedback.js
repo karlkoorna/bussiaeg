@@ -6,18 +6,12 @@ const email = require('../utils/email.js');
 // Post feedback with message and contact info.
 async function postFeedback(req, res) {
 	
-	try {
-		
-		await email.send('Tagasiside', `
-			<b>${req.body['contact']}</b>
-			<p>${req.body['message']}</p>
-		`);
-		
-		res.send();
-		
-	} catch (ex) {
-		res.code(500).send(ex);
-	}
+	await email.send('Tagasiside', `
+		<b>${req.body['contact']}</b>
+		<p>${req.body['message']}</p>
+	`);
+	
+	res.send();
 	
 }
 

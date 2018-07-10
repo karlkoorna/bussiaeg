@@ -17,6 +17,11 @@ const debug = require('./utils/debug.js');
 // Initialize HTTP server.
 const app = fastify();
 
+// Register custom error handler.
+app.setErrorHandler((err, req, res) => {
+	res.send(err.stack);
+});
+
 // Load routes dynamically from folder.
 for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${file}`));
 
