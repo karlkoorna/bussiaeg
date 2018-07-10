@@ -2,9 +2,14 @@ const got = require('got');
 
 const db = require('../db.js');
 
-// Get stop by id.
+// Get stops.
+async function getStops() {
+	return await db.query('SELECT * FROM stops');
+}
+
+// Get stop.
 async function getStop(id) {
-	return (await db.query('SELECT type, region FROM stops WHERE id = ?', [ id ]))[0] || null;
+	return (await db.query('SELECT * FROM stops WHERE id = ?', [ id ]))[0] || null;
 }
 
 // Get trips for stop.
@@ -37,6 +42,7 @@ async function getTrips(id, opts = {}) {
 }
 
 module.exports = {
+	getStops,
 	getStop,
 	getTrips
 };

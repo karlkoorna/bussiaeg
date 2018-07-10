@@ -2,8 +2,7 @@ const db = require('../db.js');
 
 // Get favorites by id.
 async function getFavorites(req, res) {
-	const rows = await db.query('SELECT data FROM favorites WHERE id = ?', [ req.query.id ]);
-	res.send(rows.length ? rows[0].data : []);
+	res.send(((await db.query('SELECT data FROM favorites WHERE id = ?', [ req.query.id ]))[0] || {}).data || null);
 }
 
 // Post favorites and return id.

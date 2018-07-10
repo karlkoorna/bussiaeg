@@ -5,7 +5,7 @@ const elron = require('../providers/elron.js');
 const tlt = require('../providers/tlt.js');
 const time = require('../utils/time.js');
 
-// Get trips for stop
+// Get trips for stop.
 async function getTrips(req, res) {
 	
 	const id = req.query['id'];
