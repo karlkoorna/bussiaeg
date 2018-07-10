@@ -23,7 +23,7 @@ for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${fi
 // Update data and start listening on port.
 data.update().then(async () => {
 	const port = process.env['PORT'];
-	await app.listen(port, '0.0.0.0');
+	await app.listen(port, process.env['HOST']);
 	debug.info(`Started listening on port ${chalk.blue(port)}`);
 });
 
