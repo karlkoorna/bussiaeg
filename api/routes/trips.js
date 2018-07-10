@@ -28,6 +28,19 @@ async function getTrips(req, res) {
 }
 
 module.exports = (fastify, opts, next) => {
-	fastify.get('/trips', getTrips);
+	
+	fastify.get('/trips', {
+		schema: {
+			querystring: {
+				type: 'object',
+				required: [ 'id' ],
+				properties: {
+					id: { type: 'string' }
+				}
+			}
+		}
+	}, getTrips);
+	
 	next();
+	
 };

@@ -19,7 +19,17 @@ async function postFavorites(req, res) {
 
 module.exports = (fastify, opts, next) => {
 	
-	fastify.get('/favorites', getFavorites);
+	fastify.get('/favorites', {
+		schema: {
+			querystring: {
+				type: 'object',
+				required: [ 'id' ],
+				properties: {
+					id: { type: 'string' }
+				}
+			}
+		}
+	}, getFavorites);
 	
 	fastify.post('/favorites', {
 		schema: {
