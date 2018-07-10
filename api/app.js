@@ -32,7 +32,7 @@ data.update().then(async () => {
 	debug.info(`Started listening on port ${chalk.blue(port)}`);
 });
 
-// Schedule data update.
+// Schedule actions.
 setInterval(() => {
 	
 	const date = new Date();
