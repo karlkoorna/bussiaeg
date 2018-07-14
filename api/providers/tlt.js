@@ -63,7 +63,7 @@ async function update(id) {
 		// Add stops to cache.
 		for (const stop of data.split('\nstop,').slice(1)) stops[stop.split('\n', 1)[0]].trips = stop.split('\n').slice(1).map((trip) => trip.split(',')).map((trip) => ({
 			trip_id: null,
-			time: trip[2],
+			time: Number(trip[2]),
 			name: trip[1],
 			terminus: trip[4],
 			type: trip[0],

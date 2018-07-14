@@ -5,7 +5,7 @@ function getSeconds() {
 
 // Converts HH:mm:ss to seconds since midnight.
 function toSeconds(hms) {
-	return new Date(`01 Jan 1970 ${hms} GMT`).getTime() / 1000;
+	return (new Date(`01 Jan 1970 ${hms} GMT`)).getTime() / 1000;
 }
 
 module.exports = {
