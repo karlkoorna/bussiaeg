@@ -1,14 +1,12 @@
 const got = require('got');
 
+const cache = require('../utils/cache.js');
 const time = require('../utils/time.js');
-
-const stops = {};
 
 // Get trips for stop.
 async function getTrips(id) {
 	
-	// Update cache if stop not present or not added today.
-	if (!stops[id] || (stops[id] || {}).timestamp < new Date() - 86400000) {
+	return cache.use('elron-stops', id, async () => {
 		
 		const data = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
 		
@@ -17,7 +15,7 @@ async function getTrips(id) {
 		
 		const now = time.getSeconds();
 		
-		stops[id] = {
+		return {
 			timestamp: (new Date()).getTime(),
 			trips: data.filter((trip) => time.toSeconds(trip.plaaniline_aeg) > now).map((trip) => ({
 				trip_id: Number(trip.reis),
@@ -28,37 +26,37 @@ async function getTrips(id) {
 				live: false,
 				provider: 'elron'
 			})).slice(0, 15)
-		}
+		};
 		
-	}
-	
-	return stops[id].trips;
+	});
 	
 };
 
 // Get trip by id.
 async function getTrip(id) {
 	
-	const data = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${encodeURIComponent(id)}`)).body).data;
+	return cache.use('elron-trips', id, async () => {
+		
+		const data = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${encodeURIComponent(id)}`)).body).data;
 	
-	if (!data) throw new Error("Provider 'Elron' is not returning data");
-	if (data.text) throw new Error(data.text);
-	
-	const trip = {
-		name: id,
-		terminus: `${data[0].peatus} - ${data[data.length - 1].peatus}`,
-		type: 'train',
-		region: '',
-		stops: data.map((trip) => ({
-			id: trip.peatus,
-			name: trip.peatus,
+		if (!data) throw new Error("Provider 'Elron' is not returning data");
+		if (data.text) throw new Error(data.text);
+		
+		return {
+			name: id,
+			terminus: `${data[0].peatus} - ${data[data.length - 1].peatus}`,
 			type: 'train',
 			region: '',
-			time: trip.plaaniline_aeg
-		}))
-	};
-	
-	return trip;
+			stops: data.map((trip) => ({
+				id: trip.peatus,
+				name: trip.peatus,
+				type: 'train',
+				region: '',
+				time: trip.plaaniline_aeg
+			}))
+		};
+		
+	});
 	
 }
 

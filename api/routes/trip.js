@@ -1,5 +1,5 @@
 const db = require('../db.js');
-
+const cache = require('../utils/cache.js');
 const elron = require('../providers/elron.js');
 
 // Get trip by id.
@@ -31,7 +31,7 @@ async function getTrip(req, res) {
 			return void res.send(trip);
 			
 		}
-			
+		
 		case 'elron': {
 			return void res.send(await elron.getTrip(id));
 		}
@@ -43,6 +43,7 @@ async function getTrip(req, res) {
 module.exports = (fastify, opts, next) => {
 	
 	fastify.get('/trip', {
+		beforeHandler: cache.middleware,
 		schema: {
 			querystring: {
 				type: 'object',

@@ -39,7 +39,8 @@ setInterval(() => {
 	const time = date.getHours().toFixed(0, 2) + date.getMinutes().toFixed(0, 2) + date.getSeconds().toFixed(0, 2);
 	
 	switch (time) {
-		case '060000': return void data.update();
+		case '060000': data.update();
+		case '060000': return void cache.clear();
 		case '000000': return void db.query('DELETE FROM favorites');
 	}
 	
