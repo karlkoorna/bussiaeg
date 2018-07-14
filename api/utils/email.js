@@ -27,6 +27,12 @@ function send(subject, html) {
 	});
 }
 
+// Remove HTML tags.
+function sanitize(str) {
+	return str.replace(/<[^>]*>/g, '');
+}
+
 module.exports = {
-	send
+	send,
+	sanitize
 };
