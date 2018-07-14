@@ -14,15 +14,17 @@ async function getTrips(id) {
 		if (!data) throw new Error("Provider 'Elron' is not returning data");
 		if (data.text) throw new Error(data.text);
 		
-		stops[id] = data.filter((trip) => time.toSeconds(trip.plaaniline_aeg) > time.getSeconds()).map((trip) => ({
+		const now = time.getSeconds();
+		
+		stops[id] = data.filter((trip) => time.toSeconds(trip.plaaniline_aeg) > now).map((trip) => ({
 			trip_id: Number(trip.reis),
-			time: trip.plaaniline_aeg,
+			time: time.toSeconds(trip.plaaniline_aeg),
 			name: trip.reis,
 			terminus: trip.liin,
 			type: 'train',
 			live: false,
 			provider: 'elron'
-		}));
+		})).slice(0, 15);
 		
 	}
 	

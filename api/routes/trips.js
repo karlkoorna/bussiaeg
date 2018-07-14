@@ -17,13 +17,13 @@ async function getTrips(req, res) {
 	if (!stop) throw new Error(`Stop with id '${id}' does not exist`);
 	
 	// Estonia: Elron
-	if (stop.type === 'train') return void res.send(await elron.getTrips(id, { hide: true, limit: 15 }));
+	if (stop.type === 'train') return void res.send(await elron.getTrips(id));
 	
 	// Tallinn: TLT + MNT
 	if (stop.region === 'tallinn') return void res.send(await tlt.mergeTrips(await tlt.getTrips(id), await mnt.getTrips(id)));
 	
 	// Estonia: MNT
-	res.send(await mnt.getTrips(id));
+	res.send(await mnt.getTrips(id, { limit: 15 }));
 	
 }
 

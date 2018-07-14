@@ -23,7 +23,7 @@ async function getTrips(id, opts = {}) {
 			JOIN services AS service ON service.id = trip.service_id
 		WHERE
 			stop.id = ?
-			${opts.hide ? 'AND time > CURDATE()' : ''}
+			${opts.limit ? 'AND time > CURDATE()' : ''}
 			AND (
 				(
 					CURDATE() BETWEEN start AND end
