@@ -1,11 +1,8 @@
 const db = require('../db.js');
 
-const mnt = require('../providers/mnt.js');
-
-// Get stops or stop by id.
+// Get all stops.
 async function getStops(req, res) {
-	const id = req.query['id'];
-	res.send(id ? await mnt.getStop(id) : await mnt.getStops());
+	res.send(await db.query('SELECT * FROM stops'));
 }
 
 module.exports = (fastify, opts, next) => {

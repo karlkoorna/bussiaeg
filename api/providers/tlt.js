@@ -1,6 +1,5 @@
 const got = require('got');
 
-const mnt = require('../providers/mnt.js');
 const time = require('../utils/time.js');
 
 const stops = {};
