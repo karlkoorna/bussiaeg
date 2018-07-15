@@ -7,6 +7,6 @@ async function getStops(req, res) {
 }
 
 module.exports = (fastify, opts, next) => {
-	fastify.get('/stops', getStops);
+	fastify.get('/stops', { beforeHandler: cache.middleware }, getStops);
 	next();
 };
