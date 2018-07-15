@@ -2,9 +2,10 @@ const got = require('got');
 
 const db = require('../db.js');
 
+const cache = require('../utils/cache.js');
+const time = require('../utils/time.js');
 const elron = require('../providers/elron.js');
 const tlt = require('../providers/tlt.js');
-const time = require('../utils/time.js');
 
 // Get trips for stop.
 async function getTrips(req, res) {
@@ -20,7 +21,7 @@ async function getTrips(req, res) {
 	if (stop.type === 'train') return void res.send(await elron.getTrips(id));
 	
 	// Get MNT trips.
-	const trips = (await db.query(`
+	const trips = await cache.use('mnt-stops', id, async () => (await db.query(`
 		SELECT trip_id, TIME_TO_SEC(time) AS time, route.name, terminus, wheelchair, route.type, route.region FROM stops AS stop
 			JOIN stop_times ON stop_id = id
 			JOIN trips AS trip ON trip.id = trip_id
@@ -40,7 +41,7 @@ async function getTrips(req, res) {
 				)
 			)
 		ORDER BY time
-	`, [ id ])).map((trip) => ({ ...trip, live: false, provider: 'mnt' }));
+	`, [ id ])).map((trip) => ({ ...trip, live: false, provider: 'mnt' })));
 	
 	// Return merged TLT and MNT trips.
 	if (stop.region === 'tallinn') return void res.send(await tlt.mergeTrips(await tlt.getTrips(id), trips));

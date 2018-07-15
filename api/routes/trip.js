@@ -7,7 +7,7 @@ async function getTrip(req, res) {
 	
 	const id = req.query['id'];
 	const provider = req.query['provider'];
-		
+	
 	switch (provider) {
 		
 		case 'mnt':

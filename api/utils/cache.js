@@ -5,13 +5,12 @@ async function use(name, item, setter) {
 	
 	// If modifying the whole cache.
 	if (!setter) {
-		setter = item;
 		
 		// Add data if doesn't exist.
-		if (!cache[name]) cache[name] = await setter();
+		if (!cache[name]) cache[name] = await item();
 		
 		// Return data.
-		return cache[name] || [];
+		return cache[name];
 		
 	}
 	
@@ -22,7 +21,7 @@ async function use(name, item, setter) {
 	if (!cache[name][item]) cache[name][item] = await setter();
 	
 	// Return item.
-	return cache[name][item] || null;
+	return cache[name][item];
 	
 };
 
