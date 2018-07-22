@@ -1,2 +1,2 @@
 # Bussiaeg (API)
-Vaata ühistranspordi aegu üle terve Eesti!
+Ühistranspordi ajad üle kogu Eesti.
