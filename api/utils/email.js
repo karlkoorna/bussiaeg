@@ -29,7 +29,7 @@ function send(subject, html) {
 
 // Remove HTML tags.
 function sanitize(str) {
-	return str.replace(/<[^>]*>/g, '');
+	return str.replace(new RegExp('<[^>]*>'), '');
 }
 
 module.exports = {

@@ -10,11 +10,11 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "dotenv": "^6.0.0",
-    "fastify": "^1.6.0",
+    "fastify": "^1.8.0",
     "fs-extra": "^6.0.1",
     "got": "^8.3.1",
     "moment": "^2.22.2",
-    "mysql": "^2.15.0",
+    "mysql": "^2.16.0",
     "nodemailer": "^4.6.7",
     "ora": "^2.1.0",
     "unzipper": "^0.8.14"
