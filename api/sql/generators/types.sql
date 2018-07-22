@@ -1,5 +1,5 @@
 UPDATE stops AS stop
-LEFT JOIN (
+JOIN (
 	SELECT
 		stop_id,
 		(
