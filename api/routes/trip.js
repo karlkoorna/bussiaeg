@@ -14,7 +14,7 @@ async function getTrip(req, res) {
 		case 'tlt': {
 			
 			const trip = (await db.query(`
-				SELECT name, terminus, type, region FROM trips AS trip
+				SELECT name, terminus, type FROM trips AS trip
 				JOIN routes AS route ON route.id = route_id
 				WHERE trip.id = ?
 			`, [ id ]))[0];
@@ -22,7 +22,7 @@ async function getTrip(req, res) {
 			if (!trip) throw new Error(`Trip with id '${id}' not found`);
 			
 			trip.stops = await db.query(`
-				SELECT stop.id, name, stop.type, stop.region, time FROM trips AS trip
+				SELECT stop.id, name, stop.type, time FROM trips AS trip
 				JOIN stop_times AS time ON time.trip_id = trip.id
 				JOIN stops AS stop ON stop.id = stop_id
 				WHERE trip.id = ?

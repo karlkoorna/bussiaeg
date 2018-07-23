@@ -11,12 +11,4 @@ type = (
         WHEN @route_type = 800 THEN 'trol'
         ELSE NULL
     END
-),
-region = (
-    CASE
-        WHEN LOCATE('Tallinn', @competent_authority) > 0 THEN 'tallinn'
-        WHEN LOCATE('Tartu', @competent_authority) > 0 THEN 'tartu'
-        WHEN LOCATE('Pärnu', @competent_authority) > 0 THEN 'parnu'
-        ELSE NULL
-    END
 );

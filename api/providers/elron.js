@@ -46,12 +46,10 @@ async function getTrip(id) {
 			name: id,
 			terminus: `${data[0].peatus} - ${data[data.length - 1].peatus}`,
 			type: 'train',
-			region: '',
 			stops: data.map((trip) => ({
 				id: trip.peatus,
 				name: trip.peatus,
 				type: 'train',
-				region: '',
 				time: trip.plaaniline_aeg
 			}))
 		};

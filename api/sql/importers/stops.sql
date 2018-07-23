@@ -13,4 +13,5 @@ id = @name,
 name = @name,
 lat = @lat,
 lng = @lng,
-type = 'train';
+type = 'train',
+region = 'other';

@@ -41,7 +41,6 @@ CREATE TABLE routes (
 	id CHAR(32) NOT NULL,
 	name NVARCHAR(16) NOT NULL,
 	type VARCHAR(16),
-	region VARCHAR(32),
 	PRIMARY KEY (id)
 );
 
