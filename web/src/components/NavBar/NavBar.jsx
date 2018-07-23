@@ -37,7 +37,7 @@ class NavBarItem extends PureComponent {
 	render() {
 		
 		const { to, colors, children } = this.props;
-		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ '#bfbfbf', '#b3b3b3' ];
+		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ '#bdbdbd', '#b3b3b3' ];
 		
 		return (
 			<NavLink className="navbar-item" title={children} to={to} exact onClick={this.onClick}>

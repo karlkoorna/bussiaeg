@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 
+// Colors for vehicle and stop icons.
 export const colors = {
-	bus: [ '#00e1b4', '#00a181' ],
-	trol: [ '#3682ce', '#255a8e' ],
-	tram: [ '#ff7b3b', '#bf5c2c' ],
-	train: [ '#f2740e', '#e83e14' ],
-	coach: [ '#b552ba', '#79377c' ]
+	bus: [ '#66BB6A', '#4CAF50' ],
+	trol: [ '#0091ea', '#0277bd' ],
+	tram: [ '#ff3d00', '#d84315' ],
+	train: [ '#ff6d00', '#e65100' ],
+	coach: [ '#7e57c2', '#673ab7' ]
 };
 
 export default function VehicleIcon({ id, className, type }) {
