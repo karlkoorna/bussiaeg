@@ -42,7 +42,7 @@
 	width: 64px;
 	height: 64px;
 	padding: 16px;
-	transition: transform .15s ease;
+	transition: transform .25s ease;
 	cursor: pointer;
 }
 

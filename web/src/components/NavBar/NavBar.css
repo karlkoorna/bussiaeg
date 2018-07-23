@@ -20,7 +20,7 @@
 
 .navbar-item-icon {
 	width: 32px;
-	transition: width .15s ease;
+	transition: width .25s ease;
 }
 
 .navbar-item.active .navbar-item-icon {
