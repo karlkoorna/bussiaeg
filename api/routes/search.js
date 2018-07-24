@@ -6,9 +6,9 @@ async function getSearch(req, res) {
 	res.send(await db.query(`
 		SELECT
 			id,
-    		name,
-    		type,
-    		region,
+			name,
+			type,
+			region,
 			ROUND(ST_Distance_Sphere(PointFromText(CONCAT('POINT(', lat, ' ', lng, ')')), PointFromText('POINT(? ?)'))) AS distance
 		FROM stops
 		WHERE
