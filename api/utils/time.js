@@ -19,7 +19,7 @@ function toHMS(seconds) {
 function toCountdown(seconds) {
 	const diff = seconds - getSeconds();
 	const hms = toHMS(Math.abs(diff));
-	return (diff < 0 ? '-' : '') + (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m` : '0m');
+	return (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m` : '0m');
 }
 
 // Converts seconds to HH:mm.
