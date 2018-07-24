@@ -39,7 +39,7 @@ async function getRoute(req, res) {
 		}
 		
 		case 'elron': {
-			return void res.send(await elron.getTrip(id));
+			return void res.send(await elron.getRoute(id));
 		}
 		
 	}

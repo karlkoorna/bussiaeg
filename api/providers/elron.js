@@ -28,8 +28,8 @@ async function getTrips(id) {
 	
 };
 
-// Get trip by id.
-async function getTrip(id) {
+// Get route by id.
+async function getRoute(id) {
 	
 	return cache.use('elron-trips', id, async () => {
 		
@@ -39,9 +39,7 @@ async function getTrip(id) {
 		if (data.text) throw new Error(data.text);
 		
 		return {
-			name: id,
 			terminus: `${data[0].peatus} - ${data[data.length - 1].peatus}`,
-			type: 'train',
 			stops: data.map((trip) => ({
 				id: trip.peatus,
 				name: trip.peatus,
@@ -56,5 +54,5 @@ async function getTrip(id) {
 
 module.exports = {
 	getTrips,
-	getTrip
+	getRoute
 };
