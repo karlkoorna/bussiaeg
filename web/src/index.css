@@ -14,10 +14,9 @@ body {
 
 #root {
 	display: flex;
-	color: #383838;
+	color: #263238;
 	font-family: Lato, Arial, Helvetica, sans-serif;
 	flex-direction: column;
-	cursor: default;
 	-webkit-tap-highlight-color: transparent;
 }
 
