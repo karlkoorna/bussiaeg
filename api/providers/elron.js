@@ -15,18 +15,15 @@ async function getTrips(id) {
 		
 		const now = time.getSeconds();
 		
-		return {
-			timestamp: (new Date()).getTime(),
-			trips: data.filter((trip) => time.toSeconds(trip.plaaniline_aeg) > now).map((trip) => ({
-				trip_id: Number(trip.reis),
-				time: time.toSeconds(trip.plaaniline_aeg),
-				name: trip.reis,
-				terminus: trip.liin,
-				type: 'train',
-				live: false,
-				provider: 'elron'
-			})).slice(0, 15)
-		};
+		return data.filter((trip) => time.toSeconds(trip.plaaniline_aeg) > now).map((trip) => ({
+			trip_id: Number(trip.reis),
+			time: time.toSeconds(trip.plaaniline_aeg),
+			name: trip.reis,
+			terminus: trip.liin,
+			type: 'train',
+			live: false,
+			provider: 'elron'
+		})).slice(0, 15);
 		
 	});
 	
