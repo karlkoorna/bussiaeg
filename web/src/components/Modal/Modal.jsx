@@ -24,7 +24,7 @@ export default class Model extends PureComponent {
 	
 	render() {
 		return (
-			<CSSTransition in={this.props.isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250} onExited={this.onExited} unmountOnExit>
+			<CSSTransition in={this.props.isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 300, exit: 150 }} onExited={this.onExited} unmountOnExit>
 				<div id="modal" onClick={this.props.onCancel}>
 					<div id="modal-panel" onClick={(e) => { e.stopPropagation() }}>
 						<div id="modal-panel-title">{this.props.title}</div>
@@ -39,4 +39,4 @@ export default class Model extends PureComponent {
 		);
 	}
 	
-}
+};
