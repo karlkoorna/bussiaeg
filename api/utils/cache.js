@@ -3,17 +3,6 @@ const cache = {};
 // Add/get to/from cache.
 async function use(name, item, setter) {
 	
-	// If modifying the whole cache.
-	if (!setter) {
-		
-		// Add data if doesn't exist.
-		if (!cache[name]) cache[name] = await item();
-		
-		// Return data.
-		return cache[name];
-		
-	}
-	
 	// Create cache if not exists.
 	if (!cache[name]) cache[name] = [];
 	
@@ -21,7 +10,7 @@ async function use(name, item, setter) {
 	if (!cache[name][item]) cache[name][item] = await setter();
 	
 	// Return item.
-	return cache[name][item];
+	return [ ...cache[name][item] ];
 	
 };
 
