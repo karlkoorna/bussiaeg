@@ -51,12 +51,12 @@ async function getTrips(id) {
 	// Return trips from cache and increase rank if exists.
 	if (stops[id]) {
 		if (stops[id].rank <= 60) stops[id].rank++;
-		return stops[id].trips;
+		return [ ...stops[id].trips ];
 	}
 	
 	// Force cache update for stop and return trips.
 	await update(id);
-	return stops[id].trips;
+	return [ ...stops[id].trips];
 	
 };
 
