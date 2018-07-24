@@ -21,7 +21,7 @@
 #stop-info-icon {
 	width: 64px;
 	height: 64px;
-	padding: 10px;
+	padding: 8px;
 }
 
 #stop-info-name {
@@ -30,11 +30,19 @@
 	font-size: 24px;
 }
 
-#stop-info-extra {
+#stop-info-direction:empty + #stop-info-name {
+	top: 17px;
+}
+
+#stop-info-direction {
 	left: 65px;
 	bottom: 11px;
-	color: #aaa;
+	color: #9e9e9e;
 	font-size: 14px;
+}
+
+#stop-info-direction:empty {
+	display: none;
 }
 
 #stop-info-favorite {
@@ -42,12 +50,7 @@
 	width: 64px;
 	height: 64px;
 	padding: 16px;
-	transition: transform .25s ease;
 	cursor: pointer;
-}
-
-#stop-info-favorite.is-active {
-	animation: navbar-favorites .75s ease;
 }
 
 /* Stop - Trips */
@@ -81,54 +84,54 @@
 	margin-top: 3px;
 }
 
-.stop-trips-trip-time,
-.stop-trips-trip-shortname {
+.stop-trips-trip-countdown,
+.stop-trips-trip-name {
 	font-size: 28px;
 }
 
-.stop-trips-trip-shortname,
-.stop-trips-trip-longname {
+.stop-trips-trip-name,
+.stop-trips-trip-terminus {
 	font-weight: bold;
 }
 
-.stop-trips-trip-shortname {
+.stop-trips-trip-name {
 	left: 48px;
 	top: 10px;
 }
 
-.stop-trips-trip-longname {
+.stop-trips-trip-terminus {
 	left: 10px;
 	bottom: 7px;
 }
 
-.stop-trips-trip-longname > svg {
+.stop-trips-trip-terminus > svg {
 	width: 16px;
 	margin-right: 8px;
 	margin-bottom: -2px;
 }
 
-.stop-trips-trip-time,
-.stop-trips-trip-alttime {
+.stop-trips-trip-countdown,
+.stop-trips-trip-time {
 	right: 8px;
 }
 
-.stop-trips-trip-time {
+.stop-trips-trip-countdown {
 	top: 8px;
 }
 
-.stop-trips-trip-time > span {
+.stop-trips-trip-countdown > span {
 	font-size: 18px;
 }
 
-.stop-trips-trip-time > svg {
+.stop-trips-trip-countdown > svg {
 	position: absolute;
-	right: 2px;
-	top: 3px;
+	right: 10px;
+	top: -1px;
 	width: 12px;
 	transform: rotate(-15deg);
 }
 
-.stop-trips-trip-alttime {
+.stop-trips-trip-time {
 	bottom: 10px;
 	color: #999;
 	font-size: 18px;

@@ -16,46 +16,55 @@ export default class Stop extends Component {
 	
 	state = {
 		isFavorite: false,
-		trips: [],
-		stop: {}
+		id: null,
+		name: '',
+		direction: '',
+		type: '',
+		trips: []
 	}
 	
-	interval = 0
+	interval = null
 	
 	// Update trips if mounted.
 	update = () => {
 		
-		fetch(`${process.env['REACT_APP_API']}/gettrips?id=${this.state.stop.id}`)
-			.then((res) => res.json())
-			.then((data) => {
-				if (this._isMounted) this.setState({ trips: data });
-			});
+		fetch(`${process.env['REACT_APP_API']}/trips?id=${this.state.id}`).then((res) => res.json()).then((data) => {
+			if (this._isMounted) this.setState({ trips: data });
+		});
 		
 	}
 	
 	// Toggle favorite stop.
 	favorite = () => {
-		this.setState({ isFavorite: favorites.toggle(this.state.stop.id) });
+		this.setState({ isFavorite: favorites.toggle(this.state.id) });
 	}
 	
 	componentWillMount() {
 		
+		// Verify stop, redirect to home page if unsuccessful.
 		const stop = window.stops.find((stop) => stop.id === (new URLSearchParams(window.location.search).get('id')));
-		
 		if (!stop) return void this.props.history.push('/');
 		
+		// Load stop data into state.
 		this.setState({
-			isFavorite: favorites.is(stop.id),
-			stop
+			isFavorite: favorites.has(stop.id),
+			id: stop.id,
+			name: stop.name,
+			direction: stop.direction,
+			type: stop.type
+		}, () => {
+			
+			// Start updating trips (2s interval).
+			this.update();
+			this.interval = setInterval(this.update, 2000);
+			
+			// Pan map to stop on first page load.
+			if (init) setTimeout(() => {
+				window.map.panTo({ lat: stop.lat, lng: stop.lng });
+				init = false;
+			}, 300);
+			
 		});
-		
-		this.update();
-		this.interval = setInterval(this.update, 2000);
-		
-		if (init) setTimeout(() => {
-			window.map.panTo({ lat: stop.lat, lng: stop.lng });
-			init = false;
-		}, 300);
 		
 	}
 	
@@ -70,16 +79,16 @@ export default class Stop extends Component {
 	
 	render() {
 		
-		const { isFavorite, stop, trips } = this.state;
+		const { isFavorite, name, direction, type, trips } = this.state;
 		
 		return (
 			<div id="stop" className="page">
 				<div id="stop-info">
-					{StopIcon({ id: 'stop-info-icon', type: stop.type })}
-					<span id="stop-info-name">{stop.name}</span>
-					<span id="stop-info-extra">{stop.name}</span>
+					{StopIcon({ id: 'stop-info-icon', type: type })}
+					<span id="stop-info-direction">{direction}</span>
+					<span id="stop-info-name">{name}</span>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
-						<path fill={isFavorite ? '#f5557e' : '#bfbfbf'} stroke={isFavorite ? '#f22559' : '#b3b3b3'} strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
+						<path fill={isFavorite ? '#f5557e' : '#bdbdbd'} stroke={isFavorite ? '#f22559' : '#b3b3b3'} strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
 					</svg>
 				</div>
 				<div id="stop-trips">
@@ -89,18 +98,18 @@ export default class Stop extends Component {
 							const [ primaryColor, secondaryColor ] = colors[trip.type];
 							
 							return (
-								<div className="stop-trips-trip" key={trip.shortName + trip.altTime}>
+								<div className="stop-trips-trip" key={trip.name + trip.time}>
 									{VehicleIcon({ className: 'stop-trips-trip-icon', type: trip.type })}
-									<div className="stop-trips-trip-shortname" style={{ color: secondaryColor }}>{trip.shortName}</div>
-									<div className="stop-trips-trip-longname" style={{ color: secondaryColor }}>
+									<div className="stop-trips-trip-name" style={{ color: secondaryColor }}>{trip.name}</div>
+									<div className="stop-trips-trip-terminus" style={{ color: secondaryColor }}>
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 											<path fill={primaryColor} d="M1024 512l-337.6 512H462l338.2-512L462 0h224.4z" />
 											<path fill={secondaryColor} d="M562 512l-337.6 512H0l338.2-512L0 0h224.4z" />
 										</svg>
-										{trip.longName}
+										{trip.terminus}
 									</div>
-									<div className="stop-trips-trip-time"> {/* TODO: Connect with API */}
-										{trip.time.split('m')[0]}<span>min</span>
+									<div className="stop-trips-trip-countdown"> {/* TODO: Connect with API */}
+										{trip.countdown}
 										{
 											trip.gps === 'off' ? null : (
 												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill={primaryColor}>
@@ -109,7 +118,7 @@ export default class Stop extends Component {
 											)
 										}
 									</div>
-									<div className="stop-trips-trip-alttime">{trip.altTime}</div>
+									<div className="stop-trips-trip-time">{trip.time}</div>
 								</div>
 							);
 							
