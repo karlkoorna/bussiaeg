@@ -117,7 +117,7 @@ $ cd api
 $ npm start
 ```
 
-Start Web module in development mode.
+Start Web module in development mode. Setting `NODE_ENV=development` will disable data updating.
 
 ```bash
 $ cd web
