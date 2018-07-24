@@ -62,8 +62,8 @@ async function getTrips(req, res) {
 		const trip = trips[i];
 		trips[i] = {
 			...trip,
-			time: time.toCountdown(trip.time),
-			altTime: time.toTime(trip.time)
+			countdown: time.toCountdown(trip.time),
+			time: time.toTime(trip.time)
 		};
 		
 	}

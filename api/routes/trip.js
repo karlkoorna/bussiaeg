@@ -24,7 +24,7 @@ async function getTrip(req, res) {
 			
 			// Get stop sequence for trip.
 			trip.stops = await db.query(`
-				SELECT stop.id, name, stop.type, stop.region, time FROM trips AS trip
+				SELECT stop.id, name, stop.type, stop.region, LEFT(time, LENGTH(time) - 3) AS time FROM trips AS trip
 				JOIN stop_times AS time ON time.trip_id = trip.id
 				JOIN stops AS stop ON stop.id = stop_id
 				WHERE trip.id = ?
