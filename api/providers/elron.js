@@ -6,26 +6,25 @@ const time = require('../utils/time.js');
 // Get trips for stop.
 async function getTrips(id) {
 	
-	return cache.use('elron-stops', id, async () => {
+	const now = time.getSeconds();
+	
+	return (await cache.use('elron-stops', id, async () => {
 		
 		const data = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
 		
 		if (!data) throw new Error("Provider 'Elron' is not returning data");
 		if (data.text) throw new Error(data.text);
 		
-		const now = time.getSeconds();
-		
-		return data.filter((trip) => time.toSeconds(trip.plaaniline_aeg) > now).map((trip) => ({
-			trip_id: Number(trip.reis),
+		return data.map((trip) => ({
 			time: time.toSeconds(trip.plaaniline_aeg),
 			name: trip.reis,
 			terminus: trip.liin,
 			type: 'train',
 			live: false,
 			provider: 'elron'
-		})).slice(0, 15);
+		}));
 		
-	});
+	})).filter((trip) => trip.time > now).slice(0, 15);
 	
 };
 
