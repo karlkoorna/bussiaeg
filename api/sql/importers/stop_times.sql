@@ -2,5 +2,5 @@ LOAD DATA LOCAL INFILE 'tmp/stop_times.csv' INTO TABLE stop_times FIELDS TERMINA
 (@trip_id, @arrival_time, @departure_time, @stop_id, @stop_sequence, @pickup_type, @drop_off_type) SET
 stop_id = @stop_id,
 trip_id = @trip_id,
-time = @arrival_time,
+time = @departure_time,
 sequence = @stop_sequence;
