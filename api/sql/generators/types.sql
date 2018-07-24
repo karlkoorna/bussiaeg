@@ -7,8 +7,8 @@ JOIN (
 				WHEN LOCATE('trol', types) > 0 THEN 'trol'
 				WHEN LOCATE('tram', types) > 0 THEN 'tram'
 				WHEN LOCATE('bus', types) > 0 THEN 'bus'
-				WHEN LOCATE('coach-c', types) > 0 THEN 'coach-c'
 				WHEN LOCATE('coach-cc', types) > 0 THEN 'coach-cc'
+				WHEN LOCATE('coach-c', types) > 0 THEN 'coach-c'
 			END
 		) AS type
 	FROM (

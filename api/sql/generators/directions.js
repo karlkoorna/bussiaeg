@@ -3,29 +3,22 @@ const db = require('../../db.js');
 module.exports = () => {
 	return new Promise(async (resolve) => {
 		
-		const terminuses = await db.query(`
-			SELECT time.stop_id, GROUP_CONCAT(terminus.area) AS areas FROM stop_times AS time
-				JOIN (
-					SELECT trip_id, area FROM stop_times
-					JOIN stops ON id = stop_id
-					WHERE (trip_id, sequence) IN (
-						SELECT trip_id, MAX(sequence) FROM stop_times GROUP BY trip_id
-					)
-				) AS terminus ON terminus.trip_id = time.trip_id
+		const stops = await db.query(`
+			SELECT stop_id, GROUP_CONCAT(terminus) AS terminuses FROM stop_times
+			JOIN trips AS trip ON trip.id = trip_id
 			GROUP BY stop_id
 		`);
 		
 		let query = 'START TRANSACTION;';
 		
-		for (const terminus of terminuses) {
+		for (const stop of stops) {
 			
 			const counts = {}
-			const areas = terminus.areas.split(',');
+			const terminuses = stop.terminuses.split(',');
 			
-			for (const area of areas) counts[area] = 0;
-			for (const area of areas) counts[area]++;
+			for (const terminus of terminuses) if (counts[terminus]) counts[terminus]++; else counts[terminus] = 0;
 			
-			query += `UPDATE stops SET direction = '${Object.entries(counts).sort((a, b) => a[1] < b[1])[0][0]}' WHERE id = '${terminus.stop_id}';`;
+			query += `UPDATE stops SET direction = '${Object.entries(counts).sort((a, b) => a[1] < b[1])[0][0]}' WHERE id = '${stop.stop_id}';`;
 			
 		}
 		

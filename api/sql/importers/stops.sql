@@ -3,8 +3,7 @@ LOAD DATA LOCAL INFILE 'tmp/stops.csv' INTO TABLE stops FIELDS TERMINATED BY ','
 id = @stop_id,
 name = @stop_name,
 lat = @stop_lat,
-lng = @stop_lon,
-area = REPLACE(REPLACE(@stop_area, ' linn', ''), ' vald', '');
+lng = @stop_lon;
 
 LOAD DATA LOCAL INFILE 'tmp/elron.csv' INTO TABLE stops FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES
 (@name, @lat, @lng) SET
