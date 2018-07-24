@@ -1,43 +1,7 @@
 const got = require('got');
 
-const time = require('../utils/time.js');
-
 const stops = {};
 let last = new Date();
-
-// Merge TLT trips with MNT trips.
-function mergeTrips(tltTrips, mntTrips) {
-	
-	let trips = [];
-	
-	// Fallback to GTFS trips on error.
-	if (!tltTrips.length) trips = mntTrips; else for (const mntTrip of mntTrips) {
-		
-		// Add trips not provided by TLT.
-		if (mntTrip.type.startsWith('coach')) trips.push(mntTrip); else for (const tltTrip of tltTrips) {
-			
-			// Match TLT and MNT trips by type, name and floored time.
-			
-			if (mntTrip.type !== tltTrip.type) continue;
-			if (mntTrip.name !== tltTrip.name) continue;
-	   		if (mntTrip.time !== tltTrip.trip_id) continue;
-			
-	   		trips.push({
-	   			...mntTrip,
-				time: tltTrip.time,
-				live: tltTrip.live,
-				provider: 'tlt'
-	   		});
-			
-		};
-		
-	};
-	
-	// Hide past trips, future coaches (3h) and sort trips.
-	const now = time.getSeconds();
-	return trips.filter((trip) => trip.time >= now && trip.time <= now + 10800).sort((a, b) => a.time - b.time);
-	
-}
 
 // Update stop/stops in cache.
 async function update(id) {
@@ -62,8 +26,7 @@ async function update(id) {
 		}
 		
 		// Add stops to cache.
-		for (const stop of data.split('\nstop,').slice(1)) stops[stop.split('\n', 1)[0]].trips = stop.split('\n').slice(1).map((trip) => trip.split(',')).map((trip) => ({
-			trip_id: trip[3] - (trip[3] % 60),
+		for (const stop of data.split('\nstop,').slice(1)) stops[stop.split('\n', 1)[0]].trips = stop.split('\n').slice(1, -1).map((trip) => trip.split(',')).map((trip) => ({
 			time: Number(trip[2]),
 			name: trip[1],
 			terminus: trip[4],
@@ -79,7 +42,7 @@ async function update(id) {
 	
 }
 
-// Update stops in cache every 2 seconds.
+// Update stops in cache (2s interval).
 setInterval(update, 2000);
 
 // Get trips for stop by stop id.
@@ -98,6 +61,5 @@ async function getTrips(id) {
 };
 
 module.exports = {
-	getTrips,
-	mergeTrips
+	getTrips
 };

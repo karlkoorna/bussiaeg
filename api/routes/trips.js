@@ -24,15 +24,22 @@ async function getTrips(req, res) {
 			continue;
 		}
 		
-		// Get MNT trips.
-		const trips = await cache.use('mnt-stops', id, async () => (await db.query(`
-			SELECT trip_id, TIME_TO_SEC(time) AS time, route.name, terminus, wheelchair, route.type FROM stops AS stop
+		// Return merged TLT trips.
+		if (stop.region === 'tallinn') {
+			tripz.push(await tlt.getTrips(id));
+			continue;
+		}
+		
+		// Return MNT trips.
+		tripz.push(await cache.use('mnt-stops', id, async () => (await db.query(`
+			SELECT TIME_TO_SEC(time) AS time, route.name, terminus, wheelchair, route.type, FALSE AS live, 'mnt' AS provider FROM stops AS stop
 				JOIN stop_times ON stop_id = id
 				JOIN trips AS trip ON trip.id = trip_id
 				JOIN routes AS route ON route.id = route_id
 				JOIN services AS service ON service.id = trip.service_id
 			WHERE
 				stop.id = ?
+				AND time > CURTIME()
 				AND (
 					(
 						CURDATE() BETWEEN start AND end
@@ -45,16 +52,8 @@ async function getTrips(req, res) {
 					)
 				)
 			ORDER BY time
-		`, [ id ])).map((trip) => ({ ...trip, live: false, provider: 'mnt' })));
-			
-		// Return merged TLT and MNT trips.
-		if (stop.region === 'tallinn') {
-			tripz.push(await tlt.mergeTrips(await tlt.getTrips(id), trips));
-			continue;
-		}
-		
-		// Return MNT trips.
-		tripz.push(trips.filter((trip) => trip.time > now).slice(0, 15));
+			LIMIT 15
+		`, [ id ]))));
 		
 	}
 	
@@ -63,8 +62,8 @@ async function getTrips(req, res) {
 		const trip = trips[i];
 		
 		trips[i] = {
-			...trip,
 			countdown: time.toCountdown(trip.time),
+			...trip,
 			time: time.toTime(trip.time)
 		};
 		
