@@ -12,4 +12,4 @@ export default function Loading() {
 			{VehicleIcon({ id: 'loading-tram', className: 'loading-vehicle', type: 'tram' })}
 		</div>
 	);
-}
+};

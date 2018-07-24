@@ -12,31 +12,35 @@ import Stop from 'pages/Stop/Stop.jsx';
 
 import './index.css';
 
-fetch(`${process.env['REACT_APP_API']}/getstops?lat_min=60.0&lng_min=60.0&lat_max=20.0&lng_max=20.0`)
-	.then((res) => res.json())
-	.then((stops) => {
-		
-		window.stops = stops;
-		
-		render((
-			<BrowserRouter>
-				<Fragment>
-					<Map />
-					<Route render={({ location }) => (
-						<TransitionGroup id="pages" className={location.pathname === '/' ? 'is-empty' : ''}>
-							<CSSTransition key={location.pathname} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250}>
-								<Switch location={location}>
-									<Route path="/search" component={Search} />
-									<Route path="/favorites" component={Favorites} />
-									<Route path="/settings" component={Settings} />
-									<Route path="/stop" component={Stop} />
-								</Switch>
-							</CSSTransition>
-						</TransitionGroup>
-					)} />
-					<NavBar />
-				</Fragment>
-			</BrowserRouter>
-		), document.getElementById('root'));
-		
+// Fetch all stop into global variable and proceed rendering the page.
+fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((stops) => {
+	
+	window.stops = stops;
+	
+	render((
+		<BrowserRouter>
+			<Fragment>
+				<Map />
+				<Route render={({ location }) => (
+					<TransitionGroup id="pages" className={location.pathname === '/' ? 'is-empty' : ''}>
+						<CSSTransition key={location.pathname} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250}>
+							<Switch location={location}>
+								<Route path="/search" component={Search} />
+								<Route path="/favorites" component={Favorites} />
+								<Route path="/settings" component={Settings} />
+								<Route path="/stop" component={Stop} />
+							</Switch>
+						</CSSTransition>
+					</TransitionGroup>
+				)} />
+				<NavBar />
+			</Fragment>
+		</BrowserRouter>
+	), document.getElementById('root'));
+	
+	// Disable navigating through elements with tab key.
+	window.addEventListener('keydown', (e) => {
+		if (e.which == 9) e.preventDefault();
 	});
+	
+});
