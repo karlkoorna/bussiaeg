@@ -11,7 +11,7 @@ JOIN (
 			END
 		) AS region
 	FROM (
-		SELECT stop_id, GROUP_CONCAT(route.region) AS regions FROM stop_times
+		SELECT stop_id, GROUP_CONCAT(region) AS regions FROM stop_times
 		JOIN trips AS trip ON trip.id = trip_id
 		JOIN routes AS route ON route.id = route_id
 		GROUP BY stop_id

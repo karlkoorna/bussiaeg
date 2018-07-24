@@ -26,7 +26,7 @@ async function getTrips(req, res) {
 		
 		// Get MNT trips.
 		const trips = await cache.use('mnt-stops', id, async () => (await db.query(`
-			SELECT trip_id, TIME_TO_SEC(time) AS time, route.name, terminus, wheelchair, route.type, route.region FROM stops AS stop
+			SELECT trip_id, TIME_TO_SEC(time) AS time, route.name, terminus, wheelchair, route.type FROM stops AS stop
 				JOIN stop_times ON stop_id = id
 				JOIN trips AS trip ON trip.id = trip_id
 				JOIN routes AS route ON route.id = route_id
