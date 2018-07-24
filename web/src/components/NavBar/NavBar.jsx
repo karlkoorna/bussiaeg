@@ -13,7 +13,7 @@ export default function NavBar() {
 			<NavBarItem to="/settings" colors={[ '#00bfff', '#00ace6' ]}>Settings</NavBarItem>
 		</nav>
 	);
-}
+};
 
 class NavBarItem extends PureComponent {
 	
@@ -26,7 +26,7 @@ class NavBarItem extends PureComponent {
 		
 		if (this.state.animation) return;
 		
-		this.setState({ animation: `navbar-${this.props.children.toLowerCase()} .75s ease` });
+		this.setState({ animation: `navbar-${this.props.children.toLowerCase()} .5s ease` });
 		
 		setTimeout(() => {
 			this.setState({ animation: '' });

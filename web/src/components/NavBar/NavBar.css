@@ -3,7 +3,6 @@
 	display: flex;
 	height: 64px;
 	background-color: white;
-	color: #333;
 	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
 	cursor: pointer;
 	overflow: hidden;
@@ -14,13 +13,12 @@
 	position: relative;
 	justify-content: center;
 	align-items: center;
-	align-items: center;
 	flex: 1;
 }
 
 .navbar-item-icon {
 	width: 32px;
-	transition: width .25s ease;
+	transition: width .1s ease;
 }
 
 .navbar-item.active .navbar-item-icon {
