@@ -58,6 +58,16 @@ async function getTrips(req, res) {
 		
 	}
 	
+	for (const trips of tripz) for (let i = 0; i < trips.length; i++) {
+		const trip = trips[i];
+		trips[i] = {
+			...trip,
+			time: time.toCountdown(trip.time),
+			altTime: time.toTime(trip.time)
+		};
+		
+	}
+	
 	res.send(req.query['id'] ? tripz[0] : tripz);
 	
 }

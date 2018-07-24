@@ -13,6 +13,7 @@ async function getTrip(req, res) {
 		case 'mnt':
 		case 'tlt': {
 			
+			// Get trip info.
 			const trip = (await db.query(`
 				SELECT name, terminus, type FROM trips AS trip
 				JOIN routes AS route ON route.id = route_id
@@ -21,6 +22,7 @@ async function getTrip(req, res) {
 			
 			if (!trip) throw new Error(`Trip with id '${id}' not found`);
 			
+			// Get stop sequence for trip.
 			trip.stops = await db.query(`
 				SELECT stop.id, name, stop.type, stop.region, time FROM trips AS trip
 				JOIN stop_times AS time ON time.trip_id = trip.id
