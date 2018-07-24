@@ -8,6 +8,7 @@ async function getSearch(req, res) {
 			id,
     		name,
     		type,
+    		region,
 			ROUND(ST_Distance_Sphere(PointFromText(CONCAT('POINT(', lat, ' ', lng, ')')), PointFromText('POINT(? ?)'))) AS distance
 		FROM stops
 		WHERE
