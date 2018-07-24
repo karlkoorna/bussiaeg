@@ -8,7 +8,7 @@ function toSeconds(hms) {
 	return (new Date(`01 Jan 1970 ${hms} GMT`)).getTime() / 1000;
 }
 
-// Converts seconds to raw hours, minutes and seconds values.
+// Converts seconds to raw hour, minute and second values.
 function toHMS(seconds) {
 	const hours = Math.floor(seconds / 3600);
 	const minutes = Math.floor((seconds % 3600) / 60);
@@ -19,10 +19,10 @@ function toHMS(seconds) {
 function toCountdown(seconds) {
 	const diff = seconds - getSeconds();
 	const hms = toHMS(Math.abs(diff));
-	return (diff < 0 ? '-' : '') + (hms[0] ? `${hms[0]} ` : '') + (hms[1] ? `${hms[1]}` : '');
+	return (diff < 0 ? '-' : '') + (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m` : '0m');
 }
 
-// Converts seconds to HH:mm:ss.
+// Converts seconds to HH:mm.
 function toTime(seconds) {
 	const hms = toHMS(seconds);
 	return `${hms[0].toString().padStart(2, '0')}:${hms[1].toString().padStart(2, '0')}`;

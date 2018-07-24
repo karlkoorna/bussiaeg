@@ -58,8 +58,10 @@ async function getTrips(req, res) {
 		
 	}
 	
+	// Calculate countdown and time for trips.
 	for (const trips of tripz) for (let i = 0; i < trips.length; i++) {
 		const trip = trips[i];
+		
 		trips[i] = {
 			...trip,
 			countdown: time.toCountdown(trip.time),
