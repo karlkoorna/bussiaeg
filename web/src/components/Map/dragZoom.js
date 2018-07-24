@@ -25,6 +25,7 @@ export default function dragZoom(map) {
 			
 		}
 		
+		// Disable move drag.
 		map.dragging.disable();
 		
 		startZoom = map.getZoom();
@@ -33,13 +34,15 @@ export default function dragZoom(map) {
 		
 	});
 	
+	// Cancel zoom drag and allow move drag.
 	$map.addEventListener('touchend', (e) => {
 		isDragging = false;
 		map.dragging.enable();
 	});
 	
+	// Set map zoom by the section the pointer is in.
 	$map.addEventListener('touchmove', (e) => {
 		if (isDragging) map.setZoom(startZoom - (startY - e.touches[0].pageY) / 80);
 	});
 	
-}
+};

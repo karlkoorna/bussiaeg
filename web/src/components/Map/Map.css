@@ -37,7 +37,7 @@
 	right: -48px;
 	bottom: 16px;
 	width: 48px;
-	height: 48px;
+	height: 48px; 
 	padding: 8px;
 	background-color: white;
 	border-radius: 100%;
@@ -60,18 +60,4 @@
 
 .leaflet-container {
     background: #f7f7f7 !important;
-}
-
-/* Animations */
-
-@keyframes map-bounce {
-	
-	50% {
-		transform: translateY(-25%);
-	}
-	
-	to {
-		transform: translateY(0);
-	}
-	
 }

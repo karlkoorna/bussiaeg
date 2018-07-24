@@ -28,24 +28,20 @@ export default class Map extends Component {
 		const { map } = window;
 		
 		// Handle message cases.
-		
 		if (!(new Leaflet.LatLngBounds(new Leaflet.LatLng(57.57, 21.84), new Leaflet.LatLng(59.7, 28))).contains(map.getCenter())) {
 			this.setState({ message: 'Bussiaeg.ee ei toimi väljaspool Eestit' });
-		} else if (map.getZoom() < 16) {
+		} else if (map.getZoom() < 15) {
 			this.setState({ message: 'Suumige sisse, et näha peatusi' });
 		} else {
 			this.setState({ message: '' });
 		}
 		
-		// Remove all stops.
-		
+		// Remove all stops from map.
 		for (const marker of this.markers) marker.remove();
-		
 		this.markers = [];
 		
 		// Add stops in viewport if zoomed in.
-		
-		if (map.getZoom() < 16) return;
+		if (map.getZoom() < 15) return;
 		
 		const bounds = map.getBounds();
 		
@@ -70,11 +66,8 @@ export default class Map extends Component {
 	
 	// Pan map to current location.
 	locate = () => {
-		
 		const { coords } = this.state;
-		
 		if (coords.lat) window.map.panTo(coords);
-		
 	}
 	
 	// Hide modal.
@@ -84,7 +77,6 @@ export default class Map extends Component {
 	
 	// Set map center to start location.
 	modalConfirm = () => {
-		
 		this.modalHide();
 		
 		const { map } = window;
@@ -115,8 +107,7 @@ export default class Map extends Component {
 			bounceAtZoomLimits: false,
 			attributionControl: false,
 			boxZoom: false,
-			keyboard: false,
-			preferCanvas: true
+			keyboard: false
 		});
 		
 		// Add third-party tile layer from configuration.
@@ -157,7 +148,7 @@ export default class Map extends Component {
 				iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup(
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 						<circle fill="#fff" cx="512" cy="512" r="512" />
-						<circle fill="#4285f4" cx="512" cy="512" r="350" />
+						<circle fill="#00bfff" cx="512" cy="512" r="350" />
 					</svg>
 				))}`
 			}),
@@ -166,17 +157,16 @@ export default class Map extends Component {
 		const circle = new Leaflet.Circle([ 0, 0 ], {
 			renderer: new Leaflet.Canvas({ padding: 1 }),
 			interactive: false,
-			fillColor: '#4285f4',
+			fillColor: '#00bfff',
 			fillOpacity: .15,
-			color: '#4285f4',
+			color: '#00bfff',
 			weight: 2
 		}).addTo(map);
-		
-		// Update current location.
 		
 		// Pan timeout reference.
 		const timestamp = new Date();
 		
+		// Update current location.
 		watchPosition.call(this);
 		function watchPosition() {
 			
@@ -185,27 +175,27 @@ export default class Map extends Component {
 				const { latitude: lat, longitude: lng, accuracy } = e.coords;
 				const coords = { lat, lng, accuracy };
 				
+				// Update coord buffer for locate function.
 				this.setState({ coords });
 				
 				// Pan map if within timeout.
-				if (new Date() - timestamp < 2000) map.panTo(coords);
+				if (new Date() - timestamp < 1500) map.panTo(coords);
 				
-				// Hide locate button if location is inacurrate.
+				// Hide locate button on medium-plus inacuraccy.
 				this.setState({ showLocate: accuracy < 500 });
 				
 				// Handle low accuracy cases.
-				
-				if (accuracy > 1000 && start.lat) {
+				if (accuracy > 1000 && start.lat) { // Pan map to start on low accuracy
 					
 					map.setView([ start.lat, start.lng ], start.zoom);
 					
-				} else if (accuracy > 500) {
+				} else if (accuracy > 500) { // Hide location marker on medium accuracy.
 					
 					marker.setLatLng([ 0, 0 ]);
 					circle.setLatLng([ 0, 0 ]);
 					circle.setRadius(0);
 					
-				} else {
+				} else { // Update location marker on high accuracy.
 					
 					marker.setLatLng(coords);
 					circle.setLatLng(coords);
@@ -231,11 +221,11 @@ export default class Map extends Component {
 				<div id="map-container"></div>
 				<span id="map-message">{this.state.message}</span>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" className={this.state.showLocate ? 'is-visible' : null} onClick={this.locate}>
-					<path fill="#4285f4" d="M512 .1C246.2.1 172.6 219.7 172.6 344.7c0 274.6 270 679.3 339.4 679.3s339.4-404.6 339.4-679.3C851.4 219.6 777.8.1 512 .1zm0 471.1c-71.3 0-129-57.8-129-129s57.7-129.1 129-129.1 129 57.8 129 129-57.7 129.1-129 129.1z" />
+					<path fill="#00bfff" d="M512 .1C246.2.1 172.6 219.7 172.6 344.7c0 274.6 270 679.3 339.4 679.3s339.4-404.6 339.4-679.3C851.4 219.6 777.8.1 512 .1zm0 471.1c-71.3 0-129-57.8-129-129s57.7-129.1 129-129.1 129 57.8 129 129-57.7 129.1-129 129.1z" />
 				</svg>
 				<Modal isVisible={this.state.showModal} title="Kinnita alguskoht" text="Asukoha mitteleidmisel kuvatav koht" onCancel={this.modalHide} onConfirm={this.modalConfirm} />
 			</div>
 		);
 	}
 	
-}
+};
