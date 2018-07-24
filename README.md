@@ -84,7 +84,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 ## Installation and updates
 
-Update project files.
+Update all modules.
 
 ```bash
 $ ./update.sh
@@ -92,7 +92,7 @@ $ ./update.sh
 
 Fill in `.env` module configuration file by example `.env.example` file. Provided values are for development only.
 
-Start project.
+Start all modules.
 
 ```bash
 $ ./start.sh
@@ -113,13 +113,13 @@ $ caddy -conf Caddydev
 Start API module.
 
 ```bash
-cd api
-npm start
+$ cd api
+$ npm start
 ```
 
 Start Web module in development mode.
 
 ```bash
-cd web
-npm start
+$ cd web
+$ npm start
 ```
