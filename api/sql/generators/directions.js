@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const db = require('../../db.js');
 
 module.exports = () => {
@@ -9,18 +11,11 @@ module.exports = () => {
 			GROUP BY stop_id
 		`);
 		
+		// Start building transaction query.
 		let query = 'START TRANSACTION;';
 		
-		for (const stop of stops) {
-			
-			const counts = {}
-			const terminuses = stop.terminuses.split(',');
-			
-			for (const terminus of terminuses) if (counts[terminus]) counts[terminus]++; else counts[terminus] = 0;
-			
-			query += `UPDATE stops SET direction = '${Object.entries(counts).sort((a, b) => a[1] < b[1])[0][0]}' WHERE id = '${stop.stop_id}';`;
-			
-		}
+		// Get the most common terminus for all trips serving a stop;
+		for (const stop of stops) query += `UPDATE stops SET direction = '${_.max(Object.entries(_.countBy(stop.terminuses.split(','))))[0]}' WHERE id = '${stop.stop_id}';`;
 		
 		await db.query(`${query}COMMIT;`);
 		resolve();
