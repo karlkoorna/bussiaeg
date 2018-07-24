@@ -84,9 +84,42 @@ Latest stable versions of all prerequisites are recommended.
 	
 ## Installation and updates
 
-Update and start app.
+Update project files.
 
 ```bash
 $ ./update.sh
+```
+
+Fill in `.env` module configuration file by example `.env.example` file. Provided values are for development only.
+
+Start project.
+
+```bash
 $ ./start.sh
+```
+
+## Development
+
+Redirect `devaeg.ee` and `api.devaeg.ee` to the machine's local or public ip.
+
+Fill in `.env` module configuration file by example `.env.example` file. Provided values are for development only.
+
+Run Caddy with development config file.
+
+```bash
+$ caddy -conf Caddydev
+```
+
+Start API module.
+
+```bash
+cd api
+npm start
+```
+
+Start Web module in development mode.
+
+```bash
+cd web
+npm start
 ```

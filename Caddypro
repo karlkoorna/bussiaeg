@@ -1,0 +1,13 @@
+https://api.bussiaeg.ee {
+	gzip
+	cors / {
+		origin *
+	}
+	proxy / 127.0.0.1:81
+}
+
+https://bussiaeg.ee,
+https://www.bussiaeg.ee {
+	gzip
+	root web/build
+}
