@@ -6,9 +6,10 @@ lat = @stop_lat,
 lng = @stop_lon;
 
 LOAD DATA LOCAL INFILE 'tmp/elron.csv' INTO TABLE stops FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES
-(@name, @lat, @lng) SET
+(@name, @desc, @lat, @lng) SET
 id = @name,
 name = @name,
+direction = @desc,
 lat = @lat,
 lng = @lng,
 type = 'train',

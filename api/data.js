@@ -19,8 +19,8 @@ function download() {
 		for (const file of await fse.readdir('tmp')) await fse.rename(`tmp/${file}`, `tmp/${file.substr(0, file.lastIndexOf('.'))}.csv`);
 		
 		// Download and write Elron stop data into temporary folder.
-		let data = 'name,lat,lng\n';
-		for (const stop of JSON.parse((await got('https://elron.ee/api/v1/stops')).body).data) data += `${stop.peatus},${stop.latitude},${stop.longitude}\n`;
+		let data = 'name,desc,lat,lng\n';
+		for (const stop of JSON.parse((await got('https://elron.ee/api/v1/stops')).body).data) data += `${stop.peatus},${stop.teade},${stop.latitude},${stop.longitude}\n`;
 		await fse.writeFile('tmp/elron.csv', data);
 		
 		debug.timeEnd('data-download', 'Downloaded data');
