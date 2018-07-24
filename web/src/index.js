@@ -40,7 +40,7 @@ fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((s
 	
 	// Disable navigating through elements with tab key.
 	window.addEventListener('keydown', (e) => {
-		if (e.which == 9) e.preventDefault();
+		if (e.which === 9) e.preventDefault();
 	});
 	
 });
