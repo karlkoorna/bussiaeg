@@ -90,7 +90,7 @@
 }
 
 .stop-trips-trip-name,
-.stop-trips-trip-terminus {
+.stop-trips-trip-destination {
 	font-weight: bold;
 }
 
@@ -99,12 +99,12 @@
 	top: 10px;
 }
 
-.stop-trips-trip-terminus {
+.stop-trips-trip-destination {
 	left: 10px;
 	bottom: 7px;
 }
 
-.stop-trips-trip-terminus > svg {
+.stop-trips-trip-destination > svg {
 	width: 16px;
 	margin-right: 8px;
 	margin-bottom: -2px;

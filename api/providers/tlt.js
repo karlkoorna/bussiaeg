@@ -29,7 +29,7 @@ async function update(id) {
 		for (const stop of data.split('\nstop,').slice(1)) stops[stop.split('\n', 1)[0]].trips = stop.split('\n').slice(1, -1).map((trip) => trip.split(',')).map((trip) => ({
 			time: Number(trip[2]),
 			name: trip[1],
-			terminus: trip[4],
+			destination: trip[4],
 			type: trip[0],
 			live: trip[2] !== trip[3],
 			provider: 'tlt'

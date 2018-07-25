@@ -18,7 +18,7 @@ async function getTrips(id) {
 		return data.map((trip) => ({
 			time: time.toSeconds(trip.plaaniline_aeg),
 			name: trip.reis,
-			terminus: trip.liin,
+			destination: trip.liin,
 			type: 'train',
 			live: false,
 			provider: 'elron'
@@ -39,7 +39,7 @@ async function getRoute(id) {
 		if (data.text) throw new Error(data.text);
 		
 		return {
-			terminus: `${data[0].peatus} - ${data[data.length - 1].peatus}`,
+			destination: `${data[0].peatus} - ${data[data.length - 1].peatus}`,
 			stops: data.map((trip) => ({
 				id: trip.peatus,
 				name: trip.peatus,

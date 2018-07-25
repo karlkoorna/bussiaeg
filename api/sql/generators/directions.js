@@ -6,7 +6,7 @@ module.exports = () => {
 	return new Promise(async (resolve) => {
 		
 		const stops = await db.query(`
-			SELECT stop_id, GROUP_CONCAT(terminus) AS terminuses FROM stop_times
+			SELECT stop_id, GROUP_CONCAT(destination) AS destinationes FROM stop_times
 			JOIN trips AS trip ON trip.id = trip_id
 			GROUP BY stop_id
 		`);
@@ -14,8 +14,8 @@ module.exports = () => {
 		// Start building transaction query.
 		let query = 'START TRANSACTION;';
 		
-		// Get the most common terminus for all trips serving a stop;
-		for (const stop of stops) query += `UPDATE stops SET direction = '${_.max(Object.entries(_.countBy(stop.terminuses.split(','))))[0]}' WHERE id = '${stop.stop_id}';`;
+		// Get the most common destination for all trips serving a stop;
+		for (const stop of stops) query += `UPDATE stops SET direction = '${_.max(Object.entries(_.countBy(stop.destinationes.split(','))))[0]}' WHERE id = '${stop.stop_id}';`;
 		
 		await db.query(`${query}COMMIT;`);
 		resolve();

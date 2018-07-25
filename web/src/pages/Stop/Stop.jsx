@@ -101,12 +101,12 @@ export default class Stop extends Component {
 								<div className="stop-trips-trip" key={trip.name + trip.time}>
 									{VehicleIcon({ className: 'stop-trips-trip-icon', type: trip.type })}
 									<div className="stop-trips-trip-name" style={{ color: secondaryColor }}>{trip.name}</div>
-									<div className="stop-trips-trip-terminus" style={{ color: secondaryColor }}>
+									<div className="stop-trips-trip-destination" style={{ color: secondaryColor }}>
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 											<path fill={primaryColor} d="M1024 512l-337.6 512H462l338.2-512L462 0h224.4z" />
 											<path fill={secondaryColor} d="M562 512l-337.6 512H0l338.2-512L0 0h224.4z" />
 										</svg>
-										{trip.terminus}
+										{trip.destination}
 									</div>
 									<div className="stop-trips-trip-countdown"> {/* TODO: Connect with API */}
 										{trip.countdown}

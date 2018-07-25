@@ -32,7 +32,7 @@ async function getTrips(req, res) {
 		
 		// Return MNT trips.
 		tripz.push(await cache.use('mnt-stops', id, async () => (await db.query(`
-			SELECT TIME_TO_SEC(time) AS time, route.name, terminus, wheelchair, route.type, FALSE AS live, 'mnt' AS provider FROM stops AS stop
+			SELECT TIME_TO_SEC(time) AS time, route.name, destination, wheelchair, route.type, FALSE AS live, 'mnt' AS provider FROM stops AS stop
 				JOIN stop_times ON stop_id = id
 				JOIN trips AS trip ON trip.id = trip_id
 				JOIN routes AS route ON route.id = route_id
