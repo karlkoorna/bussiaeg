@@ -1,3 +1,5 @@
+export NODE_ENV=production
+
 # Kill processes
 killall node
 killall caddy
