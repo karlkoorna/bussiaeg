@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Kill processes
 killall node
 killall caddy
