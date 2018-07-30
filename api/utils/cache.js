@@ -19,12 +19,12 @@ function clear() {
 	cache = {};
 }
 
-// Add route to browser cache for one day.
+// Add route to browser cache until 6 AM next day.
 function middleware(req, res, next) {
-	const now = new Date();
-	now.setDate(now.getDate() + 1);
-	now.setHours(6, 0, 0, 0);
-	res.header('Cache-Control', `max-age=${Math.floor((now.getTime() - new Date()) / 1000)}`);
+	const date = new Date();
+	date.setDate(date.getDate() + 1);
+	date.setHours(6, 0, 0, 0);
+	res.header('Expires', date.toGMTString());
 	next();
 }
 
