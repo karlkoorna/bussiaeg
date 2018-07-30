@@ -22,5 +22,10 @@ https://bussiaeg.ee {
 	header / X-XSS-Protection "1; mode=block"
 	header / X-Frame-Options "sameorigin"
 	header / Cache-Control "max-age=2629800, private"
+	ipfilter / {
+		rule allow
+		database ipfilter.mmdb
+		country ET
+	}
 	root web/build
 }
