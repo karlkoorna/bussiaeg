@@ -1,5 +1,13 @@
+http://api.bussiaeg.ee,
+http://bussiaeg.ee,
+http://www.bussiaeg.ee {
+	redir / https://{host}{uri}
+}
+
 https://api.bussiaeg.ee {
 	gzip
+	limits 1mb
+	ratelimit * / 2 2 second
 	cors / {
 		origin *
 	}

@@ -75,10 +75,10 @@ Latest stable versions of all prerequisites are recommended.
 	
 4) **Caddy**
 	
-	Install Caddy with CORS plugin.
+	Install Caddy with plugins.
 	
 	```bash
-	$ curl https://getcaddy.com | bash -s personal http.cors
+	$ curl https://getcaddy.com | bash -s personal http.cors http.ipfilter http.ratelimit
 	$ ulimit -n 8192
 	```
 	
