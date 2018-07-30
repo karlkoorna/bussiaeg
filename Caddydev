@@ -1,8 +1,6 @@
 https://api.devaeg.ee {
 	tls self_signed
-	cors / {
-		origin *
-	}
+	cors / *
 	proxy / 127.0.0.1:81
 }
 

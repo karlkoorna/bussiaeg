@@ -1,21 +1,26 @@
-http://api.bussiaeg.ee,
-http://bussiaeg.ee,
-http://www.bussiaeg.ee {
-	redir / https://{host}{uri}
-}
-
 https://api.bussiaeg.ee {
 	gzip
 	limits 1mb
 	ratelimit * / 2 2 second
-	cors / {
-		origin *
-	}
+	cors / https://bussiaeg.ee
+	header / X-Content-Type-Options "nosniff"
+	header / X-XSS-Protection "1; mode=block"
+	header / X-Frame-Options "sameorigin"
 	proxy / 127.0.0.1:81
 }
 
-https://bussiaeg.ee,
+http://bussiaeg.ee,
+http://www.bussiaeg.ee,
 https://www.bussiaeg.ee {
+	redir / https://bussiaeg.ee
+}
+
+https://bussiaeg.ee {
 	gzip
+	header /index.html Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	header / X-Content-Type-Options "nosniff"
+	header / X-XSS-Protection "1; mode=block"
+	header / X-Frame-Options "sameorigin"
+	header / Cache-Control "max-age=2629800, private"
 	root web/build
 }
