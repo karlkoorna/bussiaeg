@@ -1,6 +1,8 @@
-# Kill processes
-killall node
-killall caddy
+#!/bin/sh
+
+# Stop processes
+pm2 stop "Bussiaeg.ee (Server)"
+pm2 stop "Bussiaeg.ee (Clients)"
 
 # Pull updates
 git reset --hard origin/master
