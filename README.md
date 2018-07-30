@@ -64,14 +64,13 @@ Latest stable versions of all prerequisites are recommended.
 	$ systemctl restart mysql
 	```
 	
-3) **Node.js and modules**
+3) **Node.js**
 	
-	Install Node.js (including NPM) and PM2.
+	Install Node.js.
 	
 	```bash
 	$ curl https://deb.nodesource.com/setup_8.x | bash
 	$ apt install nodejs
-	$ npm i pm2 -g
 	```
 	
 4) **Caddy**
