@@ -32,17 +32,17 @@ export default function dragZoom(map) {
 		startY = e.touches[0].pageY;
 		isDragging = true;
 		
-	});
+	}, { passive: true });
+	
+	// Set map zoom by the section the pointer is in.
+	$map.addEventListener('touchmove', (e) => {
+		if (isDragging) map.setZoom(startZoom - (startY - e.touches[0].pageY) / 80);
+	}, { passive: true });
 	
 	// Cancel zoom drag and allow move drag.
 	$map.addEventListener('touchend', (e) => {
 		isDragging = false;
 		map.dragging.enable();
-	});
-	
-	// Set map zoom by the section the pointer is in.
-	$map.addEventListener('touchmove', (e) => {
-		if (isDragging) map.setZoom(startZoom - (startY - e.touches[0].pageY) / 80);
 	});
 	
 };

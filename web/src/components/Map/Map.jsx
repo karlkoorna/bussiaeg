@@ -132,9 +132,9 @@ export default class Map extends Component {
 			prefix: ''
 		});
 		
-		attribution.addAttribution('<a href="https://openstreetmap.org" target="_blank">OpenStreetMap</a>');
-		attribution.addAttribution('<a href="https://mapbox.com/about/maps" target="_blank">Mapbox</a>');
-		attribution.addAttribution('<a href="https://mapbox.com/feedback" target="_blank">Improve this map</a>');
+		attribution.addAttribution('<a href="https://openstreetmap.org" target="_blank" rel="noreferrer">OpenStreetMap</a>');
+		attribution.addAttribution('<a href="https://mapbox.com/about/maps" target="_blank" rel="noreferrer">Mapbox</a>');
+		attribution.addAttribution('<a href="https://mapbox.com/feedback" target="_blank" rel="noreferrer">Improve this map</a>');
 		
 		map.addControl(attribution);
 		
