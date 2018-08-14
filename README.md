@@ -84,7 +84,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 ## Installation and updates
 
-Make `start.sh´ run at boot.
+Make `start.sh` run at boot.
 
 ```bash
 $ ./setup.sh
