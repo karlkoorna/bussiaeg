@@ -110,7 +110,7 @@ Redirect `devaeg.ee` and `api.devaeg.ee` to the machine's local or public ip.
 
 Fill in `.env` module configuration file by example `.env.example` file. Provided values are for development only.
 
-Run Caddy with development config file.
+Run Caddy with development config file. (Caches are ignored as self-signed certificates are used)
 
 ```bash
 $ caddy -conf Caddydev
