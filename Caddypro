@@ -4,8 +4,6 @@ https://api.bussiaeg.ee {
 	ratelimit * / 2 2 second
 	cors / https://bussiaeg.ee
 	header / X-Content-Type-Options "nosniff"
-	header / X-XSS-Protection "1; mode=block"
-	header / X-Frame-Options "sameorigin"
 	proxy / 127.0.0.1:81
 }
 
@@ -21,7 +19,7 @@ https://bussiaeg.ee {
 	header / X-Content-Type-Options "nosniff"
 	header / X-XSS-Protection "1; mode=block"
 	header / X-Frame-Options "sameorigin"
-	header / Cache-Control "max-age=2629800, private"
+	header /(assets|static) Cache-Control "max-age=2629800, private"
 	ipfilter / {
 		rule allow
 		database ipfilter.mmdb
