@@ -8,7 +8,7 @@ import favorites from 'stores/favorites.js';
 
 import './Stop.css';
 
-// If first page loaded.
+// If first view loaded.
 let init = window.location.pathname === '/stop';
 
 @withRouter
@@ -41,7 +41,7 @@ export default class Stop extends Component {
 	
 	componentWillMount() {
 		
-		// Verify stop, redirect to home page if unsuccessful.
+		// Verify stop, redirect to home view if unsuccessful.
 		const stop = window.stops.find((stop) => stop.id === (new URLSearchParams(window.location.search).get('id')));
 		if (!stop) return void this.props.history.push('/');
 		
@@ -58,7 +58,7 @@ export default class Stop extends Component {
 			this.update();
 			this.interval = setInterval(this.update, 2000);
 			
-			// Pan map to stop on first page load.
+			// Pan map to stop on first view load.
 			if (init) setTimeout(() => {
 				window.map.panTo({ lat: stop.lat, lng: stop.lng });
 				init = false;
@@ -82,7 +82,7 @@ export default class Stop extends Component {
 		const { isFavorite, name, direction, type, trips } = this.state;
 		
 		return (
-			<div id="stop" className="page">
+			<div id="stop" className="view">
 				<div id="stop-info">
 					{StopIcon({ id: 'stop-info-icon', type: type })}
 					<span id="stop-info-direction">{direction}</span>

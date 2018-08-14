@@ -30,44 +30,44 @@ noscript {
 	font-weight: bold;
 }
 
-/* Pages */
+/* Views */
 
-#pages {
+#views {
 	position: relative;
 	background-color: #f5f5f5;
 	flex: 1;
-	animation: page-fadeIn .25s ease;
+	animation: view-fadeIn .25s ease;
 	pointer-events: none;
 }
 
-#pages.is-empty {
+#views.is-empty {
 	opacity: 0;
-	animation: page-fadeOut .25s ease;
+	animation: view-fadeOut .25s ease;
 }
 
-#pages.is-empty #page {
+#views.is-empty #view {
 	pointer-events: none;
 }
 
-.page {
+.view {
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	pointer-events: all;
 }
 
-.page.is-entering {
-	animation: page-fadeIn .25s ease;
+.view.is-entering {
+	animation: view-fadeIn .25s ease;
 }
 
-.page.is-exiting {
+.view.is-exiting {
 	opacity: 0;
-	animation: page-fadeOut .25s ease;
+	animation: view-fadeOut .25s ease;
 }
 
 /* Animations */
 
-@keyframes page-fadeIn {
+@keyframes view-fadeIn {
 	
 	from {
 		opacity: 0;
@@ -79,7 +79,7 @@ noscript {
 	
 }
 
-@keyframes page-fadeOut {
+@keyframes view-fadeOut {
 	
 	from {
 		opacity: 1;

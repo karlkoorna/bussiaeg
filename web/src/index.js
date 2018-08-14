@@ -5,10 +5,10 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
 import Map from 'components/Map/Map.jsx';
-import Search from 'pages/Search/Search.jsx';
-import Favorites from 'pages/Favorites/Favorites.jsx';
-import Settings from 'pages/Settings/Settings.jsx';
-import Stop from 'pages/Stop/Stop.jsx';
+import Search from 'views/Search/Search.jsx';
+import Favorites from 'views/Favorites/Favorites.jsx';
+import Settings from 'views/Settings/Settings.jsx';
+import Stop from 'views/Stop/Stop.jsx';
 
 import './index.css';
 
@@ -22,7 +22,7 @@ fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((s
 			<Fragment>
 				<Map />
 				<Route render={({ location }) => (
-					<TransitionGroup id="pages" className={location.pathname === '/' ? 'is-empty' : ''}>
+					<TransitionGroup id="views" className={location.pathname === '/' ? 'is-empty' : ''}>
 						<CSSTransition key={location.pathname} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={250}>
 							<Switch location={location}>
 								<Route path="/search" component={Search} />
