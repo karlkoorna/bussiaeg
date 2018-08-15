@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import Loading from 'components/Loading/Loading.jsx';
 import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
@@ -79,7 +79,7 @@ export default class Stop extends Component {
 	
 	render() {
 		
-		const { isFavorite, name, direction, type, trips } = this.state;
+		const { isFavorite, id, name, direction, type, trips } = this.state;
 		
 		return (
 			<div id="stop" className="view">
@@ -98,7 +98,7 @@ export default class Stop extends Component {
 							const [ primaryColor, secondaryColor ] = colors[trip.type];
 							
 							return (
-								<div className="stop-trips-trip" key={trip.name + trip.time}>
+								<Link className="stop-trips-trip" to={`/routes?id=${id}&name=${trip.name}&type=${trip.type}&provider=${trip.provider}`} key={trip.name + trip.time}>
 									{VehicleIcon({ className: 'stop-trips-trip-icon', type: trip.type })}
 									<div className="stop-trips-trip-name" style={{ color: secondaryColor }}>{trip.name}</div>
 									<div className="stop-trips-trip-destination" style={{ color: secondaryColor }}>
@@ -119,7 +119,7 @@ export default class Stop extends Component {
 										}
 									</div>
 									<div className="stop-trips-trip-time">{trip.time}</div>
-								</div>
+								</Link>
 							);
 							
 						}) : <Loading />

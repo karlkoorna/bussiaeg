@@ -6,6 +6,7 @@
 /* Stop - Info */
 
 #stop-info {
+	z-index: 1;
 	position: relative;
 	height: 64px;
 	background-color: white;
@@ -65,8 +66,15 @@
 }
 
 .stop-trips-trip {
+	display: block;
 	position: relative;
 	height: 80px;
+	color: inherit;
+	transition: background-color .1s linear;
+}
+
+.stop-trips-trip:hover {
+	background-color: #eee;
 }
 
 .stop-trips-trip:not(:first-child):after {
