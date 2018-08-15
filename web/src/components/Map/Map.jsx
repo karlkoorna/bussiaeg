@@ -17,7 +17,8 @@ export default class Map extends Component {
 		coords: {},
 		message: '',
 		showModal: false,
-		showLocate: false
+		showLocate: false,
+		isLocating: false
 	}
 	
 	markers = []
@@ -66,8 +67,8 @@ export default class Map extends Component {
 	
 	// Pan map to current location.
 	locate = () => {
-		const { coords } = this.state;
-		if (coords.lat) window.map.panTo(coords);
+		window.map.panTo(this.state.coords);
+		this.setState({ isLocating: true });
 	}
 	
 	// Hide modal.
@@ -110,16 +111,28 @@ export default class Map extends Component {
 			keyboard: false
 		});
 		
+		const $map = map._container;
+		
 		// Add third-party tile layer from configuration.
 		Leaflet.tileLayer(process.env['REACT_APP_MAP']).addTo(map);
 		
 		// Redraw stops on map move end.
 		map.on('moveend', this.update);
-		setImmediate(() => map.panBy([ 1, 1 ]));
+		setImmediate(() => map.panBy([ 0, 0 ]));
 		
 		// Open modal on right click (desktop) and hold (mobile).
 		map.on('contextmenu', () => {
 			this.setState({ showModal: true });
+		});
+		
+		// Cancel locating on user interaction (on desktop).
+		$map.addEventListener('mousedown', () => {
+			this.setState({ isLocating: false });
+		});
+		
+		// Cancel locating on user interaction (on mobile).
+		$map.addEventListener('touchstart', () => {
+			this.setState({ isLocating: false });
 		});
 		
 		// Register drag zoom handler (for mobile).
@@ -175,27 +188,35 @@ export default class Map extends Component {
 				const { latitude: lat, longitude: lng, accuracy } = e.coords;
 				const coords = { lat, lng, accuracy };
 				
-				// Update coord buffer for locate function.
-				this.setState({ coords });
+				// Hide locate button on low accuracy.
+				// Update coordinate buffer.
+				this.setState({
+					showLocate: accuracy < 500,
+					coords
+				});
 				
-				// Pan map if within timeout.
-				if (new Date() - timestamp < 1500) map.panTo(coords);
+				// Pan map to location on locating.
+				if (this.state.isLocating) map.panTo(coords);
 				
-				// Hide locate button on medium-plus inacuraccy.
-				this.setState({ showLocate: accuracy < 500 });
-				
-				// Handle low accuracy cases.
-				if (accuracy > 1000 && start.lat) { // Pan map to start on low accuracy
+				// If location got within timeout.
+				if (new Date() - timestamp < 1500) {
 					
-					map.setView([ start.lat, start.lng ], start.zoom);
+					if (accuracy > 1000 && start.lat) { // Pan map to start on low accuracy
+						map.setView([ start.lat, start.lng ], start.zoom);
+					} else { // Pan map on high accuracy.
+						map.panTo(coords);
+					}
 					
-				} else if (accuracy > 500) { // Hide location marker on medium accuracy.
+				}
+				
+				// Show/Hide location marker by accuracy.
+				if (accuracy > 500) {
 					
 					marker.setLatLng([ 0, 0 ]);
 					circle.setLatLng([ 0, 0 ]);
 					circle.setRadius(0);
 					
-				} else { // Update location marker on high accuracy.
+				} else {
 					
 					marker.setLatLng(coords);
 					circle.setLatLng(coords);
@@ -220,7 +241,7 @@ export default class Map extends Component {
 			<div id="map">
 				<div id="map-container"></div>
 				<span id="map-message">{this.state.message}</span>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" className={this.state.showLocate ? 'is-visible' : null} onClick={this.locate}>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" className={(this.state.showLocate ? 'is-visible ' : '') + (this.state.isLocating ? 'is-active' : '')} onClick={this.locate}>
 					<path fill="#00bfff" d="M512 .1C246.2.1 172.6 219.7 172.6 344.7c0 274.6 270 679.3 339.4 679.3s339.4-404.6 339.4-679.3C851.4 219.6 777.8.1 512 .1zm0 471.1c-71.3 0-129-57.8-129-129s57.7-129.1 129-129.1 129 57.8 129 129-57.7 129.1-129 129.1z" />
 				</svg>
 				<Modal isVisible={this.state.showModal} title="Kinnita alguskoht" text="Asukoha mitteleidmisel kuvatav koht" onCancel={this.modalHide} onConfirm={this.modalConfirm} />
