@@ -21,7 +21,7 @@
 #stop-info-icon {
 	width: 64px;
 	height: 64px;
-	padding: 8px;
+	padding: 9px;
 }
 
 #stop-info-name {
@@ -51,6 +51,10 @@
 	height: 64px;
 	padding: 16px;
 	cursor: pointer;
+}
+
+#stop-info-favorite path {
+	transition: fill .1s linear, stroke .1s linear;
 }
 
 /* Stop - Trips */
