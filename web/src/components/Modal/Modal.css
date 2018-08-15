@@ -69,6 +69,11 @@
 	user-select: none;
 }
 
+#modal-panel-buttons-button-cancel:hover,
+#modal-panel-buttons-button-confirm:hover {
+	transform: scale(1.05);
+}
+
 #modal-panel-buttons-button-cancel {
 	background-color: #9e9e9e;
 }
