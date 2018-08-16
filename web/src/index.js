@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
 import Map from 'components/Map/Map.jsx';
@@ -19,6 +20,12 @@ fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((s
 	render((
 		<BrowserRouter>
 			<Fragment>
+				<Helmet>
+					<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
+					<meta name="theme-color" content="#ffffff" />
+					<meta property="og:type" content="website" />
+					<meta property="og:title" content="Bussiaeg.ee" />
+				</Helmet>
 				<Map />
 				<Switch>
 					<Route path="/search" component={Search} />

@@ -83,6 +83,8 @@ export default class Stop extends Component {
 				<Helmet>
 					<title>{name}</title>
 					<meta name="theme-color" content={colors[type][0]} />
+					<meta property="og:type" content="article" />
+					<meta property="og:title" content={`Bussiaeg.ee: ${name} - ${direction}`} />
 				</Helmet>
 				<div id="stop" className="view">
 					<div id="stop-info">
