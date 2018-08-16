@@ -84,6 +84,26 @@
 	
 }
 
+@keyframes navbar-card {
+	
+	33.333% {
+		transform: translateY(-6px);
+	}
+	
+	50% {
+		transform: translateY(0);
+	}
+	
+	75% {
+		transform: translateY(-1px);
+	}
+	
+	to {
+		transform: translateY(0);
+	}
+	
+}
+
 @keyframes navbar-settings {
 	
 	to {

@@ -7,6 +7,7 @@ import NavBar from 'components/NavBar/NavBar.jsx';
 import Map from 'components/Map/Map.jsx';
 import Search from 'views/Search/Search.jsx';
 import Favorites from 'views/Favorites/Favorites.jsx';
+import Card from 'views/Card/Card.jsx';
 import Settings from 'views/Settings/Settings.jsx';
 import Stop from 'views/Stop/Stop.jsx';
 
@@ -30,6 +31,7 @@ fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((s
 				<Switch>
 					<Route path="/search" component={Search} />
 					<Route path="/favorites" component={Favorites} />
+					<Route path="/card" component={Card} />
 					<Route path="/settings" component={Settings} />
 					<Route path="/stop" component={Stop} />
 				</Switch>
