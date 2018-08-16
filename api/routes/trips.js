@@ -18,20 +18,18 @@ async function getTrips(req, res) {
 		const stop = (await db.query('SELECT type, region FROM stops WHERE id = ?', [ id ]))[0];
 		if (!stop) throw new Error(`Stop with id '${id}' not found`);
 		
-		// Return Elron trips.
+		// Elron
+		
 		if (stop.type === 'train') {
 			tripz.push(await elron.getTrips(id));
 			continue;
 		}
 		
-		// Return merged TLT trips.
-		if (stop.region === 'tallinn') {
-			tripz.push(await tlt.getTrips(id));
-			continue;
-		}
+		// TLT + MNT
 		
-		// Return MNT trips.
-		tripz.push(await cache.use('mnt-stops', id, async () => (await db.query(`
+		const trips = stop.region === 'tallinn' ? await tlt.getTrips(id) : [];
+		
+		const mntTrips = await cache.use('mnt-stops', id, async () => (await db.query(`
 			SELECT TIME_TO_SEC(time) AS time, route.name, destination, wheelchair, route.type, FALSE AS live, 'mnt' AS provider FROM stops AS stop
 				JOIN stop_times ON stop_id = id
 				JOIN trips AS trip ON trip.id = trip_id
@@ -51,9 +49,11 @@ async function getTrips(req, res) {
 						SELECT service_id FROM service_exceptions WHERE type = 1 AND date = CURDATE()
 					)
 				)
-			ORDER BY time
-			LIMIT 15
-		`, [ id ]))));
+				${trips.length ? "AND route.type LIKE 'coach%'" : ''}
+			LIMIT ${trips.length ? '5' : '15'}
+		`, [ id ])));
+		
+		tripz.push(trips.concat(mntTrips).sort((a, b) => a.time - b.time));
 		
 	}
 	

@@ -13,15 +13,15 @@ async function update(id) {
 	};
 	
 	// Decrease ranks and remove stops if too low.
-	if (!id) for (const key of Object.keys(stops)) if (stops[key].rank > 0) stops[key].rank--; else delete stops[id];
+	if (!id) for (const key in stops) if (stops[key].rank > 0) stops[key].rank--; else delete stops[id];
 	
 	try {
 		
 		const data = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id || Object.keys(stops)}`)).body;
 		
 		// Fallback to GTFS trips on error.
-		if (id || new Date() - last < 4200) if (data.indexOf('ERROR') > -1) {
-			for (const key of Object.keys(id ? [ id ] : stops)) stops[key].trips = [];
+		if (id || new Date() - last < 4200) if (data.split('\n').length === 2) {
+			if (id) stops[id].trips = []; else for (const key in stops) stops[key].trips = [];
 			return;
 		}
 		
@@ -37,7 +37,7 @@ async function update(id) {
 		
 	} catch (ex) {
 		// Fallback to GTFS data on error.
-		if (id || new Date() - last < 4200) for (const key of Object.keys(id ? [ id ] : stops)) stops[key].trips = [];
+		if (id || new Date() - last < 4200) if (id) stops[id].trips = []; else for (const key in stops) stops[key].trips = [];
 	}
 	
 }
@@ -56,7 +56,7 @@ async function getTrips(id) {
 	
 	// Force cache update for stop and return trips.
 	await update(id);
-	return [ ...stops[id].trips];
+	return [ ...stops[id].trips ];
 	
 };
 
