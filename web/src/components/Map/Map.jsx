@@ -29,7 +29,7 @@ export default class Map extends Component {
 		const { map } = window;
 		
 		// Handle message cases.
-		if (!(new Leaflet.LatLngBounds(new Leaflet.LatLng(57.57, 21.84), new Leaflet.LatLng(59.7, 28))).contains(map.getCenter())) {
+		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) {
 			this.setState({ message: 'Bussiaeg.ee ei toimi väljaspool Eestit' });
 		} else if (map.getZoom() < 15) {
 			this.setState({ message: 'Suumige sisse, et näha peatusi' });
@@ -67,7 +67,7 @@ export default class Map extends Component {
 	
 	// Pan map to current location.
 	locate = () => {
-		window.map.panTo(this.state.coords);
+		window.map.flyTo(this.state.coords);
 		this.setState({ isLocating: true });
 	}
 	
@@ -196,7 +196,7 @@ export default class Map extends Component {
 				});
 				
 				// Pan map to location on locating.
-				if (this.state.isLocating) map.panTo(coords);
+				if (this.state.isLocating) map.flyTo(coords);
 				
 				// If location got within timeout.
 				if (new Date() - timestamp < 1500) {
@@ -204,7 +204,7 @@ export default class Map extends Component {
 					if (accuracy > 1000 && start.lat) { // Pan map to start on low accuracy
 						map.setView([ start.lat, start.lng ], start.zoom);
 					} else { // Pan map on high accuracy.
-						map.panTo(coords);
+						map.setView(coords);
 					}
 					
 				}
