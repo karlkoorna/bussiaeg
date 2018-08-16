@@ -8,9 +8,6 @@ import favorites from 'stores/favorites.js';
 
 import './Stop.css';
 
-// If first view loaded.
-let init = window.location.pathname === '/stop';
-
 @withRouter
 export default class Stop extends Component {
 	
@@ -55,15 +52,14 @@ export default class Stop extends Component {
 			type: stop.type
 		}, () => {
 			
+			const { map } = window;
+			
+			// Pan map to stop if outside view.
+			if (!map.getBounds().contains([ stop.lat, stop.lng ]) || map.getZoom() < 15) map.setView([ stop.lat, stop.lng ], 17);
+			
 			// Start updating trips (2s interval).
 			this.update();
 			this.interval = setInterval(this.update, 2000);
-			
-			// Pan map to stop on first view load.
-			if (init) setTimeout(() => {
-				window.map.panTo({ lat: stop.lat, lng: stop.lng });
-				init = false;
-			}, 300);
 			
 		});
 		
