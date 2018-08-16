@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
-import Loading from 'components/Loading/Loading.jsx';
 import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
 import favorites from 'stores/favorites.js';
@@ -42,7 +42,8 @@ export default class Stop extends Component {
 	componentWillMount() {
 		
 		// Verify stop, redirect to home view if unsuccessful.
-		const stop = window.stops.find((stop) => stop.id === (new URLSearchParams(window.location.search).get('id')));
+		const id = (new URLSearchParams(window.location.search)).get('id');
+		const stop = window.stops.find((stop) => stop.id === id);
 		if (!stop) return void this.props.history.push('/');
 		
 		// Load stop data into state.
@@ -82,23 +83,27 @@ export default class Stop extends Component {
 		const { isFavorite, id, name, direction, type, trips } = this.state;
 		
 		return (
-			<div id="stop" className="view">
-				<div id="stop-info">
-					{StopIcon({ id: 'stop-info-icon', type })}
-					<span id="stop-info-direction">{direction}</span>
-					<span id="stop-info-name">{name}</span>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
-						<path fill={isFavorite ? '#f5557e' : '#bdbdbd'} stroke={isFavorite ? '#f22559' : '#b3b3b3'} strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
-					</svg>
-				</div>
-				<div id="stop-trips">
-					{
-						trips.length ? trips.map((trip) => {
+			<Fragment>
+				<Helmet>
+					<title>{name}</title>
+					<meta name="theme-color" content={colors[type][0]} />
+				</Helmet>
+				<div id="stop" className="view">
+					<div id="stop-info">
+						{StopIcon({ id: 'stop-info-icon', type })}
+						<span id="stop-info-direction">{direction}</span>
+						<span id="stop-info-name">{name}</span>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
+							<path fill={isFavorite ? '#f5557e' : '#bdbdbd'} stroke={isFavorite ? '#f22559' : '#b3b3b3'} strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
+						</svg>
+					</div>
+					<div id="stop-trips">
+						{trips.map((trip, i) => {
 							
 							const [ primaryColor, secondaryColor ] = colors[trip.type];
 							
 							return (
-								<Link className="stop-trips-trip" to={`/routes?id=${id}&name=${trip.name}&type=${trip.type}&provider=${trip.provider}`} key={trip.name + trip.time}>
+								<Link className="stop-trips-trip" to={`/routes?id=${id}&name=${trip.name}&type=${trip.type}&provider=${trip.provider}`} key={i}>
 									{VehicleIcon({ className: 'stop-trips-trip-icon', type: trip.type })}
 									<div className="stop-trips-trip-name" style={{ color: secondaryColor }}>{trip.name}</div>
 									<div className="stop-trips-trip-destination" style={{ color: secondaryColor }}>
@@ -122,10 +127,10 @@ export default class Stop extends Component {
 								</Link>
 							);
 							
-						}) : <Loading />
-					}
+						})}
+					</div>
 				</div>
-			</div>
+			</Fragment>
 		);
 		
 	}
