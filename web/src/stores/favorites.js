@@ -1,8 +1,23 @@
+// Get favorites.
+function get() {
+	return JSON.parse(localStorage.getItem('favorites')) || [];
+}
+
+// Set favorites.
+function set(ids) {
+	localStorage.setItem('favorites', JSON.stringify(ids));
+}
+
+// Check if stop is in favorites.
+function has(id) {
+	return get().findIndex((favorite) => favorite === id) > -1;
+}
+
 // Add or remove stop from favorites.
 function toggle(id) {
 	
 	// Load or create favorites array.
-	const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+	const favorites = get();
 	
 	// Remove or add favorite.
 	if (has(id)) favorites.splice(favorites.indexOf(id), 1); else favorites.push(id);
@@ -15,12 +30,9 @@ function toggle(id) {
 	
 }
 
-// Check if stop is in favorites.
-function has(id) {
-	return (JSON.parse(localStorage.getItem('favorites')) || []).findIndex((favorite) => favorite === id) > -1;
-}
-
 export default {
 	toggle,
+	get,
+	set,
 	has
 };
