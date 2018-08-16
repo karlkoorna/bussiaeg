@@ -52,8 +52,8 @@ export default class Favorites extends Component {
 												<Link className="favorites-stop" style={{ backgroundColor: colors[stop.type][0] }} to={`/stop?id=${stop.id}`}>
 													{StopIcon({ className: 'favorites-stop-icon', type: stop.type })}
 													<div className="favorites-stop-info">
-														<div className="favorites-stop-name">{stop.name}</div>
-														<div className="favorites-stop-direction">{stop.direction}</div>
+														<div className="favorites-stop-info-name">{stop.name}</div>
+														<div className="favorites-stop-info-direction">{stop.direction}</div>
 													</div>
 												</Link>
 											</div>

@@ -53,16 +53,29 @@
 .favorites-stop-icon {
 	height: 100%;
 	padding: 8px;
+	flex-shrink: 0;
 }
 
-.favorites-stop-name {
+.favorites-stop-info {
+	width: 100%;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+.favorites-stop-info-name,
+.favorites-stop-info-direction {
+	margin-right: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.favorites-stop-info-name {
 	margin-bottom: 8px;
 	font-size: 22px;
-	font-weight: bold;
 }
 
-.favorites-stop-direction {
+.favorites-stop-info-direction {
 	margin-bottom: 4px;
 	font-size: 14px;
-	font-weight: bold;
 }
