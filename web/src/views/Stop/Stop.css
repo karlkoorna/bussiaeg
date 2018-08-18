@@ -3,7 +3,7 @@
 	flex-direction: column;
 }
 
-/* Stop - Info */
+/* Info */
 
 #stop-info {
 	z-index: 1;
@@ -58,7 +58,7 @@
 	transition: fill .1s linear, stroke .1s linear;
 }
 
-/* Stop - Trips */
+/* Trips */
 
 #stop-trips {
 	flex: 1;
@@ -69,7 +69,6 @@
 	display: block;
 	position: relative;
 	height: 80px;
-	color: inherit;
 	transition: background-color .1s linear;
 }
 

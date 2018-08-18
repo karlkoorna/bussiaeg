@@ -1,5 +1,6 @@
 * {
 	box-sizing: border-box;
+	outline: none
 }
 
 html,
@@ -13,8 +14,7 @@ body {
 	user-select: none;
 }
 
-#root,
-noscript {
+#root {
 	display: flex;
 	color: #263238;
 	font-family: Lato, Arial, Helvetica, sans-serif;
@@ -22,13 +22,15 @@ noscript {
 	-webkit-tap-highlight-color: transparent;
 }
 
-noscript {
-	height: 100%;
-	background-color: #fa5858;
-	justify-content: center;
-	align-items: center;
-	font-size: 5vw;
-	font-weight: bold;
+/* Reset */
+
+input {
+	border: none;
+}
+
+a {
+	color: inherit;
+	text-decoration: inherit;
 }
 
 /* View */
