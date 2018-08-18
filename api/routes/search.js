@@ -14,9 +14,9 @@ async function getSearch(req, res) {
 		WHERE
 			type IS NOT NULL
 			AND name LIKE ?
-		ORDER BY distance
+		ORDER BY LOCATE(?, name), distance
 		LIMIT ?
-	`, [ req.query['lat'], req.query['lng'], `%${req.query['query']}%`, req.query['limit'] ]));
+	`, [ req.query['lat'], req.query['lng'], `%${req.query['query']}%`, req.query['query'], req.query['limit'] ]));
 	
 }
 
