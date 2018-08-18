@@ -10,7 +10,6 @@ export default function NavBar() {
 			<NavBarItem to="/search" colors={[ '#ffa94d', '#ff8400' ]}>Search</NavBarItem>
 			<NavBarItem to="/favorites" colors={[ '#f5557e', '#f22559' ]}>Favorites</NavBarItem>
 			<NavBarItem to="/" colors={[ '#00e6ad', '#00cc9a' ]}>Map</NavBarItem>
-			<NavBarItem to="/card" colors={[ '#b388ff', '#9575cd' ]}>Card</NavBarItem>
 			<NavBarItem to="/settings" colors={[ '#00bfff', '#00ace6' ]}>Settings</NavBarItem>
 		</nav>
 	);
@@ -59,12 +58,6 @@ class NavBarItem extends PureComponent {
 							<Fragment>
 								<path fill={primaryColor} d="M712.5 965.7l288-48.7V74l-288 45-391-45-296 45v846l295-47z" />
 								<path fill={secondaryColor} d="M712.5 119l-391-45-1 844 392 47.7z" />
-							</Fragment>
-						),
-						card: (
-							<Fragment>
-								<path fill={secondaryColor} d="M804.5 871.6h-678C69.6 871.6 23 825.1 23 768.1V361.7c0-56.9 46.6-103.5 103.5-103.5h678c56.9 0 103.5 46.6 103.5 103.5v406.4c0 57-46.6 103.5-103.5 103.5z"/>
-								<path fill={primaryColor} d="M896.5 765.6h-678C161.6 765.6 115 719 115 662V255.6c0-56.9 46.6-103.5 103.5-103.5h678c56.9 0 103.5 46.6 103.5 103.5V662c0 57-46.6 103.6-103.5 103.6z"/>
 							</Fragment>
 						),
 						settings: (
