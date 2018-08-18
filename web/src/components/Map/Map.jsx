@@ -186,7 +186,7 @@ export default class Map extends Component {
 			navigator.geolocation.watchPosition((e) => {
 				
 				const { latitude: lat, longitude: lng, accuracy } = e.coords;
-				const coords = { lat, lng, accuracy };
+				const coords = window.coords = { lat, lng, accuracy };
 				
 				// Hide locate button on low accuracy.
 				// Update coordinate buffer.
