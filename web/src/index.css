@@ -16,7 +16,7 @@ body {
 
 #root {
 	display: flex;
-	color: #263238;
+	color: #37474f;
 	font-family: Lato, Arial, Helvetica, sans-serif;
 	flex-direction: column;
 	-webkit-tap-highlight-color: transparent;
