@@ -183,7 +183,7 @@ export default class Map extends Component {
 		watchPosition.call(this);
 		function watchPosition() {
 			
-			navigator.geolocation.watchPosition((e) => {
+			const watcher = navigator.geolocation.watchPosition((e) => {
 				
 				const { latitude: lat, longitude: lng, accuracy } = e.coords;
 				const coords = window.coords = { lat, lng, accuracy };
@@ -225,8 +225,13 @@ export default class Map extends Component {
 				}
 				
 			}, (err) => {
+				
 				// Retry if location unavailable or denied (watching cancelled).
-				if (err.code !== 3) setTimeout(watchPosition.bind(this), 3000);
+				if (err.code === 3) return;
+				
+				navigator.geolocation.clearWatch(watcher);
+				setTimeout(watchPosition.bind(this), 3000);
+				
 			}, {
 				enableHighAccuracy: true,
 				timeout: 250
