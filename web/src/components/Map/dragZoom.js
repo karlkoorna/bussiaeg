@@ -28,6 +28,7 @@ export default function dragZoom(map) {
 		// Disable move drag.
 		map.dragging.disable();
 		
+		// Set initial variables.
 		startZoom = map.getZoom();
 		startY = e.touches[0].pageY;
 		isDragging = true;
