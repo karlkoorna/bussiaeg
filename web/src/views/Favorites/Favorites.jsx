@@ -51,9 +51,9 @@ export default class Favorites extends Component {
 											<div className={'favorites-stop-container' + (snapshot.isDragging ? ' is-dragging' : '')} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 												<Link className="favorites-stop" style={{ backgroundColor: colors[stop.type][0] }} to={`/stop?id=${stop.id}`}>
 													{StopIcon({ className: 'favorites-stop-icon', type: stop.type })}
-													<div className="favorites-stop-info">
-														<div className="favorites-stop-info-name">{stop.name}</div>
-														<div className="favorites-stop-info-direction">{stop.direction}</div>
+													<div>
+														<div className="favorites-stop-name">{stop.name}</div>
+														<div className="favorites-stop-direction">{stop.direction}</div>
 													</div>
 												</Link>
 											</div>
@@ -63,7 +63,7 @@ export default class Favorites extends Component {
 								
 							}) : (
 								<div id="favorites-empty">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="favorites-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="favorites-empty-icon">
 										<path fill="#bdbdbd" stroke="#b3b3b3" strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
 									</svg>
 									No favorites added

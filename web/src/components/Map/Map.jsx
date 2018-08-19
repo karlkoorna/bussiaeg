@@ -96,7 +96,7 @@ export default class Map extends Component {
 		
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
 		
-		const map = window.map = new Leaflet.Map('map-container', {
+		const map = window.map = new Leaflet.Map('map', {
 			center: [
 				start.lat || 59.436,
 				start.lng || 24.753
@@ -118,7 +118,9 @@ export default class Map extends Component {
 		
 		// Redraw stops on map move end.
 		map.on('moveend', this.update);
-		setImmediate(() => map.panBy([ 0, 0 ]));
+		setImmediate(() => {
+			map.panBy([ 0, 0 ]);
+		});
 		
 		// Open modal on right click (desktop) and hold (mobile).
 		map.on('contextmenu', () => {
@@ -243,8 +245,8 @@ export default class Map extends Component {
 	
 	render() {
 		return (
-			<div id="map">
-				<div id="map-container"></div>
+			<div id="map-container">
+				<div id="map"></div>
 				<span id="map-message">{this.state.message}</span>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" className={(this.state.showLocate ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')} onClick={this.locate}>
 					<path fill="#00bfff" d="M512 .1C246.2.1 172.6 219.7 172.6 344.7c0 274.6 270 679.3 339.4 679.3s339.4-404.6 339.4-679.3C851.4 219.6 777.8.1 512 .1zm0 471.1c-71.3 0-129-57.8-129-129s57.7-129.1 129-129.1 129 57.8 129 129-57.7 129.1-129 129.1z" />

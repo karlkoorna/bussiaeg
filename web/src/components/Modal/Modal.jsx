@@ -25,13 +25,13 @@ export default class Model extends PureComponent {
 	render() {
 		return (
 			<CSSTransition in={this.props.isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 300, exit: 150 }} onExited={this.onExited} unmountOnExit>
-				<div id="modal" onClick={this.props.onCancel}>
-					<div id="modal-panel" onClick={(e) => { e.stopPropagation() }}>
-						<div id="modal-panel-title">{this.props.title}</div>
-						<div id="modal-panel-text">{this.props.text}</div>
-						<div id="modal-panel-buttons">
-							<div id="modal-panel-buttons-button-cancel" onClick={(e) => this.onClick(e, this.props.onCancel)}>Tühista</div>
-							<div id="modal-panel-buttons-button-confirm" onClick={(e) => this.onClick(e, this.props.onConfirm)}>Kinnita</div>
+				<div id="modal-container" onClick={this.props.onCancel}>
+					<div id="modal" onClick={(e) => { e.stopPropagation() }}>
+						<div id="modal-title">{this.props.title}</div>
+						<div id="modal-text">{this.props.text}</div>
+						<div id="modal-buttons">
+							<div id="modal-buttons-cancel" onClick={(e) => this.onClick(e, this.props.onCancel)}>Tühista</div>
+							<div id="modal-buttons-confirm" onClick={(e) => this.onClick(e, this.props.onConfirm)}>Kinnita</div>
 						</div>
 					</div>
 				</div>
