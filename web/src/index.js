@@ -1,13 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { withRouter, BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
-import Map from 'components/Map/Map.jsx';
 
 import Search from 'views/Search/Search.jsx';
 import Favorites from 'views/Favorites/Favorites.jsx';
+import Map from 'views/Map/Map.jsx';
 import Settings from 'views/Settings/Settings.jsx';
 import Stop from 'views/Stop/Stop.jsx';
 
@@ -29,13 +29,13 @@ fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((s
 					<meta property="og:type" content="website" />
 					<meta property="og:title" content="Bussiaeg.ee" />
 				</Helmet>
-				<Map />
-				<Switch>
-					<Route path="/search" component={Search} />
-					<Route path="/favorites" component={Favorites} />
-					<Route path="/settings" component={Settings} />
+				<main>
+					<Route path="/" exact children={({ match }) => <Map isActive={Boolean(match)} />} />
+					<Route path="/search" children={({ match }) => <Search isActive={Boolean(match)} />} />
+					<Route path="/favorites" children={({ match }) => <Favorites isActive={Boolean(match)} />} />
+					<Route path="/settings" children={({ match }) => <Settings isActive={Boolean(match)} />} />
 					<Route path="/stop" component={Stop} />
-				</Switch>
+				</main>
 				<NavBar />
 			</Fragment>
 		</BrowserRouter>

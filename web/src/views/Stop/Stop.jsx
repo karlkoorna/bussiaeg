@@ -87,7 +87,7 @@ export default class Stop extends Component {
 					<meta property="og:type" content="article" />
 					<meta property="og:title" content={`Bussiaeg.ee: ${name} - ${direction}`} />
 				</Helmet>
-				<div id="stop" className="view">
+				<section id="stop" className="view is-visible">
 					<div id="stop-info">
 						{StopIcon({ id: 'stop-info-icon', type })}
 						<span id="stop-info-direction">{direction}</span>
@@ -128,7 +128,7 @@ export default class Stop extends Component {
 							
 						})}
 					</div>
-				</div>
+				</section>
 			</Fragment>
 		);
 		

@@ -4,10 +4,10 @@ export default class Settings extends Component {
 	
 	render() {
 		return (
-			<div id="settings" className="view">
+			<section id="settings" className={`view${ this.props.isActive ? ' is-visible': ''}`}>
 				Settings
-			</div>
+			</section>
 		);
 	}
 	
-}
+};

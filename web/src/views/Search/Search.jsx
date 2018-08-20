@@ -70,7 +70,7 @@ export default class Search extends Component {
 		const { type, results } = this.state;
 		
 		return (
-			<div id="search" className="view">
+			<section id="search" className={`view${ this.props.isActive ? ' is-visible': ''}`}>
 				<div id="search-top">
 					<input id="search-top-input" placeholder="Search..." autoComplete="off" required ref="$query" onKeyDown={this.hideKeyboard} onInput={this.updateQuery} />
 					<svg xmlns="http://www.w3.org/2000/svg" style={this.state} viewBox="0 0 1024 1024">
@@ -103,7 +103,7 @@ export default class Search extends Component {
 						</div>
 					))}
 				</div>
-			</div>
+			</section>
 		);
 		
 	}

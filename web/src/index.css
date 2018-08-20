@@ -45,5 +45,9 @@ a {
 	width: 100%;
 	height: calc(100% - 64px);
 	background-color: #f5f5f5;
-	flex: 1;
+	overflow: hidden;
+}
+
+.view.is-visible {
+	z-index: 999;
 }

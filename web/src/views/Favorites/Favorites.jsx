@@ -41,7 +41,7 @@ export default class Favorites extends Component {
 			<DragDropContext onDragEnd={this.reorder}>
 				<Droppable droppableId="favorites">
 					{(provided, snapshot) => (
-						<div id="favorites" className="view" ref={provided.innerRef}>
+						<section id="favorites" className={`view${ this.props.isActive ? ' is-visible': ''}`} ref={provided.innerRef}>
 							{ids.length ? ids.map((id, i) => {
 								
 								// Get stop info by id.
@@ -72,7 +72,7 @@ export default class Favorites extends Component {
 								</div>
 							)}
 							{provided.placeholder}
-						</div>
+						</section>
 					)}
 				</Droppable>
 			</DragDropContext>
