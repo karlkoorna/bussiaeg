@@ -19,7 +19,7 @@ export default class Search extends Component {
 	
 	// Hide keyboard if enter key pressed (on mobile).
 	onKeyDown = (e) => {
-		if (e.which === 13) e.nativeEvent.target.blur();
+		if (e.which === 13) e.target.blur();
 	}
 	
 	// Update query and fetch results.

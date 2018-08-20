@@ -7,7 +7,7 @@ export default class Model extends PureComponent {
 	
 	// Add animation class to button and call function.
 	onClick = (e, cb) => {
-		e.nativeEvent.target.classList.add('is-active');
+		e.target.classList.add('is-active');
 		cb();
 	}
 	
