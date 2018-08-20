@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS stops;
 DROP TABLE IF EXISTS stop_times;
+DROP TABLE IF EXISTS stop_routes;
 DROP TABLE IF EXISTS trips;
 DROP TABLE IF EXISTS routes;
 DROP TABLE IF EXISTS services;
@@ -25,6 +26,12 @@ CREATE TABLE stop_times (
 	sequence TINYINT(2) NOT NULL,
 	PRIMARY KEY (stop_id, trip_id, time),
 	KEY (trip_id, sequence)
+);
+
+CREATE TABLE stop_routes (
+	stop_id NVARCHAR(32) NOT NULL,
+	route_id CHAR(32) NOT NULL,
+	PRIMARY KEY (stop_id, route_id)
 );
 
 CREATE TABLE trips (
