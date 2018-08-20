@@ -82,7 +82,7 @@ function update() {
 		
 		resolve();
 		
-	});
+	}).catch(() => { process.exit(1); });
 };
 
 module.exports = {
