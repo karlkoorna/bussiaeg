@@ -10,7 +10,7 @@ function set(ids) {
 
 // Check if stop is in favorites.
 function has(id) {
-	return get().findIndex((favorite) => favorite === id) > -1;
+	return get().indexOf(id) > -1;
 }
 
 // Add or remove stop from favorites.

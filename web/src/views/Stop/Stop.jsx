@@ -4,7 +4,9 @@ import { Helmet } from 'react-helmet';
 
 import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
-import favorites from 'stores/favorites.js';
+
+import storeStops from 'stores/stops.js';
+import storeFavorites from 'stores/favorites.js';
 
 import './Stop.css';
 
@@ -33,19 +35,18 @@ export default class Stop extends Component {
 	
 	// Toggle favorite status.
 	favorite = () => {
-		this.setState({ isFavorite: favorites.toggle(this.state.id) });
+		this.setState({ isFavorite: storeFavorites.toggle(this.state.id) });
 	}
 	
 	componentWillMount() {
 		
 		// Verify stop, redirect to home view if unsuccessful.
-		const id = (new URLSearchParams(window.location.search)).get('id');
-		const stop = window.stops.find((stop) => stop.id === id);
+		const stop = storeStops.get((new URLSearchParams(window.location.search)).get('id'));
 		if (!stop) return void this.props.history.push('/');
 		
 		// Load stop data into state.
 		this.setState({
-			isFavorite: favorites.has(stop.id),
+			isFavorite: storeFavorites.has(stop.id),
 			id: stop.id,
 			name: stop.name,
 			direction: stop.direction,

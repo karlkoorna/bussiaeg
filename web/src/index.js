@@ -5,17 +5,20 @@ import { Helmet } from 'react-helmet';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
 import Map from 'components/Map/Map.jsx';
+
 import Search from 'views/Search/Search.jsx';
 import Favorites from 'views/Favorites/Favorites.jsx';
 import Settings from 'views/Settings/Settings.jsx';
 import Stop from 'views/Stop/Stop.jsx';
+
+import storeStops from 'stores/stops.js';
 
 import './index.css';
 
 // Fetch all stop into global variable and proceed rendering the page.
 fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((stops) => {
 	
-	window.stops = stops;
+	storeStops.set(stops);
 	
 	render((
 		<BrowserRouter>

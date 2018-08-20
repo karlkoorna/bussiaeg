@@ -5,6 +5,9 @@ import Leaflet from 'leaflet';
 
 import StopIcon from 'components/StopIcon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
+
+import storeStops from 'stores/stops.js';
+import storeCoords from 'stores/coords.js';
 import dragZoom from './dragZoom.js';
 
 import './Map.css';
@@ -46,7 +49,7 @@ export default class Map extends Component {
 		
 		const bounds = map.getBounds();
 		
-		for (const stop of window.stops) {
+		for (const stop of storeStops.get()) {
 			
 			if (stop.lat < bounds._southWest.lat || stop.lat > bounds._northEast.lat) continue;
 			if (stop.lng < bounds._southWest.lng || stop.lng > bounds._northEast.lng) continue;
@@ -188,10 +191,11 @@ export default class Map extends Component {
 			const watcher = navigator.geolocation.watchPosition((e) => {
 				
 				const { latitude: lat, longitude: lng, accuracy } = e.coords;
-				const coords = window.coords = { lat, lng, accuracy };
+				const coords = { lat, lng, accuracy };
 				
 				// Hide locate button on low accuracy.
-				// Update coordinate buffer.
+				// Update coord buffers.
+				storeCoords.set(coords);
 				this.setState({
 					showLocate: accuracy < 500,
 					coords

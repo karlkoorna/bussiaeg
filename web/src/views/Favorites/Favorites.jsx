@@ -4,7 +4,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
-import favorites from 'stores/favorites.js';
+
+import storeStops from 'stores/stops.js';
+import storeFavorites from 'stores/favorites.js';
 
 import './Favorites.css';
 
@@ -23,12 +25,12 @@ export default class Favorites extends Component {
 		ids.splice(result.destination.index, 0, ids.splice(result.source.index, 1)[0]);
 		
 		this.setState({ ids });
-		favorites.set(ids);
+		storeFavorites.set(ids);
 		
 	}
 	
 	componentWillMount() {
-		this.setState({ ids: favorites.get() });
+		this.setState({ ids: storeFavorites.get() });
 	}
 	
 	render() {
@@ -43,7 +45,7 @@ export default class Favorites extends Component {
 							{ids.length ? ids.map((id, i) => {
 								
 								// Get stop info by id.
-								const stop = window.stops.find((stop) => stop.id === id);
+								const stop = storeStops.get(id);
 								
 								return (
 									<Draggable draggableId={`favorites-${stop.id}`} index={i} key={stop.id}>

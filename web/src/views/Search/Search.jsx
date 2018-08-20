@@ -5,6 +5,8 @@ import Ink from 'react-ink';
 import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
 
+import storeCoords from 'stores/coords.js';
+
 import './Search.css';
 
 export default class Search extends Component {
@@ -34,7 +36,7 @@ export default class Search extends Component {
 	update = async () => {
 		
 		const { query, type } = this.state;
-		const { lat, lng } = window.coords || {};
+		const { lat, lng } = await storeCoords.get(10);
 		
 		try {
 			this.setState({ results: await (await fetch(`${process.env['REACT_APP_API']}/search?query=${query}&type=${type}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() });
@@ -44,21 +46,8 @@ export default class Search extends Component {
 		
 	}
 	
-	// Get coords from map.
 	componentWillMount() {
-		
-		let i = 0;
-		const checker = setInterval(() => {
-			
-			if (window.coords || i >= 10) {
-				this.update();
-				clearInterval(checker);
-			}
-			
-			i++;
-			
-		}, 250);
-		
+		this.update();
 	}
 	
 	render() {
