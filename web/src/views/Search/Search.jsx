@@ -22,32 +22,32 @@ export default class Search extends Component {
 		if (e.which === 13) e.target.blur();
 	}
 	
-	// Update query and fetch results.
+	// Update query and fetch new results.
 	onInput = (e) => {
 		this.setState({ query: e.target.value }, this.update);
 	}
 	
-	// Update type and fetch results.
+	// Update type, clear previous and fetch new results.
 	onClick = (type) => {
-		this.setState({ type }, this.update);
+		this.setState({ type, results: [] }, this.update);
 	}
 	
 	// Fetch results by query, type and coords (if available).
 	update = async () => {
 		
 		const { query, type } = this.state;
-		const { lat, lng } = await storeCoords.get(10);
+		const { lat, lng } = storeCoords.get();
 		
 		try {
-			this.setState({ results: await (await fetch(`${process.env['REACT_APP_API']}/search?query=${query}&type=${type}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() });
+			this.setState({ results: !lat && !lng && !query ? [] : await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}&type=${type}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() });
 		} catch (ex) {
 			this.setState({ results: [] });
 		}
 		
 	}
 	
-	componentWillMount() {
-		this.update();
+	async componentWillMount() {
+		if (Object.keys(await storeCoords.get(10)).length) this.update();
 	}
 	
 	render() {
@@ -80,7 +80,7 @@ export default class Search extends Component {
 									<div className="search-results-result-name">{result.name}</div>
 									<div className="search-results-result-area">{result.direction || `${result.origin} - ${result.destination}`}</div>
 								</div>
-								<div className="search-results-result-distance">{result.distance >= 100000 ? `${Math.round(result.distance / 10000) * 10}km` : result.distance >= 10000 ? `${(result.distance / 1000).toFixed()}km` : result.distance >= 1000 ? `${(result.distance / 1000).toFixed(1)}km` : `${Math.round(result.distance / 10) * 10}m`}</div>
+								<div className="search-results-result-distance">{result.distance ? result.distance >= 100000 ? `${Math.round(result.distance / 10000) * 10}km` : result.distance >= 10000 ? `${(result.distance / 1000).toFixed()}km` : result.distance >= 1000 ? `${(result.distance / 1000).toFixed(1)}km` : `${Math.round(result.distance / 10) * 10}m` : ''}</div>
 							</Link>
 						</div>
 					))}
