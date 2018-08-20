@@ -1,6 +1,6 @@
 #favorites {
 	padding: 8px;
-	color: #bdbdbd;
+	color: white;
 	font-size: 20px;
 	font-weight: bold;
 	overflow-y: scroll;
@@ -10,6 +10,7 @@
 	display: flex;
 	width: 100%;
 	height: 100%;
+	color: #bdbdbd;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
@@ -32,7 +33,6 @@
 	display: flex;
 	width: 100%;
 	height: 100px;
-	color: white;
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	align-items: center;
 	cursor: pointer;
