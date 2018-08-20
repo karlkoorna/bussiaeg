@@ -76,7 +76,7 @@
 	background-color: #eee;
 }
 
-.stop-trips-trip:not(:first-child):after {
+.stop-trips-trip:after {
 	content: '';
 	position: absolute;
 	left: 0;
