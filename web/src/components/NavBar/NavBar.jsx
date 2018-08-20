@@ -1,5 +1,5 @@
-import React, { PureComponent, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import Ink from 'react-ink';
 
 import './NavBar.css';
@@ -7,23 +7,29 @@ import './NavBar.css';
 export default function NavBar() {
 	return (
 		<nav id="navbar">
-			<NavBarItem to="/search" colors={[ '#ffa94d', '#ff8400' ]}>Search</NavBarItem>
-			<NavBarItem to="/favorites" colors={[ '#f5557e', '#f22559' ]}>Favorites</NavBarItem>
-			<NavBarItem to="/" colors={[ '#00e6ad', '#00cc9a' ]}>Map</NavBarItem>
-			<NavBarItem to="/settings" colors={[ '#00bfff', '#00ace6' ]}>Settings</NavBarItem>
+			<ul>
+				<NavBarItem to="/search" colors={[ '#ffa94d', '#ff8400' ]}>Search</NavBarItem>
+				<NavBarItem to="/favorites" colors={[ '#f5557e', '#f22559' ]}>Favorites</NavBarItem>
+				<NavBarItem to="/" colors={[ '#00e6ad', '#00cc9a' ]}>Map</NavBarItem>
+				<NavBarItem to="/settings" colors={[ '#00bfff', '#00ace6' ]}>Settings</NavBarItem>
+			</ul>
 		</nav>
 	);
 };
 
-class NavBarItem extends PureComponent {
+@withRouter
+class NavBarItem extends Component {
 	
 	state = {
 		animation: ''
 	}
 	
-	// Animate icon on click.
-	onClick = () => {
+	navigate = () => {
 		
+		// Navigate to view.
+		this.props.history.push(this.props.to);
+		
+		// Play uninterrupted animation.
 		if (this.state.animation) return;
 		
 		this.setState({ animation: `navbar-${this.props.children.toLowerCase()} .5s ease` });
@@ -40,7 +46,7 @@ class NavBarItem extends PureComponent {
 		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ '#bdbdbd', '#b3b3b3' ];
 		
 		return (
-			<NavLink className="navbar-item" title={children} to={to} exact onClick={this.onClick}>
+			<li className="navbar-item" title={children} onPointerDown={this.navigate}>
 				<svg xmlns="http://www.w3.org/2000/svg" style={this.state} viewBox="0 0 1024 1024" className="navbar-item-icon">
 					{{
 						search: (
@@ -69,7 +75,7 @@ class NavBarItem extends PureComponent {
 					}[children.toLowerCase()]}
 				</svg>
 				<Ink hasTouch={false} background={false} opacity={.5} style={{ color: colors[0] }} />
-			</NavLink>
+			</li>
 		);
 		
 	}
