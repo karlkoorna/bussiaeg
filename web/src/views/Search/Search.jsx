@@ -23,7 +23,7 @@ export default class Search extends Component {
 	// Fetch results by query, type and coords (if available).
 	fetch = async () => {
 	
-		const { query, type } = this.state;
+		const { query } = this.state;
 		const { lat, lng } = storeCoords.get();
 		
 		try {

@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { render } from 'react-dom';
-import { withRouter, BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
