@@ -12,6 +12,7 @@ body,
 body {
 	margin: 0;
 	user-select: none;
+	overflow-y: hidden
 }
 
 #root {
