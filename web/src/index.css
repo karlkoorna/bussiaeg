@@ -12,7 +12,7 @@ body,
 body {
 	margin: 0;
 	user-select: none;
-	overflow-y: hidden
+	overflow: hidden;
 }
 
 #root {
@@ -42,14 +42,13 @@ a {
 /* View */
 
 .view {
+	z-index: -1;
 	position: absolute;
 	width: 100%;
 	height: calc(100% - 64px);
 	background-color: #f5f5f5;
-	visibility: hidden;
-	overflow: hidden;
 }
 
 .view.is-visible {
-	visibility: visible;
+	z-index: unset;
 }
