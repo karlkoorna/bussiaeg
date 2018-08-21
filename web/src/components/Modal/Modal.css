@@ -1,5 +1,5 @@
 #modal-container {
-	z-index: 9999;
+	z-index: 1000;
 	display: flex;
 	position: fixed;
 	left: 0;
