@@ -3,47 +3,40 @@ const db = require('../db.js');
 // Get favorites by id.
 async function getSearch(req, res) {
 	
-	const { query, type, lat, lng } = req.query;
+	const { query, lat, lng } = req.query;
 	const params = lat && lng ? [ lat, lng, `%${query || ''}%` ] : [ `%${query || ''}%` ];
 	
-	switch (type) {
-		
-		case 'stops': {
-			
-			return void res.send(await db.query(`
-				SELECT
-					id, name, direction, type
-					${lat && lng ? ",ROUND(ST_Distance_Sphere(PointFromText(CONCAT('POINT(', lat, ' ', lng, ')')), PointFromText('POINT(? ?)'))) AS distance" : ''}
-				FROM stops
-				WHERE
-					type IS NOT NULL
-					AND name LIKE ?
-				${lat && lng ? 'ORDER BY distance' : ''}
-				LIMIT 30
-			`, params));
-			
-		}
-		
-		case 'routes': {
-			
-			return void res.send(await db.query(`
-				SELECT
-					route_id, route.name, origin, destination, route.type
-					${lat && lng ? ",MIN(ROUND(ST_Distance_Sphere(PointFromText(CONCAT('POINT(', stop.lat, ' ', stop.lng, ')')), PointFromText('POINT(? ?)')))) AS distance" : ''}
-				FROM stop_routes
-				JOIN stops AS stop ON stop.id = stop_id
-				JOIN routes AS route ON route.id = route_id
-				WHERE
-					stop.type IS NOT NULL
-					AND route.name LIKE ?
-				${lat && lng ? 'GROUP BY route_id' : ''}
-				ORDER BY ${lat && lng ? 'distance,' : ''} LENGTH(route.name), route.name
-				LIMIT 30
-			`, params));
-			
-		}
-		
-	}
+	const stops = await db.query(`
+		SELECT
+			id, name, direction, type
+			${lat && lng ? ",ROUND(ST_Distance_Sphere(PointFromText(CONCAT('POINT(', lat, ' ', lng, ')')), PointFromText('POINT(? ?)'))) AS distance" : ''}
+		FROM stops
+		WHERE
+			type IS NOT NULL
+			AND name LIKE ?
+		${lat && lng ? 'ORDER BY distance' : ''}
+		LIMIT 30
+	`, params);
+	
+	const routes = await db.query(`
+		SELECT
+			route_id, route.name, origin, destination, route.type
+			${lat && lng ? ",MIN(ROUND(ST_Distance_Sphere(PointFromText(CONCAT('POINT(', stop.lat, ' ', stop.lng, ')')), PointFromText('POINT(? ?)')))) AS distance" : ''}
+		FROM stop_routes
+		JOIN stops AS stop ON stop.id = stop_id
+		JOIN routes AS route ON route.id = route_id
+		WHERE
+			stop.type IS NOT NULL
+			AND route.name LIKE ?
+		${lat && lng ? 'GROUP BY route_id' : ''}
+		ORDER BY ${lat && lng ? 'distance,' : ''} LENGTH(route.name), route.name
+		LIMIT 30
+	`, params);
+	
+	res.send({
+		stops,
+		routes
+	});
 	
 }
 
@@ -54,9 +47,9 @@ module.exports = (fastify, opts, next) => {
 			querystring: {
 				type: 'object',
 				anyOf: [
-					{ required: [ 'query', 'type', 'lat', 'lng' ] },
-					{ required: [ 'type', 'lat', 'lng' ] },
-					{ required: [ 'query', 'type' ] }
+					{ required: [ 'query', 'lat', 'lng' ] },
+					{ required: [ 'lat', 'lng' ] },
+					{ required: [ 'query' ] }
 				],
 				properties: {
 					query: { type: 'string' },
