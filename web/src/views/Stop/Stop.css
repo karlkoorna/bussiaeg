@@ -72,10 +72,6 @@
 	transition: background-color .1s linear;
 }
 
-.stop-trips-trip:hover {
-	background-color: #eee;
-}
-
 .stop-trips-trip:after {
 	content: '';
 	position: absolute;
@@ -147,4 +143,14 @@
 	bottom: 10px;
 	color: #707070;
 	font-size: 18px;
+}
+
+/* Queries */
+
+@media (pointer: fine) {
+	
+	.stop-trips-trip:hover {
+		background-color: #eee;
+	}
+	
 }

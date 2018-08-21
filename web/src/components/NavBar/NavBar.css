@@ -33,16 +33,6 @@
 	width: 38px;
 }
 
-/* Queries */
-
-@media (pointer: fine) {
-	
-	.navbar-item:hover > svg {
-		width: 38px;
-	}
-	
-}
-
 /* Animations */
 
 @keyframes navbar-search {
@@ -93,6 +83,16 @@
 	
 	to {
 		transform: rotate(180deg);
+	}
+	
+}
+
+/* Queries */
+
+@media (pointer: fine) {
+	
+	.navbar-item:hover > svg {
+		width: 38px;
 	}
 	
 }
