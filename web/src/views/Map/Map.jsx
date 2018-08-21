@@ -26,6 +26,32 @@ export default class Map extends Component {
 	
 	markers = []
 	
+	// Pan map to current location.
+	locate = () => {
+		window.map.flyTo(this.state.coords);
+		this.setState({ isLocating: true });
+	}
+	
+	// Hide modal.
+	modalHide = () => {
+		this.setState({ showModal: false });
+	}
+	
+	// Set map center to start location.
+	modalConfirm = () => {
+		this.modalHide();
+		
+		const { map } = window;
+		const center = map.getCenter();
+		
+		localStorage.setItem('start', JSON.stringify({
+			lat: center.lat,
+			lng: center.lng,
+			zoom: map.getZoom()
+		}));
+		
+	}
+	
 	// Redraw stops and update message based on viewport.
 	update = () => {
 		
@@ -65,32 +91,6 @@ export default class Map extends Component {
 			}));
 			
 		}
-		
-	}
-	
-	// Pan map to current location.
-	locate = () => {
-		window.map.flyTo(this.state.coords);
-		this.setState({ isLocating: true });
-	}
-	
-	// Hide modal.
-	modalHide = () => {
-		this.setState({ showModal: false });
-	}
-	
-	// Set map center to start location.
-	modalConfirm = () => {
-		this.modalHide();
-		
-		const { map } = window;
-		const center = map.getCenter();
-		
-		localStorage.setItem('start', JSON.stringify({
-			lat: center.lat,
-			lng: center.lng,
-			zoom: map.getZoom()
-		}));
 		
 	}
 	
