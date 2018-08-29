@@ -69,7 +69,7 @@ Latest stable versions of all prerequisites are recommended.
 	Install Node.js.
 	
 	```bash
-	$ curl https://deb.nodesource.com/setup_8.x | bash
+	$ curl https://deb.nodesource.com/setup_10.x | bash
 	$ apt install nodejs
 	```
 	
@@ -84,7 +84,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 ## Installation and updates
 
-Make `start.sh` run at boot.
+Make `start.sh` run at startup.
 
 ```bash
 $ ./setup.sh
@@ -96,7 +96,7 @@ Update all modules.
 $ ./update.sh
 ```
 
-Fill in `.env` module configuration file by example `.env.example` file. Provided values are for development only.
+Fill in `.env` module configuration file by example `.env.example` file.
 
 Start all modules.
 
@@ -106,24 +106,24 @@ $ ./start.sh
 
 ## Development
 
-Redirect `devaeg.ee` and `api.devaeg.ee` to the machine's local or public ip.
+Redirect `devaeg.ee` and `api.devaeg.ee` to the local or public ip.
 
-Fill in `.env` module configuration file by example `.env.example` file. Provided values are for development only.
+Fill in `.env` module configuration file by example `.env.example` file.
 
-Run Caddy with development config file. Caches are ignored as self-signed certificates are used.
+Run Caddy with development config.
 
 ```bash
 $ caddy -conf Caddydev
 ```
 
-Start API module in development mode..
+Start API module.
 
 ```bash
 $ cd api
 $ npx nodemon
 ```
 
-Start Web module in development mode. Setting `NODE_ENV=development` will disable data updating.
+Start Web module. Setting `NODE_ENV=development` will disable data updating.
 
 ```bash
 $ cd web
