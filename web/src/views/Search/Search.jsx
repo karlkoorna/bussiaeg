@@ -1,84 +1,65 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Swipeable  from 'react-swipeable';
+import { when } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import SwipeableViews from 'react-swipeable-views';
 import Ink from 'react-ink';
 
+import Gate from 'components/Gate.jsx';
 import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
 
-import storeCoords from 'stores/coords.js';
-
 import './Search.css';
 
+
+@inject('storeSearch', 'storeCoords')
+@observer
 export default class Search extends Component {
 	
-	state = {
-		query: '',
-		type: 'stops',
-		results: {}
-	}
+	dispose = null
+	debounce = 0
 	
-	debounce = null
-	
-	// Fetch results by query, type and coords (if available).
-	fetch = async () => {
-	
-		const { query } = this.state;
-		const { lat, lng } = storeCoords.get();
-		
-		try {
-			this.setState({ results: !lat && !lng && !query ? {} : await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() });
-		} catch (ex) {
-			this.setState({ results: {} });
-		}
-		
-	}
-	
-	// Update query and fetch new results.
 	updateQuery = (e) => {
-	
-		const query = e.target.value;
+		
+		this.props.storeSearch.query = e.target.value;
 		
 		clearTimeout(this.debounce);
-		this.debounce = setTimeout(() => {
-			this.setState({ query }, this.fetch);
-		}, 300);
+		this.debounce = setTimeout(this.props.storeSearch.fetchResults, 250);
 		
 	}
 	
-	// Hide keyboard if enter key pressed (on mobile).
+	clearQuery = (e) => {
+		this.props.storeSearch.query = '';
+	}
+	
 	hideKeyboard = (e) => {
 		if (e.which === 13) e.target.blur();
 	}
 	
-	// Clear query input field.
-	clearQuery = (e) => {
-		this.refs.$query.value = '';
-		this.setState({ query: '' }, this.fetch);
-	}
-	
-	// Update type.
 	updateType = (type) => {
-		this.setState({ type });
+		this.props.storeSearch.type = type;
 	}
 	
-	// Update type.
-	swipeType = (e, deltaX, deltaY, absX, absY, velocity) => {
-		if (velocity > .5 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) this.updateType(deltaX < 0 ? 'stops' : 'routes');
+	swipeType = (i) => {
+		this.updateType(i ? 'routes' : 'stops');
 	}
 	
-	async componentWillMount() {
-		if (Object.keys(await storeCoords.get(10)).length) this.fetch();
+	componentDidMount() {
+		this.dispose = when(() => !this.props.storeSearch.query && this.props.storeCoords.lat && this.props.storeCoords.lng, this.props.storeSearch.fetchResults);
+	}
+	
+	componentWillUnmount() {
+		this.dispose();
 	}
 	
 	render() {
 		
-		const { type, results } = this.state;
+		const { query, type, results } = this.props.storeSearch;
 		
 		return (
-			<section id="search" className={`view${ this.props.isActive ? ' is-visible': ''}`}>
+			<main id="search" className="view">
 				<div id="search-top">
-					<input id="search-top-input" placeholder="Search..." autoComplete="off" required ref="$query" onKeyDown={this.hideKeyboard} onInput={this.updateQuery} />
+					<input id="search-top-input" value={query} placeholder="Search..." autoComplete="off" required onKeyDown={this.hideKeyboard} onChange={this.updateQuery} />
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 						<path stroke="#b3b3b3" strokeWidth="125" d="M650.7 650.7l321 321" />
 						<circle fill="transparent" stroke="#bdbdbd" strokeWidth="100" cx="399.3" cy="399.3" r="347" />
@@ -88,34 +69,39 @@ export default class Search extends Component {
 					</svg>
 					<div id="search-top-types">
 						<div className={'search-top-types-item' + (type === 'stops' ? ' is-active' : '')} onMouseDown={() => { this.updateType('stops'); }}>Stops
-							<Ink hasTouch={false} background={false} opacity={.5} style={{ color: '#ffa94d' }} />
+							<Gate><Ink hasTouch={false} background={false} opacity={.5} style={{ color: '#ffa94d' }} /></Gate>
 						</div>
 						<div className={'search-top-types-item' + (type === 'routes' ? ' is-active' : '')} onMouseDown={() => { this.updateType('routes'); }}>Routes
-							<Ink hasTouch={false} background={false} opacity={.5} style={{ color: '#ffa94d' }} />
+							<Gate><Ink hasTouch={false} background={false} opacity={.5} style={{ color: '#ffa94d' }} /></Gate>
 						</div>
 					</div>
 				</div>
-				<Swipeable id="search-results" flickThreshold={.3} onSwiping={this.swipeType} style={{ transform: type === 'stops' ? 'translateX(0)' : 'translateX(-100%)' }}>
-					{[ 'stops', 'routes' ].map((type, i) => (
-						<div key={i}>
-							{results[type] ? results[type].map((result, j) => (
-								<div className="search-results-result-container" key={j}>
-									<Link className="search-results-result" to={`/stop?id=${result.id}`}>
-										{{ stops: StopIcon, routes: VehicleIcon }[type]({ className: `search-results-result-icon is-${type}`, type: result.type })}
-										<div style={{ color: colors[result.type][0] }}>
-											<div className="search-results-result-name">{result.name}</div>
-											<div className="search-results-result-area">{result.direction || (result.origin && result.destination ? `${result.origin} - ${result.destination}` : '')}</div>
-										</div>
-										<div className="search-results-result-distance">{result.distance ? result.distance >= 100000 ? `${Math.round(result.distance / 10000) * 10}km` : result.distance >= 10000 ? `${(result.distance / 1000).toFixed()}km` : result.distance >= 1000 ? `${(result.distance / 1000).toFixed(1)}km` : `${Math.round(result.distance / 10) * 10}m` : ''}</div>
-									</Link>
-								</div>
-							)) : null}
-						</div>
-					))}
-				</Swipeable>
-			</section>
+				<SwipeableViews id="search-results" index={Number(type === 'routes')} onChangeIndex={this.swipeType}>
+					<Gate check={results.stops}>
+						{results.stops.map((stop) => <Result type="stops" data={stop} key={stop.id} />)}
+					</Gate>
+					<Gate check={results.routes}>
+						{results.routes.map((route) => <Result type="routes" data={route} key={route.id} />)}
+					</Gate>
+				</SwipeableViews>
+			</main>
 		);
 		
 	}
 	
 };
+
+function Result({ type, data }) {
+	return (
+		<div className="search-results-result-container">
+			<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${data.id}`}>
+				{{ stops: StopIcon, routes: VehicleIcon }[type]({ className: `search-results-result-icon is-${type}`, type: data.type })}
+				<div style={{ color: colors[data.type][0] }}>
+					<div className="search-results-result-name">{data.name}</div>
+					<div className="search-results-result-area">{data.direction || (data.origin && data.destination ? `${data.origin} - ${data.destination}` : '')}</div>
+				</div>
+				<div className="search-results-result-distance">{data.distance ? data.distance >= 100000 ? `${Math.round(data.distance / 10000) * 10}km` : data.distance >= 10000 ? `${(data.distance / 1000).toFixed()}km` : data.distance >= 1000 ? `${(data.distance / 1000).toFixed(1)}km` : `${Math.round(data.distance / 10) * 10}m` : ''}</div>
+			</Link>
+		</div>
+	);
+}

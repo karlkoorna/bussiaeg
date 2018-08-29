@@ -12,11 +12,11 @@
 }
 
 #modal-container.is-entering {
-	animation: modal-fadeIn .3s ease;
+	animation: modal-fadeIn .33s ease;
 }
 
 #modal-container.is-exiting {
-	animation: modal-fadeOut .17s ease;
+	animation: modal-fadeOut .2s ease;
 }
 
 /* Panel */

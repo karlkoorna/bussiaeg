@@ -1,38 +1,30 @@
-// Get favorites.
-function get() {
-	return JSON.parse(localStorage.getItem('favorites')) || [];
-}
+import { observable, action, reaction } from 'mobx';
 
-// Set favorites.
-function set(ids) {
-	localStorage.setItem('favorites', JSON.stringify(ids));
-}
-
-// Check if stop is in favorites.
-function has(id) {
-	return get().indexOf(id) > -1;
-}
-
-// Add or remove stop from favorites.
-function toggle(id) {
+export default new class StoreFavorites {
 	
-	// Load or create favorites array.
-	const favorites = get();
+	@observable
+	ids = []
 	
-	// Remove or add favorite.
-	if (has(id)) favorites.splice(favorites.indexOf(id), 1); else favorites.push(id);
+	@action
+	toggle(id) {
+		if (this.has(id)) this.ids.splice(this.ids.indexOf(id), 1); else this.ids.push(id);
+	}
 	
-	// Save changes to local storage.
-	localStorage.setItem('favorites', JSON.stringify(favorites));
+	has(id) {
+		return this.ids.indexOf(id) > -1;
+	}
 	
-	// Return state.
-	return has(id);
+	constructor() {
+		
+		this.ids = JSON.parse(localStorage.getItem('favorites')) || [];
+		
+		reaction(() => ({
+			ids: this.ids,
+			length: this.ids.length
+		}), ({ ids }) => {
+			localStorage.setItem('favorites', JSON.stringify(ids));
+		});
+		
+	}
 	
-}
-
-export default {
-	toggle,
-	get,
-	set,
-	has
 };

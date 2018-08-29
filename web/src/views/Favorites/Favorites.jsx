@@ -1,41 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
 
 import storeStops from 'stores/stops.js';
-import storeFavorites from 'stores/favorites.js';
 
 import './Favorites.css';
 
+@inject('storeFavorites')
+@observer
 export default class Favorites extends Component {
-	
-	state = {
-		ids: []
-	}
 	
 	// Update favorites afer reorder.
 	reorder = (result) => {
 		
 		if (!result.destination) return;
 		
-		const ids = [ ...this.state.ids ];
+		const ids = [ ...this.props.storeFavorites.ids ];
 		ids.splice(result.destination.index, 0, ids.splice(result.source.index, 1)[0]);
 		
-		this.setState({ ids });
-		storeFavorites.set(ids);
+		this.props.storeFavorites.ids = ids;
 		
-	}
-	
-	componentWillMount() {
-		this.setState({ ids: storeFavorites.get() });
 	}
 	
 	render() {
 		
-		const { ids } = this.state;
+		const ids = this.props.storeFavorites.ids;
 		
 		return (
 			<DragDropContext onDragEnd={this.reorder}>

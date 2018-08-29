@@ -28,7 +28,6 @@ class NavBarItem extends Component {
 		
 		// Navigate to view.
 		this.props.history.push(this.props.to);
-		
 		// Play uninterrupted animation.
 		if (this.state.animation) return;
 		
@@ -46,7 +45,7 @@ class NavBarItem extends Component {
 		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ '#bdbdbd', '#b3b3b3' ];
 		
 		return (
-			<li className="navbar-item" title={children} onPointerDown={this.navigate}>
+			<li className="navbar-item" title={children} onMouseDown={this.navigate}>
 				<svg xmlns="http://www.w3.org/2000/svg" style={this.state} viewBox="0 0 1024 1024" className="navbar-item-icon">
 					{{
 						search: (

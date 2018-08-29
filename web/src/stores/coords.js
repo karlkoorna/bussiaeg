@@ -1,34 +1,31 @@
-let coords = {};
+import { observable, action } from 'mobx';
 
-// Get coordinates.
-function get(retries, timeout = 250) {
+export default new class StoreCoords {
 	
-	if ((coords.lat && coords.lng) || !retries) return coords;
+	@observable
+	lat = 0
 	
-	return new Promise((resolve) => {
+	@observable
+	lng = 0
+	
+	@observable
+	accuracy = 9999
+	
+	@action
+	_update(...values) {
+		[ this.lat, this.lng, this.accuracy ] = values;
+	}
+	
+	constructor() {
 		
-		let i = 0;
-		const checker = setInterval(() => {
-			
-			if ((coords.lat && coords.lng) || i >= retries) {
-				clearInterval(checker);
-				return void resolve(coords);
-			}
-			
-			i++;
-			
-		}, timeout);
+		navigator.geolocation.watchPosition((e) => {
+			const { latitude: lat, longitude: lng, accuracy } = e.coords;
+			this._update(lat, lng, accuracy);
+		}, () => {}, {
+			enableHighAccuracy: true,
+			timeout: 100
+		});
 		
-	});
+	}
 	
-}
-
-// Set coords.
-function set(obj) {
-	coords = obj;
-}
-
-export default {
-	get,
-	set
 };

@@ -10,7 +10,7 @@ export default function dragZoom(map) {
 	
 	$map.addEventListener('touchstart', (e) => {
 		
-		// Cancel drag zoom with multiple fingers.
+		// Cancel with multiple touches.
 		if (e.touches.length > 1) return (isDragging = false);
 		
 		// Check for double tap.

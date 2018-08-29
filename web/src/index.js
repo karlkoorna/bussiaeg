@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Provider } from 'mobx-react';
 import { Helmet } from 'react-helmet';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
@@ -11,34 +12,46 @@ import Map from 'views/Map/Map.jsx';
 import Settings from 'views/Settings/Settings.jsx';
 import Stop from 'views/Stop/Stop.jsx';
 
+import storeCoords from 'stores/coords.js';
+import storeSearch from 'stores/search.js';
+import storeFavorites from 'stores/favorites.js';
 import storeStops from 'stores/stops.js';
 
 import './index.css';
 
-// Fetch all stop into global variable and proceed rendering the page.
-fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((stops) => {
+const stores = {
+	storeSearch,
+	storeCoords,
+	storeFavorites,
+	storeStops
+};
+
+// Fetch stops and render page.
+fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((data) => {
 	
-	storeStops.set(stops);
+	storeStops.stops = data;
 	
 	render((
-		<BrowserRouter>
-			<Fragment>
-				<Helmet>
-					<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
-					<meta name="theme-color" content="#ffffff" />
-					<meta property="og:type" content="website" />
-					<meta property="og:title" content="Bussiaeg.ee" />
-				</Helmet>
-				<main>
-					<Route path="/" exact children={({ match }) => <Map isActive={Boolean(match)} />} />
-					<Route path="/search" children={({ match }) => <Search isActive={Boolean(match)} />} />
-					<Route path="/favorites" children={({ match }) => <Favorites isActive={Boolean(match)} />} />
-					<Route path="/settings" children={({ match }) => <Settings isActive={Boolean(match)} />} />
-					<Route path="/stop" component={Stop} />
-				</main>
-				<NavBar />
-			</Fragment>
-		</BrowserRouter>
+		<Provider {...stores}>
+			<BrowserRouter>
+					<Fragment>
+						<Helmet>
+							<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
+							<meta name="theme-color" content="#ffffff" />
+							<meta property="og:type" content="website" />
+							<meta property="og:title" content="Bussiaeg.ee" />
+						</Helmet>
+						<Map />
+						<Switch>
+							<Route path="/search" component={Search} />
+							<Route path="/favorites" component={Favorites} />
+							<Route path="/settings" component={Settings} />
+							<Route path="/stop" component={Stop} />
+						</Switch>
+						<NavBar />
+					</Fragment>
+			</BrowserRouter>
+		</Provider>
 	), document.getElementById('root'));
 	
 	// Disable navigating through elements with tab key.
