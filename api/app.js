@@ -39,9 +39,17 @@ setInterval(() => {
 	const time = date.getHours().toFixed(0, 2) + date.getMinutes().toFixed(0, 2) + date.getSeconds().toFixed(0, 2);
 	
 	switch (time) {
-		case '060000': data.update();
-		case '060000': return void cache.clear();
+		
+		// Update data and clear caches at 6 AM.
+		case '060000': {
+			data.update();
+			cache.clear();
+			return;
+		}
+		
+		// Delete favorite shares at midnight.
 		case '000000': return void db.query('DELETE FROM favorites');
+		
 	}
 	
 }, 1000);
