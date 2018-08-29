@@ -4,12 +4,12 @@ const db = require('../db.js');
 async function getSearch(req, res) {
 	
 	const { query, lat, lng } = req.query;
-	const params = lat && lng ? [ lat, lng, `%${query || ''}%` ] : [ `%${query || ''}%` ];
+	const params = lat && lng ? [ lng, lat, `%${query || ''}%` ] : [ `%${query || ''}%` ];
 	
 	const stops = await db.query(`
 		SELECT
 			id, name, direction, type
-			${lat && lng ? ",ROUND(ST_Distance_Sphere(PointFromText(CONCAT('POINT(', lat, ' ', lng, ')')), PointFromText('POINT(? ?)'))) AS distance" : ''}
+			${lat && lng ? ",ROUND(ST_Distance_Sphere(ST_PointFromText(CONCAT('POINT(', lng, ' ', lat, ')')), ST_PointFromText('POINT(? ?)'))) AS distance" : ''}
 		FROM stops
 		WHERE
 			type IS NOT NULL
@@ -20,13 +20,14 @@ async function getSearch(req, res) {
 	
 	const routes = await db.query(`
 		SELECT
-			route_id, route.name, origin, destination, route.type
-			${lat && lng ? ",MIN(ROUND(ST_Distance_Sphere(PointFromText(CONCAT('POINT(', stop.lat, ' ', stop.lng, ')')), PointFromText('POINT(? ?)')))) AS distance" : ''}
+			route_id AS id, route.name, origin, destination, route.type
+			${lat && lng ? ",MIN(ROUND(ST_Distance_Sphere(ST_PointFromText(CONCAT('POINT(', stop.lng, ' ', stop.lat, ')')), ST_PointFromText('POINT(? ?)')))) AS distance" : ''}
 		FROM stop_routes
 		JOIN stops AS stop ON stop.id = stop_id
 		JOIN routes AS route ON route.id = route_id
 		WHERE
 			stop.type IS NOT NULL
+			AND route.type IS NOT NULL
 			AND route.name LIKE ?
 		${lat && lng ? 'GROUP BY route_id' : ''}
 		ORDER BY ${lat && lng ? 'distance,' : ''} LENGTH(route.name), route.name
