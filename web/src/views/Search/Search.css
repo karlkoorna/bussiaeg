@@ -76,10 +76,6 @@
 	flex-grow: 1;
 }
 
-#search-results > div {
-	height: 100%;
-}
-
 .search-results-result {
 	display: flex;
 	position: relative;

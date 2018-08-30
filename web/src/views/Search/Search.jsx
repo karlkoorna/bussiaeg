@@ -76,7 +76,7 @@ export default class Search extends Component {
 						</div>
 					</div>
 				</div>
-				<SwipeableViews id="search-results" index={Number(type === 'routes')} onChangeIndex={this.swipeType}>
+				<SwipeableViews id="search-results" scroller="search" index={Number(type === 'routes')} onChangeIndex={this.swipeType}>
 					<Gate check={results.stops}>
 						{results.stops.map((stop) => <Result type="stops" data={stop} key={stop.id} />)}
 					</Gate>

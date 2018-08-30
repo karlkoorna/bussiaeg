@@ -135,4 +135,4 @@ export default class Stop extends Component {
 		
 	}
 	
-}
+};
