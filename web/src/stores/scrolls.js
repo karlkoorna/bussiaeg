@@ -12,7 +12,7 @@ export default new class StoreScrolls {
 		
 		// Apply scroll position from store.
 		(new MutationObserver((mutations) => {
-			for (const mutation of mutations) for (const node of mutation.addedNodes) for (const el of node.querySelectorAll('[scroller]')) el.scrollTop = this.positions[el.getAttribute('scroller')];
+			for (const mutation of mutations) for (const node of mutation.addedNodes) if (node.querySelectorAll) for (const el of node.querySelectorAll('[scroller]')) el.scrollTop = this.positions[el.getAttribute('scroller')];
 		})).observe(document.getElementById('root'), {
 			childList: true,
 			subtree: true
