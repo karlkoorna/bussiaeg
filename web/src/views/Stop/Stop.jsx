@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { Helmet } from 'react-helmet';
 
 import Gate from 'components/Gate.jsx';
+import Loader from 'components/Loader/Loader.jsx';
 import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
 
@@ -97,7 +98,7 @@ export default class Stop extends Component {
 					</div>
 					<div id="stop-trips">
 						<Gate check={trips}>
-							{trips.map((trip) => {
+							{trips.length ? trips.map((trip) => {
 								
 								const [ primaryColor, secondaryColor ] = colors[trip.type];
 								
@@ -126,7 +127,7 @@ export default class Stop extends Component {
 									</Link>
 								);
 								
-							})}
+							}) : <Loader />}
 						</Gate>
 					</div>
 				</main>

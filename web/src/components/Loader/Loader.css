@@ -1,0 +1,48 @@
+#loader {
+	display: flex;
+	width: 256px;
+	height: 100%;
+	margin: 0 auto;
+	animation: loader-fadeIn 1s cubic-bezier(1, 0, 1, 0);
+	opacity: 0;
+}
+
+.loader-vehicle {
+	width: 33.333%;
+	margin: 0 16px;
+}
+
+#loader-bus {
+	animation: loader-bounce .5s cubic-bezier(.25, .46, .45, .94) infinite;
+}
+
+#loader-trol {
+	animation: loader-bounce .5s cubic-bezier(.25, .46, .45, .94) infinite .15s;
+}
+
+#loader-tram {
+	animation: loader-bounce .5s cubic-bezier(.25, .46, .45, .94) infinite .3s;
+}
+
+/* Animations */
+
+@keyframes loader-fadeIn {
+	
+	to {
+		opacity: 1;
+	}
+	
+}
+
+@keyframes loader-bounce {
+	
+	50% {
+		transform: translateY(-32px);
+		animation-timing-function: cubic-bezier(.55, .085, .68, .53);
+	}
+   
+	to {
+		transform: translateY(0)
+	}
+   
+}
