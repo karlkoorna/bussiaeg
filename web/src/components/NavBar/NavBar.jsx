@@ -1,24 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import Ink from 'react-ink';
 
 import './NavBar.css';
 
-export default function NavBar() {
-	return (
-		<nav id="navbar">
-			<ul>
-				<NavBarItem to="/search" colors={[ '#ffa94d', '#ff8400' ]}>Search</NavBarItem>
-				<NavBarItem to="/favorites" colors={[ '#f5557e', '#f22559' ]}>Favorites</NavBarItem>
-				<NavBarItem to="/" colors={[ '#00e6ad', '#00cc9a' ]}>Map</NavBarItem>
-				<NavBarItem to="/settings" colors={[ '#00bfff', '#00ace6' ]}>Settings</NavBarItem>
-			</ul>
-		</nav>
-	);
-};
-
 @withRouter
-class NavBarItem extends Component {
+class NavBarItem extends PureComponent {
 	
 	state = {
 		animation: ''
@@ -26,17 +13,17 @@ class NavBarItem extends Component {
 	
 	navigate = () => {
 		
-		// Navigate to view.
-		this.props.history.push(this.props.to);
-		// Play uninterrupted animation.
-		if (this.state.animation) return;
+		// Cancel if already active.
+		if (this.props.location.pathname === this.props.to) return;
 		
+		// Navigate and play animation.
+		this.props.history.push(this.props.to);
 		this.setState({ animation: `navbar-${this.props.children.toLowerCase()} .5s ease` });
 		
-		setTimeout(() => {
-			this.setState({ animation: '' });
-		}, 750);
-		
+	}
+	
+	resetStyle = () => {
+		this.setState({ animation: '' });
 	}
 	
 	render() {
@@ -46,7 +33,7 @@ class NavBarItem extends Component {
 		
 		return (
 			<li className="navbar-item" title={children} onMouseDown={this.navigate}>
-				<svg xmlns="http://www.w3.org/2000/svg" style={this.state} viewBox="0 0 1024 1024" className="navbar-item-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={this.state} onAnimationEnd={this.resetStyle}>
 					{{
 						search: (
 							<Fragment>
@@ -80,3 +67,16 @@ class NavBarItem extends Component {
 	}
 	
 }
+
+export default function NavBar() {
+	return (
+		<nav id="navbar">
+			<ul>
+				<NavBarItem to="/search" colors={[ '#ffa94d', '#ff8400' ]}>Search</NavBarItem>
+				<NavBarItem to="/favorites" colors={[ '#f5557e', '#f22559' ]}>Favorites</NavBarItem>
+				<NavBarItem to="/" colors={[ '#00e6ad', '#00cc9a' ]}>Map</NavBarItem>
+				<NavBarItem to="/settings" colors={[ '#00bfff', '#00ace6' ]}>Settings</NavBarItem>
+			</ul>
+		</nav>
+	);
+};
