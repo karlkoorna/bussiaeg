@@ -21,9 +21,9 @@ Latest stable versions of all prerequisites are recommended.
 	Install and configure MySQL.
 	
 	```bash
-	$ curl -o mysql https://repo.mysql.com/mysql-apt-config_0.8.10-1_all.deb
-	$ dpkg -i mysql
-	$ rm mysql
+	$ curl -o mysql.deb https://repo.mysql.com/mysql-apt-config_0.8.10-1_all.deb
+	$ dpkg -i mysql.deb
+	$ rm mysql.deb
 	$ apt update
 	$ apt install mysql-server
 	$ mysql_secure_installation
@@ -110,12 +110,6 @@ Redirect `devaeg.ee` and `api.devaeg.ee` to the local or public ip.
 
 Fill in `.env` module configuration file by example `.env.example` file.
 
-Run Caddy with development config.
-
-```bash
-$ caddy -conf Caddydev
-```
-
 Start API module.
 
 ```bash
@@ -128,4 +122,10 @@ Start Web module. Setting `NODE_ENV=development` will disable data updating.
 ```bash
 $ cd web
 $ npm start
+```
+
+Run Caddy with development config.
+
+```bash
+$ caddy -conf Caddydev
 ```

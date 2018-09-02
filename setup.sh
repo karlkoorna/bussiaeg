@@ -1,4 +1,4 @@
 #!/bin/bash
 
-# Make process run at startup.
+# Make script run at startup.
 echo "$(pwd)/start.sh" >> /etc/rc.local

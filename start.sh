@@ -14,4 +14,5 @@ rm ipfilter.tar.gz
 
 # Start servers.
 cd web && npm run build && cd ..
-cd api && npx forever start app.js & cd .. && caddy -conf Caddypro
+cd api && npx forever start app.js & cd ..
+caddy -conf Caddypro
