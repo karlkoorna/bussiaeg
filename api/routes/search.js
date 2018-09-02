@@ -15,7 +15,7 @@ async function getSearch(req, res) {
 			type IS NOT NULL
 			AND name LIKE ?
 		${lat && lng ? 'ORDER BY distance' : ''}
-		LIMIT 30
+		LIMIT 15
 	`, params);
 	
 	const routes = await db.query(`
@@ -31,7 +31,7 @@ async function getSearch(req, res) {
 			AND route.name LIKE ?
 		${lat && lng ? 'GROUP BY route_id' : ''}
 		ORDER BY ${lat && lng ? 'distance,' : ''} LENGTH(route.name), route.name
-		LIMIT 30
+		LIMIT 15
 	`, params);
 	
 	res.send({
