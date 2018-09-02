@@ -6,11 +6,26 @@ import SwipeableViews from 'react-swipeable-views';
 import Ink from 'react-ink';
 
 import Gate from 'components/Gate.jsx';
+import Scroller from 'components/Scroll.jsx';
 import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
 import StopIcon from 'components/StopIcon.jsx';
 
 import './Search.css';
 
+function Result({ type, data }) {
+	return (
+		<div className="search-results-result-container">
+			<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${data.id}`}>
+				{{ stops: StopIcon, routes: VehicleIcon }[type]({ className: `search-results-result-icon is-${type}`, type: data.type })}
+				<div style={{ color: colors[data.type][0] }}>
+					<div className="search-results-result-name">{data.name}</div>
+					<div className="search-results-result-area">{data.direction || (data.origin && data.destination ? `${data.origin} - ${data.destination}` : '')}</div>
+				</div>
+				<div className="search-results-result-distance">{data.distance ? data.distance >= 100000 ? `${Math.round(data.distance / 10000) * 10}km` : data.distance >= 10000 ? `${(data.distance / 1000).toFixed()}km` : data.distance >= 1000 ? `${(data.distance / 1000).toFixed(1)}km` : `${Math.round(data.distance / 10) * 10}m` : ''}</div>
+			</Link>
+		</div>
+	);
+}
 
 @inject('storeSearch', 'storeCoords')
 @observer
@@ -76,32 +91,19 @@ export default class Search extends Component {
 						</div>
 					</div>
 				</div>
-				<SwipeableViews id="search-results" scroller="search" index={Number(type === 'routes')} onChangeIndex={this.swipeType}>
-					<Gate check={results.stops}>
-						{results.stops.map((stop) => <Result type="stops" data={stop} key={stop.id} />)}
-					</Gate>
-					<Gate check={results.routes}>
-						{results.routes.map((route) => <Result type="routes" data={route} key={route.id} />)}
-					</Gate>
-				</SwipeableViews>
+				<Scroller>
+					<SwipeableViews id="search-results" index={Number(type === 'routes')} onChangeIndex={this.swipeType}>
+						<Gate check={results.stops}>
+							{results.stops.map((stop) => <Result type="stops" data={stop} key={stop.id} />)}
+						</Gate>
+						<Gate check={results.routes}>
+							{results.routes.map((route) => <Result type="routes" data={route} key={route.id} />)}
+						</Gate>
+					</SwipeableViews>
+				</Scroller>
 			</main>
 		);
 		
 	}
 	
 };
-
-function Result({ type, data }) {
-	return (
-		<div className="search-results-result-container">
-			<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${data.id}`}>
-				{{ stops: StopIcon, routes: VehicleIcon }[type]({ className: `search-results-result-icon is-${type}`, type: data.type })}
-				<div style={{ color: colors[data.type][0] }}>
-					<div className="search-results-result-name">{data.name}</div>
-					<div className="search-results-result-area">{data.direction || (data.origin && data.destination ? `${data.origin} - ${data.destination}` : '')}</div>
-				</div>
-				<div className="search-results-result-distance">{data.distance ? data.distance >= 100000 ? `${Math.round(data.distance / 10000) * 10}km` : data.distance >= 10000 ? `${(data.distance / 1000).toFixed()}km` : data.distance >= 1000 ? `${(data.distance / 1000).toFixed(1)}km` : `${Math.round(data.distance / 10) * 10}m` : ''}</div>
-			</Link>
-		</div>
-	);
-}

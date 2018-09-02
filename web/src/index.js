@@ -16,7 +16,6 @@ import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
 import storeStops from 'stores/stops.js';
-import 'stores/scrolls.js';
 
 import './index.css';
 
