@@ -13,6 +13,15 @@ import dragZoom from './dragZoom.js';
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
 
+const opts = {
+	startZoom: 16,
+	zoomTreshold: 15,
+	startLat: 59.436,
+	startLng: 24.753,
+	minZoom: 8,
+	maxZoom: 18,
+	accuracyTreshold: 512
+};
 
 @inject('storeStops', 'storeCoords')
 @observer
@@ -51,8 +60,10 @@ export default class Map extends Component {
 	// Start locating.
 	locate = () => {
 		
+		const map = window.map;
+		
 		this.setState({ isLocating: true }, () => {
-			window.map.flyTo([ this.props.storeCoords.lat, this.props.storeCoords.lng ]);
+			map.flyTo([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.zoomTreshold, map.getZoom()));
 		});
 		
 	}
@@ -65,14 +76,14 @@ export default class Map extends Component {
 		// Handle message cases.
 		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) {
 			this.setState({ message: 'Bussiaeg.ee ei toimi väljaspool Eestit' });
-		} else if (map.getZoom() < 15) {
+		} else if (map.getZoom() < opts.zoomTreshold) {
 			this.setState({ message: 'Suumige sisse, et näha peatusi' });
 		} else {
 			if (this.state.message) this.setState({ message: '' });
 		}
 		
 		// Remove all stops if zoomed out.
-		if (map.getZoom() < 15) {
+		if (map.getZoom() < opts.zoomTreshold) {
 			for (const marker of this.markers) marker.remove();
 			this.markers = [];
 			this.ids = [];
@@ -132,12 +143,12 @@ export default class Map extends Component {
 		
 		const map = window.map = new Leaflet.Map('map', {
 			center: [
-				start.lat || 59.436,
-				start.lng || 24.753
+				start.lat || opts.startLat,
+				start.lng || opts.startLng
 			],
-			zoom: start.zoom || 16,
-			minZoom: 8,
-			maxZoom: 18,
+			zoom: start.zoom || opts.startZoom,
+			minZoom: opts.minZoom,
+			maxZoom: opts.maxZoom,
 			preferCanvas: true,
 			zoomControl: false,
 			bounceAtZoomLimits: false,
@@ -189,13 +200,16 @@ export default class Map extends Component {
 		}, { passive: true });
 		
 		// Update location marker and accuracy circle.
+		
+		const timestamp = new Date();
+		
 		this.dispose = reaction(() => ({
 			lat: this.props.storeCoords.lat,
 			lng: this.props.storeCoords.lng,
 			accuracy: this.props.storeCoords.accuracy
 		}), ({ lat, lng, accuracy }) => {
 			
-			if (accuracy < 512) {
+			if (accuracy < opts.accuracyTreshold) {
 				
 				marker.setLatLng([ lat, lng ]);
 				circle.setLatLng([ lat, lng ]);
@@ -210,9 +224,9 @@ export default class Map extends Component {
 			}
 			
 			// Pan map if locating.
-			if (this.state.isLocating) map.flyTo([ lat, lng ]);
+			if (accuracy < opts.accuracyTreshold && (this.state.isLocating || new Date() - timestamp < 1500)) map.flyTo([ lat, lng ]);
 			
-		});
+		}, { fireImmediately: true });
 		
 		// Register drag zoom handler (for mobile).
 		dragZoom(map);
