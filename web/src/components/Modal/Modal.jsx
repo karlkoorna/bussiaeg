@@ -6,7 +6,7 @@ import './Modal.css';
 export default class Model extends PureComponent {
 	
 	// Add animation class to button and call function.
-	onPointerDown = (e, cb) => {
+	fire = (e, cb) => {
 		e.target.classList.add('is-active');
 		cb();
 	}
@@ -25,13 +25,13 @@ export default class Model extends PureComponent {
 	render() {
 		return (
 			<CSSTransition in={this.props.isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 300, exit: 170 }} onExited={this.onExited} unmountOnExit>
-				<div id="modal-container" onPointerDown={this.props.onCancel}>
-					<div id="modal" onPointerDown={(e) => { e.stopPropagation() }}>
+				<div id="modal-container" onMouseDown={this.props.onCancel}>
+					<div id="modal" onMouseDown={(e) => { e.stopPropagation() }}>
 						<div id="modal-title">{this.props.title}</div>
 						<div id="modal-text">{this.props.text}</div>
 						<div id="modal-buttons">
-							<div id="modal-buttons-cancel" onPointerDown={(e) => this.onPointerDown(e, this.props.onCancel)}>Tühista</div>
-							<div id="modal-buttons-confirm" onPointerDown={(e) => this.onPointerDown(e, this.props.onConfirm)}>Kinnita</div>
+							<div id="modal-buttons-cancel" onMouseDown={(e) => this.fire(e, this.props.onCancel)}>Tühista</div>
+							<div id="modal-buttons-confirm" onMouseDown={(e) => this.fire(e, this.props.onConfirm)}>Kinnita</div>
 						</div>
 					</div>
 				</div>
