@@ -30,7 +30,7 @@ class NavBarItem extends PureComponent {
 		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ '#bdbdbd', '#b3b3b3' ];
 		
 		return (
-			<li className="navbar-item" title={children} onMouseDown={this.navigate}>
+			<li className="navbar-item" title={children} onMouseDown={this.navigate} onTouchStart={this.navigate}>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={this.state}>
 					{{
 						search: (
