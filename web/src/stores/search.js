@@ -32,10 +32,12 @@ export default new class StoreSearch {
 		} catch (ex) {
 			
 			runInAction(() => {
+				
 				this.results = {
 					stops: [],
 					routes: []
 				};
+				
 			});
 			
 		}

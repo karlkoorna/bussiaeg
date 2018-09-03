@@ -12,18 +12,18 @@ import Map from 'views/Map/Map.jsx';
 import Settings from 'views/Settings/Settings.jsx';
 import Stop from 'views/Stop/Stop.jsx';
 
+import storeStops from 'stores/stops.js';
 import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
-import storeStops from 'stores/stops.js';
 
 import './index.css';
 
 const stores = {
-	storeSearch,
+	storeStops,
 	storeCoords,
-	storeFavorites,
-	storeStops
+	storeSearch,
+	storeFavorites
 };
 
 // Fetch stops and render page.
