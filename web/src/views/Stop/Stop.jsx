@@ -5,8 +5,7 @@ import { Helmet } from 'react-helmet';
 
 import Gate from 'components/Gate.jsx';
 import Loader from 'components/Loader/Loader.jsx';
-import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
-import StopIcon from 'components/StopIcon.jsx';
+import Icon, { colors } from 'components/Icon.jsx';
 
 import storeStops from 'stores/stops.js';
 
@@ -89,7 +88,7 @@ export default class Stop extends Component {
 				</Helmet>
 				<main id="stop" className="view is-visible">
 					<div id="stop-info">
-						{StopIcon({ id: 'stop-info-icon', type })}
+						<Icon id="stop-info-icon" shape="stop" type={type} />
 						<span id="stop-info-direction">{direction}</span>
 						<span id="stop-info-name">{name}</span>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
@@ -104,7 +103,7 @@ export default class Stop extends Component {
 								
 								return (
 									<Link className="stop-trips-trip" to={`/routes?id=${id}&name=${trip.name}&type=${trip.type}&provider=${trip.provider}`} key={trip.type + trip.name + trip.time}>
-										{VehicleIcon({ className: 'stop-trips-trip-icon', type: trip.type })}
+										<Icon className="stop-trips-trip-icon" shape="vehicle" type={trip.type} />
 										<div className="stop-trips-trip-name" style={{ color: secondaryColor }}>{trip.name}</div>
 										<div className="stop-trips-trip-destination" style={{ color: secondaryColor }}>
 											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">

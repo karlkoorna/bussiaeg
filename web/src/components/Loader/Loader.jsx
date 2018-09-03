@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-import VehicleIcon from 'components/VehicleIcon.jsx';
+import Icon from 'components/Icon.jsx';
 
 import './Loader.css';
 
 export default function Loader() {
 	return (
 		<div id="loader">
-			{VehicleIcon({ id: 'loader-bus', className: 'loader-vehicle', type: 'bus' })}
-			{VehicleIcon({ id: 'loader-trol', className: 'loader-vehicle', type: 'trol' })}
-			{VehicleIcon({ id: 'loader-tram', className: 'loader-vehicle', type: 'tram' })}
+			<Icon id="loader-bus" className="loader-vehicle" shape="vehicle" type="bus" />
+			<Icon id="loader-trol" className="loader-vehicle" shape="vehicle" type="trol" />
+			<Icon id="loader-tram" className="loader-vehicle" shape="vehicle" type="tram" />
 		</div>
 	);
 };

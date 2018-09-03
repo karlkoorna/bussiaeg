@@ -5,7 +5,7 @@ import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import Leaflet from 'leaflet';
 
-import StopIcon from 'components/StopIcon.jsx';
+import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
 
 import dragZoom from './dragZoom.js';
@@ -116,7 +116,7 @@ export default class Map extends Component {
 				icon: new Leaflet.Icon({
 					iconSize: [ 26, 26 ],
 					iconAnchor: [ 13, 13 ],
-					iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup(StopIcon({ type: stop.type })))}`
+					iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type })))}`
 				})
 			}).addTo(map).on('click', () => {
 				this.props.history.push(`/stop?id=${stop.id}`);

@@ -6,9 +6,8 @@ import SwipeableViews from 'react-swipeable-views';
 import Ink from 'react-ink';
 
 import Gate from 'components/Gate.jsx';
-import Scroller from 'components/Scroll.jsx';
-import VehicleIcon, { colors } from 'components/VehicleIcon.jsx';
-import StopIcon from 'components/StopIcon.jsx';
+import Scroller from 'components/Scroller.jsx';
+import Icon, { colors } from 'components/Icon.jsx';
 
 import './Search.css';
 
@@ -16,7 +15,7 @@ function Result({ type, data }) {
 	return (
 		<div className="search-results-result-container">
 			<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${data.id}`}>
-				{{ stops: StopIcon, routes: VehicleIcon }[type]({ className: `search-results-result-icon is-${type}`, type: data.type })}
+				<Icon className={`search-results-result-icon is-${type}`} shape={[ 'stop', 'vehicle' ][Number(type == 'routes')]} type={data.type} />
 				<div style={{ color: colors[data.type][0] }}>
 					<div className="search-results-result-name">{data.name}</div>
 					<div className="search-results-result-area">{data.direction || (data.origin && data.destination ? `${data.origin} - ${data.destination}` : '')}</div>

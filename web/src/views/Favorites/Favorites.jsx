@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { colors } from 'components/VehicleIcon.jsx';
-import StopIcon from 'components/StopIcon.jsx';
+import Icon, { colors } from 'components/Icon.jsx';
 
 import storeStops from 'stores/stops.js';
 
@@ -45,7 +44,7 @@ export default class Favorites extends Component {
 										{(provided, snapshot) => (
 											<div className={'favorites-stop-container' + (snapshot.isDragging ? ' is-dragging' : '')} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
 												<Link className="favorites-stop" style={{ backgroundColor: colors[stop.type][0] }} to={`/stop?id=${stop.id}`}>
-													{StopIcon({ className: 'favorites-stop-icon', type: stop.type })}
+													<Icon className="favorites-stop-icon" shape="stop" type={stop.type} />
 													<div>
 														<div className="favorites-stop-name">{stop.name}</div>
 														<div className="favorites-stop-direction">{stop.direction}</div>
