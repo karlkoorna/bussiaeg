@@ -40,16 +40,25 @@
 	cursor: pointer;
 }
 
-#search-top-input:not(:invalid) + svg + svg {
-	transform: scale(1);
-}
-
 #search-top-input:focus + svg {
 	animation: search-pulse 1s linear infinite;
 }
 
-#search-top-input:focus + svg {
-	fill: #ffa94d;
+#search-top-input + svg > path,
+#search-top-input + svg > circle {
+	transition: stroke .15s linear;
+}
+
+#search-top-input:focus + svg > path {
+	stroke: #ff8400;
+}
+
+#search-top-input:focus + svg > circle {
+	stroke: #ffa94d;
+}
+
+#search-top-input:not(:invalid) + svg + svg {
+	transform: scale(1);
 }
 
 #search-top-types {
@@ -73,6 +82,7 @@
 /* Results */
 
 #search-results {
+	position: relative;
 	flex-grow: 1;
 }
 
@@ -144,7 +154,7 @@
 
 @media (min-width: 480px) {
 	
-	#search-results > div {
+	#search-results .react-swipeable-view-container {
 		transition: none !important;
 	}
 	
