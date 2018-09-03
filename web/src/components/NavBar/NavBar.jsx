@@ -13,17 +13,15 @@ class NavBarItem extends PureComponent {
 	
 	navigate = () => {
 		
+		const { colors, to, children, history, location: { pathname } } = this.props;
+		
 		// Cancel if already active.
-		if (this.props.location.pathname === this.props.to) return;
+		if (pathname === to) return;
 		
 		// Navigate and play animation.
-		this.props.history.push(this.props.to);
-		this.setState({ animation: `navbar-${this.props.children.toLowerCase()} .5s ease` });
+		history.push(to);
+		this.setState({ animation: `navbar-${children.toLowerCase()} .5s ease` });
 		
-	}
-	
-	resetStyle = () => {
-		this.setState({ animation: '' });
 	}
 	
 	render() {
@@ -32,8 +30,8 @@ class NavBarItem extends PureComponent {
 		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ '#bdbdbd', '#b3b3b3' ];
 		
 		return (
-			<li className="navbar-item" title={children} onMouseDown={this.navigate}>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={this.state} onAnimationEnd={this.resetStyle}>
+			<li className="navbar-item" title={children} onPointerDown={this.navigate}>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={this.state}>
 					{{
 						search: (
 							<Fragment>
