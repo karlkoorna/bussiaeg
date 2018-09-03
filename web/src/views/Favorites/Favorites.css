@@ -65,11 +65,11 @@
 }
 
 .favorites-stop-name {
-	margin-bottom: 8px;
 	font-size: 22px;
 }
 
-.favorites-stop-direction {
+.favorites-stop-direction:not(:empty) {
+	margin-top: 8px;
 	margin-bottom: 4px;
 	font-size: 14px;
 }
