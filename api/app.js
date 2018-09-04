@@ -22,7 +22,7 @@ app.setErrorHandler((err, req, res) => {
 	res.send(err.stack);
 });
 
-// Load routes dynamically from folder.
+// Dynamically register routes from folder.
 for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${file}`));
 
 // Update data and start listening on port.

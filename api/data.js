@@ -29,7 +29,7 @@ function download() {
 	});
 };
 
-// Run all SQL files in a folder.
+// Execute all SQL from folder.
 function prepare(path, msgIncomplete, msgComplete) {
 	return new Promise(async (resolve) => {
 		

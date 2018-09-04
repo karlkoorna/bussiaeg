@@ -3,7 +3,7 @@ const { promisify } = require('util');
 const mysql = require('mysql');
 const chalk = require('chalk');
 
-// Open database connection.
+// Open the database connection.
 const db = mysql.createConnection({
 	host: process.env['DB_HOST'],
 	port: process.env['DB_PORT'],
@@ -13,7 +13,7 @@ const db = mysql.createConnection({
 	multipleStatements: true
 });
 
-// Recreate tables in production only.
+// Recreate tables (only in production).
 if (process.env['NODE_ENV'] !== 'development') db.query(fs.readFileSync('sql/tables.sql').toString());
 
 // Promisify for async/await.
