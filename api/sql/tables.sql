@@ -31,7 +31,8 @@ CREATE TABLE stop_times (
 CREATE TABLE stop_routes (
 	stop_id NVARCHAR(32) NOT NULL,
 	route_id CHAR(32) NOT NULL,
-	PRIMARY KEY (stop_id, route_id)
+	PRIMARY KEY (stop_id, route_id),
+	KEY (route_id)
 );
 
 CREATE TABLE trips (
