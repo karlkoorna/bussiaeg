@@ -1,16 +1,16 @@
 const cache = {};
 
 // Add/get to/from cache.
-async function use(name, item, setter) {
+async function use(space, key, setter) {
 	
 	// Create cache if not exists.
-	if (!cache[name]) cache[name] = [];
+	if (!cache[space]) cache[space] = {};
 	
 	// Add item if doesn't exist.
-	if (!cache[name][item]) cache[name][item] = await setter();
+	if (!cache[space][key]) cache[space][key] = await setter();
 	
-	// Return item.
-	return [ ...cache[name][item] ];
+	// Return new dereferenced item.
+	return Array.isArray(cache[space][key]) ? [ ...cache[space][key] ] : { ...cache[space][key] };
 	
 };
 

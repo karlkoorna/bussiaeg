@@ -29,7 +29,7 @@ async function getTrips(req, res) {
 		
 		const trips = stop.region === 'tallinn' ? await tlt.getTrips(id) : [];
 		
-		const mntTrips = await cache.use('mnt-stops', id, async () => (await db.query(`
+		const mntTrips = await cache.use('mnt-stops', id, () => db.query(`
 			SELECT TIME_TO_SEC(time) AS time, route.name, trip.destination, wheelchair, route.type, FALSE AS live, 'mnt' AS provider FROM stops AS stop
 				JOIN stop_times ON stop_id = id
 				JOIN trips AS trip ON trip.id = trip_id
@@ -37,6 +37,7 @@ async function getTrips(req, res) {
 				JOIN services AS service ON service.id = trip.service_id
 			WHERE
 				stop.id = ?
+				AND route.type IS NOT NULL
 				AND time > CURTIME()
 				AND (
 					(
@@ -51,7 +52,7 @@ async function getTrips(req, res) {
 				)
 				${trips.length ? "AND route.type LIKE 'coach%'" : ''}
 			LIMIT ${trips.length ? '5' : '15'}
-		`, [ id ])));
+		`, [ id ]));
 		
 		tripz.push(trips.concat(mntTrips).sort((a, b) => a.time - b.time));
 		
