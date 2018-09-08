@@ -29,6 +29,22 @@
 	width: 24px;
 }
 
+#search-top-input + svg > * {
+	transition: stroke .15s linear;
+}
+
+#search-top-input:focus + svg {
+	animation: search-pulse 1s linear infinite;
+}
+
+#search-top-input:focus + svg path {
+	stroke: #ff8400;
+}
+
+#search-top-input:focus + svg circle {
+	stroke: #ffa94d;
+}
+
 #search-top-input + svg + svg {
 	position: absolute;
 	right: 16px;
@@ -36,25 +52,9 @@
 	width: 42px;
 	padding: 12px;
 	transform: scale(0);
+	stroke: #b3b3b3;
 	transition: transform .15s ease-out;
 	cursor: pointer;
-}
-
-#search-top-input:focus + svg {
-	animation: search-pulse 1s linear infinite;
-}
-
-#search-top-input + svg > path,
-#search-top-input + svg > circle {
-	transition: stroke .15s linear;
-}
-
-#search-top-input:focus + svg > path {
-	stroke: #ff8400;
-}
-
-#search-top-input:focus + svg > circle {
-	stroke: #ffa94d;
 }
 
 #search-top-input:not(:invalid) + svg + svg {
