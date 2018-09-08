@@ -1,18 +1,21 @@
 const got = require('got');
 
 const db = require('../db.js');
+
 const cache = require('../utils/cache.js');
 const time = require('../utils/time.js');
+
 const elron = require('../providers/elron.js');
 const tlt = require('../providers/tlt.js');
 
 // Get trips for stop.
 async function getTrips(req, res) {
 	
+	const { stop: stopId, stops: stopIds } = req.query;
 	const now = time.getSeconds();
 	const tripz = [];
 	
-	for (const id of (req.query['id'] || req.query['ids']).split(',')) {
+	for (const id of (stopId || stopIds).split(',')) {
 		
 		// Verify stop, get type and region.
 		const stop = (await db.query('SELECT type, region FROM stops WHERE id = ?', [ id ]))[0];
@@ -70,7 +73,7 @@ async function getTrips(req, res) {
 		
 	}
 	
-	res.send(req.query['id'] ? tripz[0] : tripz);
+	res.send(tripz.length === 1 ? tripz[0] : tripz);
 	
 }
 
@@ -81,12 +84,12 @@ module.exports = (fastify, opts, next) => {
 			querystring: {
 				type: 'object',
 				oneOf: [
-					{ required: [ 'id' ] },
-					{ required: [ 'ids' ] }
+					{ required: [ 'stop' ] },
+					{ required: [ 'stops' ] }
 				],
 				properties: {
-					id: { type: 'string' },
-					ids: { type: 'string' }
+					stop: { type: 'string' },
+					stops: { type: 'string' }
 				}
 			}
 		}

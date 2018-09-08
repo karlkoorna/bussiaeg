@@ -23,9 +23,9 @@ const opts = {
 	accuracyTreshold: 512
 };
 
-@inject('storeStops', 'storeCoords')
-@observer
 @withRouter
+@inject('storeCoords')
+@observer
 export default class Map extends Component {
 	
 	state = {
@@ -34,9 +34,8 @@ export default class Map extends Component {
 		isLocating: false
 	}
 	
-	dispose = []
+	dispose = null
 	markers = []
-	ids = []
 	
 	modalHide = () => {
 		this.setState({ showModal: false });
@@ -69,9 +68,50 @@ export default class Map extends Component {
 	}
 	
 	// Redraw stops and update message based on bounds.
-	update = () => {
+	fetchStops = async () => {
 		
 		const map = window.map;
+		const { _southWest: { lat: lat_min, lng: lng_min }, _northEast: { lat: lat_max, lng: lng_max } } = map.getBounds();
+		
+		// Remove markers depending on bounds and zoom.
+		if (map.getZoom() < opts.zoomTreshold) { // Remove all markers.
+			for (const marker of this.markers) marker.remove();
+			return void (this.markers = []);
+		} else { // Remove out of bounds markers.
+			window.test = this.markers
+			for (const i in this.markers) {
+				const marker = this.markers[i];
+				
+				if (marker._latlng.lat > lat_min && marker._latlng.lat < lat_max && marker._latlng.lng > lng_min && marker._latlng.lng < lng_max) continue;
+				
+				marker.remove();
+				this.markers.splice(i, 1);
+				
+			}
+			
+		}
+		
+		// Add needed new markers.
+		fetch(`${process.env['REACT_APP_API']}/stops?lat_min=${lat_min}&lat_max=${lat_max}&lng_min=${lng_min}&lng_max=${lng_max}`).then(async (res) => {
+			
+			for (const stop of await res.json()) {
+				
+				if (this.markers.find((marker) => marker.options.id === stop.id)) continue;
+				
+				this.markers.push((new Leaflet.Marker([ stop.lat, stop.lng ], {
+					id: stop.id,
+					icon: new Leaflet.Icon({
+						iconSize: [ 26, 26 ],
+						iconAnchor: [ 13, 13 ],
+						iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type })))}`
+					})
+				})).addTo(map).on('click', () => {
+					this.props.history.push(`/stop?id=${stop.id}`);
+				}));
+				
+			}
+			
+		});
 		
 		// Handle message cases.
 		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) {
@@ -80,59 +120,6 @@ export default class Map extends Component {
 			this.setState({ message: 'Suumige sisse, et näha peatusi' });
 		} else {
 			if (this.state.message) this.setState({ message: '' });
-		}
-		
-		// Remove all stops if zoomed out.
-		if (map.getZoom() < opts.zoomTreshold) {
-			for (const marker of this.markers) marker.remove();
-			this.markers = [];
-			this.ids = [];
-			return;
-		}
-		
-		const bounds = map.getBounds();
-		
-		// Remove markers outside bounds.
-		if (this.markers.length) {
-			
-			const markers = [];
-			const ids = [];
-			
-			for (const marker of this.markers) {
-				
-				const coords = marker._latlng;
-				
-				if (coords.lat > bounds._southWest.lat && coords.lat < bounds._northEast.lat && coords.lng > bounds._southWest.lng && coords.lng < bounds._northEast.lng) {
-					markers.push(marker);
-					ids.push(marker.options.id);
-				} else {
-					marker.remove();
-				}
-				
-			}
-			
-			this.markers = markers;
-			this.ids = ids;
-			
-		}
-		
-		// Add markers inside bounds, excluding previous.
-		for (const stop of this.props.storeStops.stops.filter(({ lat, lng }) => lat > bounds._southWest.lat && lat < bounds._northEast.lat && lng > bounds._southWest.lng && lng < bounds._northEast.lng)) {
-			
-			if (this.ids.indexOf(stop.id) > -1) continue;
-			
-			this.ids.push(stop.id);
-			this.markers.push(new Leaflet.Marker([ stop.lat, stop.lng ], {
-				id: stop.id,
-				icon: new Leaflet.Icon({
-					iconSize: [ 26, 26 ],
-					iconAnchor: [ 13, 13 ],
-					iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type })))}`
-				})
-			}).addTo(map).on('click', () => {
-				this.props.history.push(`/stop?id=${stop.id}`);
-			}));
-			
 		}
 		
 	}
@@ -186,8 +173,8 @@ export default class Map extends Component {
 		Leaflet.tileLayer(process.env['REACT_APP_MAP']).addTo(map);
 		
 		// Redraw stops when available and on bounds change.
-		this.update();
-		map.on('moveend', this.update);
+		this.fetchStops();
+		map.on('moveend', this.fetchStops);
 		
 		// Open modal on right click (desktop) or hold (mobile).
 		map.on('contextmenu', () => {
@@ -250,7 +237,7 @@ export default class Map extends Component {
 		this.dispose();
 	}
 	
-	render() {
+	render() {console.log(this.props.storeCoords.accuracy);
 		return (
 			<div id="map-container" className="view">
 				<div id="map"></div>

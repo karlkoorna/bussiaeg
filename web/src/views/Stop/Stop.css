@@ -51,11 +51,19 @@
 	width: 64px;
 	height: 64px;
 	padding: 16px;
+	fill: #bdbdbd;
+	stroke: #b3b3b3;
+	stroke-width: 100;
 	cursor: pointer;
 }
 
 #stop-info-favorite path {
 	transition: fill .1s linear, stroke .1s linear;
+}
+
+#stop-info-favorite.is-active path {
+	fill: #f5557e;
+	stroke: #f22559;
 }
 
 /* Trips */
@@ -112,7 +120,7 @@
 	bottom: 7px;
 }
 
-.stop-trips-trip-destination > svg {
+.stop-trips-trip-destination svg {
 	width: 16px;
 	margin-right: 8px;
 	margin-bottom: -2px;
@@ -127,11 +135,11 @@
 	top: 8px;
 }
 
-.stop-trips-trip-countdown > span {
+.stop-trips-trip-countdown span {
 	font-size: 18px;
 }
 
-.stop-trips-trip-countdown > svg {
+.stop-trips-trip-countdown svg {
 	position: absolute;
 	right: 10px;
 	top: -1px;

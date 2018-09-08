@@ -12,7 +12,6 @@ import Map from 'views/Map/Map.jsx';
 import Settings from 'views/Settings/Settings.jsx';
 import Stop from 'views/Stop/Stop.jsx';
 
-import storeStops from 'stores/stops.js';
 import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
@@ -20,43 +19,35 @@ import storeFavorites from 'stores/favorites.js';
 import './index.css';
 
 const stores = {
-	storeStops,
 	storeCoords,
 	storeSearch,
 	storeFavorites
 };
 
-// Fetch stops and render page.
-fetch(`${process.env['REACT_APP_API']}/stops`).then((res) => res.json()).then((data) => {
-	
-	storeStops.stops = data;
-	
-	render((
-		<Provider {...stores}>
-			<BrowserRouter>
-					<Fragment>
-						<Helmet>
-							<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
-							<meta name="theme-color" content="#ffffff" />
-							<meta property="og:type" content="website" />
-							<meta property="og:title" content="Bussiaeg.ee" />
-						</Helmet>
-						<Map />
-						<Switch>
-							<Route path="/search" component={Search} />
-							<Route path="/favorites" component={Favorites} />
-							<Route path="/settings" component={Settings} />
-							<Route path="/stop" component={Stop} />
-						</Switch>
-						<NavBar />
-					</Fragment>
-			</BrowserRouter>
-		</Provider>
-	), document.getElementById('root'));
-	
-	// Disable navigating through elements with tab key.
-	window.addEventListener('keydown', (e) => {
-		if (e.which === 9) e.preventDefault();
-	});
-	
+render((
+	<Provider {...stores}>
+		<BrowserRouter>
+				<Fragment>
+					<Helmet>
+						<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
+						<meta name="theme-color" content="#ffffff" />
+						<meta property="og:type" content="website" />
+						<meta property="og:title" content="Bussiaeg.ee" />
+					</Helmet>
+					<Map />
+					<Switch>
+						<Route path="/search" component={Search} />
+						<Route path="/favorites" component={Favorites} />
+						<Route path="/settings" component={Settings} />
+						<Route path="/stop" component={Stop} />
+					</Switch>
+					<NavBar />
+				</Fragment>
+		</BrowserRouter>
+	</Provider>
+), document.getElementById('root'));
+
+// Disable navigating through elements with tab key.
+window.addEventListener('keydown', (e) => {
+	if (e.which === 9) e.preventDefault();
 });

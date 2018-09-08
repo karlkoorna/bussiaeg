@@ -7,8 +7,6 @@ import Gate from 'components/Gate.jsx';
 import Loader from 'components/Loader/Loader.jsx';
 import Icon, { colors } from 'components/Icon.jsx';
 
-import storeStops from 'stores/stops.js';
-
 import './Stop.css';
 
 @withRouter
@@ -17,7 +15,7 @@ import './Stop.css';
 export default class Stop extends Component {
 	
 	state = {
-		id: null,
+		id: '',
 		name: '',
 		direction: '',
 		type: '',
@@ -26,37 +24,39 @@ export default class Stop extends Component {
 	
 	interval = 0
 	
-	// Update trips if mounted.
-	fetchTrips = async () => {
-		const trips = await (await fetch(`${process.env['REACT_APP_API']}/trips?id=${this.state.id}`)).json();
-		if (this._isMounted) if (JSON.stringify(trips) !== JSON.stringify(this.state.trips)) this.setState({ trips });
-	}
-	
 	// Toggle favorite status.
 	favorite = () => {
-		this.props.storeFavorites.toggle(this.state.id);
+		
+		this.props.storeFavorites.toggle({
+			id: this.state.id,
+			name: this.state.name,
+			direction: this.state.direction,
+			type: this.state.type
+		});
+		
 	}
 	
-	componentWillMount() {
+	// Update trips if mounted.
+	fetchTrips = async () => {
+		if (this._isMounted) this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop=${this.state.id}`)).json() });
+	}
+	
+	async componentWillMount() {
 		
-		// Verify stop, redirect to home view if unsuccessful.
-		const stop = storeStops.get((new URLSearchParams(window.location.search)).get('id'));
-		if (!stop) return void this.props.history.push('/');
+		// Fetch and verify stop, redirect to home view if unsuccessful.
+		let stop = await (await fetch(`${process.env['REACT_APP_API']}/stops?id=${(new URLSearchParams(window.location.search)).get('id')}`)).json();
+		if (!stop.length) return void this.props.history.push('/');
+		stop = stop[0];
 		
 		// Load stop data into state.
-		this.setState({
-			id: stop.id,
-			name: stop.name,
-			direction: stop.direction,
-			type: stop.type
-		}, () => {
+		this.setState(stop, () => {
 			
 			const map = window.map;
 			
 			// Pan map to stop if outside view.
 			if (!map.getBounds().contains([ stop.lat, stop.lng ]) || map.getZoom() < 15) map.setView([ stop.lat, stop.lng ], 17);
 			
-			// Start updating trips (2s interval).
+			// Start fetching trips (with 2s interval).
 			this.fetchTrips();
 			this.interval = setInterval(this.fetchTrips, 2000);
 			
@@ -77,23 +77,29 @@ export default class Stop extends Component {
 		
 		const { id, name, direction, type, trips } = this.state;
 		const isFavorite = this.props.storeFavorites.has(id);
-		
+		console.log(isFavorite);
 		return (
 			<Fragment>
-				<Helmet>
-					<title>{name}</title>
-					<meta name="theme-color" content={colors[type][0]} />
-					<meta property="og:type" content="article" />
-					<meta property="og:title" content={`Bussiaeg.ee: ${name} - ${direction}`} />
-				</Helmet>
+				{id ? (
+					<Helmet>
+						<title>{name}</title>
+						<meta name="theme-color" content={colors[type][0]} />
+						<meta property="og:type" content="article" />
+						<meta property="og:title" content={`Bussiaeg.ee: ${name} - ${direction}`} />
+					</Helmet>
+				) : null}
 				<main id="stop" className="view is-visible">
 					<div id="stop-info">
-						<Icon id="stop-info-icon" shape="stop" type={type} />
-						<span id="stop-info-direction">{direction}</span>
-						<span id="stop-info-name">{name}</span>
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
-							<path fill={isFavorite ? '#f5557e' : '#bdbdbd'} stroke={isFavorite ? '#f22559' : '#b3b3b3'} strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
-						</svg>
+						{id ? (
+							<Fragment>
+								<Icon id="stop-info-icon" shape="stop" type={type} />
+								<span id="stop-info-direction">{direction}</span>
+								<span id="stop-info-name">{name}</span>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
+									<path fill="#bdbdbd" stroke="#b3b3b3" strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
+								</svg>
+							</Fragment>
+						) : null}
 					</div>
 					<div id="stop-trips">
 						<Gate check={trips}>

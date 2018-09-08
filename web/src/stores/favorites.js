@@ -3,26 +3,26 @@ import { observable, action, reaction } from 'mobx';
 export default new class StoreFavorites {
 	
 	@observable
-	ids = []
+	favorites = []
 	
 	@action
-	toggle(id) {
-		if (this.has(id)) this.ids.splice(this.ids.indexOf(id), 1); else this.ids.push(id);
+	toggle(favorite) {
+		if (this.has(favorite.id)) this.favorites.splice(this.favorites.findIndex((localFavorite) => localFavorite.id === favorite.id), 1); else this.favorites.push(favorite);
 	}
 	
 	has(id) {
-		return this.ids.indexOf(id) > -1;
+		return Boolean(this.favorites.find((favorite) => favorite.id === id));
 	}
 	
 	constructor() {
 		
-		this.ids = JSON.parse(localStorage.getItem('favorites')) || [];
+		this.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 		
 		reaction(() => ({
-			ids: this.ids,
-			length: this.ids.length
-		}), ({ ids }) => {
-			localStorage.setItem('favorites', JSON.stringify(ids));
+			favorites: this.favorites,
+			length: this.favorites.length
+		}), ({ favorites }) => {
+			localStorage.setItem('favorites', JSON.stringify(favorites));
 		});
 		
 	}
