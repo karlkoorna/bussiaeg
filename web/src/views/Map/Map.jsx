@@ -237,7 +237,7 @@ export default class Map extends Component {
 		this.dispose();
 	}
 	
-	render() {console.log(this.props.storeCoords.accuracy);
+	render() {
 		return (
 			<div id="map-container" className="view">
 				<div id="map"></div>
