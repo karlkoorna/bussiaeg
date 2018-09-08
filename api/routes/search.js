@@ -4,13 +4,13 @@ const db = require('../db.js');
 async function getSearch(req, res) {
 	
 	const { query, lat, lng } = req.query;
-	const params = lat && lng ? [ lat, lat, lng, `%${query || ''}%` ] : [ `%${query || ''}%` ];
+	const params = lat && lng ? [ lng, lat, `%${query || ''}%` ] : [ `%${query || ''}%` ];
 	
 	const [ stops, routes ] = await Promise.all([
 		db.query(`
 			SELECT
 				id, name, direction, type
-				${lat && lng ? ', ACOS(SIN(lat) * SIN(?) + COS(lat) * COS(?) * COS(? - lng)) * 6371000 AS distance' : ''}
+				${lat && lng ? ", ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(?, ?)) AS distance" : ''}
 			FROM stops
 			WHERE
 				type IS NOT NULL
@@ -21,7 +21,7 @@ async function getSearch(req, res) {
 		db.query(`
 			SELECT
 				route_id AS id, route.name, origin, destination, route.type
-				${lat && lng ? ', ACOS(SIN(stop.lat) * SIN(?) + COS(stop.lat) * COS(?) * COS(? - stop.lng)) * 6371000 AS distance' : ''}
+				${lat && lng ? ", ST_DISTANCE_SPHERE(POINT(stop.lng, stop.lat), POINT(?, ?)) AS distance" : ''}
 			FROM stop_routes
 			JOIN stops AS stop ON stop.id = stop_id
 			JOIN routes AS route ON route.id = route_id
