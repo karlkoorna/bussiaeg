@@ -90,20 +90,22 @@ export default class Stop extends Component {
 				) : null}
 				<main id="stop" className="view is-visible">
 					<div id="stop-info">
-						{id ? (
-							<Fragment>
-								<Icon id="stop-info-icon" shape="stop" type={type} />
-								<span id="stop-info-direction">{direction}</span>
-								<span id="stop-info-name">{name}</span>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
-									<path fill="#bdbdbd" stroke="#b3b3b3" strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
-								</svg>
-							</Fragment>
-						) : null}
+						<span className={id ? 'is-loaded' : ''}>
+							{id ? (
+								<Fragment>
+									<Icon id="stop-info-icon" shape="stop" type={type} />
+									<span id="stop-info-direction">{direction}</span>
+									<span id="stop-info-name">{name}</span>
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
+										<path fill="#bdbdbd" stroke="#b3b3b3" strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
+									</svg>
+								</Fragment>
+							) : null}
+						</span>
 					</div>
-					<div id="stop-trips">
+					<div id="stop-trips" className={trips.length ? 'is-loaded' : ''}>
 						<Gate check={trips}>
-							{trips.length ? trips.map((trip) => {
+							{trips.length ? trips.map((trip, i) => {
 								
 								const [ primaryColor, secondaryColor ] = colors[trip.type];
 								
