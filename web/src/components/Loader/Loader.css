@@ -3,7 +3,7 @@
 	width: 256px;
 	height: 100%;
 	margin: 0 auto;
-	animation: loader-fadeIn 1s cubic-bezier(1, 0, 1, 0);
+	animation: loader-fadeIn .5s linear forwards .25s;
 	opacity: 0;
 }
 
