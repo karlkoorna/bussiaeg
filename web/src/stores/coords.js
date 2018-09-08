@@ -18,7 +18,7 @@ export default new class StoreCoords {
 	
 	constructor() {
 		
-		navigator.geolocation.watchPosition((e) => {
+		if (navigator.geolocation) navigator.geolocation.watchPosition((e) => {
 			const { latitude: lat, longitude: lng, accuracy } = e.coords;
 			this._update(lat, lng, accuracy);
 		}, () => {}, {
