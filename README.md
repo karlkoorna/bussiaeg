@@ -96,7 +96,7 @@ Update all modules.
 $ ./update.sh
 ```
 
-Fill in `.env` module configuration file by example `.env.example` file.
+Fill in `.env` file by example `.env.example` file for all modules.
 
 Start all modules.
 
@@ -108,7 +108,8 @@ $ ./start.sh
 
 Redirect `devaeg.ee` and `api.devaeg.ee` to the local or public ip.
 
-Fill in `.env` module configuration file by example `.env.example` file.
+Fill in `.env` file by example `.env.example` file for all modules.\
+*HTTP headers do not work properly if the HTTPS certificate is invalid.*
 
 Start API module.
 
@@ -117,7 +118,8 @@ $ cd api
 $ npx nodemon
 ```
 
-Start Web module. Setting `NODE_ENV=development` will disable data updating.
+Start Web module.\
+*Setting `NODE_ENV=development` will disable data updating.*
 
 ```bash
 $ cd web
