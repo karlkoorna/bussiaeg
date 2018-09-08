@@ -91,7 +91,7 @@
 
 @media (pointer: fine) {
 	
-	.navbar-item:hover > svg {
+	.navbar-item:hover svg {
 		width: 38px;
 	}
 	

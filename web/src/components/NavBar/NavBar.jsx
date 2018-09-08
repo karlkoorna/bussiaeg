@@ -13,7 +13,7 @@ class NavBarItem extends PureComponent {
 	
 	navigate = () => {
 		
-		const { colors, to, children, history, location: { pathname } } = this.props;
+		const { to, children, history, location: { pathname } } = this.props;
 		
 		// Cancel if already active.
 		if (pathname === to) return;
