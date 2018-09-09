@@ -24,6 +24,10 @@ class NavBarItem extends PureComponent {
 		
 	}
 	
+	resetStyle = () => {
+		this.setState({ animation: '' });
+	}
+	
 	render() {
 		
 		const { to, colors, children } = this.props;
@@ -31,7 +35,7 @@ class NavBarItem extends PureComponent {
 		
 		return (
 			<li className="navbar-item" title={children} onMouseDown={this.navigate} onTouchStart={this.navigate}>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={this.state}>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={this.state} onAnimationEnd={this.resetStyle}>
 					{{
 						search: (
 							<Fragment>
