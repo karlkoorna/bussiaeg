@@ -77,7 +77,7 @@ export default class Stop extends Component {
 		
 		const { id, name, direction, type, trips } = this.state;
 		const isFavorite = this.props.storeFavorites.has(id);
-		console.log(isFavorite);
+		
 		return (
 			<Fragment>
 				{id ? (
