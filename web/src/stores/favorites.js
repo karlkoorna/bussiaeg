@@ -18,8 +18,10 @@ export default new class StoreFavorites {
 	
 	constructor() {
 		
+		// Restore favorites from local storage.
 		this.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 		
+		// Save favorites to local storage on change.
 		reaction(() => ({
 			favorites: this.favorites,
 			length: this.favorites.length

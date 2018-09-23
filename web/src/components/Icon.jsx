@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-// Colors for vehicle and stop icons.
+// Colors for vehicles and stops.
 export const colors = {
 	bus: [ '#66bb6a', '#4caf50' ],
 	trol: [ '#0091ea', '#0277bd' ],

@@ -12,6 +12,8 @@ export default class Scroller extends PureComponent {
 		positions[el.id] = el.scrollTop;
 	}
 	
+	// On mount restore position.
+	// On scroll update position.
 	componentDidMount() {
 		const el = this.el = ReactDOM.findDOMNode(this);
 		el.scrollTop = positions[el.id];

@@ -20,7 +20,8 @@ const opts = {
 	startLng: 24.753,
 	minZoom: 8,
 	maxZoom: 18,
-	accuracyTreshold: 512
+	accuracyTreshold: 512,
+	panTimeout: 1500
 };
 
 @withRouter
@@ -196,13 +197,14 @@ export default class Map extends Component {
 			accuracy: this.props.storeCoords.accuracy
 		}), ({ lat, lng, accuracy }) => {
 			
-			if (accuracy < opts.accuracyTreshold) {
+			// Overlay accuracy cases.
+			if (accuracy < opts.accuracyTreshold) { // Show overlay on high accuracy.
 				
 				marker.setLatLng([ lat, lng ]);
 				circle.setLatLng([ lat, lng ]);
 				circle.setRadius(accuracy);
 				
-			} else {
+			} else { // Hide overlay on low accuracy.
 				
 				marker.setLatLng([ 0, 0 ]);
 				circle.setLatLng([ 0, 0 ]);
@@ -210,8 +212,8 @@ export default class Map extends Component {
 				
 			}
 			
-			// Pan map if GPS found on load.
-			if (new Date() - timestamp < 1500) map.panTo([ lat, lng ]);
+			// Pan map if GPS found on load within timeout.
+			if (new Date() - timestamp < opts.panTimeout) map.panTo([ lat, lng ]);
 			
 			// Pan map if locating.
 			if (accuracy < opts.accuracyTreshold && this.state.isLocating) map.flyTo([ lat, lng ]);

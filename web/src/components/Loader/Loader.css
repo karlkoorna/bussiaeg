@@ -13,15 +13,15 @@
 }
 
 #loader-bus {
-	animation: loader-bounce .5s cubic-bezier(.25, .46, .45, .94) infinite;
+	animation: loader-bounce .6s cubic-bezier(.25, .46, .45, .94) infinite;
 }
 
 #loader-trol {
-	animation: loader-bounce .5s cubic-bezier(.25, .46, .45, .94) infinite .15s;
+	animation: loader-bounce .6s cubic-bezier(.25, .46, .45, .94) infinite .15s;
 }
 
 #loader-tram {
-	animation: loader-bounce .5s cubic-bezier(.25, .46, .45, .94) infinite .3s;
+	animation: loader-bounce .6s cubic-bezier(.25, .46, .45, .94) infinite .3s;
 }
 
 /* Animations */
