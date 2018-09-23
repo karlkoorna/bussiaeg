@@ -210,8 +210,11 @@ export default class Map extends Component {
 				
 			}
 			
+			// Pan map if GPS found on load.
+			if (new Date() - timestamp < 1500) map.panTo([ lat, lng ]);
+			
 			// Pan map if locating.
-			if (accuracy < opts.accuracyTreshold && (this.state.isLocating || new Date() - timestamp < 1500)) map.flyTo([ lat, lng ]);
+			if (accuracy < opts.accuracyTreshold && this.state.isLocating) map.flyTo([ lat, lng ]);
 			
 		}, { fireImmediately: true });
 		
