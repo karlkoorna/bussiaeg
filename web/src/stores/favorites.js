@@ -6,12 +6,14 @@ export default new class StoreFavorites {
 	favorites = []
 	
 	@action
-	toggle(favorite) {
-		if (this.has(favorite.id)) this.favorites.splice(this.favorites.findIndex((localFavorite) => localFavorite.id === favorite.id), 1); else this.favorites.push(favorite);
+	toggle(id, data) {
+		const index = this.favorites.findIndex((favorite) => favorite.id === id);
+		if (index > -1) this.favorites.splice(index, 1); else this.favorites.push(data);
+		return index < 0;
 	}
 	
-	has(id) {
-		return Boolean(this.favorites.find((favorite) => favorite.id === id));
+	exists(id) {
+		return this.favorites.findIndex((favorite) => favorite.id === id);
 	}
 	
 	constructor() {

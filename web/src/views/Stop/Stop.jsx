@@ -19,20 +19,23 @@ export default class Stop extends Component {
 		name: '',
 		direction: '',
 		type: '',
-		trips: []
+		trips: [],
+		isFavorite: false
 	}
 	
 	interval = 0
 	
 	// Toggle favorite status.
-	favorite = () => {
+	toggleFavorite = () => {
 		
-		this.props.storeFavorites.toggle({
+		const isFavorite = this.props.storeFavorites.toggle(this.state.id, {
 			id: this.state.id,
 			name: this.state.name,
 			direction: this.state.direction,
 			type: this.state.type
 		});
+		
+		this.setState({ isFavorite });
 		
 	}
 	
@@ -49,7 +52,10 @@ export default class Stop extends Component {
 		stop = stop[0];
 		
 		// Load stop data into state.
-		this.setState(stop, () => {
+		this.setState({
+			...stop,
+			isFavorite: this.props.storeFavorites.exists(stop.id)
+		}, () => {
 			
 			const map = window.map;
 			
@@ -75,8 +81,7 @@ export default class Stop extends Component {
 	
 	render() {
 		
-		const { id, name, direction, type, trips } = this.state;
-		const isFavorite = this.props.storeFavorites.has(id);
+		const { id, name, direction, type, trips, isFavorite } = this.state;
 		
 		return (
 			<Fragment>
@@ -95,7 +100,7 @@ export default class Stop extends Component {
 								<Icon id="stop-info-icon" shape="stop" type={type} />
 								<span id="stop-info-direction">{direction}</span>
 								<span id="stop-info-name">{name}</span>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.favorite}>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.toggleFavorite}>
 									<path fill="#bdbdbd" stroke="#b3b3b3" strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
 								</svg>
 							</Fragment>
