@@ -15,15 +15,7 @@
 	overflow: hidden;
 }
 
-#stop-info > span {
-	opacity: 0;
-}
-
-#stop-info > span.is-loaded {
-	animation: stop-fadeIn .15s linear forwards;
-}
-
-#stop-info > span > * {
+#stop-info > * {
 	position: absolute;
 }
 
@@ -79,11 +71,6 @@
 #stop-trips {
 	flex: 1;
 	overflow-y: scroll;
-	opacity: 0;
-}
-
-#stop-trips.is-loaded {
-	animation: stop-fadeIn .2s linear forwards;
 }
 
 .stop-trips-trip {
