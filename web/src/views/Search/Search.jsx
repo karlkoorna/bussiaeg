@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import SwipeableViews from 'react-swipeable-views';
 import Ink from 'react-ink';
@@ -26,7 +25,7 @@ function Result({ type, data }) {
 	);
 }
 
-@inject('storeSearch', 'storeCoords')
+@inject('storeSearch')
 @observer
 export default class Search extends Component {
 	
@@ -35,7 +34,7 @@ export default class Search extends Component {
 	
 	updateQuery = (e) => {
 		
-		this.props.storeSearch.query = e.target.value;
+		this.props.storeSearch.updateQuery(e.target.value);
 		
 		clearTimeout(this.debounce);
 		this.debounce = setTimeout(this.props.storeSearch.fetchResults, 250);
@@ -43,35 +42,24 @@ export default class Search extends Component {
 	}
 	
 	clearQuery = (e) => {
-		this.props.storeSearch.query = '';
+		this.props.storeSearch.updateQuery('');
 		this.props.storeSearch.fetchResults();
+	}
+	
+	changeType = (index) => {
+		this.props.storeSearch.updateType(index ? 'routes' : 'stops');
 	}
 	
 	hideKeyboard = (e) => {
 		if (e.which === 13) e.target.blur();
 	}
 	
-	updateType = (type) => {
-		this.props.storeSearch.type = type;
-	}
-	
-	swipeType = (index) => {
-		this.updateType(index ? 'routes' : 'stops');
-	}
-	
 	componentWillMount() {
-		
-		this.dispose = reaction(() => ({
-			lat: this.props.storeCoords.lat,
-			lng: this.props.storeCoords.lng
-		}), () => {
-			if (!this.props.storeSearch.query) this.props.storeSearch.fetchResults();
-		});
-		
+		this.props.storeSearch.startScanning();
 	}
 	
 	componentWillUnmount() {
-		this.dispose();
+		this.props.storeSearch.stopScanning();
 	}
 	
 	render() {
@@ -90,16 +78,16 @@ export default class Search extends Component {
 						<path stroke="#b3b3b3" strokeWidth="128" d="M92 92l840 840M932 92L92 932" />
 					</svg>
 					<div id="search-top-types">
-						<div className={'search-top-types-item' + (type === 'stops' ? ' is-active' : '')} onMouseDown={() => { this.updateType('stops'); }}>Stops
+						<div className={'search-top-types-item' + (type === 'stops' ? ' is-active' : '')} onMouseDown={() => { this.changeType(0); }}>Stops
 							<Gate><Ink hasTouch={false} background={false} opacity={.5} style={{ color: '#ffa94d' }} /></Gate>
 						</div>
-						<div className={'search-top-types-item' + (type === 'routes' ? ' is-active' : '')} onMouseDown={() => { this.updateType('routes'); }}>Routes
+						<div className={'search-top-types-item' + (type === 'routes' ? ' is-active' : '')} onMouseDown={() => { this.changeType(1); }}>Routes
 							<Gate><Ink hasTouch={false} background={false} opacity={.5} style={{ color: '#ffa94d' }} /></Gate>
 						</div>
 					</div>
 				</div>
 				<Scroller>
-					<SwipeableViews id="search-results" index={Number(type === 'routes')} onChangeIndex={this.swipeType}>
+					<SwipeableViews id="search-results" index={Number(type === 'routes')} onChangeIndex={this.changeType}>
 						<Gate check={results.stops}>
 							{results.stops.map((stop) => <Result type="stops" data={stop} key={stop.id} />)}
 						</Gate>

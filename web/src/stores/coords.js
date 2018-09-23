@@ -12,14 +12,14 @@ export default new class StoreCoords {
 	accuracy = 9999
 	
 	@action
-	_update(coords) {
+	update(coords) {
 		[ this.lat, this.lng, this.accuracy ] = [ coords.latitude || coords.lat, coords.longitude || coords.lng, coords.accuracy ];
 	}
 	
 	constructor() {
 		
 		if (navigator.geolocation) navigator.geolocation.watchPosition((e) => {
-			this._update(e.coords);
+			this.update(e.coords);
 		}, () => {}, {
 			enableHighAccuracy: true,
 			timeout: 100
