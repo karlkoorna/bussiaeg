@@ -78,7 +78,7 @@ export default class Map extends Component {
 			for (const marker of this.markers) marker.remove();
 			return void (this.markers = []);
 		} else { // Remove out of bounds markers.
-			window.test = this.markers
+			
 			for (const i in this.markers) {
 				const marker = this.markers[i];
 				
