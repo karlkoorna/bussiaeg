@@ -13,7 +13,7 @@ export default new class StoreCoords {
 	
 	@action
 	_update(coords) {
-		[ this.lat, this.lng, this.accuracy ] = [ coords.lat, coords.lng, coords.accuracy ];
+		[ this.lat, this.lng, this.accuracy ] = [ coords.latitude || coords.lat, coords.longitude || coords.lng, coords.accuracy ];
 	}
 	
 	constructor() {

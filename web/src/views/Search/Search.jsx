@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { when } from 'mobx';
+import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import SwipeableViews from 'react-swipeable-views';
 import Ink from 'react-ink';
@@ -55,12 +55,19 @@ export default class Search extends Component {
 		this.props.storeSearch.type = type;
 	}
 	
-	swipeType = (i) => {
-		this.updateType(i ? 'routes' : 'stops');
+	swipeType = (index) => {
+		this.updateType(index ? 'routes' : 'stops');
 	}
 	
 	componentWillMount() {
-		this.dispose = when(() => !this.props.storeSearch.query && this.props.storeCoords.lat && this.props.storeCoords.lng, this.props.storeSearch.fetchResults);
+		
+		this.dispose = reaction(() => ({
+			lat: this.props.storeCoords.lat,
+			lng: this.props.storeCoords.lng
+		}), () => {
+			if (!this.props.storeSearch.query) this.props.storeSearch.fetchResults();
+		});
+		
 	}
 	
 	componentWillUnmount() {
