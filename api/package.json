@@ -10,11 +10,11 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "dotenv": "^6.0.0",
-    "fastify": "^1.11.0",
+    "fastify": "^1.11.2",
     "forever": "^0.15.3",
     "fs-extra": "^6.0.1",
     "got": "^8.3.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "mysql": "^2.16.0",
     "nodemailer": "^4.6.8",
@@ -22,7 +22,7 @@
     "unzipper": "^0.8.14"
   },
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.4"
   },
   "scripts": {
     "start": "node app.js"
