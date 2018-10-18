@@ -78,7 +78,7 @@ Latest stable versions of all prerequisites are recommended.
 	Install Caddy with plugins.
 	
 	```bash
-	$ curl https://getcaddy.com | bash -s personal http.cors http.ipfilter http.ratelimit
+	$ curl https://getcaddy.com | bash -s personal http.cors http.ratelimit
 	$ ulimit -n 8192
 	```
 	
