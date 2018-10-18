@@ -18,6 +18,7 @@ export default new class StoreSearch {
 		routes: []
 	}
 	
+	// Start fetching nearby search results on location update.
 	startScanning() {
 		
 		this.dispose = reaction(() => ({
@@ -25,10 +26,11 @@ export default new class StoreSearch {
 			lng: storeCoords.lng
 		}), () => {
 			if (!this.query) this.fetchResults();
-		});
+		}, { fireImmediately: true });
 		
 	}
 	
+	// Stop fetching nearby search results on location update.
 	stopScanning() {
 		this.dispose();
 	}
@@ -46,8 +48,14 @@ export default new class StoreSearch {
 	@action.bound
 	async fetchResults() {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
-		const results = query || (lat && lng) ? await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() : {};
-		this.results = results;
+		
+		// Return on manual search or if coordinates unavailable.
+		if (query || !lat || !lng) return;
+		
+		// Fetch search results.
+		const results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json();
+		if (results) this.results = results;
+		
 	}
 	
 };
