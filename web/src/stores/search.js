@@ -49,12 +49,9 @@ export default new class StoreSearch {
 	async fetchResults() {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
 		
-		// Return on manual search or if coordinates unavailable.
-		if (query || !lat || !lng) return;
-		
 		// Fetch search results.
-		const results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json();
-		if (results) this.results = results;
+		const results = query || (lat && lng) ? await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() : { stops: [], routes: [] };
+		this.results = results;
 		
 	}
 	
