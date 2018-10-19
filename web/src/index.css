@@ -15,6 +15,28 @@ body {
 	overflow: hidden;
 }
 
+/* Reset */
+
+input {
+	border: none;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+/* Scrollbars */
+
+/* TODO: Implement custom scrollbar styles that adapt to the theme. */
+
+/* App */
+
 #app {
 	display: flex;
 	color: var(--fg-dark);
@@ -33,24 +55,8 @@ body {
 #app.theme-dark {
 	--fg-dark: #cecece;
 	--fg-light: #eaeaea;
-	--bg-dark: #1a1a1a;
+	--bg-dark: #181818;
 	--bg-light: #242424;
-}
-
-/* Reset */
-
-input {
-	border: none;
-}
-
-ul {
-	margin: 0;
-	padding: 0;
-}
-
-a {
-	color: inherit;
-	text-decoration: inherit;
 }
 
 /* View */

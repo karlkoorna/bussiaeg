@@ -64,5 +64,5 @@
 }
 
 .leaflet-container {
-	background: #f7f7f7 !important;
+	background: var(--bg) !important;
 }
