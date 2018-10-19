@@ -45,7 +45,7 @@ render((
 				</Fragment>
 		</BrowserRouter>
 	</Provider>
-), document.getElementById('root'));
+), document.getElementById('app'));
 
 // Disable navigating through elements with tab key.
 window.addEventListener('keydown', (e) => {

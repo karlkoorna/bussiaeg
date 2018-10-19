@@ -9,7 +9,7 @@
 	z-index: 1;
 	position: relative;
 	height: 64px;
-	background-color: white;
+	background-color: var(--bg-light);
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	font-weight: bold;
 	overflow: hidden;
@@ -38,7 +38,7 @@
 #stop-info-direction {
 	left: 65px;
 	bottom: 11px;
-	color: #707070;
+	color: var(--fg-dark);
 	font-size: 14px;
 }
 
@@ -128,7 +128,7 @@
 
 .stop-trips-trip-countdown,
 .stop-trips-trip-time {
-	right: 8px;
+	right: 14px;
 }
 
 .stop-trips-trip-countdown {
@@ -149,8 +149,8 @@
 
 .stop-trips-trip-time {
 	bottom: 10px;
-	color: #707070;
-	font-size: 18px;
+	color: var(--fg-dark);
+	font-size: 19px;
 }
 
 /* Animations */
@@ -168,7 +168,7 @@
 @media (pointer: fine) {
 	
 	.stop-trips-trip:hover {
-		background-color: #eee;
+		background-color: rgba(127, 127, 127, .1);
 	}
 	
 }

@@ -31,7 +31,7 @@ class NavBarItem extends PureComponent {
 	render() {
 		
 		const { to, colors, children } = this.props;
-		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ '#bdbdbd', '#b3b3b3' ];
+		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ 'rgba(127, 127, 127, .4)', 'rgba(127, 127, 127, .3)' ];
 		
 		return (
 			<li className="navbar-item" title={children} onMouseDown={this.navigate} onTouchStart={this.navigate}>

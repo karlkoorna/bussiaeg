@@ -5,7 +5,7 @@
 
 #search-top {
 	z-index: 1;
-	background-color: white;
+	background-color: var(--bg-light);
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	font-weight: bold;
 	flex: 0;
@@ -16,7 +16,8 @@
 	margin: 16px;
 	margin-bottom: 0;
 	padding: 12px 48px;
-	background-color: #f5f5f5;
+	background-color: var(--bg-dark);
+	color: var(--fg-light);
 	border-radius: 12px;
 	border: none;
 	font-size: 16px;
@@ -25,7 +26,7 @@
 #search-top-input + svg {
 	position: absolute;
 	left: 30px;
-	top: 24px;
+	top: 25px;
 	width: 24px;
 }
 
@@ -163,7 +164,7 @@
 @media (pointer: fine) {
 	
 	.search-results-result:hover {
-		background-color: #eee;
+		background-color: rgba(127, 127, 127, .1);
 	}
 	
 }

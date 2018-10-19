@@ -5,7 +5,7 @@
 
 html,
 body,
-#root {
+#app {
 	height: 100%;
 }
 
@@ -15,12 +15,26 @@ body {
 	overflow: hidden;
 }
 
-#root {
+#app {
 	display: flex;
-	color: #37474f;
+	color: var(--fg-dark);
 	font-family: Lato, Arial, Helvetica, sans-serif;
 	flex-direction: column;
 	-webkit-tap-highlight-color: transparent;
+}
+
+#app.theme-light {
+	--fg-dark: #37474f;
+	--fg-light: #707070;
+	--bg-dark: #f5f5f5;
+	--bg-light: white;
+}
+
+#app.theme-dark {
+	--fg-dark: #cecece;
+	--fg-light: #eaeaea;
+	--bg-dark: #1a1a1a;
+	--bg-light: #242424;
 }
 
 /* Reset */
@@ -45,5 +59,5 @@ a {
 	position: absolute;
 	width: 100%;
 	height: calc(100% - 64px);
-	background-color: #f5f5f5;
+	background-color: var(--bg-dark);
 }

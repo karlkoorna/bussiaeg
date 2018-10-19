@@ -13,6 +13,8 @@ import dragZoom from './dragZoom.js';
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
 
+const $app = document.getElementById('app');
+
 const opts = {
 	startZoom: 16,
 	zoomTreshold: 15,
@@ -35,6 +37,7 @@ export default class Map extends Component {
 		isLocating: false
 	}
 	
+	tileLayer = ''
 	dispose = null
 	markers = []
 	
@@ -125,6 +128,12 @@ export default class Map extends Component {
 		
 	}
 	
+	// Replace old tile layer with a new styled one.
+	updateTileLayer = () => {
+		if (this.tileLayer) this.tileLayer.remove();
+		this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + $app.className.slice(6).toUpperCase()]).addTo(window.map);
+	}
+	
 	componentDidMount() {
 		
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
@@ -170,8 +179,9 @@ export default class Map extends Component {
 			weight: 2
 		}).addTo(map);
 		
-		// Add third-party tile layer from configuration.
-		Leaflet.tileLayer(process.env['REACT_APP_MAP']).addTo(map);
+		// Add and update third-party tile layer from configuration when needed.
+		this.updateTileLayer();
+		(new MutationObserver(this.updateTileLayer)).observe($app, { attributes: true });
 		
 		// Redraw stops when available and on bounds change.
 		this.fetchStops();

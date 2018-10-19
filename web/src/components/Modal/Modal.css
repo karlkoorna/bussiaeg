@@ -27,7 +27,7 @@
 	min-height: 128px;
 	margin-bottom: 48px;
 	padding: 16px;
-	background-color: white;
+	background-color: var(--bg-light);
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
 }
@@ -64,13 +64,13 @@
 	font-weight: bold;
 	justify-content: center;
 	align-items: center;
-	transition: transform .25s ease;
+	transition: width .25s ease;
 	cursor: pointer;
 }
 
 #modal-buttons-cancel:hover,
 #modal-buttons-confirm:hover {
-	transform: scale(1.05);
+	width: 112px;
 }
 
 #modal-buttons-cancel {
@@ -83,7 +83,7 @@
 
 #modal-buttons-cancel.is-active,
 #modal-buttons-confirm.is-active {
-	transform: scale(1.2);
+	width: 100%;
 }
 
 /* Animations */
