@@ -50,8 +50,7 @@ export default new class StoreSearch {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
 		
 		// Fetch search results.
-		const results = query || (lat && lng) ? await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() : { stops: [], routes: [] };
-		this.results = results;
+		this.results = query || (lat && lng) ? await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() : { stops: [], routes: [] };
 		
 	}
 	
