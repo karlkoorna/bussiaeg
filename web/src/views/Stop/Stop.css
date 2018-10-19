@@ -88,7 +88,7 @@
 	width: calc(100% - 16px);
 	height: 1px;
 	margin: 0 8px;
-	background-color: rgba(0, 0, 0, .1);
+	background-color: rgba(127, 127, 127, .2);
 }
 
 .stop-trips-trip > * {
