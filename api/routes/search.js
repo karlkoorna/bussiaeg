@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const db = require('../db.js');
 
 // Get favorites by id.
@@ -10,7 +12,7 @@ async function getSearch(req, res) {
 		db.query(`
 			SELECT
 				id, name, direction, type
-				${lat && lng ? ", ROUND(ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(?, ?))) AS distance" : ''}
+				${lat && lng ? ', ROUND(ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(?, ?))) AS distance' : ''}
 			FROM stops
 			WHERE
 				type IS NOT NULL
@@ -19,29 +21,24 @@ async function getSearch(req, res) {
 			LIMIT 15
 		`, params),
 		db.query(`
-			SELECT id, name, origin, destination, route_type AS type
-			${lat && lng ? ', distance' : ''}
-			FROM (
-				SELECT
-					route_id AS id, route.name, origin, destination, route.type AS route_type, stop.type AS stop_type
-					${lat && lng ? ", ROUND(ST_DISTANCE_SPHERE(POINT(stop.lng, stop.lat), POINT(?, ?))) AS distance" : ''}
-				FROM stop_routes
-				JOIN stops AS stop ON stop.id = stop_id
-				JOIN routes AS route ON route.id = route_id
-				GROUP BY route_id
-				LIMIT 15
-			) AS stop_route
+			SELECT
+				route_id AS id, route.name, origin, destination, route.type
+				${lat && lng ? ', ROUND(ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(?, ?))) AS distance' : ''}
+			FROM stop_routes
+			JOIN stops AS stop ON stop.id = stop_id
+			JOIN routes AS route ON route.id = route_id
 			WHERE
-				stop_type IS NOT NULL
-				AND route_type IS NOT NULL
-				AND name LIKE ?
-				ORDER BY ${lat && lng ? 'distance,' : ''} LENGTH(name), name
+				stop.type IS NOT NULL
+				AND route.type IS NOT NULL
+				AND route.name LIKE ?
+			ORDER BY ${lat && lng ? 'distance, ' : ''} name
+			LIMIT 300
 		`, params)
 	]);
 	
 	res.send({
 		stops,
-		routes
+		routes: _.uniqBy(routes, 'id').slice(0, 15)
 	});
 	
 }
