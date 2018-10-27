@@ -35,6 +35,7 @@ a {
 
 #app {
 	display: flex;
+	background-color: var(--color-bg-dark);
 	color: var(--color-fg-dark);
 	font-family: Lato, Arial, Helvetica, sans-serif;
 	flex-direction: column;
