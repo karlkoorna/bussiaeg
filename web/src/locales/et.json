@@ -5,17 +5,17 @@
     "routes": "Liinid"
   },
   "favorites": {
-    "empty": "Lemmikpeatuseid pole lisatud"
+    "empty": "Lemmikpeatused puuduvad"
   },
   "stop": {
-    "empty": "Täna sõidukeid ei ole"
+    "empty": "Täna pole enam sõidukeid"
   },
   "map": {
     "zoom": "Bussiaeg.ee ei tööta väljaspool Eestit",
     "bounds": "Suumige sisse, et näha peatusi",
     "start": {
   	  "title": "Kinnita asukoht",
-  	  "text": "Location if geolocation unavailable"
+  	  "text": "GPSi puudumisel kasutatav algasukoht."
     }
   },
   "modal": {
