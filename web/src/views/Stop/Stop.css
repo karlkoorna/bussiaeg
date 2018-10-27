@@ -51,8 +51,8 @@
 	width: 64px;
 	height: 64px;
 	padding: 16px;
-	fill: #bdbdbd;
-	stroke: #b3b3b3;
+	fill: rgba(127, 127, 127, .4);
+	stroke: rgba(127, 127, 127, .2);
 	stroke-width: 100;
 	cursor: pointer;
 }
