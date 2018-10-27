@@ -71,11 +71,20 @@ export default class Map extends Component {
 		
 	}
 	
-	// Redraw stops and update message based on bounds.
+	// Update message based on bounds and redraw stops.
 	fetchStops = async () => {
 		
 		const map = window.map;
 		const { _southWest: { lat: lat_min, lng: lng_min }, _northEast: { lat: lat_max, lng: lng_max } } = map.getBounds();
+		
+		// Handle message cases.
+		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) {
+			this.setState({ message: 'Bussiaeg.ee ei toimi väljaspool Eestit' });
+		} else if (map.getZoom() < opts.zoomTreshold) {
+			this.setState({ message: 'Suumige sisse, et näha peatusi' });
+		} else {
+			if (this.state.message) this.setState({ message: '' });
+		}
 		
 		// Remove markers depending on bounds and zoom.
 		if (map.getZoom() < opts.zoomTreshold) { // Remove all markers.
@@ -116,15 +125,6 @@ export default class Map extends Component {
 			}
 			
 		});
-		
-		// Handle message cases.
-		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) {
-			this.setState({ message: 'Bussiaeg.ee ei toimi väljaspool Eestit' });
-		} else if (map.getZoom() < opts.zoomTreshold) {
-			this.setState({ message: 'Suumige sisse, et näha peatusi' });
-		} else {
-			if (this.state.message) this.setState({ message: '' });
-		}
 		
 	}
 	
