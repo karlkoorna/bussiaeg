@@ -1,11 +1,11 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import Ink from 'react-ink';
 
 import './NavBar.css';
 
 @withRouter
-class NavBarItem extends PureComponent {
+class NavBarItem extends Component {
 	
 	state = {
 		animation: ''

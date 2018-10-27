@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import './Modal.css';
 
-export default class Model extends PureComponent {
+export default class Model extends Component {
 	
 	// Add animation class to button and call function.
 	fire = (e, cb) => {

@@ -1,9 +1,9 @@
-import { PureComponent } from 'react';
+import { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 const positions = {};
 
-export default class Scroller extends PureComponent {
+export default class Scroller extends Component {
 	
 	el = null
 	
