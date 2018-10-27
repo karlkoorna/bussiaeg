@@ -4,8 +4,7 @@
 }
 
 #search-top {
-	z-index: 1;
-	background-color: var(--bg-light);
+	background-color: var(--color-bg-light);
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	font-weight: bold;
 	flex: 0;
@@ -16,8 +15,8 @@
 	margin: 16px;
 	margin-bottom: 0;
 	padding: 12px 48px;
-	background-color: var(--bg-dark);
-	color: var(--fg-light);
+	background-color: var(--color-bg-dark);
+	color: var(--color-fg-light);
 	border-radius: 12px;
 	border: none;
 	font-size: 16px;

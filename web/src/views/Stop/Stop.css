@@ -9,7 +9,7 @@
 	z-index: 1;
 	position: relative;
 	height: 64px;
-	background-color: var(--bg-light);
+	background-color: var(--color-bg-light);
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	font-weight: bold;
 	overflow: hidden;
@@ -38,7 +38,7 @@
 #stop-info-direction {
 	left: 65px;
 	bottom: 11px;
-	color: var(--fg-dark);
+	color: var(--color-fg-dark);
 	font-size: 14px;
 }
 
@@ -149,7 +149,7 @@
 
 .stop-trips-trip-time {
 	bottom: 10px;
-	color: var(--fg-dark);
+	color: var(--color-fg-dark);
 	font-size: 19px;
 }
 

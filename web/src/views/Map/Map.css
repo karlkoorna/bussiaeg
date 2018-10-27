@@ -1,10 +1,3 @@
-#map-container {
-	position: absolute;
-	width: 100%;
-	height: calc(100% - 64px);
-	overflow: hidden;
-}
-
 #map {
 	z-index: 0;
 	width: 100%;
@@ -18,12 +11,16 @@
 	top: 32px;
 	width: 100%;
 	padding: 8px;
-	background-color: rgba(0, 0, 0, .4);
+	background-color: rgba(0, 0, 0, .45);
 	color: white;
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;
 	pointer-events: none;
+}
+
+#app.theme-dark #map-message {
+	background-color: rgba(127, 127, 127, .45);
 }
 
 #map-message:empty {
@@ -47,22 +44,33 @@
 	cursor: pointer;
 }
 
+#app.theme-dark #map-locate {
+	background-color: var(--color-bg-light);
+}
+
 #map-locate.is-visible {
 	right: 16px;
 }
 
 #map-locate.is-active {
-	border-color: #00bfff;
+	border-color: #00e6ad;
 }
 
 /* Leaflet */
 
 .leaflet-control-attribution {
 	padding-bottom: 2px;
-	background-color: rgba(255, 255, 255, .5) !important;
+	background-color: transparent !important;
+	color: deepskyblue !important;
 	border-bottom-left-radius: 3px;
+	font-weight: bold;
+	opacity: .75;
+}
+
+.leaflet-control-attribution > a {
+	color: inherit !important;
 }
 
 .leaflet-container {
-	background: var(--bg) !important;
+	background: var(--color-bg-dark) !important;
 }

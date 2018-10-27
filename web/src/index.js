@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { Helmet } from 'react-helmet';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
 

@@ -31,32 +31,28 @@ a {
 	text-decoration: inherit;
 }
 
-/* Scrollbars */
-
-/* TODO: Implement custom scrollbar styles that adapt to the theme. */
-
 /* App */
 
 #app {
 	display: flex;
-	color: var(--fg-dark);
+	color: var(--color-fg-dark);
 	font-family: Lato, Arial, Helvetica, sans-serif;
 	flex-direction: column;
 	-webkit-tap-highlight-color: transparent;
 }
 
 #app.theme-light {
-	--fg-dark: #37474f;
-	--fg-light: #707070;
-	--bg-dark: #f5f5f5;
-	--bg-light: white;
+	--color-fg-dark: #37474f;
+	--color-fg-light: #707070;
+	--color-bg-dark: #f5f5f5;
+	--color-bg-light: white;
 }
 
 #app.theme-dark {
-	--fg-dark: #cecece;
-	--fg-light: #eaeaea;
-	--bg-dark: #181818;
-	--bg-light: #242424;
+	--color-fg-dark: #cecece;
+	--color-fg-light: #eaeaea;
+	--color-bg-dark: #181818;
+	--color-bg-light: #242424;
 }
 
 /* View */
@@ -65,5 +61,6 @@ a {
 	position: absolute;
 	width: 100%;
 	height: calc(100% - 64px);
-	background-color: var(--bg-dark);
+	background-color: var(--color-bg-dark);
+	overflow: hidden;
 }

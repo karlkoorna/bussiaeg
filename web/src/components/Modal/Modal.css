@@ -27,7 +27,7 @@
 	min-height: 128px;
 	margin-bottom: 48px;
 	padding: 16px;
-	background-color: var(--bg-light);
+	background-color: var(--color-bg-light);
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
 }
