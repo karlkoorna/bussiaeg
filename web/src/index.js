@@ -24,7 +24,8 @@ import './index.css';
 const stores = {
 	storeCoords,
 	storeSearch,
-	storeFavorites
+	storeFavorites,
+	storeSettings
 };
 
 render((
