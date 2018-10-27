@@ -56,7 +56,8 @@
 #modal-buttons-confirm {
 	display: flex;
 	width: 96px;
-	height: 32px;
+	height: 33px;
+	padding-bottom: 1px;
 	margin: 0 8px;
 	color: white;
 	border-radius: 3px;

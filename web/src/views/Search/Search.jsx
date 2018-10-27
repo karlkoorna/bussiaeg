@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import { withNamespaces } from 'react-i18next';
 import SwipeableViews from 'react-swipeable-views';
 import Ink from 'react-ink';
 
@@ -25,6 +26,7 @@ function Result({ type, data }) {
 	);
 }
 
+@withNamespaces()
 @inject('storeSearch')
 @observer
 export default class Search extends Component {
@@ -64,12 +66,13 @@ export default class Search extends Component {
 	
 	render() {
 		
+		const t = this.props.t;
 		const { query, type, results } = this.props.storeSearch;
 		
 		return (
 			<main id="search" className="view">
 				<div id="search-top">
-					<input id="search-top-input" value={query} placeholder="Search..." autoComplete="off" required onKeyDown={this.hideKeyboard} onChange={this.updateQuery} />
+					<input id="search-top-input" value={query} placeholder={t('search.search')} autoComplete="off" required onKeyDown={this.hideKeyboard} onChange={this.updateQuery} />
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 						<path stroke="#b3b3b3" strokeWidth="125" d="M650.7 650.7l321 321" />
 						<circle fill="transparent" stroke="#bdbdbd" strokeWidth="100" cx="399.3" cy="399.3" r="347" />
@@ -78,10 +81,10 @@ export default class Search extends Component {
 						<path stroke="#b3b3b3" strokeWidth="128" d="M92 92l840 840M932 92L92 932" />
 					</svg>
 					<div id="search-top-types">
-						<div className={'search-top-types-item' + (type === 'stops' ? ' is-active' : '')} onMouseDown={() => { this.changeType(0); }}>Stops
+						<div className={'search-top-types-item' + (type === 'stops' ? ' is-active' : '')} onMouseDown={() => { this.changeType(0); }}>{t('search.stops')}
 							<Gate><Ink hasTouch={false} background={false} opacity={.5} style={{ color: '#ffa94d' }} /></Gate>
 						</div>
-						<div className={'search-top-types-item' + (type === 'routes' ? ' is-active' : '')} onMouseDown={() => { this.changeType(1); }}>Routes
+						<div className={'search-top-types-item' + (type === 'routes' ? ' is-active' : '')} onMouseDown={() => { this.changeType(1); }}>{t('search.routes')}
 							<Gate><Ink hasTouch={false} background={false} opacity={.5} style={{ color: '#ffa94d' }} /></Gate>
 						</div>
 					</div>

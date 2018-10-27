@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import { withNamespaces } from 'react-i18next';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Icon, { colors } from 'components/Icon.jsx';
 
 import './Favorites.css';
 
+@withNamespaces()
 @inject('storeFavorites')
 @observer
 export default class Favorites extends Component {
@@ -24,6 +26,7 @@ export default class Favorites extends Component {
 	
 	render() {
 		
+		const t = this.props.t;
 		const favorites = this.props.storeFavorites.favorites;
 		
 		return (
@@ -47,7 +50,7 @@ export default class Favorites extends Component {
 								</Draggable>
 							)) : (
 								<div className="view-empty">
-									No favorites added
+									{t('favorites.empty')}
 								</div>
 							)}
 							{provided.placeholder}

@@ -31,10 +31,10 @@ class NavBarItem extends Component {
 	render() {
 		
 		const { to, colors, children } = this.props; // 	fill: rgba(127, 127, 127, .4); stroke: rgba(127, 127, 127, .2);
-		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ 'rgba(127, 127, 127, .4)', 'rgba(127, 127, 127, .2)' ]; 
+		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : [ 'rgba(127, 127, 127, .4)', 'rgba(127, 127, 127, .2)' ];
 		
 		return (
-			<li className="navbar-item" title={children} onMouseDown={this.navigate} onTouchStart={this.navigate}>
+			<li className="navbar-item" onMouseDown={this.navigate} onTouchStart={this.navigate}>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={this.state} onAnimationEnd={this.resetStyle}>
 					{{
 						search: (

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { withNamespaces } from 'react-i18next';
 import { CSSTransition } from 'react-transition-group';
 
 import './Modal.css';
 
+@withNamespaces()
 export default class Model extends Component {
 	
 	// Add animation class to button and call function.
@@ -23,6 +25,9 @@ export default class Model extends Component {
 	}
 	
 	render() {
+		
+		const t = this.props.t;
+		
 		return (
 			<CSSTransition in={this.props.isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 300, exit: 170 }} onExited={this.onExited} unmountOnExit>
 				<div id="modal-container" onMouseDown={this.props.onCancel}>
@@ -30,13 +35,14 @@ export default class Model extends Component {
 						<div id="modal-title">{this.props.title}</div>
 						<div id="modal-text">{this.props.text}</div>
 						<div id="modal-buttons">
-							<div id="modal-buttons-cancel" onMouseDown={(e) => this.fire(e, this.props.onCancel)}>Tühista</div>
-							<div id="modal-buttons-confirm" onMouseDown={(e) => this.fire(e, this.props.onConfirm)}>Kinnita</div>
+							<div id="modal-buttons-cancel" onMouseDown={(e) => this.fire(e, this.props.onCancel)}>{t('modal.cancel')}</div>
+							<div id="modal-buttons-confirm" onMouseDown={(e) => this.fire(e, this.props.onConfirm)}>{t('modal.confirm')}</div>
 						</div>
 					</div>
 				</div>
 			</CSSTransition>
 		);
+		
 	}
 	
 };

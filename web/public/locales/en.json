@@ -1,0 +1,25 @@
+{
+  "search": {
+    "search": "Search...",
+    "stops": "Stops",
+    "routes": "Routes"
+  },
+  "favorites": {
+    "empty": "No favorites added"
+  },
+  "stop": {
+    "empty": "No arrivals today"
+  },
+  "map": {
+    "zoom": "Bussiaeg.ee does not work outside Estonia",
+    "bounds": "Zoom in to see stops",
+    "start": {
+      "title": "Confirm location",
+      "text": "Location if geolocation unavailable"
+    }
+  },
+  "modal": {
+	"cancel": "Cancel",
+	"confirm": "Confirm"
+  }
+}

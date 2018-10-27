@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { Helmet } from 'react-helmet';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
 
@@ -16,6 +15,9 @@ import Stop from 'views/Stop/Stop.jsx';
 import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
+import storeSettings from 'stores/settings.js';
+
+import i18n from './i18n.js';
 
 import './index.css';
 
@@ -28,22 +30,22 @@ const stores = {
 render((
 	<Provider {...stores}>
 		<BrowserRouter>
-				<Fragment>
-					<Helmet>
-						<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
-						<meta name="theme-color" content="#ffffff" />
-						<meta property="og:type" content="website" />
-						<meta property="og:title" content="Bussiaeg.ee" />
-					</Helmet>
-					<Map />
-					<Switch>
-						<Route path="/search" component={Search} />
-						<Route path="/favorites" component={Favorites} />
-						<Route path="/settings" component={Settings} />
-						<Route path="/stop" component={Stop} />
-					</Switch>
-					<NavBar />
-				</Fragment>
+			<Fragment>
+				<Helmet>
+					<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
+					<meta name="theme-color" content="#ffffff" />
+					<meta property="og:type" content="website" />
+					<meta property="og:title" content="Bussiaeg.ee" />
+				</Helmet>
+				<Map />
+				<Switch>
+					<Route path="/search" component={Search} />
+					<Route path="/favorites" component={Favorites} />
+					<Route path="/settings" component={Settings} />
+					<Route path="/stop" component={Stop} />
+				</Switch>
+				<NavBar />
+			</Fragment>
 		</BrowserRouter>
 	</Provider>
 ), document.getElementById('app'));

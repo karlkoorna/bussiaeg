@@ -1,15 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import { withNamespaces } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
-import Gate from 'components/Gate.jsx';
 import Loader from 'components/Loader/Loader.jsx';
 import Icon, { colors } from 'components/Icon.jsx';
 
 import './Stop.css';
 
 @withRouter
+@withNamespaces()
 @inject('storeFavorites')
 @observer
 export default class Stop extends Component {
@@ -82,6 +83,7 @@ export default class Stop extends Component {
 	
 	render() {
 		
+		const t = this.props.t;
 		const { id, name, direction, type, trips, isFavorite, isLoading } = this.state;
 		
 		return (
@@ -137,7 +139,7 @@ export default class Stop extends Component {
 							
 						}) : (
 							<div className="view-empty">
-								No arrivals today
+								{t('stop.empty')}
 							</div>
 						)}
 					</div>
