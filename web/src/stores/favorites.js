@@ -13,7 +13,7 @@ export default new class StoreFavorites {
 	}
 	
 	exists(id) {
-		return this.favorites.findIndex((favorite) => favorite.id === id);
+		return this.favorites.findIndex((favorite) => favorite.id === id) > -1;
 	}
 	
 	constructor() {
