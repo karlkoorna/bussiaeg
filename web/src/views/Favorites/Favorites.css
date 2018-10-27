@@ -6,22 +6,6 @@
 	overflow-y: scroll;
 }
 
-#favorites-empty {
-	display: flex;
-	width: 100%;
-	height: 100%;
-	color: var(--color-fg-dark);
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-
-#favorites-empty-icon {
-	width: 128px;
-	margin-top: -32px;
-	margin-bottom: 64px;
-}
-
 /* Stops */
 
 .favorites-stop-container {
