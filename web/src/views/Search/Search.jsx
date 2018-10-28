@@ -74,11 +74,11 @@ export default class Search extends Component {
 				<div id="search-top">
 					<input id="search-top-input" value={query} placeholder={t('search.search')} autoComplete="off" required onKeyDown={this.hideKeyboard} onChange={this.updateQuery} />
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-						<path stroke="#b3b3b3" strokeWidth="125" d="M650.7 650.7l321 321" />
-						<circle fill="transparent" stroke="#bdbdbd" strokeWidth="100" cx="399.3" cy="399.3" r="347" />
+						<path strokeWidth="125" d="M650.7 650.7l321 321" />
+						<circle fill="transparent" strokeWidth="100" cx="399.3" cy="399.3" r="347" />
 					</svg>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" onMouseDown={this.clearQuery}>
-						<path stroke="#b3b3b3" strokeWidth="128" d="M92 92l840 840M932 92L92 932" />
+						<path strokeWidth="128" d="M92 92l840 840M932 92L92 932" />
 					</svg>
 					<div id="search-top-types">
 						<div className={'search-top-types-item' + (type === 'stops' ? ' is-active' : '')} onMouseDown={() => { this.changeType(0); }}>{t('search.stops')}

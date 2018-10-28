@@ -16,7 +16,7 @@
 	margin-bottom: 0;
 	padding: 12px 48px;
 	background-color: var(--color-bg-dark);
-	color: var(--color-fg-light);
+	color: var(--color-fg-dark);
 	border-radius: 12px;
 	border: none;
 	font-size: 16px;
@@ -31,6 +31,24 @@
 
 #search-top-input + svg > * {
 	transition: stroke .15s linear;
+}
+
+#search-top-input + svg > path,
+#search-top-input + svg + svg > path {
+	stroke: #b3b3b3;
+}
+
+#search-top-input + svg > circle {
+	stroke: #bdbdbd;
+}
+
+#app.theme-dark #search-top-input + svg > path,
+#app.theme-dark #search-top-input + svg + svg > path {
+	stroke: #606060;
+}
+
+#app.theme-dark #search-top-input + svg > circle {
+	stroke: #707070;
 }
 
 #search-top-input:focus + svg {
