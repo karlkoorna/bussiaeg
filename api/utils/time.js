@@ -9,7 +9,7 @@ function toSeconds(hms) {
 }
 
 // Converts seconds to raw hour, minute and second values.
-function toHMS(seconds) {
+function toTime(seconds) {
 	const hours = Math.floor(seconds / 3600);
 	const minutes = Math.floor((seconds % 3600) / 60);
 	return [ hours, minutes, seconds - (minutes * 60) - (hours * 3600) ];
@@ -17,20 +17,12 @@ function toHMS(seconds) {
 
 // Converts seconds to countdown from current time.
 function toCountdown(seconds) {
-	const diff = seconds - getSeconds();
-	const hms = toHMS(Math.abs(diff));
-	return (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m` : '0m');
-}
-
-// Converts seconds to HH:mm.
-function toTime(seconds) {
-	const hms = toHMS(seconds);
-	return `${hms[0].toString().padStart(2, '0')}:${hms[1].toString().padStart(2, '0')}`;
+	return toTime(Math.abs(seconds - getSeconds()));
 }
 
 module.exports = {
 	getSeconds,
 	toSeconds,
-	toCountdown,
-	toTime
+	toTime,
+	toCountdown
 };

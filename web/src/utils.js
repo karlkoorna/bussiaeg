@@ -17,3 +17,12 @@ export function withTheme(C) {
 	};
 };
 
+// Convert HMS to time format.
+export function formatTime(hms) {
+	return hms[0].toString().padStart(2, '0') + ':' + hms[1].toString().padStart(2, '0');
+};
+
+// Convert HMS to countdown format.
+export function formatCountdown(hms) {
+	return (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m` : '0m');
+};
