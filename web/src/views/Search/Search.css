@@ -55,11 +55,11 @@
 	animation: search-pulse 1s linear infinite;
 }
 
-#search-top-input:focus + svg path {
+#search-top-input:focus + svg > path {
 	stroke: #ff8400;
 }
 
-#search-top-input:focus + svg circle {
+#search-top-input:focus + svg > circle {
 	stroke: #ffa94d;
 }
 
