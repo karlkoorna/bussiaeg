@@ -2,9 +2,12 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import Ink from 'react-ink';
 
+import { withTheme } from 'utils.js';
+
 import './NavBar.css';
 
 @withRouter
+@withTheme
 class NavBarItem extends Component {
 	
 	state = {
@@ -26,6 +29,10 @@ class NavBarItem extends Component {
 	
 	resetStyle = () => {
 		this.setState({ animation: '' });
+	}
+	
+	themeChange = () => {
+		this.forceUpdate();
 	}
 	
 	render() {

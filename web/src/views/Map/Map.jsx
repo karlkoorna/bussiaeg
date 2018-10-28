@@ -6,6 +6,8 @@ import { inject, observer } from 'mobx-react';
 import { withNamespaces } from 'react-i18next';
 import Leaflet from 'leaflet';
 
+import { withTheme } from 'utils.js';
+
 import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
 
@@ -27,8 +29,9 @@ const opts = {
 	panTimeout: 1500
 };
 
-@withRouter
 @withNamespaces()
+@withRouter
+@withTheme
 @inject('storeCoords')
 @observer
 export default class Map extends Component {
@@ -131,8 +134,8 @@ export default class Map extends Component {
 		
 	}
 	
-	// Replace old tile layer with a new styled one.
-	updateTileLayer = () => {
+	// Update map tile layer.
+	themeChange = () => {
 		if (this.tileLayer) this.tileLayer.remove();
 		this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + $app.className.slice(6).toUpperCase()]).addTo(window.map);
 	}
@@ -182,9 +185,8 @@ export default class Map extends Component {
 			weight: 2
 		}).addTo(map);
 		
-		// Add and update third-party tile layer from configuration when needed.
-		this.updateTileLayer();
-		(new MutationObserver(this.updateTileLayer)).observe($app, { attributes: true });
+		// Load tile layer.
+		this.themeChange();
 		
 		// Redraw stops when available and on bounds change.
 		this.fetchStops();
