@@ -65,14 +65,10 @@ async function getTrips(req, res) {
 	for (const trips of tripz) for (let i = 0; i < trips.length; i++) {
 		const trip = trips[i];
 		
-		// Fix timezone difference.
-		const tzTime = time.toTime(trip.time);
-		tzTime[0] -= ((new Date()).getTimezoneOffset() === -120 ? 1 : 0); // UTC-2
-		
 		trips[i] = {
 			countdown: time.toCountdown(trip.time),
 			...trip,
-			time: tzTime
+			time: time.toTime(trip.time)
 		};
 		
 	}
