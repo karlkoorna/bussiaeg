@@ -10,7 +10,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "dotenv": "^6.1.0",
-    "fastify": "^1.12.1",
+    "fastify": "^1.13.0",
     "forever": "^0.15.3",
     "fs-extra": "^6.0.1",
     "got": "^8.3.1",
@@ -22,7 +22,7 @@
     "unzipper": "^0.8.14"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.6"
   },
   "scripts": {
     "start": "node app.js"
