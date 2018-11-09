@@ -157,7 +157,8 @@ export default class Map extends Component {
 			bounceAtZoomLimits: false,
 			attributionControl: false,
 			boxZoom: false,
-			keyboard: false
+			keyboard: false,
+			inertia: false
 		});
 		
 		const $map = map._container;
