@@ -17,12 +17,22 @@ export function withTheme(C) {
 	};
 };
 
+// Converts seconds to raw hour, minute and second values.
+function secondsToShms(seconds) {
+	const absSeconds = Math.abs(seconds);
+	const hours = Math.floor(absSeconds / 3600);
+	const minutes = Math.floor((absSeconds % 3600) / 60);
+	return [ seconds < 0, hours, minutes, absSeconds - (minutes * 60) - (hours * 3600) ];
+}
+
 // Convert HMS to time format.
-export function formatTime(hms) {
-	return hms[0].toString().padStart(2, '0') + ':' + hms[1].toString().padStart(2, '0');
+export function formatTime(seconds) {
+	const shms = secondsToShms(seconds);
+	return (shms[0] ? '-' : '') + shms[1].toString().padStart(2, '0') + ':' + shms[2].toString().padStart(2, '0');
 };
 
 // Convert HMS to countdown format.
-export function formatCountdown(hms) {
-	return (hms[0] ? `${hms[0]}h ` : '') + (hms[1] ? `${hms[1]}m` : '0m');
+export function formatCountdown(seconds) {
+	const shms = secondsToShms(seconds);
+	return (shms[0] ? '-' : '') + (shms[1] ? `${shms[1]}h ` : '') + (shms[2] ? `${shms[2]}m` : '0m');
 };
