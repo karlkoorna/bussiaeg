@@ -38,7 +38,6 @@ CREATE TABLE trips (
 	id MEDIUMINT(6) NOT NULL,
 	route_id CHAR(32) NOT NULL,
 	service_id MEDIUMINT(6) NOT NULL,
-	direction NVARCHAR(16) NOT NULL,
 	origin NVARCHAR(32) NOT NULL,
 	destination NVARCHAR(32) NOT NULL,
 	PRIMARY KEY (id)
