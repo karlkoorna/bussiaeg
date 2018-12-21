@@ -42,7 +42,7 @@ export default class Favorites extends Component {
 												<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
 												<div>
 													<div className="favorites-stop-name">{favorite.name}</div>
-													<div className="favorites-stop-direction">{favorite.direction}</div>
+													<div className="favorites-stop-description">{favorite.description}</div>
 												</div>
 											</Link>
 										</div>

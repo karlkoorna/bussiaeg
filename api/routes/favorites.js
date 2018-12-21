@@ -38,11 +38,11 @@ module.exports = (fastify, opts, next) => {
 				maxItems: 32,
 				items: {
 					type: 'object',
-					required: [ 'id', 'name', 'direction' ],
+					required: [ 'id', 'name', 'description' ],
 					properties: {
 						id: { type: 'string', minLength: 3, maxLength: 32 },
 						name: { type: 'string', minLength: 1, maxLength: 32 },
-						direction: { type: 'string', minLength: 1, maxLength: 32 }
+						description: { type: 'string', minLength: 1, maxLength: 32 }
 					}
 				}
 			}

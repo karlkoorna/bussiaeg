@@ -6,25 +6,24 @@ const time = require('../utils/time.js');
 // Get trips for stop.
 async function getTrips(id) {
 	
-	const now = time.getSeconds();
+	const now = time.getSeconds(); // TODO: IMPLEMENT REALTIME
+	const data = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
 	
-	return (await cache.use('elron-stops', id, async () => {
-		
-		const data = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
-		
-		if (!data) throw new Error("Provider 'Elron' is not returning data");
-		if (data.text) throw new Error(data.text);
-		
-		return data.map((trip) => ({
-			time: time.toSeconds(trip.plaaniline_aeg),
-			name: trip.reis,
-			destination: trip.liin,
-			type: 'train',
-			live: false,
-			provider: 'elron'
-		}));
-		
-	})).filter((trip) => trip.time > now).slice(0, 15);
+	if (!data) throw new Error("Provider 'Elron' is not returning data");
+	if (data.text) throw new Error(data.text);
+	
+	const trips = [];
+	
+	for (const trip of data) if (!trip.tegelik_aeg) trips.push({
+		time: time.toSeconds(trip.plaaniline_aeg),
+		name: trip.reis,
+		destination: trip.liin,
+		type: 'train',
+		live: false,
+		provider: 'elron'
+	});
+	
+	return trips.slice(0, 15);
 	
 };
 
@@ -43,8 +42,7 @@ async function getRoute(id) {
 			stops: data.map((trip) => ({
 				id: trip.peatus,
 				name: trip.peatus,
-				type: 'train',
-				time: trip.plaaniline_aeg
+				type: 'train'
 			}))
 		};
 		

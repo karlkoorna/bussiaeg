@@ -15,7 +15,7 @@ module.exports = () => {
 		let query = 'START TRANSACTION;';
 		
 		// Get the most common destination for all trips serving a stop;
-		for (const stop of stops) query += `UPDATE stops SET direction = '${_.max(Object.entries(_.countBy(stop.destinations.split(','))))[0]}' WHERE id = '${stop.stop_id}';`;
+		for (const stop of stops) query += `UPDATE stops SET description = '${_.max(Object.entries(_.countBy(stop.destinations.split(','))))[0]}' WHERE id = '${stop.stop_id}';`;
 		
 		await db.query(`${query}COMMIT;`);
 		resolve();

@@ -18,7 +18,7 @@ function Result({ type, data }) {
 				<Icon className={`search-results-result-icon is-${type}`} shape={[ 'stop', 'vehicle' ][Number(type === 'routes')]} type={data.type} />
 				<div style={{ color: colors[data.type][0] }}>
 					<div className="search-results-result-name">{data.name}</div>
-					<div className="search-results-result-area">{data.direction || (data.origin && data.destination ? `${data.origin} - ${data.destination}` : '')}</div>
+					<div className="search-results-result-area">{data.description || (data.origin && data.destination ? `${data.origin} - ${data.destination}` : '')}</div>
 				</div>
 				<div className="search-results-result-distance">~{data.distance ? data.distance >= 100000 ? `${Math.round(data.distance / 10000) * 10}km` : data.distance >= 10000 ? `${(data.distance / 1000).toFixed()}km` : data.distance >= 1000 ? `${(data.distance / 1000).toFixed(1)}km` : `${Math.round(data.distance / 10) * 10}m` : ''}</div>
 			</Link>

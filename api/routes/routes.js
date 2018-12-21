@@ -7,7 +7,7 @@ const elron = require('../providers/elron.js');
 // Get route by parameters.
 async function getRoutes(req, res) {
 	
-	const { stop: stopId, name, type, provider } = req.query;
+	const { stop_id: stopId, name, type, provider } = req.query;
 	
 	res.send(await cache.use('routes', `${stopId}-${name}-${type}`, async () => {
 		

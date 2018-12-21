@@ -9,7 +9,7 @@ LOAD DATA LOCAL INFILE 'tmp/elron.csv' INTO TABLE stops FIELDS TERMINATED BY ','
 (@name, @desc, @lat, @lng) SET
 id = @name,
 name = @name,
-direction = @desc,
+description = @desc,
 lat = @lat,
 lng = @lng,
 type = 'train',

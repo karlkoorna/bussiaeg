@@ -10,9 +10,9 @@ DROP TABLE IF EXISTS favorites;
 CREATE TABLE stops (
 	id NVARCHAR(32) NOT NULL,
 	name NVARCHAR(32) NOT NULL,
+	description NVARCHAR(32),
 	lat DECIMAL(10, 8) NOT NULL,
 	lng DECIMAL(11, 8) NOT NULL,
-	direction NVARCHAR(32),
 	type VARCHAR(16),
 	region VARCHAR(32),
 	PRIMARY KEY (id),
@@ -38,7 +38,7 @@ CREATE TABLE trips (
 	id MEDIUMINT(6) NOT NULL,
 	route_id CHAR(32) NOT NULL,
 	service_id MEDIUMINT(6) NOT NULL,
-	wheelchair BOOL NOT NULL,
+	direction NVARCHAR(16) NOT NULL,
 	origin NVARCHAR(32) NOT NULL,
 	destination NVARCHAR(32) NOT NULL,
 	PRIMARY KEY (id)

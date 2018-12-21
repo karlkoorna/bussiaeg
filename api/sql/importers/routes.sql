@@ -6,7 +6,7 @@ origin = IF(
 	SUBSTRING_INDEX(@route_long_name, ' -', 1) = @route_long_name,
 	SUBSTRING_INDEX(@route_long_name, '-', 1),
 	SUBSTRING_INDEX(@route_long_name, ' -', 1)
-),
+), /* TODO: REPLACE OSALISELT NÕUDELIIN, REMOVE (;), HANDLE WHEN ENDS WITH - */
 destination = IF(
 	SUBSTRING_INDEX(@route_long_name, '- ', -1) = @route_long_name,
 	SUBSTRING_INDEX(@route_long_name, '-', -1),

@@ -31,18 +31,18 @@
 	font-size: 24px;
 }
 
-#stop-info-direction:empty + #stop-info-name {
+#stop-info-description:empty + #stop-info-name {
 	top: 17px;
 }
 
-#stop-info-direction {
+#stop-info-description {
 	left: 65px;
 	bottom: 11px;
 	color: var(--color-fg-light);
 	font-size: 14px;
 }
 
-#stop-info-direction:empty {
+#stop-info-description:empty {
 	display: none;
 }
 

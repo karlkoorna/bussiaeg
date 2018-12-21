@@ -40,7 +40,7 @@
 }
 
 .favorites-stop-name,
-.favorites-stop-direction {
+.favorites-stop-description {
 	margin-right: 10px;
 	white-space: nowrap;
 	overflow: hidden;
@@ -51,7 +51,7 @@
 	font-size: 22px;
 }
 
-.favorites-stop-direction:not(:empty) {
+.favorites-stop-description:not(:empty) {
 	margin-top: 8px;
 	margin-bottom: 4px;
 	font-size: 14px;
