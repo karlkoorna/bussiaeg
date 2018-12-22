@@ -188,9 +188,10 @@ class Map extends Component {
 		
 		// Redraw stops when available and on bounds change.
 		this.fetchStops();
+		map.on('zoomend', this.fetchStops);
 		map.on('move', () => {
 			this.debounce++;
-			if (this.debounce < 10) return;
+			if (this.debounce < 15) return;
 			this.debounce = 0;
 			this.fetchStops();
 		});
