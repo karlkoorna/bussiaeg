@@ -7,6 +7,12 @@
   ],
   "license": "AGPL-3.0",
   "version": "3.0.0",
+  "browserslist": [
+    "last 2 major versions",
+    ">2%",
+    "not dead",
+    "not ie <= 11"
+  ],
   "dependencies": {
     "i18next": "^12.1.0",
     "i18next-browser-languagedetector": "^2.2.4",
