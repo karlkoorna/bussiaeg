@@ -6,7 +6,7 @@ const time = require('../utils/time.js');
 // Get trips for stop.
 async function getTrips(id) {
 	
-	const now = time.getSeconds(); // TODO: IMPLEMENT REALTIME
+	const now = time.getSeconds();
 	const data = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
 	
 	if (!data) throw new Error("Provider 'Elron' is not returning data");
@@ -14,8 +14,9 @@ async function getTrips(id) {
 	
 	const trips = [];
 	
-	for (const trip of data) if (!trip.tegelik_aeg) trips.push({
+	for (const trip of data) if (time.toSeconds(trip.plaaniline_aeg) > now) trips.push({
 		time: time.toSeconds(trip.plaaniline_aeg),
+		countdown: time.toSeconds(trip.plaaniline_aeg) - now,
 		name: trip.reis,
 		destination: trip.liin,
 		type: 'train',
