@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'mobx-react';
@@ -30,7 +30,7 @@ const stores = {
 render((
 	<Provider {...stores}>
 		<BrowserRouter>
-			<Fragment>
+			<>
 				<Helmet>
 					<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
 					<meta name="theme-color" content="#ffffff" />
@@ -45,7 +45,7 @@ render((
 					<Route path="/stop" component={Stop} />
 				</Switch>
 				<NavBar />
-			</Fragment>
+			</>
 		</BrowserRouter>
 	</Provider>
 ), document.getElementById('app'));

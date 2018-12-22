@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { withNamespaces } from 'react-i18next';
@@ -80,7 +80,7 @@ class Stop extends Component {
 		const { stop: { id, name, description, type }, trips, isFavorite, isLoading } = this.state;
 		
 		return (
-			<Fragment>
+			<>
 				{id ? (
 					<Helmet>
 						<title>{name}</title>
@@ -133,7 +133,7 @@ class Stop extends Component {
 						)}
 					</div>
 				</main>
-			</Fragment>
+			</>
 		);
 		
 	}
