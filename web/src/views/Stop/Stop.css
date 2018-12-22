@@ -139,6 +139,10 @@
 	top: 8px;
 }
 
+.stop-trips-trip-countdown.is-urgent {
+	animation: stop-urgent 1s ease infinite;
+}
+
 .stop-trips-trip-countdown span {
 	font-size: 18px;
 }
@@ -167,12 +171,18 @@
 	
 }
 
-/* Queries */
-
-@media (pointer: fine) {
+@keyframes stop-urgent {
 	
-	.stop-trips-trip:hover {
-		background-color: rgba(127, 127, 127, .1);
+	from {
+		opacity: 1;
+	}
+	
+	50% {
+		opacity: 0;
+	}
+	
+	to {
+		opacity: 1;
 	}
 	
 }

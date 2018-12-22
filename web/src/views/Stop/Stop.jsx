@@ -114,7 +114,7 @@ class Stop extends Component {
 										</svg>
 										{trip.destination}
 									</div>
-									<div className="stop-trips-trip-countdown">
+									<div className={`stop-trips-trip-countdown ${trip.countdown < 60 ? 'is-urgent' : ''}`}>
 										{formatCountdown(trip.countdown)}
 										{trip.live ? (
 											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill={primaryColor}>
