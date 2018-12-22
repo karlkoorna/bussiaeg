@@ -18,7 +18,7 @@ import 'leaflet/dist/leaflet.css';
 
 const $app = document.getElementById('app');
 
-const opts = {
+export const opts = {
 	startZoom: 16,
 	zoomTreshold: 15,
 	startLat: 59.436,

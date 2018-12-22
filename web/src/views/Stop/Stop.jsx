@@ -9,39 +9,34 @@ import { formatTime, formatCountdown } from 'utils.js';
 import Loader from 'components/Loader/Loader.jsx';
 import Icon, { colors } from 'components/Icon.jsx';
 
+import { opts as mapOpts } from '../Map/Map.jsx';
 import './Stop.css';
 
 class Stop extends Component {
 	
 	state = {
-		id: '',
-		name: '',
-		description: '',
-		type: '',
+		stop: {
+			id: '',
+			name: '',
+			description: '',
+			type: ''
+		},
 		trips: [],
 		isFavorite: false,
 		isLoading: true
 	}
 	
+	_isMounted = true
 	interval = 0
 	
 	// Toggle favorite status.
 	toggleFavorite = () => {
-		
-		const isFavorite = this.props.storeFavorites.toggle(this.state.id, {
-			id: this.state.id,
-			name: this.state.name,
-			description: this.state.description,
-			type: this.state.type
-		});
-		
-		this.setState({ isFavorite });
-		
+		this.setState({ isFavorite: this.props.storeFavorites.toggle(this.state.stop) });
 	}
 	
 	// Update trips if mounted.
 	fetchTrips = async () => {
-		if (this._isMounted) this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${this.state.id}`)).json(), isLoading: false });
+		if (this._isMounted) this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${this.state.stop.id}`)).json(), isLoading: false });
 	}
 	
 	async componentWillMount() {
@@ -53,14 +48,14 @@ class Stop extends Component {
 		
 		// Load stop data into state.
 		this.setState({
-			...stop,
+			stop,
 			isFavorite: Boolean(this.props.storeFavorites.get(stop.id))
 		}, () => {
 			
 			const map = window.map;
 			
 			// Pan map to stop if outside view.
-			if (!map.getBounds().contains([ stop.lat, stop.lng ]) || map.getZoom() < 15) map.setView([ stop.lat, stop.lng ], 17);
+			if (!map.getBounds().contains([ stop.lat, stop.lng ]) || map.getZoom() < mapOpts.zoomTreshold) map.setView([ stop.lat, stop.lng ], mapOpts.startZoom + 1);
 			
 			// Start fetching trips (with 2s interval).
 			this.fetchTrips();
@@ -81,9 +76,9 @@ class Stop extends Component {
 	
 	render() {
 		
-		const t = this.props.t;
-		const { id, name, description, type, trips, isFavorite, isLoading } = this.state;
-		console.log(isFavorite);
+		const { t } = this.props;
+		const { stop: { id, name, description, type }, trips, isFavorite, isLoading } = this.state;
+		
 		return (
 			<Fragment>
 				{id ? (
@@ -96,7 +91,7 @@ class Stop extends Component {
 				) : null}
 				<main id="stop" className="view">
 					<div id="stop-info">
-						<Icon id="stop-info-icon" shape="stop" type={type || 'bus'} />
+						<Icon id="stop-info-icon" shape="stop" type={type || 'unknown'} />
 						<span id="stop-info-description">{description || ''}</span>
 						<span id="stop-info-name">{name || ''}</span>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.toggleFavorite}>

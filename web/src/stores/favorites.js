@@ -5,9 +5,9 @@ class StoreFavorites {
 	favorites = []
 	
 	// Toggle stop in favorites and return result state.
-	toggle(id, data) {
-		const index = this.favorites.findIndex((favorite) => favorite.id === id);
-		if (index === -1) this.favorites.push(data); else this.favorites.splice(index, 1);
+	toggle(stop) {
+		const index = this.favorites.findIndex((favorite) => favorite.id === stop.id);
+		if (index === -1) this.favorites.push(stop); else this.favorites.splice(index, 1);
 		return index === -1;
 	}
 	
