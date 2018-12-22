@@ -5,11 +5,11 @@ import { withNamespaces } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import { formatTime, formatCountdown } from 'utils.js';
+import { opts as mapOpts } from 'views/Map/Map.jsx';
 
 import Loader from 'components/Loader/Loader.jsx';
 import Icon, { colors } from 'components/Icon.jsx';
 
-import { opts as mapOpts } from '../Map/Map.jsx';
 import './Stop.css';
 
 class Stop extends Component {
@@ -83,10 +83,10 @@ class Stop extends Component {
 			<>
 				{id ? (
 					<Helmet>
-						<title>{name}</title>
+						<title>Bussiaeg.ee: {name}</title>
 						<meta name="theme-color" content={colors[type][0]} />
 						<meta property="og:type" content="article" />
-						<meta property="og:title" content={`Bussiaeg.ee: ${name} - ${description}`} />
+						<meta property="og:title" content={`Bussiaeg.ee: ${name}`} />
 					</Helmet>
 				) : null}
 				<main id="stop" className="view">

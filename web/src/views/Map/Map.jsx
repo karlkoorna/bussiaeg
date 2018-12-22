@@ -4,10 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { withNamespaces } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 import Leaflet from 'leaflet';
 
 import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
+import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
 import { withTheme } from 'utils.js';
 import dragZoom from './dragZoom.js';
@@ -263,14 +265,19 @@ class Map extends Component {
 		const { t } = this.props;
 		
 		return (
-			<div id="map-container" className="view">
-				<div id="map"></div>
-				<span id="map-message">{this.state.message}</span>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" className={(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')} onMouseDown={this.locate}>
-					<path fill="#00e6ad" d="M512 .1C246.2.1 172.6 219.7 172.6 344.7c0 274.6 270 679.3 339.4 679.3s339.4-404.6 339.4-679.3C851.4 219.6 777.8.1 512 .1zm0 471.1c-71.3 0-129-57.8-129-129s57.7-129.1 129-129.1 129 57.8 129 129-57.7 129.1-129 129.1z" />
-				</svg>
-				<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} onCancel={this.modalHide} onConfirm={this.modalConfirm} />
-			</div>
+			<>
+				<Helmet>
+					<meta name="theme-color" content={viewColors.map[0]} />
+				</Helmet>
+				<div id="map-container" className="view">
+					<div id="map"></div>
+					<span id="map-message">{this.state.message}</span>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" className={(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')} onMouseDown={this.locate}>
+						<path fill="#00e6ad" d="M512 .1C246.2.1 172.6 219.7 172.6 344.7c0 274.6 270 679.3 339.4 679.3s339.4-404.6 339.4-679.3C851.4 219.6 777.8.1 512 .1zm0 471.1c-71.3 0-129-57.8-129-129s57.7-129.1 129-129.1 129 57.8 129 129-57.7 129.1-129 129.1z" />
+					</svg>
+					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} onCancel={this.modalHide} onConfirm={this.modalConfirm} />
+				</div>
+			</>
 		);
 		
 	}

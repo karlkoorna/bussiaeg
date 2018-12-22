@@ -32,7 +32,7 @@ render((
 		<BrowserRouter>
 			<>
 				<Helmet>
-					<title>Bussiaeg.ee - Ühistranspordi ajad üle kogu Eesti.</title>
+					<title>Bussiaeg.ee: Ühistranspordi ajad üle kogu Eesti.</title>
 					<meta name="theme-color" content="#ffffff" />
 					<meta property="og:type" content="website" />
 					<meta property="og:title" content="Bussiaeg.ee" />
