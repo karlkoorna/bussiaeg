@@ -7,10 +7,14 @@ DROP TABLE IF EXISTS services;
 DROP TABLE IF EXISTS service_exceptions;
 DROP TABLE IF EXISTS favorites;
 
+DROP FUNCTION IF EXISTS CUTLONGNAME;
+
+/* Tables */
+
 CREATE TABLE stops (
 	id NVARCHAR(32) NOT NULL,
 	name NVARCHAR(32) NOT NULL,
-	description NVARCHAR(32),
+	description NVARCHAR(48),
 	lat DECIMAL(10, 8) NOT NULL,
 	lng DECIMAL(11, 8) NOT NULL,
 	type VARCHAR(16),
@@ -38,16 +42,16 @@ CREATE TABLE trips (
 	id MEDIUMINT(6) NOT NULL,
 	route_id CHAR(32) NOT NULL,
 	service_id MEDIUMINT(6) NOT NULL,
-	origin NVARCHAR(32) NOT NULL,
-	destination NVARCHAR(32) NOT NULL,
+	origin NVARCHAR(48) NOT NULL,
+	destination NVARCHAR(48) NOT NULL,
 	PRIMARY KEY (id)
 );
 
 CREATE TABLE routes (
 	id CHAR(32) NOT NULL,
 	name NVARCHAR(16) NOT NULL,
-	origin NVARCHAR(32),
-	destination NVARCHAR(32),
+	origin NVARCHAR(48),
+	destination NVARCHAR(48),
 	type VARCHAR(16),
 	region VARCHAR(32),
 	PRIMARY KEY (id)
@@ -75,3 +79,16 @@ CREATE TABLE favorites (
 	data JSON NOT NULL,
 	PRIMARY KEY (id)
 );
+
+/* Functions */
+
+CREATE FUNCTION CUTLONGNAME(str NVARCHAR(255), dir TINYINT(1))
+RETURNS NVARCHAR(255)
+DETERMINISTIC
+BEGIN
+	RETURN IF(
+		SUBSTRING_INDEX(REPLACE(str, '–', '-'), '- ', -1) != str,
+		TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(str, '–', '-'), '- ', dir), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)')),
+		TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(str, '–', '-'), '-', dir), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)'))
+	);
+END;

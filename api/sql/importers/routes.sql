@@ -2,16 +2,8 @@ LOAD DATA LOCAL INFILE 'tmp/routes.csv' INTO TABLE routes FIELDS TERMINATED BY '
 (@route_id, @agency_id, @route_short_name, @route_long_name, @route_type, @route_color, @competent_authority) SET
 id = @route_id,
 name = @route_short_name,
-origin = IF(
-	SUBSTRING_INDEX(@route_long_name, ' -', 1) = @route_long_name,
-	SUBSTRING_INDEX(@route_long_name, '-', 1),
-	SUBSTRING_INDEX(@route_long_name, ' -', 1)
-), /* TODO: REPLACE OSALISELT NÕUDELIIN, REMOVE (;), HANDLE WHEN ENDS WITH - */
-destination = IF(
-	SUBSTRING_INDEX(@route_long_name, '- ', -1) = @route_long_name,
-	SUBSTRING_INDEX(@route_long_name, '-', -1),
-	SUBSTRING_INDEX(@route_long_name, '- ', -1)
-),
+origin = CUTLONGNAME(@route_long_name, 1),
+destination = CUTLONGNAME(@route_long_name, -1),
 type = (
 	CASE
 		WHEN @route_color = 'F55ADC' OR @route_color = '00933C' THEN 'coach-c'

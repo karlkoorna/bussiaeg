@@ -3,13 +3,5 @@ LOAD DATA LOCAL INFILE 'tmp/trips.csv' INTO TABLE trips FIELDS TERMINATED BY ','
 id = @trip_id,
 route_id = @route_id,
 service_id = @service_id,
-origin = IF(
-	SUBSTRING_INDEX(@trip_long_name, ' -', 1) = @trip_long_name,
-	SUBSTRING_INDEX(@trip_long_name, '-', 1),
-	SUBSTRING_INDEX(@trip_long_name, ' -', 1)
-),
-destination = IF(
-	SUBSTRING_INDEX(@trip_long_name, '- ', -1) = @trip_long_name,
-	SUBSTRING_INDEX(@trip_long_name, '-', -1),
-	SUBSTRING_INDEX(@trip_long_name, '- ', -1)
-);
+origin = CUTLONGNAME(@trip_long_name, 1),
+destination = CUTLONGNAME(@trip_long_name, -1);
