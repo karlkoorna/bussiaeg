@@ -44,6 +44,6 @@ class Modal extends Component {
 		
 	}
 	
-};
+}
 
 export default withNamespaces()(Modal);

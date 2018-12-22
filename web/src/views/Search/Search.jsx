@@ -102,6 +102,6 @@ class Search extends Component {
 		
 	}
 	
-};
+}
 
 export default withNamespaces()(inject('storeSearch')(observer(Search)));

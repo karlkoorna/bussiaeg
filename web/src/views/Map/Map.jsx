@@ -270,6 +270,6 @@ class Map extends Component {
 		
 	}
 	
-};
+}
 
 export default withNamespaces()(withRouter(withTheme(inject('storeCoords')(observer(Map)))));

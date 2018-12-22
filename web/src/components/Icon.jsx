@@ -94,4 +94,4 @@ export default function Icon({ id, className, shape, type }) {
 		</svg>
 	);
 	
-};
+}

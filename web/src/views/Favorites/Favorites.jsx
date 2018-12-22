@@ -59,6 +59,6 @@ class Favorites extends Component {
 		
 	}
 	
-};
+}
 
 export default withNamespaces()(inject('storeFavorites')(observer(Favorites)));

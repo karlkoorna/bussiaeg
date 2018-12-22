@@ -12,4 +12,4 @@ export default function Loader() {
 			<Icon id="loader-tram" className="loader-vehicle" shape="vehicle" type="tram" />
 		</div>
 	);
-};
+}

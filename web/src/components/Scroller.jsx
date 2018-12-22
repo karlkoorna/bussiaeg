@@ -28,4 +28,4 @@ export default class Scroller extends Component {
 		return this.props.children;
 	}
 	
-};
+}

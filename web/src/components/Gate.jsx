@@ -10,4 +10,4 @@ export default class Gate extends Component {
 		return this.props.children;
 	}
 	
-};
+}

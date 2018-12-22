@@ -138,6 +138,6 @@ class Stop extends Component {
 		
 	}
 	
-};
+}
 
 export default withNamespaces()(withRouter(inject('storeFavorites')(observer(Stop))));
