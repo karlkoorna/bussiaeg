@@ -6,13 +6,11 @@ import { inject, observer } from 'mobx-react';
 import { withNamespaces } from 'react-i18next';
 import Leaflet from 'leaflet';
 
-import { withTheme } from 'utils.js';
-
 import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
 
+import { withTheme } from 'utils.js';
 import dragZoom from './dragZoom.js';
-
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
 
@@ -37,8 +35,10 @@ class Map extends Component {
 		isLocating: false
 	}
 	
-	tileLayer = ''
 	dispose = null
+	debounce = 0
+	
+	tileLayer = null
 	markers = []
 	
 	modalHide = () => {
@@ -49,7 +49,7 @@ class Map extends Component {
 	modalConfirm = () => {
 		this.modalHide();
 		
-		const map = window.map;
+		const { map } = window;
 		const center = map.getCenter();
 		
 		localStorage.setItem('start', JSON.stringify({
@@ -63,7 +63,7 @@ class Map extends Component {
 	// Start locating.
 	locate = () => {
 		
-		const map = window.map;
+		const { map } = window;
 		
 		this.setState({ isLocating: true }, () => {
 			map.flyTo([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.zoomTreshold, map.getZoom()));
@@ -74,8 +74,8 @@ class Map extends Component {
 	// Update message based on bounds and redraw stops.
 	fetchStops = async () => {
 		
-		const t = this.props.t;
-		const map = window.map;
+		const { t } = this.props;
+		const { map } = window;
 		const { _southWest: { lat: lat_min, lng: lng_min }, _northEast: { lat: lat_max, lng: lng_max } } = map.getBounds();
 		
 		// Handle message cases.
@@ -186,7 +186,12 @@ class Map extends Component {
 		
 		// Redraw stops when available and on bounds change.
 		this.fetchStops();
-		map.on('moveend', this.fetchStops);
+		map.on('move', () => {
+			this.debounce++;
+			if (this.debounce < 10) return;
+			this.debounce = 0;
+			this.fetchStops();
+		});
 		
 		// Open modal on right click (desktop) or hold (mobile).
 		map.on('contextmenu', () => {
@@ -255,7 +260,7 @@ class Map extends Component {
 	
 	render() {
 		
-		const t = this.props.t;
+		const { t } = this.props;
 		
 		return (
 			<div id="map-container" className="view">
