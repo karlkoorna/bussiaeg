@@ -5,6 +5,7 @@ import { withNamespaces } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
+import Scroller from 'components/Scroller.jsx';
 import Icon, { colors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
@@ -36,28 +37,30 @@ class Favorites extends Component {
 				<DragDropContext onDragEnd={this.reorder}>
 					<Droppable droppableId="favorites">
 						{(provided, snapshot) => (
-							<main id="favorites" className="view" ref={provided.innerRef}>
-								{favorites.length ? favorites.map((favorite, i) => (
-									<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
-										{(provided, snapshot) => (
-											<div className="favorites-stop-container" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-												<Link className="favorites-stop" style={{ backgroundColor: colors[favorite.type][0] }} to={`/stop?id=${favorite.id}`}>
-													<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
-													<div>
-														<div className="favorites-stop-name">{favorite.name}</div>
-														<div className="favorites-stop-description">{favorite.description}</div>
-													</div>
-												</Link>
-											</div>
-										)}
-									</Draggable>
-								)) : (
-									<div className="view-empty">
-										{t('favorites.empty')}
-									</div>
-								)}
-								{provided.placeholder}
-							</main>
+							<Scroller>
+								<main id="favorites" className="view" ref={provided.innerRef}>
+									{favorites.length ? favorites.map((favorite, i) => (
+										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
+											{(provided, snapshot) => (
+												<div className="favorites-stop-container" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+													<Link className="favorites-stop" style={{ backgroundColor: colors[favorite.type][0] }} to={`/stop?id=${favorite.id}`}>
+														<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
+														<div>
+															<div className="favorites-stop-name">{favorite.name}</div>
+															<div className="favorites-stop-description">{favorite.description}</div>
+														</div>
+													</Link>
+												</div>
+											)}
+										</Draggable>
+									)) : (
+										<div className="view-empty">
+											{t('favorites.empty')}
+										</div>
+									)}
+									{provided.placeholder}
+								</main>
+							</Scroller>
 						)}
 					</Droppable>
 				</DragDropContext>

@@ -104,7 +104,7 @@ class Stop extends Component {
 							const [ primaryColor, secondaryColor ] = colors[trip.type];
 							
 							return (
-								<Link className="stop-trips-trip" to={`/routes?id=${id}&name=${trip.name}&type=${trip.type}&provider=${trip.provider}`} key={trip.type + trip.name + trip.time}>
+								<div className="stop-trips-trip">
 									<Icon className="stop-trips-trip-icon" shape="vehicle" type={trip.type} />
 									<div className="stop-trips-trip-name" style={{ color: secondaryColor }}>{trip.name}</div>
 									<div className="stop-trips-trip-destination" style={{ color: secondaryColor }}>
@@ -123,7 +123,7 @@ class Stop extends Component {
 										) : null}
 									</div>
 									<div className="stop-trips-trip-time">{formatTime(trip.time)}</div>
-								</Link>
+								</div>
 							);
 							
 						}) : (

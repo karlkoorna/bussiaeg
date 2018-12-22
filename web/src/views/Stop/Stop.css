@@ -79,7 +79,6 @@
 }
 
 .stop-trips-trip {
-	display: block;
 	position: relative;
 	height: 80px;
 	transition: background-color .1s linear;

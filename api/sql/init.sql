@@ -32,12 +32,6 @@ CREATE TABLE stop_times (
 	KEY (trip_id, sequence)
 );
 
-CREATE TABLE stop_routes (
-	stop_id NVARCHAR(32) NOT NULL,
-	route_id CHAR(32) NOT NULL,
-	PRIMARY KEY (stop_id, route_id)
-);
-
 CREATE TABLE trips (
 	id MEDIUMINT(6) NOT NULL,
 	route_id CHAR(32) NOT NULL,

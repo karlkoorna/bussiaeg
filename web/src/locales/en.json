@@ -2,17 +2,18 @@
   "search": {
     "search": "Search...",
     "stops": "Stops",
-    "routes": "Routes"
+    "routes": "Routes",
+    "empty": "No stops found."
   },
   "favorites": {
-    "empty": "No favorites added"
+    "empty": "No favorites added."
   },
   "stop": {
-    "empty": "No more arrivals today"
+    "empty": "No more arrivals today."
   },
   "map": {
-    "zoom": "Bussiaeg.ee does not work outside Estonia",
-    "bounds": "Zoom in to see stops",
+    "zoom": "Bussiaeg.ee does not work outside Estonia.",
+    "bounds": "Zoom in to see stops.",
     "start": {
       "title": "Confirm location",
       "text": "Starting location if GPS unavailable."

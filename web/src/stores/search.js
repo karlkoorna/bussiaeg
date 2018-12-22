@@ -7,12 +7,7 @@ class StoreSearch {
 	dispose = 0
 	
 	query = ''
-	type = 'stops'
-	
-	results = {
-		stops: [],
-		routes: []
-	}
+	results = []
 	
 	// Start fetching nearby search results on location update.
 	startScanning() {
@@ -36,15 +31,10 @@ class StoreSearch {
 		this.query = query;
 	}
 	
-	// Update view type.
-	updateType(type) {
-		this.type = type;
-	}
-	
 	// Fetch search results.
 	async fetchResults() {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
-		this.results = query || (lat && lng) ? await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() : { stops: [], routes: [] };
+		this.results = query || (lat && lng) ? await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() : [];
 	}
 	
 };
@@ -54,7 +44,6 @@ decorate(StoreSearch, {
 	type: observable,
 	results: observable.struct,
 	updateQuery: action,
-	updateType: action,
 	fetchResults: action.bound
 });
 

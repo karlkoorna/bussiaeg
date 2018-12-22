@@ -2,17 +2,18 @@
   "search": {
     "search": "Otsing...",
     "stops": "Peatused",
-    "routes": "Liinid"
+    "routes": "Liinid",
+    "empty": "Peatuseid ei leitud."
   },
   "favorites": {
-    "empty": "Lemmikpeatused puuduvad"
+    "empty": "Lemmikpeatused puuduvad."
   },
   "stop": {
-    "empty": "Täna pole enam sõidukeid"
+    "empty": "Täna pole enam sõidukeid."
   },
   "map": {
-    "zoom": "Bussiaeg.ee ei tööta väljaspool Eestit",
-    "bounds": "Suumige sisse, et näha peatusi",
+    "zoom": "Bussiaeg.ee ei tööta väljaspool Eestit.",
+    "bounds": "Suumige sisse, et näha peatusi.",
     "start": {
   	  "title": "Kinnita asukoht",
   	  "text": "GPSi puudumisel kasutatav algasukoht."
