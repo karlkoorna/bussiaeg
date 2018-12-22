@@ -73,7 +73,19 @@ a {
 	color: var(--color-fg-dark);
 	font-size: 20px;
 	font-weight: bold;
+	animation: view-fadeIn .5s linear forwards;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	opacity: 0;
+}
+
+/* Animations */
+
+@keyframes view-fadeIn {
+	
+	to {
+		opacity: 1;
+	}
+	
 }
