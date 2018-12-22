@@ -11,7 +11,7 @@ export default function dragZoom(map) {
 	$map.addEventListener('touchstart', (e) => {
 		
 		// Cancel with multiple touches.
-		if (e.touches.length > 1) return (isDragging = false);
+		if (e.touches.length > 1) return void (isDragging = false);
 		
 		// Check for double tap.
 		if (!isDoubleTap) {
@@ -46,4 +46,4 @@ export default function dragZoom(map) {
 		map.dragging.enable();
 	});
 	
-};
+}

@@ -52,7 +52,7 @@ class Stop extends Component {
 			isFavorite: Boolean(this.props.storeFavorites.get(stop.id))
 		}, () => {
 			
-			const map = window.map;
+			const { map } = window;
 			
 			// Pan map to stop if outside view.
 			if (!map.getBounds().contains([ stop.lat, stop.lng ]) || map.getZoom() < mapOpts.zoomTreshold) map.setView([ stop.lat, stop.lng ], mapOpts.startZoom + 1);

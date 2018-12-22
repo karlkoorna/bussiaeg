@@ -54,7 +54,6 @@ class Search extends Component {
 	}
 	
 	componentWillMount() {
-		console.log(this.props.storeSearch);
 		this.props.storeSearch.startScanning();
 	}
 	
@@ -64,7 +63,7 @@ class Search extends Component {
 	
 	render() {
 		
-		const t = this.props.t;
+		const { t } = this.props;
 		const { query, type, results } = this.props.storeSearch;
 		
 		return (

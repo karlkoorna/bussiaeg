@@ -24,7 +24,7 @@ class Favorites extends Component {
 	render() {
 		
 		const { t } = this.props;
-		const favorites = this.props.storeFavorites.favorites;
+		const { favorites } = this.props.storeFavorites;
 		
 		return (
 			<DragDropContext onDragEnd={this.reorder}>
