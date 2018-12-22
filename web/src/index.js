@@ -17,8 +17,7 @@ import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
 import storeSettings from 'stores/settings.js';
 
-import i18n from './i18n.js';
-
+import './i18n.js';
 import './index.css';
 
 const stores = {

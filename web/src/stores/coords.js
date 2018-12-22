@@ -1,17 +1,12 @@
-import { observable, action } from 'mobx';
+import { decorate, observable, action } from 'mobx';
 
-export default new class StoreCoords {
+class StoreCoords {
 	
-	@observable
 	lat = 0
-	
-	@observable
 	lng = 0
-	
-	@observable
 	accuracy = 9999
 	
-	@action
+	// Update coordinates and accuracy in store.
 	update(coords) {
 		[ this.lat, this.lng, this.accuracy ] = [ coords.latitude || coords.lat, coords.longitude || coords.lng, coords.accuracy ];
 	}
@@ -27,4 +22,13 @@ export default new class StoreCoords {
 		
 	}
 	
-};
+}
+
+decorate(StoreCoords, {
+	lat: observable,
+	lng: observable,
+	accuracy: observable,
+	update: action
+});
+
+export default new StoreCoords();

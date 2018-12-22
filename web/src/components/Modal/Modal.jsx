@@ -4,8 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import './Modal.css';
 
-@withNamespaces()
-export default class Model extends Component {
+class Modal extends Component {
 	
 	// Add animation class to button and call function.
 	fire = (e, cb) => {
@@ -46,3 +45,5 @@ export default class Model extends Component {
 	}
 	
 };
+
+export default withNamespaces()(Modal);

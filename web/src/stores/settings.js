@@ -1,13 +1,7 @@
-import { observable, action } from 'mobx';
+import {  } from 'mobx';
 
 export default new class StoreSettings {
 	
 	
-	
-	constructor() {
-		
-		
-		
-	}
 	
 };

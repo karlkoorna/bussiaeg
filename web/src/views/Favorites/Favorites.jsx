@@ -8,10 +8,7 @@ import Icon, { colors } from 'components/Icon.jsx';
 
 import './Favorites.css';
 
-@withNamespaces()
-@inject('storeFavorites')
-@observer
-export default class Favorites extends Component {
+class Favorites extends Component {
 	
 	// Update favorites afer reorder.
 	reorder = (result) => {
@@ -26,7 +23,7 @@ export default class Favorites extends Component {
 	
 	render() {
 		
-		const t = this.props.t;
+		const { t } = this.props;
 		const favorites = this.props.storeFavorites.favorites;
 		
 		return (
@@ -63,3 +60,5 @@ export default class Favorites extends Component {
 	}
 	
 };
+
+export default withNamespaces()(inject('storeFavorites')(observer(Favorites)));

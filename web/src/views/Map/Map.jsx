@@ -29,12 +29,7 @@ const opts = {
 	panTimeout: 1500
 };
 
-@withNamespaces()
-@withRouter
-@withTheme
-@inject('storeCoords')
-@observer
-export default class Map extends Component {
+class Map extends Component {
 	
 	state = {
 		message: '',
@@ -276,3 +271,5 @@ export default class Map extends Component {
 	}
 	
 };
+
+export default withNamespaces()(withRouter(withTheme(inject('storeCoords')(observer(Map)))));

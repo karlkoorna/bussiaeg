@@ -1,19 +1,19 @@
-import { observable, action, reaction } from 'mobx';
+import { decorate, observable, action, reaction } from 'mobx';
 
-export default new class StoreFavorites {
+class StoreFavorites {
 	
-	@observable
 	favorites = []
 	
-	@action
+	// Toggle stop in favorites and return result state.
 	toggle(id, data) {
 		const index = this.favorites.findIndex((favorite) => favorite.id === id);
-		if (index > -1) this.favorites.splice(index, 1); else this.favorites.push(data);
-		return index < 0;
+		if (index === -1) this.favorites.push(data); else this.favorites.splice(index, 1);
+		return index === -1;
 	}
 	
-	exists(id) {
-		return this.favorites.findIndex((favorite) => favorite.id === id) > -1;
+	// Return stop if in favorites.
+	get(id) {
+		return Boolean(this.favorites.find((favorite) => favorite.id === id)) || null;
 	}
 	
 	constructor() {
@@ -26,9 +26,17 @@ export default new class StoreFavorites {
 			favorites: this.favorites,
 			length: this.favorites.length
 		}), ({ favorites }) => {
+			console.log(123);
 			localStorage.setItem('favorites', JSON.stringify(favorites));
 		});
 		
 	}
 	
 };
+
+decorate(StoreFavorites, {
+	favorites: observable,
+	toggle: action
+});
+
+export default new StoreFavorites();

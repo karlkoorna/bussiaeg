@@ -57,12 +57,12 @@ module.exports = (fastify, opts, next) => {
 		schema: {
 			querystring: {
 				type: 'object',
-				required: [ 'name', 'type', 'provider', 'stop' ],
+				required: [ 'stop_id', 'name', 'type', 'provider' ],
 				properties: {
 					name: { type: 'string' },
 					type: { type: 'string' },
 					provider: { type: 'string', enum: [ 'mnt', 'tlt', 'elron' ] },
-					stop: { type: 'string' }
+					stop_id: { type: 'string' }
 				}
 			}
 		}

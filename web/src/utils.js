@@ -1,5 +1,3 @@
-import React from 'react';
-
 const $app = document.getElementById('app');
 
 // Call function in component on theme change.

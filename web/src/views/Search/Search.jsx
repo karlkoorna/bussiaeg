@@ -26,10 +26,7 @@ function Result({ type, data }) {
 	);
 }
 
-@withNamespaces()
-@inject('storeSearch')
-@observer
-export default class Search extends Component {
+class Search extends Component {
 	
 	dispose = null
 	debounce = 0
@@ -57,6 +54,7 @@ export default class Search extends Component {
 	}
 	
 	componentWillMount() {
+		console.log(this.props.storeSearch);
 		this.props.storeSearch.startScanning();
 	}
 	
@@ -105,3 +103,5 @@ export default class Search extends Component {
 	}
 	
 };
+
+export default withNamespaces()(inject('storeSearch')(observer(Search)));

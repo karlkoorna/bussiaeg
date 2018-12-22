@@ -6,8 +6,6 @@ import { withTheme } from 'utils.js';
 
 import './NavBar.css';
 
-@withRouter
-@withTheme
 class NavBarItem extends Component {
 	
 	state = {
@@ -77,14 +75,16 @@ class NavBarItem extends Component {
 	
 }
 
+const WrappedNavBarItem = withRouter(withTheme(NavBarItem));
+
 export default function NavBar() {
 	return (
 		<nav id="navbar">
 			<ul>
-				<NavBarItem to="/search" colors={[ '#ffa94d', '#ff8400' ]}>Search</NavBarItem>
-				<NavBarItem to="/favorites" colors={[ '#f5557e', '#f22559' ]}>Favorites</NavBarItem>
-				<NavBarItem to="/" colors={[ '#00e6ad', '#00cc9a' ]}>Map</NavBarItem>
-				<NavBarItem to="/settings" colors={[ '#00bfff', '#00ace6' ]}>Settings</NavBarItem>
+				<WrappedNavBarItem to="/search" colors={[ '#ffa94d', '#ff8400' ]}>Search</WrappedNavBarItem>
+				<WrappedNavBarItem to="/favorites" colors={[ '#f5557e', '#f22559' ]}>Favorites</WrappedNavBarItem>
+				<WrappedNavBarItem to="/" colors={[ '#00e6ad', '#00cc9a' ]}>Map</WrappedNavBarItem>
+				<WrappedNavBarItem to="/settings" colors={[ '#00bfff', '#00ace6' ]}>Settings</WrappedNavBarItem>
 			</ul>
 		</nav>
 	);

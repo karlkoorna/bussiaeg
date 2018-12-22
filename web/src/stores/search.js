@@ -1,18 +1,14 @@
-import { observable, action, reaction } from 'mobx';
+import { observable, action, reaction, decorate } from 'mobx';
 
 import storeCoords from 'stores/coords.js';
 
-export default new class StoreSearch {
+class StoreSearch {
 	
 	dispose = 0
 	
-	@observable
 	query = ''
-	
-	@observable
 	type = 'stops'
 	
-	@observable.struct
 	results = {
 		stops: [],
 		routes: []
@@ -35,23 +31,31 @@ export default new class StoreSearch {
 		this.dispose();
 	}
 	
-	@action
+	// Update search query.
 	updateQuery(query) {
 		this.query = query;
 	}
 	
-	@action
+	// Update view type.
 	updateType(type) {
 		this.type = type;
 	}
 	
-	@action.bound
+	// Fetch search results.
 	async fetchResults() {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
-		
-		// Fetch search results.
 		this.results = query || (lat && lng) ? await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() : { stops: [], routes: [] };
-		
 	}
 	
 };
+
+decorate(StoreSearch, {
+	query: observable,
+	type: observable,
+	results: observable.struct,
+	updateQuery: action,
+	updateType: action,
+	fetchResults: action.bound
+});
+
+export default new StoreSearch();

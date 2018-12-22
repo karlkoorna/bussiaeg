@@ -16,7 +16,7 @@ async function getTrips(req, res) {
 	let trips = [];
 	
 	// Verify stop, get type and region.
-	const stop = (await db.query('SELECT type, region FROM stops WHERE id = ?', [ id ]))[0];
+	const stop = (await db.query('SELECT type, region FROM stops WHERE id = ?', [ stopId ]))[0];
 	if (!stop) throw new Error(`Stop with id '${stopId}' not found`);
 	
 	// Elron
@@ -50,7 +50,7 @@ async function getTrips(req, res) {
 			)
 			${trips.length ? "AND route.type LIKE 'coach%'" : ''}
 		LIMIT ${trips.length ? '5' : '15'}
-	`, [ id ]));
+	`, [ stopId ]));
 	
 	trips.concat(trips.concat(mntTrips).map((trip) => ({
 		...trip,
