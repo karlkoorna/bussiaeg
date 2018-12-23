@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { withNamespaces } from 'react-i18next';
 import { Helmet } from 'react-helmet';
-import SwipeableViews from 'react-swipeable-views';
-import Ink from 'react-ink';
 
 import Scroller from 'components/Scroller.jsx';
 import Icon, { colors as stopColors } from 'components/Icon.jsx';

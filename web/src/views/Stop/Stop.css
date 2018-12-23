@@ -27,8 +27,8 @@
 
 #stop-info-name {
 	left: 64px;
-	top: 7px;
-	font-size: 24px;
+	top: 8px;
+	font-size: 22px;
 }
 
 #stop-info-description:empty + #stop-info-name {
@@ -37,7 +37,7 @@
 
 #stop-info-description {
 	left: 65px;
-	bottom: 11px;
+	bottom: 12px;
 	color: var(--color-fg-light);
 	font-size: 14px;
 }
@@ -136,7 +136,7 @@
 }
 
 .stop-trips-trip-countdown {
-	top: 8px;
+	top: 10px;
 }
 
 .stop-trips-trip-countdown.is-urgent {
@@ -149,14 +149,14 @@
 
 .stop-trips-trip-countdown > svg {
 	position: absolute;
-	right: 10px;
-	top: -1px;
+	right: 12px;
+	top: -4px;
 	width: 12px;
 	transform: rotate(-15deg);
 }
 
 .stop-trips-trip-time {
-	bottom: 10px;
+	bottom: 11px;
 	color: var(--color-fg-light);
 	font-size: 19px;
 }

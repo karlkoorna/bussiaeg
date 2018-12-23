@@ -17,8 +17,18 @@ body {
 
 /* Reset */
 
-input {
+input,
+select {
+	color: inherit;
+	background-color: transparent;
 	border: none;
+	outline: none;
+	box-shadow: none;
+	font-size: inherit;
+}
+
+select {
+	-webkit-appearance: none;
 }
 
 ul {
@@ -37,7 +47,7 @@ a {
 	display: flex;
 	background-color: var(--color-bg-dark);
 	color: var(--color-fg-dark);
-	font-family: Lato, Arial, Helvetica, sans-serif;
+	font-family: 'Roboto UI', Arial, Helvetica, sans-serif;
 	flex-direction: column;
 	-webkit-tap-highlight-color: transparent;
 }
@@ -73,7 +83,7 @@ a {
 	color: var(--color-fg-dark);
 	font-size: 20px;
 	font-weight: bold;
-	animation: view-fadeIn .5s linear forwards;
+	animation: view-fadeIn .25s linear forwards;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;

@@ -17,7 +17,6 @@
 	background-color: var(--color-bg-dark);
 	color: var(--color-fg-dark);
 	border-radius: 12px;
-	border: none;
 	font-size: 16px;
 }
 
@@ -127,17 +126,17 @@
 
 .search-results-result-name {
 	margin-bottom: 4px;
-	font-size: 22px;
+	font-size: 21px;
 }
 
 .search-results-result-area {
 	margin-bottom: 2px;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .search-results-result-distance {
 	padding: 16px;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 /* Animations */
