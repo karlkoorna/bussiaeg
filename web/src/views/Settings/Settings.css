@@ -1,0 +1,23 @@
+#settings {
+	font-size: 17px;
+}
+
+#settings label {
+	display: flex;
+	margin: 16px;
+	font-weight: bold;
+	align-items: center;
+}
+
+#settings label i {
+	margin-right: 16px;
+}
+
+#settings select,
+#settings input {
+	width: 100%;
+	padding: 12px 14px;
+	background-color: var(--color-bg-darker);
+	color: var(--color-fg-light);
+	font-size: 15px;
+}
