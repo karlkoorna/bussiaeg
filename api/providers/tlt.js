@@ -61,7 +61,7 @@ async function getTrips(id) {
 	await update(id);
 	return [ ...stops[id].trips ];
 	
-};
+}
 
 module.exports = {
 	getTrips
