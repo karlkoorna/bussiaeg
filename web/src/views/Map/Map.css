@@ -30,22 +30,27 @@
 /* Locate */
 
 #map-locate {
+	display: flex;
 	position: absolute;
 	right: -48px;
 	bottom: 16px;
 	width: 48px;
 	height: 48px;
 	padding: 8px;
-	background-color: white;
+	background-color: var(--color-bg-light);
+	color: #00e6ad !important;
 	border: 3px solid transparent;
 	border-radius: 100%;
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
+	font-size: 28px;
 	transition: right .25s ease, border-color .1s linear;
+    justify-content: center;
+    align-items: center;
 	cursor: pointer;
 }
 
 #app.theme-dark #map-locate {
-	background-color: var(--color-bg-light);
+	color: var(--color-bg-light);
 }
 
 #map-locate.is-visible {

@@ -273,9 +273,7 @@ class Map extends Component {
 				<div id="map-container" className="view">
 					<div id="map"></div>
 					<span id="map-message">{this.state.message}</span>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="map-locate" className={(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')} onMouseDown={this.locate}>
-						<path fill="#00e6ad" d="M512 .1C246.2.1 172.6 219.7 172.6 344.7c0 274.6 270 679.3 339.4 679.3s339.4-404.6 339.4-679.3C851.4 219.6 777.8.1 512 .1zm0 471.1c-71.3 0-129-57.8-129-129s57.7-129.1 129-129.1 129 57.8 129 129-57.7 129.1-129 129.1z" />
-					</svg>
+					<i id="map-locate" className={`material-icons ${(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')}`} onMouseDown={this.locate}>location_on</i>
 					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} onCancel={this.modalHide} onConfirm={this.modalConfirm} />
 				</div>
 			</>
