@@ -175,7 +175,7 @@ class Map extends Component {
 		}).addTo(map);
 		
 		const circle = new Leaflet.Circle([ 0, 0 ], {
-			renderer: new Leaflet.Canvas({ padding: 1 }),
+			renderer: new Leaflet.SVG({ padding: 1 }),
 			interactive: false,
 			fillColor: '#00e6ad',
 			fillOpacity: .15,
