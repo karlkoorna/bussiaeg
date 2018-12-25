@@ -57,7 +57,7 @@
 	cursor: pointer;
 }
 
-#app.theme-dark #stop-info-favorite {
+#app[data-theme="dark"] #stop-info-favorite {
 	fill: #707070;
 	stroke: #606060;
 }

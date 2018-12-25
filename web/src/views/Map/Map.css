@@ -19,7 +19,7 @@
 	pointer-events: none;
 }
 
-#app.theme-dark #map-message {
+#app[data-theme="dark"] #map-message {
 	background-color: rgba(127, 127, 127, .45);
 }
 
@@ -49,7 +49,7 @@
 	cursor: pointer;
 }
 
-#app.theme-dark #map-locate {
+#app[data-theme="dark"] #map-locate {
 	color: var(--color-bg-light);
 }
 

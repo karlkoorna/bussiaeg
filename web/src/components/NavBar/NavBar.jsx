@@ -45,7 +45,7 @@ class NavBarItem extends Component {
 	render() {
 		
 		const { to, colors, children } = this.props;
-		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : $app.className === 'theme-light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
+		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : $app.getAttribute('data-theme') === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
 		
 		return (
 			<li className="navbar-item" onMouseDown={this.navigate} onTouchStart={this.navigate}>

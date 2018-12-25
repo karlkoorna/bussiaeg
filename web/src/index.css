@@ -52,16 +52,16 @@ a {
 	-webkit-tap-highlight-color: transparent;
 }
 
-#app.theme-light {
-	--color-fg-light: #1e2529;
-	--color-fg-dark: #1b1c1d;
+#app[data-theme="light"] {
+	--color-fg-light: #6a6b70;
+	--color-fg-dark: #34393d;
 	--color-bg-light: white;
 	--color-bg-dark: #f5f5f5;
 	--color-bg-darker: #ebebeb;
 }
 
-#app.theme-dark {
-	--color-fg-light: #bababa;
+#app[data-theme="dark"] {
+	--color-fg-light: #bebebe;
 	--color-fg-dark: #eaeaea;
 	--color-bg-light: #1e2529;
 	--color-bg-dark: #1b1c1d;

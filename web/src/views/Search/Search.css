@@ -40,12 +40,12 @@
 	stroke: #bdbdbd;
 }
 
-#app.theme-dark #search-top-input + svg > path,
-#app.theme-dark #search-top-input + svg + svg > path {
+#app[data-theme="dark"] #search-top-input + svg > path,
+#app[data-theme="dark"] #search-top-input + svg + svg > path {
 	stroke: #606060;
 }
 
-#app.theme-dark #search-top-input + svg > circle {
+#app[data-theme="dark"] #search-top-input + svg > circle {
 	stroke: #707070;
 }
 

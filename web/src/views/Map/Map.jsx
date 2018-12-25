@@ -134,7 +134,7 @@ class Map extends Component {
 	// Update map tile layer.
 	themeChange = () => {
 		if (this.tileLayer) this.tileLayer.remove();
-		this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + $app.className.slice(6).toUpperCase()]).addTo(window.map);
+		this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + $app.getAttribute('data-theme').toUpperCase()]).addTo(window.map);
 	}
 	
 	componentDidMount() {
