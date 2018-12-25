@@ -40,6 +40,12 @@ class Settings extends Component {
 					<input name="startZoom" defaultValue={data.startZoom} type="number" min={mapOpts.minZoom} max={mapOpts.maxZoom} onInput={this.updateSetting}></input>
 					<label><i className="material-icons">visibility</i>{t('settings.stopZoom')}<span>({defaultData.stopZoom})</span></label>
 					<input name="stopZoom" defaultValue={data.stopZoom} type="number" min={mapOpts.minZoom} max={mapOpts.maxZoom} onInput={this.updateSetting}></input>
+					<img src="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/banner-1.svg?sanitize=true" alt="Bussiaeg.ee" />
+					<p>
+						<a rel="nofollow" target="_blank" href="https://mnt.ee">Maanteeamet</a> ― Plaaniajad.<br />
+						<a rel="nofollow" target="_blank" href="https://tallinnlt.ee">Tallinna Linna Transport</a> ― Reaalajad Tallinnas.<br />
+						<a rel="nofollow" target="_blank" href="http://elron.ee/">Elron</a> ― Rongiajad.
+					</p>
 				</main>
 			</>
 		);

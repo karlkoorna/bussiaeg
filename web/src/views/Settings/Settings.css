@@ -25,6 +25,24 @@
 	width: 100%;
 	padding: 12px 14px;
 	background-color: var(--color-bg-darker);
-	color: var(--color-fg-light);
 	font-size: 15px;
+}
+
+#settings img {
+	width: 75%;
+	max-width: 384px;
+	margin: 32px 16px;
+	margin-bottom: 24px;
+	transform: rotate(3deg);
+}
+
+#settings p {
+	margin: 0 16px;
+	font-size: 16px;
+	font-style: italic;
+	line-height: 1.8;
+}
+
+#settings p a {
+	color: deepskyblue;
 }
