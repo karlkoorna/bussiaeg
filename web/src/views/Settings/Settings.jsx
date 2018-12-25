@@ -25,20 +25,20 @@ class Settings extends Component {
 					<meta name="theme-color" content={viewColors.settings[0]} />
 				</Helmet>
 				<main id="settings" className="view">
-					<label><i className="material-icons">language</i>Language <span>({defaultData.lang})</span></label>
+					<label><i className="material-icons">language</i>{t('settings.language')}<span>({defaultData.lang})</span></label>
 					<select name="lang" defaultValue={data.lang} onInput={this.updateSetting}>
 						<option value="et">Eesti keel</option>
 						<option value="en">English</option>
 						<option value="ru">Русскии</option>
 					</select>
-					<label><i className="material-icons">style</i>Theme <span>({defaultData.theme})</span></label>
+					<label><i className="material-icons">style</i>{t('settings.theme')}<span>({t(`settings.theme-${defaultData.theme}`)})</span></label>
 					<select name="theme" defaultValue={data.theme} onInput={this.updateSetting}>
-						<option value="light">Light</option>
-						<option value="dark">Dark</option>
+						<option value="light">{t('settings.theme-light')}</option>
+						<option value="dark">{t('settings.theme-dark')}</option>
 					</select>
-					<label><i className="material-icons">search</i>Start zoom <span>({defaultData.startZoom})</span></label>
+					<label><i className="material-icons">search</i>{t('settings.startZoom')}<span>({defaultData.startZoom})</span></label>
 					<input name="startZoom" defaultValue={data.startZoom} type="number" min={mapOpts.minZoom} max={mapOpts.maxZoom} onInput={this.updateSetting}></input>
-					<label><i className="material-icons">visibility</i>Stop zoom <span>({defaultData.stopZoom})</span></label>
+					<label><i className="material-icons">visibility</i>{t('settings.stopZoom')}<span>({defaultData.stopZoom})</span></label>
 					<input name="stopZoom" defaultValue={data.stopZoom} type="number" min={mapOpts.minZoom} max={mapOpts.maxZoom} onInput={this.updateSetting}></input>
 				</main>
 			</>
