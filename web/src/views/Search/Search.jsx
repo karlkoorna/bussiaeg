@@ -65,7 +65,7 @@ class Search extends Component {
 					<Scroller>
 						<div id="search-results">
 							{results.length ? results.map((result) => (
-								<div className="search-results-result-container">
+								<div className="search-results-result-container" key={result.id}>
 									<Link className="search-results-result" to={`/stop?id=${result.id}`}>
 										<Icon className="search-results-result-icon" shape="stop" type={result.type} />
 										<div style={{ color: stopColors[result.type][0] }}>

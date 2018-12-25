@@ -5,6 +5,7 @@
 #settings label {
 	display: flex;
 	margin: 16px;
+	margin-top: 24px;
 	font-weight: bold;
 	align-items: center;
 }
