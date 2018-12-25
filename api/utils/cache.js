@@ -10,7 +10,7 @@ async function use(space, key, setter) {
 	if (!cache[space][key]) cache[space][key] = await setter();
 	
 	// Return new dereferenced item.
-	return Array.isArray(cache[space][key]) ? [ ...cache[space][key] ] : { ...cache[space][key] };
+	return [ ...cache[space][key] ];
 	
 };
 
@@ -19,17 +19,7 @@ function clear() {
 	cache = {};
 }
 
-// Add route to browser cache until 6 AM next day.
-function middleware(req, res, next) {
-	const date = new Date();
-	date.setDate(date.getDate() + 1);
-	date.setHours(6, 0, 0, 0);
-	res.header('Expires', date.toGMTString());
-	next();
-}
-
 module.exports = {
 	use,
-	clear,
-	middleware
+	clear
 };
