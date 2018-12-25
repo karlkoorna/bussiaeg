@@ -19,7 +19,7 @@ class StoreFavorites {
 	constructor() {
 		
 		// Restore favorites from local storage.
-		this.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+		this.favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 		
 		// Save favorites to local storage on change.
 		reaction(() => ({
@@ -28,6 +28,28 @@ class StoreFavorites {
 		}), ({ favorites }) => {
 			localStorage.setItem('favorites', JSON.stringify(favorites));
 		});
+		
+		// Convert legacy bookmarks.
+		
+		(async () => {
+			
+			const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+			
+			if (bookmarks.length) {
+				
+				try {
+					
+					const favorites = [];
+					for (const bookmark of bookmarks) favorites.push((await (await fetch(`${process.env['REACT_APP_API']}/stops?id=${bookmark.stop}`)).json())[0]);
+					
+					localStorage.setItem('favorites', JSON.stringify(favorites));
+					localStorage.removeItem('bookmarks');
+					
+				} catch (ex) {}
+				
+			}
+			
+		})();
 		
 	}
 	
