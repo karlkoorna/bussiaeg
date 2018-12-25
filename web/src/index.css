@@ -84,7 +84,8 @@ a {
 	width: 100%;
 	height: calc(100% - 64px);
 	background-color: var(--color-bg-dark);
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .view-empty {

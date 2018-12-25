@@ -82,7 +82,7 @@
 
 #search-results {
 	flex: 1;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .search-results-result {
