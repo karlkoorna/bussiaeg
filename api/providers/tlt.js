@@ -38,6 +38,8 @@ async function update(id) {
 			provider: 'tlt'
 		}));
 		
+		last = new Date();
+		
 	} catch (ex) {
 		// Fallback to GTFS data on error.
 		if (id || new Date() - last < 4200) if (id) stops[id].trips = []; else for (const key in stops) stops[key].trips = [];

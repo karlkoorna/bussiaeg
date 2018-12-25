@@ -99,12 +99,12 @@ class Stop extends Component {
 						</svg>
 					</div>
 					<div id="stop-trips">
-						{isLoading ? <Loader /> : trips.length ? trips.map((trip, i) => {
+						{isLoading ? <Loader /> : trips.length ? trips.map((trip) => {
 							
 							const [ primaryColor, secondaryColor ] = colors[trip.type];
 							
 							return (
-								<div className="stop-trips-trip">
+								<div className="stop-trips-trip" key={`${trip.name}${trip.type}${trip.time}`}>
 									<Icon className="stop-trips-trip-icon" shape="vehicle" type={trip.type} />
 									<div className="stop-trips-trip-name" style={{ color: secondaryColor }}>{trip.name}</div>
 									<div className="stop-trips-trip-destination" style={{ color: secondaryColor }}>
