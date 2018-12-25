@@ -186,9 +186,10 @@ class Map extends Component {
 		// Load tile layer.
 		this.themeChange();
 		
-		// Redraw stops when available and on bounds change.
+		// Redraw stops.
 		this.fetchStops();
 		map.on('zoomend', this.fetchStops);
+		map.on('moveend', this.fetchStops);
 		map.on('move', () => {
 			this.debounce++;
 			if (this.debounce < 15) return;
