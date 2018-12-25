@@ -4,6 +4,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { Helmet } from 'react-helmet';
 
+import 'i18n.js';
+
 import NavBar from 'components/NavBar/NavBar.jsx';
 
 import Search from 'views/Search/Search.jsx';
@@ -15,16 +17,14 @@ import Stop from 'views/Stop/Stop.jsx';
 import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
-import storeSettings from 'stores/settings.js';
 
-import './i18n.js';
+import 'stores/settings.js';
 import './index.css';
 
 const stores = {
 	storeCoords,
 	storeSearch,
-	storeFavorites,
-	storeSettings
+	storeFavorites
 };
 
 render((

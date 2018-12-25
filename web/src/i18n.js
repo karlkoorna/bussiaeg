@@ -29,5 +29,3 @@ i18n.use(LanguageDetector)
 			lookupLocalStorage: 'lang'
 		}
 	});
-
-export default i18n;

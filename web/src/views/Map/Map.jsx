@@ -11,16 +11,19 @@ import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
+import settings from 'stores/settings.js';
+
 import { withTheme } from 'utils.js';
 import dragZoom from './dragZoom.js';
+
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
 
 const $app = document.getElementById('app');
 
 export const opts = {
-	startZoom: 16,
-	zoomTreshold: 15,
+	startZoom: settings.data.startZoom,
+	stopZoom: settings.data.stopZoom,
 	startLat: 59.436,
 	startLng: 24.753,
 	minZoom: 8,
@@ -68,7 +71,7 @@ class Map extends Component {
 		const { map } = window;
 		
 		this.setState({ isLocating: true }, () => {
-			map.flyTo([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.zoomTreshold, map.getZoom()));
+			map.flyTo([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.stopZoom, map.getZoom()));
 		});
 		
 	}
@@ -83,7 +86,7 @@ class Map extends Component {
 		// Handle message cases.
 		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) {
 			this.setState({ message: t('map.zoom') });
-		} else if (map.getZoom() < opts.zoomTreshold) {
+		} else if (map.getZoom() < opts.stopZoom) {
 			this.setState({ message: t('map.bounds') });
 		} else {
 			if (this.state.message) this.setState({ message: '' });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { withNamespaces } from 'react-i18next';
 import { Helmet } from 'react-helmet';
@@ -55,7 +55,7 @@ class Stop extends Component {
 			const { map } = window;
 			
 			// Pan map to stop if outside view.
-			if (!map.getBounds().contains([ stop.lat, stop.lng ]) || map.getZoom() < mapOpts.zoomTreshold) map.setView([ stop.lat, stop.lng ], mapOpts.startZoom + 1);
+			if (!map.getBounds().contains([ stop.lat, stop.lng ]) || map.getZoom() < mapOpts.stopZoom) map.setView([ stop.lat, stop.lng ], mapOpts.startZoom + 1);
 			
 			// Start fetching trips (with 2s interval).
 			this.fetchTrips();
