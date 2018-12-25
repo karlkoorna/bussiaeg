@@ -93,7 +93,7 @@ class Map extends Component {
 		}
 		
 		// Remove markers depending on bounds and zoom.
-		if (map.getZoom() < opts.zoomTreshold) { // Remove all markers.
+		if (map.getZoom() < opts.stopZoom) { // Remove all markers.
 			for (const marker of this.markers) marker.remove();
 			return void (this.markers = []);
 		} else { // Remove out of bounds markers.
