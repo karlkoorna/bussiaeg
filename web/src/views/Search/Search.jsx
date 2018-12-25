@@ -8,6 +8,8 @@ import Scroller from 'components/Scroller.jsx';
 import Icon, { colors as stopColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
+import { formatDistance } from 'utils.js';
+
 import './Search.css';
 
 class Search extends Component {
@@ -72,7 +74,7 @@ class Search extends Component {
 											<div className="search-results-result-name">{result.name}</div>
 											<div className="search-results-result-area">{result.description || (result.origin && result.destination ? `${result.origin} - ${result.destination}` : '')}</div>
 										</div>
-										<div className="search-results-result-distance">~{result.distance ? result.distance >= 100000 ? `${Math.round(result.distance / 10000) * 10}km` : result.distance >= 10000 ? `${(result.distance / 1000).toFixed()}km` : result.distance >= 1000 ? `${(result.distance / 1000).toFixed(1)}km` : `${Math.round(result.distance / 10) * 10}m` : ''}</div>
+										<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
 									</Link>
 								</div>
 							)) : (
