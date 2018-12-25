@@ -17,14 +17,15 @@ import Stop from 'views/Stop/Stop.jsx';
 import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
+import storeSettings from 'stores/settings.js';
 
-import 'stores/settings.js';
 import './index.css';
 
 const stores = {
 	storeCoords,
 	storeSearch,
-	storeFavorites
+	storeFavorites,
+	storeSettings
 };
 
 render((

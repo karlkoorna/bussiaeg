@@ -1,4 +1,4 @@
-import { observable, action, reaction, decorate } from 'mobx';
+import { decorate, observable, action, reaction } from 'mobx';
 
 import storeCoords from 'stores/coords.js';
 

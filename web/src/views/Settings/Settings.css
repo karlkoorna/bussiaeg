@@ -13,6 +13,12 @@
 	margin-right: 16px;
 }
 
+#settings label span {
+	margin-left: 8px;
+	color: var(--color-fg-light);
+	font-size: 12px;
+}
+
 #settings select,
 #settings input {
 	width: 100%;

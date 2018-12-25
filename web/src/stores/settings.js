@@ -2,17 +2,18 @@ import i18n from 'i18next';
 
 const $app = document.getElementById('app');
 
-export default new class StoreSettings {
+class StoreSettings {
 	
-	// Default settings.
-	data = {
+	data = {}
+	
+	defaultData = {
 		lang: i18n.language || 'en',
 		theme: 'light',
 		startZoom: 16,
 		stopZoom: 15
 	}
 	
-	// Apply setting and optionally update localStorage.
+	// Update setting.
 	update(key, value, save) {
 		
 		if (save) {
@@ -31,14 +32,19 @@ export default new class StoreSettings {
 				$app.setAttribute('data-theme', value);
 				break;
 			
+			default:
+				break;
+			
 		}
 		
 	}
 	
 	// Load and apply settings.
 	constructor() {
-		this.data = { ...this.data, ...JSON.parse(localStorage.getItem('settings') || '{}') };
+		this.data = { ...this.defaultData, ...JSON.parse(localStorage.getItem('settings') || '{}') };
 		for (const key of Object.keys(this.data)) this.update(key, this.data[key]);
 	}
 	
 }
+
+export default new StoreSettings();

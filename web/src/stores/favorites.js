@@ -26,7 +26,6 @@ class StoreFavorites {
 			favorites: this.favorites,
 			length: this.favorites.length
 		}), ({ favorites }) => {
-			console.log(123);
 			localStorage.setItem('favorites', JSON.stringify(favorites));
 		});
 		
