@@ -41,14 +41,15 @@ setInterval(() => {
 	switch (time) {
 		
 		// Update data and clear caches at 6 AM.
-		case '060000': {
+		case '060000':
 			data.update();
 			cache.clear();
-			return;
-		}
+			break;
 		
 		// Delete favorite shares at midnight.
-		case '000000': return void db.query('DELETE FROM favorites');
+		case '000000':
+			db.query('DELETE FROM favorites');
+			break;
 		
 	}
 	

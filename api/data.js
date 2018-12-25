@@ -41,15 +41,13 @@ function prepare(path, msgIncomplete, msgComplete) {
 			
 			switch (file.split('.')[1]) {
 				
-				case 'sql': {
+				case 'sql':
 					await db.query((await fse.readFile(`${path}/${file}`)).toString());
 					break;
-				}
 				
-				case 'js': {
+				case 'js':
 					await (require(`./${path}/${file}`))();
 					break;
-				}
 				
 			}
 			
