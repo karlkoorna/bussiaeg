@@ -24,6 +24,10 @@
     "theme": "Тема",
     "theme-light": "Светлая",
     "theme-dark": "Тёмная",
+    "view": "Страница",
+    "view-search": "Поиск",
+    "view-favorites": "Любимые",
+    "view-map": "Карта",
     "startZoom": "Начальный зум",
     "stopZoom": "Зум остановок"
   },

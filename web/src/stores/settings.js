@@ -9,6 +9,7 @@ class StoreSettings {
 	defaultData = {
 		lang: i18n.language || 'en',
 		theme: 'light',
+		view: 'map',
 		startZoom: 16,
 		stopZoom: 15
 	}

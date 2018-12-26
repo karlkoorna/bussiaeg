@@ -36,6 +36,12 @@ class Settings extends Component {
 						<option value="light">{t('settings.theme-light')}</option>
 						<option value="dark">{t('settings.theme-dark')}</option>
 					</select>
+					<label><i className="material-icons">view_carousel</i>{t('settings.view')}<span>({t(`settings.view-${defaultData.view}`)})</span></label>
+					<select name="view" defaultValue={data.view} onInput={this.updateSetting}>
+						<option value="search">{t('settings.view-search')}</option>
+						<option value="favorites">{t('settings.view-favorites')}</option>
+						<option value="map">{t('settings.view-map')}</option>
+					</select>
 					<label><i className="material-icons">search</i>{t('settings.startZoom')}<span>({defaultData.startZoom})</span></label>
 					<input name="startZoom" defaultValue={data.startZoom} type="number" min={mapOpts.minZoom} max={mapOpts.maxZoom} onInput={this.updateSetting}></input>
 					<label><i className="material-icons">visibility</i>{t('settings.stopZoom')}<span>({defaultData.stopZoom})</span></label>

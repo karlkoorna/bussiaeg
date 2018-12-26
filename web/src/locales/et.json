@@ -24,6 +24,10 @@
     "theme": "Teema",
     "theme-light": "Hele",
     "theme-dark": "Tume",
+    "view": "Vaade",
+    "view-search": "Otsing",
+    "view-favorites": "Lemmikud",
+    "view-map": "Kaart",
     "startZoom": "Algus suum",
     "stopZoom": "Peatuste suum"
   },

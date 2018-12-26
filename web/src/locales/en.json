@@ -24,6 +24,10 @@
     "theme": "Theme",
     "theme-light": "Light",
     "theme-dark": "Dark",
+    "view": "View",
+    "view-search": "Search",
+    "view-favorites": "Favorites",
+    "view-map": "Map",
     "startZoom": "Start Zoom",
     "stopZoom": "Stop Zoom"
   },

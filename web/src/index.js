@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { Helmet } from 'react-helmet';
 
@@ -38,6 +38,7 @@ render((
 					<meta property="og:type" content="website" />
 					<meta property="og:title" content="Bussiaeg.ee" />
 				</Helmet>
+				<Redirect to={'/' + storeSettings.data.view} />
 				<Map />
 				<Switch>
 					<Route path="/search" component={Search} />
