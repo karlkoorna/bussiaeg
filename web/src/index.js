@@ -39,14 +39,14 @@ render((
 					<meta property="og:title" content="Bussiaeg.ee" />
 				</Helmet>
 				<Map />
+				{window.location.pathname === '/' ? <Redirect to={'/' + storeSettings.data.view} /> : null}
 				<Switch>
+					<Redirect from="/map" to="/" />
 					<Route path="/search" component={Search} />
 					<Route path="/favorites" component={Favorites} />
 					<Route path="/settings" component={Settings} />
 					<Route path="/stop" component={Stop} />
-					<Redirect from="/map" to="/" />
 				</Switch>
-				<Redirect to={'/' + storeSettings.data.view} />
 				<NavBar />
 			</>
 		</BrowserRouter>
