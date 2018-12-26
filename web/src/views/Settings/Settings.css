@@ -28,6 +28,28 @@
 	font-size: 15px;
 }
 
+#settings select {
+	cursor: pointer;
+}
+
+#settings label.is-select {
+	position: relative;
+}
+
+#settings label.is-select:after {
+	content: '▼';
+	display: flex;
+	position: absolute;
+	right: 0;
+	top: 41px;
+	height: 41px;
+	color: var(--color-fg-light);
+	font-size: 18px;
+	justify-content: center;
+	align-items: center;
+	pointer-events: none;
+}
+
 #settings img {
 	width: 75%;
 	max-width: 384px;
