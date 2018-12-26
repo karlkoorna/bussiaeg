@@ -16,7 +16,7 @@
     "bounds": "Zoom in to see stops",
     "start": {
       "title": "Confirm location",
-      "text": "Starting location if GPS unavailable"
+      "text": "Starting location if GPS unavailable."
     }
   },
   "settings": {

@@ -29,7 +29,7 @@ class Settings extends Component {
 					<select name="lang" defaultValue={data.lang} onInput={this.updateSetting}>
 						<option value="et">Eesti keel</option>
 						<option value="en">English</option>
-						<option value="ru">Русскии</option>
+						<option value="ru">Русский</option>
 					</select>
 					<label><i className="material-icons">style</i>{t('settings.theme')}<span>({t(`settings.theme-${defaultData.theme}`)})</span></label>
 					<select name="theme" defaultValue={data.theme} onInput={this.updateSetting}>
