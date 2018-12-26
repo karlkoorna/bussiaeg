@@ -31,7 +31,7 @@ class Settings extends Component {
 						<option value="en">English</option>
 						<option value="ru">Русский</option>
 					</select>
-					<label className="is-select"><i className="material-icons">style</i>{t('settings.theme')}<span>({t(`settings.theme-${defaultData.theme}`)})</span></label>
+					<label className="is-select"><i className="material-icons">color_lens</i>{t('settings.theme')}<span>({t(`settings.theme-${defaultData.theme}`)})</span></label>
 					<select name="theme" defaultValue={data.theme} onInput={this.updateSetting}>
 						<option value="light">{t('settings.theme-light')}</option>
 						<option value="dark">{t('settings.theme-dark')}</option>
