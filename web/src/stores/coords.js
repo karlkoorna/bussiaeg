@@ -1,9 +1,11 @@
 import { decorate, observable, action } from 'mobx';
 
+import { opts as mapOpts } from 'views/Map/Map.jsx';
+
 class StoreCoords {
 	
-	lat = 0
-	lng = 0
+	lat = mapOpts.startLat
+	lng = mapOpts.startLng
 	accuracy = 9999
 	
 	// Update coordinates and accuracy in store.
