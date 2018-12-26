@@ -92,7 +92,7 @@ a {
 	display: flex;
 	width: 100%;
 	height: 100%;
-	color: var(--color-fg-dark);
+	color: var(--color-fg-light);
 	font-size: 20px;
 	font-weight: bold;
 	animation: view-fadeIn .25s linear forwards;

@@ -79,7 +79,3 @@
 .leaflet-container {
 	background: var(--color-bg-dark) !important;
 }
-
-.leaflet-overlay-pane svg path {
-	transition: all .15s linear;
-}
