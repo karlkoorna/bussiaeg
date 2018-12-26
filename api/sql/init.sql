@@ -44,8 +44,6 @@ CREATE TABLE trips (
 CREATE TABLE routes (
 	id CHAR(32) NOT NULL,
 	name NVARCHAR(16) NOT NULL,
-	origin NVARCHAR(48),
-	destination NVARCHAR(48),
 	type VARCHAR(16),
 	region VARCHAR(32),
 	PRIMARY KEY (id)
