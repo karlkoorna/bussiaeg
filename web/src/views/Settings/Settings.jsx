@@ -25,7 +25,7 @@ class Settings extends Component {
 					<meta name="theme-color" content={viewColors.settings[0]} />
 				</Helmet>
 				<main id="settings" className="view">
-					<label className="is-select"><i className="material-icons">language</i>{t('settings.language')}<span>({defaultData.lang})</span></label>
+					<label className="is-select"><i className="material-icons">public</i>{t('settings.language')}<span>({defaultData.lang})</span></label>
 					<select name="lang" defaultValue={data.lang} onInput={this.updateSetting}>
 						<option value="et">Eesti keel</option>
 						<option value="en">English</option>
@@ -42,7 +42,6 @@ class Settings extends Component {
 						<option value="favorites">{t('settings.view-favorites')}</option>
 						<option value="map">{t('settings.view-map')}</option>
 					</select>
-					<img src="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/banner-1.svg?sanitize=true" alt="Bussiaeg.ee" />
 					<p>
 						<a rel="nofollow" target="_blank" href="https://mnt.ee">Maanteeamet</a> ― Plaaniajad.<br />
 						<a rel="nofollow" target="_blank" href="https://tallinnlt.ee">Tallinna Linna Transport</a> ― Reaalajad Tallinnas.<br />

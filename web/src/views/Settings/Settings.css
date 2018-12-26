@@ -59,7 +59,8 @@
 }
 
 #settings p {
-	margin: 0 16px;
+	margin: 16px;
+	margin-top: 64px;
 	font-size: 16px;
 	font-style: italic;
 	line-height: 1.8;
