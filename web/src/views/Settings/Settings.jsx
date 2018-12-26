@@ -10,13 +10,9 @@ import './Settings.css';
 
 class Settings extends Component {
 	
-	hideKeyboard = (e) => {
-		if (e.which === 13) e.target.blur();
-	}
-	
 	updateSetting = (e) => {
 		const target = e.target;
-		this.props.storeSettings.update(target.name, target.valueAsNumber || target.value || target.options ? target.options[e.target.selectedIndex].value : this.props.storeSettings.defaultData[target.name], true);
+		this.props.storeSettings.update(target.name, target.options[e.target.selectedIndex].value, true);
 	}
 	
 	render() {
@@ -46,10 +42,6 @@ class Settings extends Component {
 						<option value="favorites">{t('settings.view-favorites')}</option>
 						<option value="map">{t('settings.view-map')}</option>
 					</select>
-					<label><i className="material-icons">search</i>{t('settings.startZoom')}<span>({defaultData.startZoom})</span></label>
-					<input name="startZoom" defaultValue={data.startZoom} type="number" min={mapOpts.minZoom} max={mapOpts.maxZoom} onKeyDown={this.hideKeyboard} onInput={this.updateSetting}></input>
-					<label><i className="material-icons">visibility</i>{t('settings.stopZoom')}<span>({defaultData.stopZoom})</span></label>
-					<input name="stopZoom" defaultValue={data.stopZoom} type="number" min={mapOpts.minZoom} max={mapOpts.maxZoom} onKeyDown={this.hideKeyboard} onInput={this.updateSetting}></input>
 					<img src="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/banner-1.svg?sanitize=true" alt="Bussiaeg.ee" />
 					<p>
 						<a rel="nofollow" target="_blank" href="https://mnt.ee">Maanteeamet</a> ― Plaaniajad.<br />

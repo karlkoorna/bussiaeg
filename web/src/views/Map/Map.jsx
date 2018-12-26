@@ -22,8 +22,8 @@ import 'leaflet/dist/leaflet.css';
 const $app = document.getElementById('app');
 
 export const opts = {
-	startZoom: settings.data.startZoom,
-	stopZoom: settings.data.stopZoom,
+	startZoom: 15,
+	stopZoom: 16,
 	startLat: 59.436,
 	startLng: 24.753,
 	minZoom: 8,
