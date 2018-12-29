@@ -8,7 +8,7 @@ Latest stable versions of all prerequisites are recommended.
 
 1) **Debian**
 	
-	[Download](https://www.debian.org/distrib/) and install Debian with SSH and without a desktop environment.
+	[Download](https://www.debian.org/distrib/) and install Debian.
 	
 	Install additional required tools.
 	
@@ -79,6 +79,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 	```bash
 	$ curl https://getcaddy.com | bash -s personal http.cors http.ratelimit
+	$ setcap cap_net_bind_service=+ep /usr/local/bin/caddy
 	```
 	
 ## Production
@@ -122,5 +123,5 @@ $ npm start
 Run Caddy with development config.
 
 ```bash
-$ caddy -conf Caddydev
+$ caddy -conf $(pwd)/Caddydev
 ```

@@ -2,12 +2,13 @@
 
 export NODE_ENV=production
 
-# Kill processes.
-killall node
-killall caddy
+# Kill stale processes.
+while read pid; do
+	kill -9 $pid
+done < 'pid'
+> pid
 
-# Start servers.
-cd web && npm run build && cd ..
-cd api && npx forever start app.js & cd ..
+# Start server.
 ulimit -n 8192
-caddy -conf Caddypro
+caddy -conf $(pwd)/Caddypro & echo $! > pid
+cd api && npx forever start app.js & echo $! > pid
