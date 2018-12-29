@@ -11,4 +11,4 @@ done < 'pid'
 # Start server.
 ulimit -n 8192
 caddy -conf $(pwd)/Caddypro & echo $! > pid
-cd api && npx forever start app.js & echo $! > pid
+cd api && node app.js & echo $! > pid
