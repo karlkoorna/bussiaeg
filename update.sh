@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # Kill processes.
-while read pid; do
-	kill -9 $pid
-done < 'pid'
-> pid
+killall caddy
+killall node
 
 # Pull updates.
 git reset --hard origin/master

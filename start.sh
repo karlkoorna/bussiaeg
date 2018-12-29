@@ -3,12 +3,10 @@
 export NODE_ENV=production
 
 # Kill processes.
-while read pid; do
-	kill -9 $pid
-done < 'pid'
-> pid
+killall caddy
+killall node
 
 # Start server.
 ulimit -n 8192
-caddy -conf $(pwd)/Caddypro & echo $! > pid
-cd api && echo $(pgrep -f 'node app.js') > pid
+caddy -conf $(pwd)/Caddypro &
+cd api && npm start
