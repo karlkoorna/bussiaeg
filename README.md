@@ -109,7 +109,7 @@ Start API module.
 
 ```bash
 $ cd api
-$ npx nodemon
+$ npm start
 ```
 
 Start Web module.\
