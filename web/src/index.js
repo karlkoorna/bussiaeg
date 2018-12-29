@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { Helmet } from 'react-helmet';
 
-import './i18n.js';
+import 'i18n.js';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
 
