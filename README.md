@@ -82,13 +82,7 @@ Latest stable versions of all prerequisites are recommended.
 	$ ulimit -n 8192
 	```
 	
-## Installation and updates
-
-Make `start.sh` run at startup.
-
-```bash
-$ ./setup.sh
-```
+## Production
 
 Update all modules.
 
