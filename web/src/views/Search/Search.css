@@ -49,16 +49,12 @@
 	stroke: #707070;
 }
 
-#search-top-input:focus + svg {
-	animation: search-pulse 1s linear infinite;
+#search-top-input:active + svg > path {
+	stroke: #ff8400 !important;
 }
 
-#search-top-input:focus + svg > path {
-	stroke: #ff8400;
-}
-
-#search-top-input:focus + svg > circle {
-	stroke: #ffa94d;
+#search-top-input:active + svg > circle {
+	stroke: #ffa94d !important;
 }
 
 #search-top-input + svg + svg {
@@ -137,16 +133,6 @@
 .search-results-result-distance {
 	padding: 16px;
 	font-size: 18px;
-}
-
-/* Animations */
-
-@keyframes search-pulse {
-	
-	50% {
-		transform: scale(1.1);
-	}
-	
 }
 
 /* Queries */
