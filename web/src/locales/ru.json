@@ -27,7 +27,14 @@
     "view": "Дефолт страница",
     "view-search": "Поиск",
     "view-favorites": "Любимые",
-    "view-map": "Карта"
+    "view-map": "Карта",
+    "credits": "Credits",
+    "credits-programmer": "Программист",
+    "credits-designer": "Дизайнер",
+    "credits-coach": "Плановые времена",
+    "credits-tallinn": "Реальные времена в Таллинне",
+    "credits-train": "Времена поезда",
+    "version": "Версия"
   },
   "modal": {
   	"cancel": "Нет",

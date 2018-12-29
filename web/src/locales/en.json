@@ -27,7 +27,14 @@
     "view": "Default view",
     "view-search": "Search",
     "view-favorites": "Favorites",
-    "view-map": "Map"
+    "view-map": "Map",
+    "credits": "Credits",
+    "credits-programmer": "Programmer",
+    "credits-designer": "Designer",
+    "credits-coach": "Plan times",
+    "credits-tallinn": "Live times in Tallinn",
+    "credits-train": "Train times",
+    "version": "Version"
   },
   "modal": {
 	"cancel": "Cancel",

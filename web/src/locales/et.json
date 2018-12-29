@@ -27,7 +27,14 @@
     "view": "Tavavaade",
     "view-search": "Otsing",
     "view-favorites": "Lemmikud",
-    "view-map": "Kaart"
+    "view-map": "Kaart",
+    "credits": "Credits",
+    "credits-programmer": "Programmeerija",
+    "credits-designer": "Disainer",
+    "credits-coach": "Plaaniajad",
+    "credits-tallinn": "Reaalajad Tallinnas",
+    "credits-train": "Rongiajad",
+    "version": "Versioon"
   },
   "modal": {
   	"cancel": "Tühista",

@@ -49,20 +49,20 @@ class Settings extends Component {
 						<option value="favorites">{t('settings.view-favorites')}</option>
 						<option value="map">{t('settings.view-map')}</option>
 					</select>
-					<label><i className="material-icons">people</i>Credits</label>
+					<label><i className="material-icons">people</i>{t('settings.credits')}</label>
 					<p>
-						<h1 class="first-party">Programmeerija</h1>
+						<h1 class="first-party">{t('settings.credits-programmer')}</h1>
 						<a>Karl Köörna</a>
-						<h1 class="first-party">Disainer</h1>
+						<h1 class="first-party">{t('settings.credits-designer')}</h1>
 						<a>Kaur Hendrikson</a>
-						<h1 class="third-party">Plaaniajad</h1>
+						<h1 class="third-party">{t('settings.credits-coach')}</h1>
 						<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet</a>
-						<h1 class="third-party">Reaalajad Tallinnas</h1>
+						<h1 class="third-party">{t('settings.credits-tallinn')}</h1>
 						<a target="_blank" rel="noopener noreferrer" href="https://tallinnlt.ee">Tallinna Linna Transport</a>
-						<h1 class="third-party">Rongiajad</h1>
+						<h1 class="third-party">{t('settings.credits-train')}</h1>
 						<a target="_blank" rel="noopener noreferrer" href="http://elron.ee/">Elron</a>
 					</p>
-					<label><i className="material-icons">memory</i>Version</label>
+					<label><i className="material-icons">memory</i>{t('settings.version')}</label>
 					<p>{this.state.version}</p>
 				</main>
 			</>
