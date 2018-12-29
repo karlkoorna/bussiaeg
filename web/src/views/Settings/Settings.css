@@ -1,6 +1,9 @@
 #settings {
+	padding-bottom: 48px;
 	font-size: 17px;
 }
+
+/* Settings */
 
 #settings label {
 	display: flex;
@@ -10,18 +13,17 @@
 	align-items: center;
 }
 
+#settings label:first-of-type {
+	margin-top: 16px;
+}
+
 #settings label i {
 	margin-right: 16px;
 }
 
-#settings label span {
-	margin-left: 8px;
-	color: var(--color-fg-light);
-	font-size: 12px;
-}
-
 #settings select,
-#settings input {
+#settings input,
+#settings p {
 	width: 100%;
 	padding: 12px 14px;
 	background-color: var(--color-bg-darker);
@@ -37,11 +39,11 @@
 }
 
 #settings label.is-select:after {
-	content: '▼';
+	content: '∨';
 	display: flex;
 	position: absolute;
-	right: 0;
-	top: 41px;
+	right: -3px;
+	top: 40px;
 	height: 41px;
 	color: var(--color-fg-light);
 	font-size: 18px;
@@ -50,22 +52,22 @@
 	pointer-events: none;
 }
 
-#settings img {
-	width: 75%;
-	max-width: 384px;
-	margin: 32px 16px;
-	margin-bottom: 24px;
-	transform: rotate(3deg);
+/* Info */
+
+#settings p h1 {
+	margin-top: 16px;
+	margin-bottom: 6px;
+	font-size: inherit;
 }
 
-#settings p {
-	margin: 16px;
-	margin-top: 64px;
-	font-size: 16px;
-	font-style: italic;
-	line-height: 1.8;
+#settings p h1:first-of-type {
+	margin-top: 0;
 }
 
-#settings p a {
+#settings p h1.first-party {
 	color: deepskyblue;
+}
+
+#settings p h1.third-party {
+	color: #ffa94d;
 }
