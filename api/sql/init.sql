@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS trips;
 DROP TABLE IF EXISTS routes;
 DROP TABLE IF EXISTS services;
 DROP TABLE IF EXISTS service_exceptions;
-DROP TABLE IF EXISTS favorites;
 
 DROP FUNCTION IF EXISTS CUTLONGNAME;
 
@@ -64,12 +63,6 @@ CREATE TABLE service_exceptions (
 	type BOOL NOT NULL,
 	PRIMARY KEY (service_id, date),
 	KEY (date, type)
-);
-
-CREATE TABLE favorites (
-	id CHAR(4) NOT NULL,
-	data JSON NOT NULL,
-	PRIMARY KEY (id)
 );
 
 /* Functions */

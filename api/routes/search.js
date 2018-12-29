@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 const db = require('../db.js');
 
-// Get favorites by id.
+// Search stops by name, sort by coordinate points.
 async function getSearch(req, res) {
 	
 	const { query, lat, lng } = req.query;

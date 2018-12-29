@@ -46,11 +46,6 @@ setInterval(() => {
 			cache.clear();
 			break;
 		
-		// Delete favorite shares at midnight.
-		case '000000':
-			db.query('DELETE FROM favorites');
-			break;
-		
 	}
 	
 }, 1000);
