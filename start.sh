@@ -2,7 +2,7 @@
 
 export NODE_ENV=production
 
-# Kill stale processes.
+# Kill processes.
 while read pid; do
 	kill -9 $pid
 done < 'pid'
@@ -11,4 +11,4 @@ done < 'pid'
 # Start server.
 ulimit -n 8192
 caddy -conf $(pwd)/Caddypro & echo $! > pid
-cd api && node app.js & echo $! > pid
+cd api && echo $(pgrep -f 'node app.js') > pid
