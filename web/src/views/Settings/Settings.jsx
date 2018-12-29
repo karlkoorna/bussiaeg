@@ -62,6 +62,8 @@ class Settings extends Component {
 						<h1 class="third-party">Rongiajad</h1>
 						<a target="_blank" rel="noopener noreferrer" href="http://elron.ee/">Elron</a>
 					</p>
+					<label><i className="material-icons">memory</i>Version</label>
+					<p>{this.state.version}</p>
 				</main>
 			</>
 		);
