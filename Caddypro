@@ -20,5 +20,8 @@ https://bussiaeg.ee {
 	header / X-XSS-Protection "1; mode=block"
 	header / X-Frame-Options "sameorigin"
 	header /(assets|static) Cache-Control "max-age=2629800, private"
+	rewrite {
+		to {path} /
+	}
 	root web/build
 }
