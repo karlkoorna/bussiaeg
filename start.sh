@@ -9,4 +9,5 @@ killall caddy
 # Start servers.
 cd web && npm run build && cd ..
 cd api && npx forever start app.js & cd ..
+ulimit -n 8192
 caddy -conf Caddypro

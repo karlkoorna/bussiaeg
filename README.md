@@ -79,7 +79,6 @@ Latest stable versions of all prerequisites are recommended.
 	
 	```bash
 	$ curl https://getcaddy.com | bash -s personal http.cors http.ratelimit
-	$ ulimit -n 8192
 	```
 	
 ## Production
