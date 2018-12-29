@@ -8,6 +8,10 @@ killall caddy
 git reset --hard origin/master
 git pull
 
+# Fix permissions
+chmod +x update.sh
+chmod +x start.sh
+
 # Resolve packages.
 cd api && npm install && cd ..
 cd web && npm install && npm run build && cd ..
