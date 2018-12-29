@@ -11,8 +11,6 @@ import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
-import settings from 'stores/settings.js';
-
 import { withTheme } from 'utils.js';
 import dragZoom from './dragZoom.js';
 
@@ -23,7 +21,7 @@ const $app = document.getElementById('app');
 
 export const opts = {
 	startZoom: 15,
-	stopZoom: 16,
+	stopZoom: 15,
 	startLat: 59.436,
 	startLng: 24.753,
 	minZoom: 8,
@@ -253,9 +251,9 @@ class Map extends Component {
 			prefix: ''
 		});
 		
-		attribution.addAttribution('<a href="https://openstreetmap.org" target="_blank" rel="noreferrer">OpenStreetMap</a>');
-		attribution.addAttribution('<a href="https://mapbox.com/about/maps" target="_blank" rel="noreferrer">Mapbox</a>');
-		attribution.addAttribution('<a href="https://mapbox.com/feedback" target="_blank" rel="noreferrer">Improve this map</a>');
+		attribution.addAttribution('<a target="_blank" rel="noopener noreferrer" href="https://openstreetmap.org">OpenStreetMap</a>');
+		attribution.addAttribution('<a target="_blank" rel="noopener noreferrer" href="https://mapbox.com/about/maps">Mapbox</a>');
+		attribution.addAttribution('<a target="_blank" rel="noopener noreferrer" href="https://mapbox.com/feedback">Improve this map</a>');
 		
 		map.addControl(attribution);
 		
@@ -278,7 +276,7 @@ class Map extends Component {
 					<div id="map"></div>
 					<span id="map-message">{this.state.message}</span>
 					<i id="map-locate" className={`material-icons ${(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')}`} onMouseDown={this.locate}>location_on</i>
-					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} onCancel={this.modalHide} onConfirm={this.modalConfirm} />
+					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} showCancel onCancel={this.modalHide} onConfirm={this.modalConfirm} />
 				</div>
 			</>
 		);

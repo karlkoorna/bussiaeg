@@ -25,17 +25,17 @@ class Modal extends Component {
 	
 	render() {
 		
-		const t = this.props.t;
+		const { t, title, text, showCancel, isVisible, onCancel, onConfirm } = this.props;
 		
 		return (
-			<CSSTransition in={this.props.isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 300, exit: 170 }} onExited={this.onExited} unmountOnExit>
-				<div id="modal-container" onMouseDown={this.props.onCancel}>
+			<CSSTransition in={isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 300, exit: 170 }} onExited={this.onExited} unmountOnExit>
+				<div id="modal-container" onMouseDown={onCancel}>
 					<div id="modal" onMouseDown={(e) => { e.stopPropagation() }}>
-						<div id="modal-title">{this.props.title}</div>
-						<div id="modal-text">{this.props.text}</div>
+						<div id="modal-title">{title}</div>
+						<div id="modal-text">{text}</div>
 						<div id="modal-buttons">
-							<div id="modal-buttons-cancel" onMouseDown={(e) => this.fire(e, this.props.onCancel)}>{t('modal.cancel')}</div>
-							<div id="modal-buttons-confirm" onMouseDown={(e) => this.fire(e, this.props.onConfirm)}>{t('modal.confirm')}</div>
+							{showCancel ? <div id="modal-buttons-cancel" onMouseDown={(e) => this.fire(e, onCancel)}>{t('modal.cancel')}</div> : null}
+							<div id="modal-buttons-confirm" onMouseDown={(e) => this.fire(e, onConfirm)}>{t('modal.confirm')}</div>
 						</div>
 					</div>
 				</div>
