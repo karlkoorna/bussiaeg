@@ -90,12 +90,17 @@ class Map extends Component {
 			if (this.state.message) this.setState({ message: '' });
 		}
 		
-		// Remove markers depending on bounds and zoom.
-		if (map.getZoom() < opts.stopZoom) { // Remove all markers.
-			for (const marker of this.markers) marker.remove();
-			return void (this.markers = []);
-		} else { // Remove out of bounds markers.
+		try {
 			
+			// Remove all markers if zoomed below treshold.
+			if (map.getZoom() < opts.stopZoom) {
+				for (const marker of this.markers) marker.remove();
+				return void (this.markers = []);
+			}
+			
+			const stops = await (await fetch(`${process.env['REACT_APP_API']}/stops?lat_min=${lat_min}&lat_max=${lat_max}&lng_min=${lng_min}&lng_max=${lng_max}`)).json();
+			console.log(stops);
+			// Remove out of bounds markers.
 			for (const i in this.markers) {
 				const marker = this.markers[i];
 				
@@ -106,12 +111,8 @@ class Map extends Component {
 				
 			}
 			
-		}
-		
-		// Add needed new markers.
-		fetch(`${process.env['REACT_APP_API']}/stops?lat_min=${lat_min}&lat_max=${lat_max}&lng_min=${lng_min}&lng_max=${lng_max}`).then(async (res) => {
-			
-			for (const stop of await res.json()) {
+			// Add new stop markers.
+			for (const stop of stops) {
 				
 				if (this.markers.find((marker) => marker.options.id === stop.id)) continue;
 				
@@ -128,7 +129,7 @@ class Map extends Component {
 				
 			}
 			
-		});
+		} catch (ex) {}
 		
 	}
 	
@@ -188,14 +189,17 @@ class Map extends Component {
 		this.themeChange();
 		
 		// Redraw stops.
-		this.fetchStops();
-		map.on('zoomend', this.fetchStops);
-		map.on('moveend', this.fetchStops);
-		map.on('move', () => {
-			this.debounce++;
-			if (this.debounce < 15) return;
-			this.debounce = 0;
-			this.fetchStops();
+		map.once('moveend', () => {
+			
+			map.on('zoomend', this.fetchStops);
+			map.on('moveend', this.fetchStops);
+			map.on('move', () => {
+				this.debounce++;
+				if (this.debounce < 15) return;
+				this.debounce = 0;
+				this.fetchStops();
+			});
+			
 		});
 		
 		// Open modal on right click (desktop) or hold (mobile).
