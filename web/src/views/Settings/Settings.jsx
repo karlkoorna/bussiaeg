@@ -58,7 +58,7 @@ class Settings extends Component {
 						<h1 class="third-party">{t('settings.credits-coach')}</h1>
 						<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet</a>
 						<h1 class="third-party">{t('settings.credits-tallinn')}</h1>
-						<a target="_blank" rel="noopener noreferrer" href="https://tallinnlt.ee">Tallinna Linna Transport</a>
+						<a target="_blank" rel="noopener noreferrer" href="https://tallinnlt.ee">Tallinna Linnatransport</a>
 						<h1 class="third-party">{t('settings.credits-train')}</h1>
 						<a target="_blank" rel="noopener noreferrer" href="http://elron.ee/">Elron</a>
 					</p>
