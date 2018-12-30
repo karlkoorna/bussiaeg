@@ -67,6 +67,7 @@ setInterval(() => {
 	lastPath = path;
 	
 	if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
+		'page_title': document.title,
 		'page_path': path
 	});
 	
