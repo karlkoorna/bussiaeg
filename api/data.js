@@ -64,8 +64,11 @@ function prepare(path, msgIncomplete, msgComplete) {
 function update() {
 	return new Promise(async (resolve) => {
 		
-		// Update data in production only.
-		if (process.env['NODE_ENV'] !== 'development') {
+		let nextUpdate;
+		if (await fse.exists('tmp/update')) nextUpdate = await fse.readFile('tmp/update');
+		
+		// Update data if outdated.
+		if (!nextUpdate || new Date(nextUpdate) <= new Date()) {
 			
 			debug.info('Starting data update');
 			debug.time('data-update');
@@ -75,6 +78,14 @@ function update() {
 			await prepare('sql/generators', 'Generating', 'Generated');
 			
 			debug.timeEnd('data-update', 'Data update completed');
+			
+			const date = new Date();
+			date.setSeconds(0);
+			date.setMinutes(0);
+			date.setHours(6);
+			date.setDate(date.getDate() + 1);
+			
+			fse.writeFile('tmp/update', date);
 			
 		}
 		
