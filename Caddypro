@@ -19,7 +19,9 @@ https://bussiaeg.ee {
 	header / X-Content-Type-Options "nosniff"
 	header / X-XSS-Protection "1; mode=block"
 	header / X-Frame-Options "sameorigin"
-	header /(assets|static) Cache-Control "max-age=2629800, private"
+	expires {
+		match /(static|assets) 3m
+	}
 	rewrite {
 		to {path} /
 	}

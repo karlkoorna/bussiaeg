@@ -78,7 +78,7 @@ Latest stable versions of all prerequisites are recommended.
 	Install Caddy with plugins.
 	
 	```bash
-	$ curl https://getcaddy.com | bash -s personal http.cors,http.ratelimit
+	$ curl https://getcaddy.com | bash -s personal http.cors,http.ratelimit,http.expires
 	$ setcap cap_net_bind_service=+ep /usr/local/bin/caddy
 	```
 	
