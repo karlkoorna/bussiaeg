@@ -39,7 +39,7 @@ render((
 					<meta property="og:title" content="Bussiaeg.ee" />
 				</Helmet>
 				<Map />
-				{window.location.pathname === '/' && window.location.pathname === '/' + storeSettings.data.view ? <Redirect to={'/' + storeSettings.data.view} /> : null}
+				{window.location.pathname === '/' && window.location.pathname !== '/' + storeSettings.data.view ? <Redirect to={'/' + storeSettings.data.view} /> : null}
 				<Switch>
 					<Redirect from="/map" to="/" />
 					<Route path="/search" component={Search} />
