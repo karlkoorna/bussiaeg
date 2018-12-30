@@ -62,8 +62,8 @@ window.addEventListener('keydown', (e) => {
 let lastPath = '';
 setInterval(() => {
 	
-	const path = window.location.pathname;
-	if (path === lastPath) return;
+	const path = window.location.pathname + window.location.search;
+	if (path === lastPath + window.location.search) return;
 	lastPath = path;
 	
 	if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
