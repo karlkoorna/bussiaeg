@@ -1,5 +1,4 @@
 #settings {
-	padding-bottom: 48px;
 	font-size: 17px;
 }
 
@@ -33,6 +32,15 @@
 
 #settings select {
 	cursor: pointer;
+}
+
+#settings select:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 var(--color-fg-dark);
+}
+
+#settings div:last-of-type {
+	margin-bottom: 48px;
 }
 
 #settings label.is-select {
