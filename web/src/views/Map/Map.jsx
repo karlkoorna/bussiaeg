@@ -99,7 +99,7 @@ class Map extends Component {
 			}
 			
 			const stops = await (await fetch(`${process.env['REACT_APP_API']}/stops?lat_min=${lat_min}&lat_max=${lat_max}&lng_min=${lng_min}&lng_max=${lng_max}`)).json();
-			console.log(stops);
+			
 			// Remove out of bounds markers.
 			for (const i in this.markers) {
 				const marker = this.markers[i];
