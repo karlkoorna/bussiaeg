@@ -1,2 +1,2 @@
 # Bussiaeg (API)
-Ühistranspordi ajad üle kogu Eesti.
+Kogu Eesti ühistranspordi väljumisajad ühest kohast.
