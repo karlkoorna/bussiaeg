@@ -57,3 +57,13 @@ render((
 window.addEventListener('keydown', (e) => {
 	if (e.which === 9) e.preventDefault();
 });
+
+let lastPath = '';
+setInterval(() => {
+	const path = window.location.pathname;
+	if (path === lastPath) return;
+	lastPath = path;
+	if (!window.ga) return;
+	window.ga('set', 'page', path);
+	window.ga('send', 'pageview');
+}, 2000);
