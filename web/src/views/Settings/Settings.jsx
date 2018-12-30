@@ -63,7 +63,7 @@ class Settings extends Component {
 						<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron</a>
 					</div>
 					<label><i className="material-icons">memory</i>{t('settings.version')}</label>
-					<p>{this.state.version || '3.x.x'}</p>
+					<div>{this.state.version || '3.x.x'}</div>
 				</main>
 			</>
 		);
