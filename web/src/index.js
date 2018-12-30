@@ -36,7 +36,7 @@ render((
 					<title>Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast.</title>
 					<meta name="theme-color" content="#ffffff" />
 					<meta property="og:type" content="website" />
-					<meta property="og:title" content="Bussiaeg.ee" />
+					<meta property="og:title" content="Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast." />
 				</Helmet>
 				<Map />
 				{window.location.pathname === '/' && window.location.pathname !== '/' + storeSettings.data.view ? <Redirect to={'/' + storeSettings.data.view} /> : null}
