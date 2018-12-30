@@ -23,7 +23,7 @@
 
 #settings select,
 #settings input,
-#settings p {
+#settings div {
 	width: 100%;
 	padding: 12px 14px;
 	background-color: var(--color-bg-darker);
@@ -54,20 +54,20 @@
 
 /* Info */
 
-#settings p h1 {
+#settings div h1 {
 	margin-top: 16px;
 	margin-bottom: 6px;
 	font-size: inherit;
 }
 
-#settings p h1:first-of-type {
+#settings div h1:first-of-type {
 	margin-top: 0;
 }
 
-#settings p h1.first-party {
+#settings div h1.first-party {
 	color: deepskyblue;
 }
 
-#settings p h1.third-party {
+#settings div h1.third-party {
 	color: #ffa94d;
 }

@@ -7,7 +7,7 @@ class StoreSettings {
 	data = {}
 	
 	defaultData = {
-		lang: i18n.language || 'en',
+		lang: i18n.languages[0] || 'en',
 		theme: 'light',
 		view: 'map'
 	}
