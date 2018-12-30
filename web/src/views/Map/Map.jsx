@@ -64,7 +64,7 @@ class Map extends Component {
 	}
 	
 	// Start locating.
-	locate = () => {
+	startLocating = () => {
 		
 		const { map } = window;
 		
@@ -72,6 +72,11 @@ class Map extends Component {
 			map.flyTo([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.stopZoom, map.getZoom()));
 		});
 		
+	}
+	
+	// Stop locating.
+	stopLocating = () => {
+		if (this.state.isLocating) this.setState({ isLocating: false });
 	}
 	
 	// Update message based on bounds and redraw stops.
@@ -208,9 +213,8 @@ class Map extends Component {
 		});
 		
 		// Cancel locating on user interaction.
-		$map.addEventListener('pointerdown', () => {
-			if (this.state.isLocating) this.setState({ isLocating: false });
-		}, { passive: true });
+		$map.addEventListener('mousedown', this.stopLocating, { passive: true });
+		$map.addEventListener('touchstart', this.stopLocating, { passive: true });
 		
 		// Update location marker and accuracy circle.
 		
@@ -279,7 +283,7 @@ class Map extends Component {
 				<div id="map-container" className="view">
 					<div id="map"></div>
 					<span id="map-message">{this.state.message}</span>
-					<i id="map-locate" className={`material-icons ${(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')}`} onMouseDown={this.locate}>location_on</i>
+					<i id="map-locate" className={`material-icons ${(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')}`} onMouseDown={this.startLocating}>location_on</i>
 					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} showCancel onCancel={this.modalHide} onConfirm={this.modalConfirm} />
 				</div>
 			</>
