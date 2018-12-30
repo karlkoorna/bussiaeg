@@ -1,7 +1,7 @@
 https://api.bussiaeg.ee {
 	gzip
 	limits 1mb
-	ratelimit * / 2 2 second
+	ratelimit * / 3 3 second
 	cors / https://bussiaeg.ee
 	header / X-Content-Type-Options "nosniff"
 	proxy / 127.0.0.1:81
