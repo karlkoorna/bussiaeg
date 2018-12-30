@@ -63,7 +63,7 @@ let lastPath = '';
 setInterval(() => {
 	
 	const path = window.location.pathname + window.location.search;
-	if (path === lastPath + window.location.search) return;
+	if (path === lastPath) return;
 	lastPath = path;
 	
 	if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
