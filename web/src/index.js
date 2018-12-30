@@ -61,11 +61,13 @@ window.addEventListener('keydown', (e) => {
 // Send analytics about active page.
 let lastPath = '';
 setInterval(() => {
+	
 	const path = window.location.pathname;
 	if (path === lastPath) return;
 	lastPath = path;
-	if (!window.gtag) return;
-	gtag('config', process.env['REACT_APP_GA'], {
+	
+	if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
 		'page_path': path
 	});
+	
 }, 2000);
