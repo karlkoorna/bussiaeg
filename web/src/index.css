@@ -57,7 +57,6 @@ a {
 	background-color: var(--color-bg-dark);
 	color: var(--color-fg-dark);
 	font-family: Arial, Helvetica, sans-serif;
-	font-display: swap;
 	flex-direction: column;
 	-webkit-tap-highlight-color: transparent;
 }
