@@ -58,12 +58,14 @@ window.addEventListener('keydown', (e) => {
 	if (e.which === 9) e.preventDefault();
 });
 
+// Send analytics about active page.
 let lastPath = '';
 setInterval(() => {
 	const path = window.location.pathname;
 	if (path === lastPath) return;
 	lastPath = path;
-	if (!window.ga) return;
-	window.ga('set', 'page', path);
-	window.ga('send', 'pageview');
+	if (!window.gtag) return;
+	gtag('config', process.env['REACT_APP_GA'], {
+		'page_path': path
+	});
 }, 2000);
