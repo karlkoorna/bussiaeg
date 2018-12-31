@@ -94,6 +94,16 @@
 	pointer-events: all;
 }
 
+.search-results-result.is-favorite:before {
+	content: 'favorite';
+	position: absolute;
+	left: 12px;
+	bottom: 12px;
+	color: #f5557e;
+	text-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
+	font-family: 'Material Icons';
+}
+
 .search-results-result:after {
 	content: '';
 	position: absolute;
@@ -109,10 +119,6 @@
 	height: 100%;
 	padding: 8px;
 	flex-shrink: 0;
-}
-
-.search-results-result-icon.is-routes {
-	padding: 4px;
 }
 
 .search-results-result-icon + div {

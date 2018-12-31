@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import Scroller from 'components/Scroller.jsx';
 import Icon, { colors as stopColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
-
+import storeFavorites from 'stores/favorites.js';
 import { formatDistance } from 'utils.js';
 
 import './Search.css';
@@ -68,7 +68,7 @@ class Search extends Component {
 						<div id="search-results">
 							{results.length ? results.map((result) => (
 								<div className="search-results-result-container" key={result.id}>
-									<Link className="search-results-result" to={`/stop?id=${result.id}`}>
+									<Link className={`search-results-result ${storeFavorites.get(result.id) ? 'is-favorite' : ''}`} to={`/stop?id=${result.id}`}>
 										<Icon className="search-results-result-icon" shape="stop" type={result.type} />
 										<div style={{ color: stopColors[result.type][0] }}>
 											<div className="search-results-result-name">{result.name}</div>
