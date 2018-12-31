@@ -36,12 +36,13 @@ data.update().then(async () => {
 setInterval(() => {
 	
 	const date = new Date();
-	const time = date.getHours().toFixed(0, 2) + date.getMinutes().toFixed(0, 2) + date.getSeconds().toFixed(0, 2);
+	const time = ('0' + date.getHours()).slice(-2) + ('0' + date.getMinutes()).slice(-2) + ('0' + date.getSeconds()).slice(-2);
 	
 	switch (time) {
 		
 		// Update data and clear caches at 6 AM.
 		case '060000':
+			console.log(123321);
 			data.update();
 			cache.clear();
 			break;
