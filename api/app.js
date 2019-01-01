@@ -11,7 +11,7 @@ dotenv.config();
 
 const db = require('./db.js');
 const data = require('./data.js');
-const cache = require('./cache.js');
+const cache = require('./utils/cache.js');
 const debug = require('./utils/debug.js');
 
 // Initialize HTTP server.
