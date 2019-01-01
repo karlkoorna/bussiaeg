@@ -26,6 +26,7 @@ async function getTrips(id, coachOnly) {
 				)
 			)
 			${coachOnly ? "AND route.type LIKE 'coach%'" : ''}
+		ORDER BY time
 		LIMIT ${coachOnly ? '5' : '15'}
 	`, [ id ]));
 	
