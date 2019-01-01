@@ -84,7 +84,7 @@ class Stop extends Component {
 				{id ? (
 					<Helmet>
 						<title>Bussiaeg.ee: {name}</title>
-						<meta name="theme-color" content={colors[type][0]} />
+						<meta name="theme-color" content={colors[type][1]} />
 						<meta property="og:title" content={`Bussiaeg.ee: ${name}`} />
 					</Helmet>
 				) : null}
