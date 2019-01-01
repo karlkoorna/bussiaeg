@@ -2,7 +2,6 @@ const fs = require('fs');
 const dotenv = require('dotenv');
 const fastify = require('fastify');
 const chalk = require('chalk');
-
 // Show splash.
 const package = require('./package.json');
 console.log(chalk`\n{yellow ${package.description}} {blue v${package.version}} {gray (${package.license})}\n`);
@@ -12,6 +11,7 @@ dotenv.config();
 
 const db = require('./db.js');
 const data = require('./data.js');
+const cache = require('./cache.js');
 const debug = require('./utils/debug.js');
 
 // Initialize HTTP server.
