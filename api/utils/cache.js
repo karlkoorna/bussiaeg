@@ -1,4 +1,4 @@
-const cache = {};
+let cache = {};
 
 // Add/get to/from cache.
 async function use(space, key, setter) {

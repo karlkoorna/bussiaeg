@@ -42,7 +42,6 @@ setInterval(() => {
 		
 		// Update data and clear caches at 6 AM.
 		case '060000':
-			console.log(123321);
 			data.update();
 			cache.clear();
 			break;
