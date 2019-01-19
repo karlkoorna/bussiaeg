@@ -12,7 +12,7 @@ async function getTrips(id) {
 	if (!trips) throw new Error("Provider 'Elron' is not returning data");
 	if (trips.text) throw new Error(trips.text);
 	
-	// Show not arrived trips until 30 minutes of being late.
+	// Show not arrived trips until 10 minutes of being late.
 	return trips.filter((trip) => !trip.tegelik_aeg).map((trip) => ({
 		time: time.toSeconds(trip.plaaniline_aeg),
 		countdown: time.toSeconds(trip.plaaniline_aeg) - now,
@@ -21,7 +21,7 @@ async function getTrips(id) {
 		type: 'train',
 		live: false,
 		provider: 'elron'
-	})).filter((trip) => now - trip.time < 1800).slice(0, 15);
+	})).filter((trip) => now - trip.time < 600).slice(0, 15);
 	
 }
 
