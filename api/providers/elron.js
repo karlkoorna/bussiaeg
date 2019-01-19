@@ -7,25 +7,21 @@ const time = require('../utils/time.js');
 async function getTrips(id) {
 	
 	const now = time.getSeconds();
+	const trips = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
 	
-	return (await cache.use('elron-trips', id, async () => {
-		
-		const data = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
-		
-		if (!data) throw new Error("Provider 'Elron' is not returning data");
-		if (data.text) throw new Error(data.text);
-		
-		return data.map((trip) => ({
-			time: time.toSeconds(trip.plaaniline_aeg),
-			countdown: time.toSeconds(trip.plaaniline_aeg) - now,
-			name: trip.reis,
-			destination: trip.liin,
-			type: 'train',
-			live: false,
-			provider: 'elron'
-		}));
-		
-	})).filter((trip) => trip.time > now).slice(0, 15);
+	if (!trips) throw new Error("Provider 'Elron' is not returning data");
+	if (trips.text) throw new Error(trips.text);
+	
+	// Show not arrived trips until 30 minutes of being late.
+	return trips.filter((trip) => !trip.tegelik_aeg).map((trip) => ({
+		time: time.toSeconds(trip.plaaniline_aeg),
+		countdown: time.toSeconds(trip.plaaniline_aeg) - now,
+		name: trip.reis,
+		destination: trip.liin,
+		type: 'train',
+		live: false,
+		provider: 'elron'
+	})).filter((trip) => now - trip.time < 1800).slice(0, 15);
 	
 }
 
