@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 const db = require('../db.js');
 
 // Search stops by name, sort by coordinate points.
