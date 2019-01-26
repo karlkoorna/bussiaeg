@@ -43,24 +43,6 @@
 	margin-bottom: 48px;
 }
 
-#settings label.is-select {
-	position: relative;
-}
-
-#settings label.is-select:after {
-	content: '●';
-	display: flex;
-	position: absolute;
-	right: -3px;
-	top: 40px;
-	height: 41px;
-	color: var(--color-fg-light);
-	font-size: 18px;
-	justify-content: center;
-	align-items: center;
-	pointer-events: none;
-}
-
 /* Info */
 
 #settings div h1 {

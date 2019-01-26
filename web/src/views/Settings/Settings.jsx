@@ -34,18 +34,18 @@ class Settings extends Component {
 				</Helmet>
 				<Scroller>
 					<main id="settings" className="view">
-						<label className="is-select"><i className="material-icons">public</i>{t('settings.language')}</label>
+						<label><i className="material-icons">public</i>{t('settings.language')}</label>
 						<select name="lang" defaultValue={data.lang} onInput={this.updateSetting}>
 							<option value="et">Eesti keel</option>
 							<option value="en">English</option>
 							<option value="ru">Русский</option>
 						</select>
-						<label className="is-select"><i className="material-icons">color_lens</i>{t('settings.theme')}</label>
+						<label><i className="material-icons">color_lens</i>{t('settings.theme')}</label>
 						<select name="theme" defaultValue={data.theme} onInput={this.updateSetting}>
 							<option value="light">{t('settings.theme-light')}</option>
 							<option value="dark">{t('settings.theme-dark')}</option>
 						</select>
-						<label className="is-select"><i className="material-icons">view_carousel</i>{t('settings.view')}</label>
+						<label><i className="material-icons">view_carousel</i>{t('settings.view')}</label>
 						<select name="view" defaultValue={data.view} onInput={this.updateSetting}>
 							<option value="search">{t('settings.view-search')}</option>
 							<option value="favorites">{t('settings.view-favorites')}</option>
