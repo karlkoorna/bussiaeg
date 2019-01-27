@@ -15,7 +15,7 @@ https://www.bussiaeg.ee {
 
 https://bussiaeg.ee {
 	gzip
-	header / Content-Security-Policy "default-src bussiaeg.ee api.bussiaeg.ee google-analytics.com; script-src 'unsafe-inline' bussiaeg.ee googletagmanager.com; style-src 'unsafe-inline' bussiaeg.ee fonts.googleapis.com; font-src fonts.gstatic.com; img-src * data:;"
+	header / Content-Security-Policy "default-src bussiaeg.ee api.bussiaeg.ee www.google-analytics.com; script-src 'unsafe-inline' bussiaeg.ee googletagmanager.com; style-src 'unsafe-inline' bussiaeg.ee fonts.googleapis.com; font-src fonts.gstatic.com; img-src * data:;"
 	header / Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 	header / X-Content-Type-Options "nosniff"
 	header / X-XSS-Protection "1; mode=block"
