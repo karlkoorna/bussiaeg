@@ -26,7 +26,7 @@ async function getTrips(req, res) {
 	// TLT + MNT
 	
 	if (stop.region === 'tallinn') trips = await tlt.getTrips(id);
-	trips = trips.concat(await mnt.getTrips(id, trips.length)).sort((a, b) => a.time - b.time);
+	trips = trips.concat(await mnt.getTrips(id, trips.length)).sort((a, b) => a.countdown - b.countdown);
 	
 	res.send(trips);
 	
