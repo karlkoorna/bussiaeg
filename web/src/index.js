@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'mobx-react';
-import { Helmet } from 'react-helmet';
 
 import 'i18n.js';
 
@@ -32,14 +31,8 @@ render((
 	<Provider {...stores}>
 		<BrowserRouter>
 			<>
-				<Helmet>
-					<title>Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast.</title>
-					<meta name="theme-color" content="#ffffff" />
-					<meta property="og:type" content="website" />
-					<meta property="og:title" content="Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast." />
-				</Helmet>
 				<Map />
-				{window.location.pathname === '/' && window.location.pathname !== '/' + storeSettings.data.view ? <Redirect to={'/' + storeSettings.data.view} /> : null}
+				<Redirect from="/" to={'/' + storeSettings.data.view} exact />
 				<Switch>
 					<Redirect from="/map" to="/" />
 					<Route path="/search" component={Search} />
