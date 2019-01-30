@@ -32,7 +32,7 @@ render((
 		<BrowserRouter>
 			<>
 				<Map />
-				<Redirect from="/" to={'/' + storeSettings.data.view} exact />
+				{storeSettings.data.view !== 'map' ? <Redirect to={'/' + storeSettings.data.view} /> : null}
 				<Switch>
 					<Redirect from="/map" to="/" />
 					<Route path="/search" component={Search} />
