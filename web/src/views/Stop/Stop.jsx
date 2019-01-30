@@ -83,9 +83,9 @@ class Stop extends Component {
 			<>
 				{id ? (
 					<Helmet>
-						<title>Bussiaeg.ee: {name}</title>
+						<title>Bussiaeg.ee: {name} – {description}</title>
 						<meta name="theme-color" content={colors[type][1]} />
-						<meta property="og:title" content={`Bussiaeg.ee: ${name}`} />
+						<meta property="og:title" content={`Bussiaeg.ee: ${name} – ${description}`} />
 					</Helmet>
 				) : null}
 				<main id="stop" className="view">
