@@ -9,7 +9,7 @@ class Modal extends Component {
 	// Add animation class to button and call function.
 	fire = (e, cb) => {
 		e.target.classList.add('is-active');
-		cb();
+		if (cb) cb();
 	}
 	
 	// Cancel modal on escape key.
