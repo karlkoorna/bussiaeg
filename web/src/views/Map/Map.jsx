@@ -243,12 +243,12 @@ class Map extends Component {
 			if (accuracy < opts.accuracyTreshold) { // Show overlay on high accuracy.
 				
 				marker.setLatLng([ lat, lng ]);
+				circle.setLatLng([ lat, lng ]);
 				circle.setRadius(accuracy <= 10 ? 0 : accuracy); // Hide accuracy circle on very high accuracy.
 				
 			} else { // Hide overlay on low accuracy.
 				
 				marker.setLatLng([ 0, 0 ]);
-				circle.setLatLng([ 0, 0 ]);
 				circle.setRadius(0);
 				
 			}
