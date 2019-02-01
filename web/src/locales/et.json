@@ -15,7 +15,7 @@
     "zoom": "Bussiaeg.ee ei tööta väljaspool Eestit",
     "bounds": "Suumige sisse, et näha peatusi",
     "start": {
-  	  "title": "Kinnita asukoht",
+  	  "title": "Kinnita asukoht?",
   	  "text": "GPSi puudumisel kasutatav algasukoht."
     }
   },
@@ -37,7 +37,7 @@
     "version": "Versioon"
   },
   "modal": {
-  	"cancel": "Tühista",
-  	"confirm": "Kinnita"
+  	"cancel": "TÜHISTA",
+  	"confirm": "KINNITA"
   }
 }

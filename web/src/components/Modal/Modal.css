@@ -12,11 +12,11 @@
 }
 
 #modal-container.is-entering {
-	animation: modal-fadeIn .33s ease;
+	animation: modal-fadeIn .15s ease;
 }
 
 #modal-container.is-exiting {
-	animation: modal-fadeOut .2s ease;
+	animation: modal-fadeOut .1s ease;
 }
 
 /* Panel */
@@ -24,67 +24,69 @@
 #modal {
 	width: 80%;
 	max-width: 384px;
-	min-height: 128px;
 	margin-bottom: 48px;
-	padding: 16px;
 	background-color: var(--color-bg-light);
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
 }
 
 #modal-title {
-	margin: 8px 0;
-	font-size: 24px;
+	padding: 24px 24px 20px;
+	font-size: 22px;
 	font-weight: bold;
-	text-align: center;
 }
 
 #modal-text {
-	margin-top: 24px;
-	margin-bottom: 28px;
-	text-align: center;
+	padding: 0 24px 24px;
+	color: var(--color-fg-light);
 }
 
 /* Panel - Buttons */
 
 #modal-buttons {
 	display: flex;
-	justify-content: center;
+	padding: 8px;
+	font-size: 14px;
+	justify-content: flex-end;
+}
+
+#modal-buttons canvas {
+	color: rgba(0, 0, 0, .2);
 }
 
 #modal-buttons-cancel,
 #modal-buttons-confirm {
+	position: relative;
 	display: flex;
-	width: 96px;
-	height: 33px;
-	padding-bottom: 1px;
-	margin: 0 8px;
-	color: white;
+	height: 36px;
+	padding: 0 16px;
+	color: deepskyblue;
 	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	font-weight: bold;
 	justify-content: center;
 	align-items: center;
-	transition: width .25s ease;
+	transition: background-color .25s ease;
 	cursor: pointer;
 }
 
-#modal-buttons-cancel:hover,
-#modal-buttons-confirm:hover {
-	width: 112px;
+#app[data-theme="light"] #modal-buttons-cancel:hover,
+#app[data-theme="light"] #modal-buttons-confirm:hover {
+	background-color: rgba(0, 0, 0, .075);
 }
 
-#modal-buttons-cancel {
-	background-color: #9e9e9e;
+#app[data-theme="dark"] #modal-buttons-cancel:hover,
+#app[data-theme="dark"] #modal-buttons-confirm:hover {
+	background-color: rgba(0, 0, 0, .175);
 }
 
-#modal-buttons-confirm {
-	background-color: #00ace6;
+#app[data-theme="light"] #modal-buttons-cancel:hover canvas,
+#app[data-theme="light"] #modal-buttons-confirm:hover canvas {
+	color: rgba(0, 0, 0, .075);
 }
 
-#modal-buttons-cancel.is-active,
-#modal-buttons-confirm.is-active {
-	width: 100%;
+#app[data-theme="dark"] #modal-buttons-cancel:hover canvas,
+#app[data-theme="dark"] #modal-buttons-confirm:hover canvas {
+	color: rgba(0, 0, 0, .5);
 }
 
 /* Animations */
