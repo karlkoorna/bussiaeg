@@ -49,11 +49,11 @@
 	stroke: #707070;
 }
 
-#search-top-input:active + svg > path {
+#search-top-input:focus + svg > path {
 	stroke: #ff8400 !important;
 }
 
-#search-top-input:active + svg > circle {
+#search-top-input:focus + svg > circle {
 	stroke: #ffa94d !important;
 }
 
