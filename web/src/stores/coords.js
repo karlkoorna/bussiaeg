@@ -19,7 +19,7 @@ class StoreCoords {
 			this.update(e.coords);
 		}, () => {}, {
 			enableHighAccuracy: true,
-			timeout: 100
+			timeout: 300
 		});
 		
 	}
