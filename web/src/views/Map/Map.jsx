@@ -11,13 +11,12 @@ import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
+import storeSettings from 'stores/settings.js';
 import { withTheme } from 'utils.js';
 import dragZoom from './dragZoom.js';
 
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
-
-const $app = document.getElementById('app');
 
 export const opts = {
 	startZoom: 15,
@@ -139,9 +138,9 @@ class Map extends Component {
 	}
 	
 	// Update map tile layer.
-	themeChange = () => {
+	onThemeChange = () => {
 		if (this.tileLayer) this.tileLayer.remove();
-		this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + $app.getAttribute('data-theme').toUpperCase()]).addTo(window.map);
+		this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + storeSettings.data.theme.toUpperCase()]).addTo(window.map);
 	}
 	
 	componentDidMount() {
@@ -191,7 +190,7 @@ class Map extends Component {
 		}).addTo(map);
 		
 		// Load tile layer.
-		this.themeChange();
+		this.onThemeChange();
 		
 		// Redraw stops.
 		map.once('moveend', () => {

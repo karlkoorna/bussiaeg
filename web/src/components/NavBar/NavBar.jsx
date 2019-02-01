@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Ink from 'react-ink';
 
+import storeSettings from 'stores/settings.js';
 import { withTheme } from 'utils.js';
 
 import './NavBar.css';
@@ -12,8 +13,6 @@ export const colors = {
 	map: [ '#00e6ad', '#00cc9a' ],
 	settings: [ '#00bfff', '#00ace6' ]
 };
-
-const $app = document.getElementById('app');
 
 class NavBarItem extends Component {
 	
@@ -38,14 +37,14 @@ class NavBarItem extends Component {
 		this.setState({ animation: '' });
 	}
 	
-	themeChange = () => {
+	onThemeChange = () => {
 		this.forceUpdate();
 	}
 	
 	render() {
 		
 		const { to, colors, children } = this.props;
-		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : $app.getAttribute('data-theme') === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
+		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : storeSettings.data.theme === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
 		
 		return (
 			<li className="navbar-item" onMouseDown={this.navigate} onTouchStart={this.navigate}>

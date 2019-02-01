@@ -7,7 +7,7 @@ export function withTheme(C) {
 		componentDidMount() {
 			
 			(new MutationObserver(() => {
-				if (this.themeChange) this.themeChange(); else this.wrappedInstance.themeChange();
+				if (this.onThemeChange) this.onThemeChange(); else this.wrappedInstance.onThemeChange();
 			})).observe($app, { attributes: true });
 			
 		}
