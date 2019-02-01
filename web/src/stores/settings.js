@@ -20,11 +20,12 @@ class StoreSettings {
 			localStorage.setItem('settings', JSON.stringify(this.data));
 		}
 		
-		// Handle special settings.
+		// Handle setting side effects.
 		switch (key) {
 			
 			case 'lang':
 				i18n.changeLanguage(value);
+				document.body.parentElement.setAttribute('lang', value);
 				break;
 			
 			case 'theme':
