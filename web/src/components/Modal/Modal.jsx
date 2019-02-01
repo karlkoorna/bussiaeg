@@ -7,12 +7,6 @@ import './Modal.css';
 
 class Modal extends Component {
 	
-	// Add animation class to button and call function.
-	fire = (e, cb) => {
-		e.target.classList.add('is-active');
-		if (cb) cb();
-	}
-	
 	// Cancel modal on escape key.
 	onKeyDown = (e) => {
 		if (e.which === 27) this.props.onCancel();
@@ -36,11 +30,11 @@ class Modal extends Component {
 						<div id="modal-text">{text}</div>
 						<div id="modal-buttons">
 							{showCancel ? (
-								<div id="modal-buttons-cancel" onMouseUp={(e) => this.fire(e, onCancel)}>{t('modal.cancel')}
+								<div id="modal-buttons-cancel" onMouseUp={onCancel}>{t('modal.cancel')}
 									<Ink background={false} opacity={.5} />
 								</div>
 							) : null}
-							<div id="modal-buttons-confirm" onMouseUp={(e) => this.fire(e, onConfirm)}>{t('modal.confirm')}
+							<div id="modal-buttons-confirm" onMouseUp={onConfirm}>{t('modal.confirm')}
 								<Ink background={false} opacity={.5} />
 							</div>
 						</div>

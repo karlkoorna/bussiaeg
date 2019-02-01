@@ -60,13 +60,20 @@
 	display: flex;
 	height: 36px;
 	padding: 0 16px;
-	color: deepskyblue;
 	border-radius: 3px;
 	font-weight: bold;
 	justify-content: center;
 	align-items: center;
 	transition: background-color .25s ease;
 	cursor: pointer;
+}
+
+#modal-buttons-cancel {
+	color: tomato;
+}
+
+#modal-buttons-confirm {
+	color: deepskyblue;
 }
 
 #app[data-theme="light"] #modal-buttons-cancel:hover,
