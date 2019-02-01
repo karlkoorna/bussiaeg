@@ -11,7 +11,7 @@ import './Settings.css';
 class Settings extends Component {
 	
 	state = {
-		version: ''
+		version: '3.x.x'
 	}
 	
 	updateSetting = (e) => {
@@ -20,7 +20,10 @@ class Settings extends Component {
 	}
 	
 	async componentDidMount() {
-		this.setState({ version: await (await fetch(`${process.env['REACT_APP_API']}/version`)).text() });
+		try {
+			const res = await fetch(`${process.env['REACT_APP_API']}/version`);
+			if (res.ok) this.setState({ version: await res.text() });
+		} catch {}
 	}
 	
 	render() {
@@ -65,7 +68,7 @@ class Settings extends Component {
 							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron</a>
 						</div>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>
-						<div>{this.state.version || '3.x.x'}</div>
+						<div>{this.state.version}</div>
 					</main>
 				</Scroller>
 			</>

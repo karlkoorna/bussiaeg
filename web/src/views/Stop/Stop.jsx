@@ -10,6 +10,8 @@ import { opts as mapOpts } from 'views/Map/Map.jsx';
 import Loader from 'components/Loader/Loader.jsx';
 import Icon, { colors } from 'components/Icon.jsx';
 
+import storeSettings from 'stores/settings.js';
+
 import './Stop.css';
 
 class Stop extends Component {
@@ -36,15 +38,23 @@ class Stop extends Component {
 	
 	// Update trips if mounted.
 	fetchTrips = async () => {
-		if (this._isMounted) this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${this.state.stop.id}`)).json(), isLoading: false });
+		try {
+			if (this._isMounted) this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${this.state.stop.id}`)).json(), isLoading: false });
+		} catch (ex) {}
 	}
 	
 	async componentWillMount() {
 		
-		// Fetch and verify stop, redirect to home view if unsuccessful.
-		let stop = await (await fetch(`${process.env['REACT_APP_API']}/stops?id=${(new URLSearchParams(window.location.search)).get('id')}`)).json();
-		if (!stop.length) return void this.props.history.push('/');
-		stop = stop[0];
+		let stop;
+		
+		// Fetch stop, redirect to default view if unsuccessful.
+		try {
+			stop = await (await fetch(`${process.env['REACT_APP_API']}/stops?id=${(new URLSearchParams(window.location.search)).get('id')}`)).json();
+			if (!stop.length) return void this.props.history.push('/' + storeSettings.data.view);
+			stop = stop[0];
+		} catch (ex) {
+			return void this.props.history.push('/' + storeSettings.data.view);
+		}
 		
 		// Load stop data into state.
 		this.setState({

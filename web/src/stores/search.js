@@ -33,8 +33,16 @@ class StoreSearch {
 	
 	// Fetch search results.
 	async fetchResults() {
+		
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
-		this.results = query || (lat && lng) ? await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json() : [];
+		
+		// Clear results if no query or coords.
+		if (!query && !lat) return void (this.results = []);
+		
+		try {
+			this.results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json();
+		} catch (ex) {}
+		
 	}
 	
 };
