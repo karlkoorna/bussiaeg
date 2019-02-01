@@ -61,6 +61,12 @@ a {
 	-webkit-tap-highlight-color: transparent;
 }
 
+#app[data-theme="light"],
+#app[data-theme="dark"] {
+	--shadow-light: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
+	--shadow-dark: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
+}
+
 #app[data-theme="light"] {
 	--color-fg-light: #6a6b70;
 	--color-fg-dark: #34393d;

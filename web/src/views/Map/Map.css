@@ -41,7 +41,7 @@
 	color: #00e6ad !important;
 	border: 3px solid transparent;
 	border-radius: 100%;
-	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
+	box-shadow: var(--shadow-light);
 	font-size: 28px;
 	transition: right .25s ease, border-color .1s linear;
     justify-content: center;
