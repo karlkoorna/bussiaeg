@@ -62,13 +62,13 @@ class Map extends Component {
 		
 	}
 	
-	// Start locating.
+	// Start locating at zoom where stops are visible.
 	startLocating = () => {
 		
 		const { map } = window;
 		
 		this.setState({ isLocating: true }, () => {
-			map.flyTo([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.stopZoom, map.getZoom()));
+			map.setView([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.stopZoom, map.getZoom()));
 		});
 		
 	}
@@ -168,6 +168,7 @@ class Map extends Component {
 		
 		const marker = new Leaflet.Marker([ 0, 0 ], {
 			interactive: false,
+			renderer: new Leaflet.SVG(),
 			icon: new Leaflet.Icon({
 				iconSize: [ 20, 20 ],
 				iconAnchor: [ 10, 10 ],
@@ -181,8 +182,8 @@ class Map extends Component {
 		}).addTo(map);
 		
 		const circle = new Leaflet.Circle([ 0, 0 ], {
-			renderer: new Leaflet.Canvas({ padding: 1 }),
 			interactive: false,
+			renderer: new Leaflet.SVG({ padding: 1 }),
 			fillColor: '#00e6ad',
 			fillOpacity: .15,
 			color: '#00e6ad',
@@ -206,10 +207,23 @@ class Map extends Component {
 			
 		});
 		
+		// Fix location marker and accuracy circle transition while zooming.
+		map.on('zoomstart', () => {
+			$map.classList.add('is-zooming');
+		});
+		map.on('zoomend', () => {
+			setTimeout(() => {
+				$map.classList.remove('is-zooming');
+			}, 0);
+		});
+		
 		// Open modal on right click (desktop) or hold (mobile).
 		map.on('contextmenu', () => {
 			this.setState({ showModal: true });
 		});
+		
+		// Register drag zoom handler (mobile).
+		dragZoom(map);
 		
 		// Cancel locating on user interaction.
 		$map.addEventListener('mousedown', this.stopLocating, { passive: true });
@@ -229,8 +243,7 @@ class Map extends Component {
 			if (accuracy < opts.accuracyTreshold) { // Show overlay on high accuracy.
 				
 				marker.setLatLng([ lat, lng ]);
-				circle.setLatLng([ lat, lng ]);
-				circle.setRadius(accuracy);
+				circle.setRadius(accuracy <= 10 ? 0 : accuracy); // Hide accuracy circle on very high accuracy.
 				
 			} else { // Hide overlay on low accuracy.
 				
@@ -241,15 +254,12 @@ class Map extends Component {
 			}
 			
 			// Pan map if GPS found on load within timeout.
-			if (new Date() - timestamp < opts.panTimeout) map.panTo([ lat, lng ]);
+			if (new Date() - timestamp < opts.panTimeout) map.setView([ lat, lng ]);
 			
 			// Pan map if locating.
-			if (accuracy < opts.accuracyTreshold && this.state.isLocating) map.flyTo([ lat, lng ]);
+			if (accuracy < opts.accuracyTreshold && this.state.isLocating) map.panTo([ lat, lng ], { duration: .5 });
 			
 		}, { fireImmediately: true });
-		
-		// Register drag zoom handler (for mobile).
-		dragZoom(map);
 		
 		// Setup attribution.
 		

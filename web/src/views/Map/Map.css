@@ -79,3 +79,11 @@
 .leaflet-container {
 	background: var(--color-bg-dark) !important;
 }
+
+#map:not(.is-zooming) .leaflet-overlay-pane svg path {
+	transition: all .3s ease;
+}
+
+#map:not(.is-zooming) .leaflet-marker-icon:first-of-type {
+	transition: all .3s ease;
+}
