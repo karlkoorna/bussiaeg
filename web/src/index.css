@@ -101,7 +101,7 @@ a {
 	color: var(--color-fg-light);
 	font-size: 20px;
 	font-weight: bold;
-	animation: view-fadeIn .25s linear forwards;
+	animation: view-fadeIn .15s linear forwards;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
