@@ -23,7 +23,14 @@
 		<link rel="mask-icon" href="assets/favicons/safari-pinned.svg" color="#66bb6a">
 		<link rel="manifest" href="assets/favicons/manifest.json">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
-		<script defer>if (!window.fetch || !window.Promise) window.location = 'http://outdatedbrowser.com'</script>
+		<script async src="https://googletagmanager.com/gtag/js?id=%REACT_APP_GA%"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', '%REACT_APP_GA%');
+		</script>
+		<script>if (!window.fetch || !window.Promise) window.location = 'http://outdatedbrowser.com'</script>
 	</head>
 	<body>
 		<div id="app" data-theme="light"></div>
