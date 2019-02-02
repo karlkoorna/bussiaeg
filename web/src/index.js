@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'mobx-react';
+import GA from 'react-ga';
 
 import 'i18n.js';
 
@@ -51,6 +52,9 @@ window.addEventListener('keydown', (e) => {
 	if (e.which === 9) e.preventDefault();
 });
 
+// Initialize Google Analytics.
+GA.initialize(process.env['REACT_APP_GA'], { debug: true });
+
 // Send analytics about active page.
 let lastPath = '';
 setInterval(() => {
@@ -59,9 +63,6 @@ setInterval(() => {
 	if (path === lastPath) return;
 	lastPath = path;
 	
-	if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
-		'page_title': document.title,
-		'page_path': path
-	});
+	GA.pageview(path, [], document.title);
 	
 }, 2000);
