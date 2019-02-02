@@ -1,6 +1,2 @@
 User-agent: *
-Disallow: /search
-Disallow: /favorites
-Disallow: /map
-Disallow: /settings
-Disallow: /stop
+Allow: /
