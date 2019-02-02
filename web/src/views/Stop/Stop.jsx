@@ -36,11 +36,17 @@ class Stop extends Component {
 		this.setState({ isFavorite: this.props.storeFavorites.toggle(this.state.stop) });
 	}
 	
-	// Update trips if mounted.
+	// Update trips if mounted with 2s timeout after previous request.
 	fetchTrips = async () => {
+		
+		if (!this._isMounted) return;
+		
 		try {
-			if (this._isMounted) this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${this.state.stop.id}`)).json(), isLoading: false });
+			this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${this.state.stop.id}`)).json(), isLoading: false });
 		} catch (ex) {}
+		
+		setTimeout(this.fetchTrips, 2000);
+		
 	}
 	
 	async componentWillMount() {
@@ -67,9 +73,8 @@ class Stop extends Component {
 			// Pan map to stop if outside view.
 			if (!map.getBounds().contains([ stop.lat, stop.lng ]) || map.getZoom() < mapOpts.stopZoom) map.setView([ stop.lat, stop.lng ], mapOpts.startZoom + 1);
 			
-			// Start fetching trips (with 2s interval).
+			// Start fetching trips.
 			this.fetchTrips();
-			this.interval = setInterval(this.fetchTrips, 2000);
 			
 		});
 		
@@ -91,13 +96,11 @@ class Stop extends Component {
 		
 		return (
 			<>
-				{id ? (
-					<Helmet>
-						<title>Bussiaeg.ee: {name} – {description}</title>
-						<meta name="theme-color" content={colors[type][1]} />
-						<meta property="og:title" content={`Bussiaeg.ee: ${name} – ${description}`} />
-					</Helmet>
-				) : null}
+				<Helmet>
+					<title>{id ? `Bussiaeg.ee: ${name} – ${description}` : document.title}</title>
+					<meta property="og:title" content={id ? `Bussiaeg.ee: ${name} – ${description}` : document.title} />
+					<meta name="theme-color" content={id ? colors[type][1] : 'unknown'} />
+				</Helmet>
 				<main id="stop" className="view">
 					<div id="stop-info">
 						<Icon id="stop-info-icon" shape="stop" type={type || 'unknown'} />
