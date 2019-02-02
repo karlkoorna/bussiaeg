@@ -61,11 +61,11 @@ class Settings extends Component {
 							<h1 className="first-party">{t('settings.credits-designer')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="/">Kaur Hendrikson</a>
 							<h1 className="third-party">{t('settings.credits-coach')}</h1>
-							<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet</a>
+							<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet<i class="material-icons">open_in_new</i></a>
 							<h1 className="third-party">{t('settings.credits-tallinn')}</h1>
-							<a target="_blank" rel="noopener noreferrer" href="https://tallinnlt.ee">Tallinna Linnatransport</a>
+							<a target="_blank" rel="noopener noreferrer" href="https://tallinnlt.ee">Tallinna Linnatransport<i class="material-icons">open_in_new</i></a>
 							<h1 className="third-party">{t('settings.credits-train')}</h1>
-							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron</a>
+							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i class="material-icons">open_in_new</i></a>
 						</div>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>
 						<div>{this.state.version}</div>

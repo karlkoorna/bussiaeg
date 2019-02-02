@@ -62,3 +62,10 @@
 #settings div h1.third-party {
 	color: #ffa94d;
 }
+
+#settings div a i {
+    margin-left: 4px;
+    color: var(--color-fg-light);
+	font-size: 18px;
+	vertical-align: sub;
+}
