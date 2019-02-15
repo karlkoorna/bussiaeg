@@ -15,11 +15,11 @@ async function update(id) {
 	};
 	
 	// Decrease ranks and remove stops if too low.
-	if (!id) for (const key in stops) if (stops[key].rank > 0) stops[key].rank--; else delete stops[id];
+	if (!id) for (const key in stops) if (stops[key].rank > 0) stops[key].rank--; else delete stops[key];
 	
 	try {
 		
-		const data = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id || Object.keys(stops)}`, { retry: 0, timeout: 2500 })).body;
+		const data = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id || Object.keys(stops)}`, { retry: 0, timeout: 2000 + 125 * Object.keys(stops).length })).body;
 		
 		// Fallback to GTFS trips on error.
 		if (id || new Date() - last < 4200) if (data.split('\n').length === 2) {
