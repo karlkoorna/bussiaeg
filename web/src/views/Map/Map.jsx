@@ -193,8 +193,8 @@ class Map extends Component {
 		// Load tile layer.
 		this.onThemeChange();
 		
-		// Redraw stops.
-		map.once('moveend', () => {
+		// (Re)draw stops.
+		map.whenReady(() => {
 			
 			map.on('zoomend', this.fetchStops);
 			map.on('moveend', this.fetchStops);
