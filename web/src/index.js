@@ -52,16 +52,21 @@ window.addEventListener('keydown', (e) => {
 });
 
 // Send analytics about active page.
-let lastPath = '';
-setInterval(() => {
+if (process.env['REACT_APP_GA']) {
 	
-	const path = window.location.pathname + window.location.search;
-	if (path === lastPath) return;
-	lastPath = path;
+	let lastPath = '';
 	
-	if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
-		'page_title': document.title,
-		'page_path': path
-	});
+	setInterval(() => {
+		
+		const path = window.location.pathname + window.location.search;
+		if (path === lastPath) return;
+		lastPath = path;
+		
+		if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
+			'page_title': document.title,
+			'page_path': path
+		});
+		
+	}, 2000);
 	
-}, 2000);
+}
