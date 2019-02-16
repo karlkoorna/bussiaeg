@@ -5,7 +5,7 @@ const db = require('../db.js');
 const time = require('../utils/time.js');
 
 const elron = require('../providers/elron.js');
-const tlt = require('../providers/tlt.js');
+const tta = require('../providers/tta.js');
 const mnt = require('../providers/mnt.js');
 
 // Get trips for stop.
@@ -23,9 +23,9 @@ async function getTrips(req, res) {
 	
 	if (stop.type === 'train') return res.send(await elron.getTrips(id));
 	
-	// TLT + MNT
+	// TTA + MNT
 	
-	if (stop.region === 'tallinn') trips = await tlt.getTrips(id);
+	if (stop.region === 'tallinn') trips = await tta.getTrips(id);
 	trips = trips.concat(await mnt.getTrips(id, trips.length)).sort((a, b) => a.countdown - b.countdown);
 	
 	res.send(trips);

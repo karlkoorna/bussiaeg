@@ -35,7 +35,7 @@ async function update(id) {
 			destination: trip[4],
 			type: trip[0],
 			live: trip[2] !== trip[3],
-			provider: 'tlt'
+			provider: 'tta'
 		}));
 		
 		last = new Date();

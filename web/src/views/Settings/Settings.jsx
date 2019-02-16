@@ -63,7 +63,7 @@ class ViewSettings extends Component {
 							<h1 className="third-party">{t('settings.credits-coach')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet<i class="material-icons">open_in_new</i></a>
 							<h1 className="third-party">{t('settings.credits-tallinn')}</h1>
-							<a target="_blank" rel="noopener noreferrer" href="https://tallinnlt.ee">Tallinna Linnatransport<i class="material-icons">open_in_new</i></a>
+							<a target="_blank" rel="noopener noreferrer" href="https://tallinnlt.ee">Tallinna Transpordiamet<i class="material-icons">open_in_new</i></a>
 							<h1 className="third-party">{t('settings.credits-train')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i class="material-icons">open_in_new</i></a>
 						</div>
