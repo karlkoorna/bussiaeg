@@ -37,7 +37,7 @@
     "version": "Version"
   },
   "modal": {
-	"cancel": "CANCEL",
-	"confirm": "CONFIRM"
+    "cancel": "CANCEL",
+    "confirm": "CONFIRM"
   }
 }

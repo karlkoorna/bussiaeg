@@ -14,7 +14,7 @@ import storeSettings from 'stores/settings.js';
 
 import './Stop.css';
 
-class Stop extends Component {
+class ViewStop extends Component {
 	
 	state = {
 		stop: {
@@ -152,4 +152,4 @@ class Stop extends Component {
 	
 }
 
-export default withNamespaces()(withRouter(inject('storeFavorites')(observer(Stop))));
+export default withNamespaces()(withRouter(inject('storeFavorites')(observer(ViewStop))));

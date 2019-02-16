@@ -12,7 +12,7 @@ import { formatDistance } from 'utils.js';
 
 import './Search.css';
 
-class Search extends Component {
+class ViewSearch extends Component {
 	
 	dispose = null
 	debounce = 0
@@ -92,4 +92,4 @@ class Search extends Component {
 	
 }
 
-export default withNamespaces()(inject('storeSearch')(observer(Search)));
+export default withNamespaces()(inject('storeSearch')(observer(ViewSearch)));

@@ -8,7 +8,7 @@ import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
 import './Settings.css';
 
-class Settings extends Component {
+class ViewSettings extends Component {
 	
 	state = {
 		version: '3.x.x'
@@ -78,4 +78,4 @@ class Settings extends Component {
 	
 }
 
-export default withNamespaces()(inject('storeSettings')(observer(Settings)));
+export default withNamespaces()(inject('storeSettings')(observer(ViewSettings)));

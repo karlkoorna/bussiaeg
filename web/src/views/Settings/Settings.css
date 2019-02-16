@@ -64,8 +64,8 @@
 }
 
 #settings div a i {
-    margin-left: 4px;
-    color: var(--color-fg-light);
+	margin-left: 4px;
+	color: var(--color-fg-light);
 	font-size: 18px;
 	vertical-align: sub;
 }

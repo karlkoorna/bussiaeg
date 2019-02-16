@@ -24,17 +24,17 @@ class Modal extends Component {
 		
 		return (
 			<CSSTransition in={isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 150, exit: 75 }} onExited={this.onExited} unmountOnExit>
-				<div id="modal-container" onMouseUp={onCancel} onContextMenu={(e) => { e.preventDefault(); }}>
-					<div id="modal" onMouseUp={(e) => { e.stopPropagation(); }} onContextMenu={(e) => { e.stopPropagation(); }}>
+				<div id="modal-container" onMouseDown={onCancel} onContextMenu={(e) => { e.preventDefault(); }}>
+					<div id="modal" onMouseDown={(e) => { e.stopPropagation(); }} onContextMenu={(e) => { e.stopPropagation(); }}>
 						<div id="modal-title">{title}</div>
 						<div id="modal-text">{text}</div>
 						<div id="modal-buttons">
 							{showCancel ? (
-								<div id="modal-buttons-cancel" onMouseUp={onCancel}>{t('modal.cancel')}
+								<div id="modal-buttons-cancel" onClick={onCancel}>{t('modal.cancel')}
 									<Ink background={false} opacity={.5} />
 								</div>
 							) : null}
-							<div id="modal-buttons-confirm" onMouseUp={onConfirm}>{t('modal.confirm')}
+							<div id="modal-buttons-confirm" onClick={onConfirm}>{t('modal.confirm')}
 								<Ink background={false} opacity={.5} />
 							</div>
 						</div>

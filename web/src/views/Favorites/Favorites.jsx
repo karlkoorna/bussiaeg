@@ -11,7 +11,7 @@ import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
 import './Favorites.css';
 
-class Favorites extends Component {
+class ViewFavorites extends Component {
 	
 	// Update favorites afer reorder.
 	reorder = (result) => {
@@ -71,4 +71,4 @@ class Favorites extends Component {
 	
 }
 
-export default withNamespaces()(inject('storeFavorites')(observer(Favorites)));
+export default withNamespaces()(inject('storeFavorites')(observer(ViewFavorites)));

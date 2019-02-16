@@ -7,11 +7,11 @@ import 'i18n.js';
 
 import NavBar from 'components/NavBar/NavBar.jsx';
 
-import Search from 'views/Search/Search.jsx';
-import Favorites from 'views/Favorites/Favorites.jsx';
-import Map from 'views/Map/Map.jsx';
-import Settings from 'views/Settings/Settings.jsx';
-import Stop from 'views/Stop/Stop.jsx';
+import ViewSearch from 'views/Search/Search.jsx';
+import ViewFavorites from 'views/Favorites/Favorites.jsx';
+import ViewMap from 'views/Map/Map.jsx';
+import ViewSettings from 'views/Settings/Settings.jsx';
+import ViewStop from 'views/Stop/Stop.jsx';
 
 import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
@@ -31,14 +31,14 @@ render((
 	<Provider {...stores}>
 		<BrowserRouter>
 			<>
-				<Map />
+				<ViewMap />
 				{storeSettings.data.view !== 'map' ? <Redirect to={'/' + storeSettings.data.view} /> : null}
 				<Switch>
 					<Redirect from="/map" to="/" />
-					<Route path="/search" component={Search} />
-					<Route path="/favorites" component={Favorites} />
-					<Route path="/settings" component={Settings} />
-					<Route path="/stop" component={Stop} />
+					<Route path="/search" component={ViewSearch} />
+					<Route path="/favorites" component={ViewFavorites} />
+					<Route path="/settings" component={ViewSettings} />
+					<Route path="/stop" component={ViewStop} />
 				</Switch>
 				<NavBar />
 			</>

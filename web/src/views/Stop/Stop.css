@@ -150,7 +150,7 @@
 .stop-trips-trip-countdown > svg {
 	position: absolute;
 	right: -6px;
-    top: -1px;
+	top: -1px;
 	width: 12px;
 	transform: rotate(-15deg);
 }

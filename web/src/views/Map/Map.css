@@ -44,8 +44,8 @@
 	box-shadow: var(--shadow-light);
 	font-size: 28px;
 	transition: right .25s ease, border-color .1s linear;
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 	cursor: pointer;
 }
 

@@ -29,7 +29,7 @@ export const opts = {
 	panTimeout: 1500
 };
 
-class Map extends Component {
+class ViewMap extends Component {
 	
 	state = {
 		message: '',
@@ -302,4 +302,4 @@ class Map extends Component {
 	
 }
 
-export default withNamespaces()(withRouter(withTheme(inject('storeCoords')(observer(Map)))));
+export default withNamespaces()(withRouter(withTheme(inject('storeCoords')(observer(ViewMap)))));
