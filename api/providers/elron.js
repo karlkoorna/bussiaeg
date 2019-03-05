@@ -1,11 +1,9 @@
 const got = require('got');
 
-const cache = require('../utils/cache.js');
 const time = require('../utils/time.js');
 
 // Get trips for stop.
 async function getTrips(id) {
-	
 	const now = time.getSeconds();
 	const trips = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
 	
@@ -22,7 +20,6 @@ async function getTrips(id) {
 		live: false,
 		provider: 'elron'
 	})).filter((trip) => now - trip.time < 600).slice(0, 15);
-	
 }
 
 module.exports = {

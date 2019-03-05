@@ -2,7 +2,6 @@ let cache = {};
 
 // Add/get to/from cache.
 async function use(space, key, setter) {
-	
 	// Create cache if not exists.
 	if (!cache[space]) cache[space] = {};
 	
@@ -11,8 +10,7 @@ async function use(space, key, setter) {
 	
 	// Return new dereferenced item.
 	return [ ...cache[space][key] ];
-	
-};
+}
 
 // Clear cache.
 function clear() {

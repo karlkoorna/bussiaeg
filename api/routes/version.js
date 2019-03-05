@@ -1,9 +1,7 @@
-const db = require('../db.js');
+const info = require('../package.json');
 
-const package = require('../package.json');
-
-async function getVersion(req, res) {
-	res.send(package.version);
+function getVersion(req, res) {
+	res.send(info.version);
 }
 
 module.exports = (fastify, opts, next) => {

@@ -4,20 +4,19 @@ const moment = require('moment');
 
 const timers = {};
 
-// Display info message with current time.
-function info(text) {
-	console.log(chalk`{cyan ℹ} {cyan ${text}}`, chalk.gray(`(${moment().format('HH:mm:ss - DD.MM.YYYY')})`));
+// Log message with current time.
+function log(message) {
+	console.log(chalk`{cyan ℹ} {cyan ${message}}`, chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`));
 }
 
-// Start timing and display spinner if text provided.
-function time(id, text) {
-	
+// Start timing and display spinner if message provided.
+function time(id, message) {
 	const timer = {
 		time: new Date()
 	};
 	
-	if (text) timer.spinner = ora({
-		text: chalk.yellow(`${text}...`),
+	if (message) timer.spinner = ora({
+		text: chalk.yellow(`${message}...`),
 		color: 'yellow',
 		spinner: {
 			interval: 80,
@@ -26,23 +25,17 @@ function time(id, text) {
 	}).start();
 	
 	timers[id] = timer;
-	
 }
 
-// Display timing results.
-function timeEnd(id, text) {
-	
+// Display timing result.
+function timeEnd(id, message) {
 	const timer = timers[id];
-	const spinner = timer.spinner;
-	
-	if (spinner) spinner.stop();
-	
-	console.log(chalk.green('✔'), chalk`{green ${text}} {gray (${((new Date() - timer.time) / 1000).toFixed(3)}s)}`);
-	
+	if (timer.spinner) timer.spinner.stop();
+	console.log(chalk.green('✔'), chalk`{green ${message}} {gray (${((new Date() - timer.time) / 1000).toFixed(3)}s)}`);
 }
 
 module.exports = {
-	info,
+	log,
 	time,
 	timeEnd
 };

@@ -1,7 +1,6 @@
 const fs = require('fs');
 const { promisify } = require('util');
 const mysql = require('mysql');
-const chalk = require('chalk');
 
 // Open the database connection.
 const db = mysql.createConnection({

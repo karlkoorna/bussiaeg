@@ -7,7 +7,6 @@ let last = new Date();
 
 // Update stop/stops in cache.
 async function update(id) {
-	
 	// Add stop to cache.
 	if (id) stops[id] = {
 		rank: 5,
@@ -18,8 +17,7 @@ async function update(id) {
 	if (!id) for (const key in stops) if (stops[key].rank > 0) stops[key].rank--; else delete stops[key];
 	
 	try {
-		
-		const data = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id || Object.keys(stops)}`, { retry: 0, timeout: 2000 + 125 * Object.keys(stops).length })).body;
+		const data = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id || Object.keys(stops)}`, { retry: 0, timeout: 2000 + (125 * Object.keys(stops).length) })).body;
 		
 		// Fallback to GTFS trips on error.
 		if (id || new Date() - last < 4200) if (data.split('\n').length === 2) {
@@ -39,12 +37,10 @@ async function update(id) {
 		}));
 		
 		last = new Date();
-		
 	} catch (ex) {
 		// Fallback to GTFS data on error.
 		if (id || new Date() - last < 4200) if (id) stops[id].trips = []; else for (const key in stops) stops[key].trips = [];
 	}
-	
 }
 
 // Update stops in cache (2s interval).
@@ -52,7 +48,6 @@ setInterval(update, 2000);
 
 // Get trips for stop by stop id.
 async function getTrips(id) {
-	
 	// Return trips from cache and increase rank if exists.
 	if (stops[id]) {
 		if (stops[id].rank <= 60) stops[id].rank++;
@@ -62,7 +57,6 @@ async function getTrips(id) {
 	// Force cache update for stop and return trips.
 	await update(id);
 	return [ ...stops[id].trips ];
-	
 }
 
 module.exports = {
