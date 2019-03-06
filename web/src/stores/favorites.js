@@ -17,7 +17,6 @@ class StoreFavorites {
 	}
 	
 	constructor() {
-		
 		// Restore favorites from local storage.
 		this.favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 		
@@ -30,30 +29,20 @@ class StoreFavorites {
 		});
 		
 		// Convert legacy bookmarks.
-		
 		(async () => {
-			
 			const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
 			
-			if (bookmarks.length) {
-				
-				try {
+			if (bookmarks.length) try {
+				const favorites = [];
+				for (const bookmark of bookmarks) favorites.push((await (await fetch(`${process.env['REACT_APP_API']}/stops?id=${bookmark.stop}`)).json())[0]);
 					
-					const favorites = [];
-					for (const bookmark of bookmarks) favorites.push((await (await fetch(`${process.env['REACT_APP_API']}/stops?id=${bookmark.stop}`)).json())[0]);
-					
-					localStorage.setItem('favorites', JSON.stringify(favorites));
-					localStorage.removeItem('bookmarks');
-					
-				} catch (ex) {}
-				
-			}
-			
+				localStorage.setItem('favorites', JSON.stringify(favorites));
+				localStorage.removeItem('bookmarks');
+			} catch (ex) {}
 		})();
-		
 	}
 	
-};
+}
 
 decorate(StoreFavorites, {
 	favorites: observable,

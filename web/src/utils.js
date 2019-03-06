@@ -5,15 +5,13 @@ export function withTheme(C) {
 	return class extends C {
 		
 		componentDidMount() {
-			
 			(new MutationObserver(() => {
 				if (this.onThemeChange) this.onThemeChange(); else this.wrappedInstance.onThemeChange();
 			})).observe($app, { attributes: true });
-			
 		}
 		
 	};
-};
+}
 
 // Format meters to appropriate distance units.
 export function formatDistance(meters) {

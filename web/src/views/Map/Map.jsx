@@ -59,18 +59,15 @@ class ViewMap extends Component {
 			lng: center.lng,
 			zoom: map.getZoom()
 		}));
-		
 	}
 	
 	// Start locating at zoom where stops are visible.
 	startLocating = () => {
-		
 		const { map } = window;
 		
 		this.setState({ isLocating: true }, () => {
 			map.setView([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.stopZoom, map.getZoom()));
 		});
-		
 	}
 	
 	// Stop locating.
@@ -80,22 +77,16 @@ class ViewMap extends Component {
 	
 	// Update message based on bounds and redraw stops.
 	fetchStops = async () => {
-		
 		const { t } = this.props;
 		const { map } = window;
 		const { _southWest: { lat: lat_min, lng: lng_min }, _northEast: { lat: lat_max, lng: lng_max } } = map.getBounds();
 		
 		// Handle message cases.
-		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) {
-			this.setState({ message: t('map.zoom') });
-		} else if (map.getZoom() < opts.stopZoom) {
-			this.setState({ message: t('map.bounds') });
-		} else {
-			if (this.state.message) this.setState({ message: '' });
-		}
+		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) this.setState({ message: t('map.zoom') });
+		else if (map.getZoom() < opts.stopZoom) this.setState({ message: t('map.bounds') });
+		else if (this.state.message) this.setState({ message: '' });
 		
 		try {
-			
 			// Remove all markers if zoomed below treshold.
 			if (map.getZoom() < opts.stopZoom) {
 				for (const marker of this.markers) marker.remove();
@@ -112,12 +103,10 @@ class ViewMap extends Component {
 				
 				marker.remove();
 				this.markers.splice(i, 1);
-				
 			}
 			
 			// Add new stop markers.
 			for (const stop of stops) {
-				
 				if (this.markers.find((marker) => marker.options.id === stop.id)) continue;
 				
 				this.markers.push((new Leaflet.Marker([ stop.lat, stop.lng ], {
@@ -130,11 +119,8 @@ class ViewMap extends Component {
 				})).addTo(map).on('click', () => {
 					this.props.history.push(`/stop?id=${stop.id}`);
 				}));
-				
 			}
-			
 		} catch (ex) {}
-		
 	}
 	
 	// Update map tile layer.
@@ -144,7 +130,6 @@ class ViewMap extends Component {
 	}
 	
 	componentDidMount() {
-		
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
 		
 		const map = window.map = new Leaflet.Map('map', {
@@ -172,13 +157,13 @@ class ViewMap extends Component {
 			icon: new Leaflet.Icon({
 				iconSize: [ 20, 20 ],
 				iconAnchor: [ 10, 10 ],
-				iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup(
+				iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup((
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 						<circle fill="#fff" cx="512" cy="512" r="512" />
 						<circle fill="#00e6ad" cx="512" cy="512" r="350" />
 					</svg>
-				))}`
-			}),
+				)))}`
+			})
 		}).addTo(map);
 		
 		const circle = new Leaflet.Circle([ 0, 0 ], {
@@ -195,7 +180,6 @@ class ViewMap extends Component {
 		
 		// (Re)draw stops.
 		map.whenReady(() => {
-			
 			map.on('zoomend', this.fetchStops);
 			map.on('moveend', this.fetchStops);
 			map.on('move', () => {
@@ -204,7 +188,6 @@ class ViewMap extends Component {
 				this.debounce = 0;
 				this.fetchStops();
 			});
-			
 		});
 		
 		// Fix location marker and accuracy circle transition while zooming.
@@ -238,19 +221,14 @@ class ViewMap extends Component {
 			lng: this.props.storeCoords.lng,
 			accuracy: this.props.storeCoords.accuracy
 		}), ({ lat, lng, accuracy }) => {
-			
 			// Overlay accuracy cases.
 			if (accuracy < opts.accuracyTreshold) { // Show overlay on high accuracy.
-				
 				marker.setLatLng([ lat, lng ]);
 				circle.setLatLng([ lat, lng ]);
 				circle.setRadius(accuracy <= 10 ? 0 : accuracy); // Hide accuracy circle on very high accuracy.
-				
 			} else { // Hide overlay on low accuracy.
-				
 				marker.setLatLng([ 0, 0 ]);
 				circle.setRadius(0);
-				
 			}
 			
 			// Pan map if GPS found on load within timeout.
@@ -258,7 +236,6 @@ class ViewMap extends Component {
 			
 			// Pan map if locating.
 			if (accuracy < opts.accuracyTreshold && this.state.isLocating) map.panTo([ lat, lng ], { duration: .5 });
-			
 		}, { fireImmediately: true });
 		
 		// Setup attribution.
@@ -273,7 +250,6 @@ class ViewMap extends Component {
 		attribution.addAttribution('<a target="_blank" rel="noopener noreferrer" href="https://mapbox.com/feedback">Improve this map</a>');
 		
 		map.addControl(attribution);
-		
 	}
 	
 	componentWillUnmount() {
@@ -281,7 +257,6 @@ class ViewMap extends Component {
 	}
 	
 	render() {
-		
 		const { t } = this.props;
 		
 		return (
@@ -290,14 +265,13 @@ class ViewMap extends Component {
 					<meta name="theme-color" content={viewColors.map[0]} />
 				</Helmet>
 				<div id="map-container" className="view">
-					<div id="map"></div>
+					<div id="map" />
 					<span id="map-message">{this.state.message}</span>
 					<i id="map-locate" className={`material-icons ${(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')}`} onMouseDown={this.startLocating}>location_on</i>
 					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} showCancel onCancel={this.modalHide} onConfirm={this.modalConfirm} />
 				</div>
 			</>
 		);
-		
 	}
 	
 }

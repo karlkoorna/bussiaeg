@@ -14,7 +14,6 @@ class StoreSettings {
 	
 	// Update setting.
 	update(key, value, save) {
-		
 		if (save) {
 			this.data[key] = value;
 			localStorage.setItem('settings', JSON.stringify(this.data));
@@ -22,21 +21,16 @@ class StoreSettings {
 		
 		// Handle setting side effects.
 		switch (key) {
-			
 			case 'lang':
 				i18n.changeLanguage(value);
 				document.body.parentElement.setAttribute('lang', value);
 				break;
-			
 			case 'theme':
 				$app.setAttribute('data-theme', value);
 				break;
-			
 			default:
 				break;
-			
 		}
-		
 	}
 	
 	// Load and apply settings.

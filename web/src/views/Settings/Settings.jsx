@@ -27,7 +27,6 @@ class ViewSettings extends Component {
 	}
 	
 	render() {
-		
 		const { t, storeSettings: { data } } = this.props;
 		
 		return (
@@ -61,11 +60,11 @@ class ViewSettings extends Component {
 							<h1 className="first-party">{t('settings.credits-designer')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="/">Kaur Hendrikson</a>
 							<h1 className="third-party">{t('settings.credits-coach')}</h1>
-							<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet<i class="material-icons">open_in_new</i></a>
+							<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet<i className="material-icons">open_in_new</i></a>
 							<h1 className="third-party">{t('settings.credits-tallinn')}</h1>
-							<a target="_blank" rel="noopener noreferrer" href="https://tallinn.ee/est/transpordiamet">Tallinna Transpordiamet<i class="material-icons">open_in_new</i></a>
+							<a target="_blank" rel="noopener noreferrer" href="https://tallinn.ee/est/transpordiamet">Tallinna Transpordiamet<i className="material-icons">open_in_new</i></a>
 							<h1 className="third-party">{t('settings.credits-train')}</h1>
-							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i class="material-icons">open_in_new</i></a>
+							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i className="material-icons">open_in_new</i></a>
 						</div>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>
 						<div>{this.state.version}</div>
@@ -73,7 +72,6 @@ class ViewSettings extends Component {
 				</Scroller>
 			</>
 		);
-		
 	}
 	
 }

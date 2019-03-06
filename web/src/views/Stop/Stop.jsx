@@ -33,24 +33,21 @@ class ViewStop extends Component {
 	
 	// Toggle favorite status.
 	toggleFavorite = () => {
-		this.setState({ isFavorite: this.props.storeFavorites.toggle(this.state.stop) });
+		this.setState((prevState) => ({ isFavorite: this.props.storeFavorites.toggle(prevState.stop) }));
 	}
 	
 	// Update trips if mounted with 2s timeout after previous request.
-	fetchTrips = async () => {
-		
+	fetchTrips = () => {
 		if (!this._isMounted) return;
 		
 		try {
-			this.setState({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${this.state.stop.id}`)).json(), isLoading: false });
+			this.setState(async (prevState) => ({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${prevState.stop.id}`)).json(), isLoading: false }));
 		} catch (ex) {}
 		
 		setTimeout(this.fetchTrips, 2000);
-		
 	}
 	
 	async componentWillMount() {
-		
 		let stop;
 		
 		// Fetch stop, redirect to default view if unsuccessful.
@@ -67,7 +64,6 @@ class ViewStop extends Component {
 			stop,
 			isFavorite: Boolean(this.props.storeFavorites.get(stop.id))
 		}, () => {
-			
 			const { map } = window;
 			
 			// Pan map to stop if outside view.
@@ -75,9 +71,7 @@ class ViewStop extends Component {
 			
 			// Start fetching trips.
 			this.fetchTrips();
-			
 		});
-		
 	}
 	
 	componentDidMount() {
@@ -90,7 +84,6 @@ class ViewStop extends Component {
 	}
 	
 	render() {
-		
 		const { t } = this.props;
 		const { stop: { id, name, description, type }, trips, isFavorite, isLoading } = this.state;
 		
@@ -106,13 +99,14 @@ class ViewStop extends Component {
 						<Icon id="stop-info-icon" shape="stop" type={type || 'unknown'} />
 						<span id="stop-info-description">{description || ''}</span>
 						<span id="stop-info-name">{name || ''}</span>
-						{id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.toggleFavorite}>
-							<path strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
-						</svg> : null}
+						{id ? (
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.toggleFavorite}>
+								<path strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
+							</svg>
+						) : null}
 					</div>
 					<div id="stop-trips">
 						{isLoading ? <Loader /> : trips.length ? trips.map((trip) => {
-							
 							const [ primaryColor, secondaryColor ] = colors[trip.type];
 							
 							return (
@@ -137,7 +131,6 @@ class ViewStop extends Component {
 									<div className="stop-trips-trip-time">{formatTime(trip.time)}</div>
 								</div>
 							);
-							
 						}) : (
 							<div className="view-empty">
 								{t('stop.empty')}
@@ -147,7 +140,6 @@ class ViewStop extends Component {
 				</main>
 			</>
 		);
-		
 	}
 	
 }

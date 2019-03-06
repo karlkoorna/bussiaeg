@@ -15,17 +15,14 @@ class ViewFavorites extends Component {
 	
 	// Update favorites afer reorder.
 	reorder = (result) => {
-		
 		if (!result.destination) return;
 		
 		const favorites = [ ...this.props.storeFavorites.favorites ];
 		favorites.splice(result.destination.index, 0, favorites.splice(result.source.index, 1)[0]);
 		this.props.storeFavorites.favorites = favorites;
-		
 	}
 	
 	render() {
-		
 		const { t } = this.props;
 		const { favorites } = this.props.storeFavorites;
 		
@@ -36,13 +33,13 @@ class ViewFavorites extends Component {
 				</Helmet>
 				<DragDropContext onDragEnd={this.reorder}>
 					<Droppable droppableId="favorites">
-						{(provided, snapshot) => (
+						{(dropProvided) => (
 							<Scroller>
-								<main id="favorites" className="view" ref={provided.innerRef}>
+								<main id="favorites" className="view" ref={dropProvided.innerRef}>
 									{favorites.length ? favorites.map((favorite, i) => (
 										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
-											{(provided, snapshot) => (
-												<div className="favorites-stop-container" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+											{(dragProvided) => (
+												<div className="favorites-stop-container" ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
 													<Link className="favorites-stop" style={{ backgroundColor: colors[favorite.type][0] }} to={`/stop?id=${favorite.id}`}>
 														<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
 														<div>
@@ -58,7 +55,7 @@ class ViewFavorites extends Component {
 											{t('favorites.empty')}
 										</div>
 									)}
-									{provided.placeholder}
+									{dropProvided.placeholder}
 								</main>
 							</Scroller>
 						)}
@@ -66,7 +63,6 @@ class ViewFavorites extends Component {
 				</DragDropContext>
 			</>
 		);
-		
 	}
 	
 }

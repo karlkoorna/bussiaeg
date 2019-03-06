@@ -14,14 +14,12 @@ class StoreCoords {
 	}
 	
 	constructor() {
-		
 		if (navigator.geolocation) navigator.geolocation.watchPosition((e) => {
 			this.update(e.coords);
 		}, () => {}, {
 			enableHighAccuracy: true,
 			timeout: 300
 		});
-		
 	}
 	
 }

@@ -27,18 +27,21 @@ const stores = {
 	storeSettings
 };
 
+function redirectView() {
+	return window.performance.now() < 1000 ? <Redirect to={'/' + storeSettings.data.view} /> : null;
+}
+
 render((
 	<Provider {...stores}>
 		<BrowserRouter>
 			<>
 				<ViewMap />
-				{storeSettings.data.view !== 'map' ? <Redirect to={'/' + storeSettings.data.view} /> : null}
 				<Switch>
-					<Redirect from="/map" to="/" />
-					<Route path="/search" component={ViewSearch} />
-					<Route path="/favorites" component={ViewFavorites} />
-					<Route path="/settings" component={ViewSettings} />
-					<Route path="/stop" component={ViewStop} />
+					<Route exact path="/" component={redirectView} />
+					<Route exact path="/search" component={ViewSearch} />
+					<Route exact path="/favorites" component={ViewFavorites} />
+					<Route exact path="/settings" component={ViewSettings} />
+					<Route exact path="/stop" component={ViewStop} />
 				</Switch>
 				<NavBar />
 			</>
@@ -53,20 +56,16 @@ window.addEventListener('keydown', (e) => {
 
 // Send analytics about active page.
 if (process.env['REACT_APP_GA']) {
-	
 	let lastPath = '';
 	
 	setInterval(() => {
-		
 		const path = window.location.pathname + window.location.search;
 		if (path === lastPath) return;
 		lastPath = path;
 		
 		if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
-			'page_title': document.title,
-			'page_path': path
+			page_title: document.title,
+			page_path: path
 		});
-		
 	}, 2000);
-	
 }

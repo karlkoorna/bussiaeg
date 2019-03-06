@@ -21,7 +21,6 @@ class NavBarItem extends Component {
 	}
 	
 	navigate = () => {
-		
 		const { to, children, history, location: { pathname } } = this.props;
 		
 		// Cancel if already active.
@@ -30,7 +29,6 @@ class NavBarItem extends Component {
 		// Navigate and play animation.
 		history.push(to);
 		this.setState({ animation: `navbar-${children.toLowerCase()} .5s ease` });
-		
 	}
 	
 	resetStyle = () => {
@@ -42,13 +40,12 @@ class NavBarItem extends Component {
 	}
 	
 	render() {
-		
-		const { to, colors, children } = this.props;
-		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? colors : storeSettings.data.theme === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
+		const { to, colors: _colors, children } = this.props;
+		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? _colors : storeSettings.data.theme === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
 		
 		return (
 			<li className="navbar-item" onMouseDown={this.navigate} onTouchStart={this.navigate}>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={this.state} onAnimationEnd={this.resetStyle}>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={{ animation: this.state.animation }} onAnimationEnd={this.resetStyle}>
 					{{
 						search: (
 							<>
@@ -78,7 +75,6 @@ class NavBarItem extends Component {
 				<Ink hasTouch={false} background={false} opacity={.5} style={{ color: colors[0] }} />
 			</li>
 		);
-		
 	}
 	
 }

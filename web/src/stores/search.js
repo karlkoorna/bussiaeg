@@ -11,14 +11,12 @@ class StoreSearch {
 	
 	// Start fetching nearby search results on location update.
 	startScanning() {
-		
 		this.dispose = reaction(() => ({
 			lat: storeCoords.lat,
 			lng: storeCoords.lng
 		}), () => {
 			if (!this.query) this.fetchResults();
 		}, { fireImmediately: true });
-		
 	}
 	
 	// Stop fetching nearby search results on location update.
@@ -33,7 +31,6 @@ class StoreSearch {
 	
 	// Fetch search results.
 	async fetchResults() {
-		
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
 		
 		// Clear results if no query or coords.
@@ -42,10 +39,9 @@ class StoreSearch {
 		try {
 			this.results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json();
 		} catch (ex) {}
-		
 	}
 	
-};
+}
 
 decorate(StoreSearch, {
 	query: observable,

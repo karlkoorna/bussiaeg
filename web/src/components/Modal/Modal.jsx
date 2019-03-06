@@ -19,7 +19,6 @@ class Modal extends Component {
 	}
 	
 	render() {
-		
 		const { t, title, text, showCancel, isVisible, onCancel, onConfirm } = this.props;
 		
 		return (
@@ -42,7 +41,6 @@ class Modal extends Component {
 				</div>
 			</CSSTransition>
 		);
-		
 	}
 	
 }

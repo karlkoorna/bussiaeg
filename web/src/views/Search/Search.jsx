@@ -18,15 +18,13 @@ class ViewSearch extends Component {
 	debounce = 0
 	
 	updateQuery = (e) => {
-		
 		this.props.storeSearch.updateQuery(e.target.value);
 		
 		clearTimeout(this.debounce);
 		this.debounce = setTimeout(this.props.storeSearch.fetchResults, 250);
-		
 	}
 	
-	clearQuery = (e) => {
+	clearQuery = () => {
 		this.props.storeSearch.updateQuery('');
 		this.props.storeSearch.fetchResults();
 	}
@@ -44,7 +42,6 @@ class ViewSearch extends Component {
 	}
 	
 	render() {
-		
 		const { t } = this.props;
 		const { query, results } = this.props.storeSearch;
 		
@@ -87,7 +84,6 @@ class ViewSearch extends Component {
 				</main>
 			</>
 		);
-		
 	}
 	
 }

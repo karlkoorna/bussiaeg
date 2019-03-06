@@ -12,7 +12,6 @@ export const colors = {
 };
 
 export default function Icon({ id, className, shape, type }) {
-	
 	const [ primaryColor, secondaryColor ] = colors[type];
 	
 	return (
@@ -93,5 +92,4 @@ export default function Icon({ id, className, shape, type }) {
 			}[type][Number(shape === 'stop')]}
 		</svg>
 	);
-	
 }
