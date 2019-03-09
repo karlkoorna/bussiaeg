@@ -5,6 +5,14 @@ import Ink from 'react-ink';
 
 import './Modal.css';
 
+function preventDefault(e) {
+	e.preventDefault();
+}
+
+function stopPropagation(e) {
+	e.stopPropagation();
+}
+
 class Modal extends Component {
 	
 	// Cancel modal on escape key.
@@ -23,8 +31,8 @@ class Modal extends Component {
 		
 		return (
 			<CSSTransition in={isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 150, exit: 75 }} onExited={this.onExited} unmountOnExit>
-				<div id="modal-container" onMouseDown={onCancel} onContextMenu={(e) => { e.preventDefault(); }}>
-					<div id="modal" onMouseDown={(e) => { e.stopPropagation(); }} onContextMenu={(e) => { e.stopPropagation(); }}>
+				<div id="modal-container" onMouseDown={onCancel} onContextMenu={preventDefault}>
+					<div id="modal" onMouseDown={stopPropagation} onContextMenu={stopPropagation}>
 						<div id="modal-title">{title}</div>
 						<div id="modal-text">{text}</div>
 						<div id="modal-buttons">

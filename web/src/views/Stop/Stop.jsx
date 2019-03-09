@@ -37,12 +37,15 @@ class ViewStop extends Component {
 	}
 	
 	// Update trips if mounted with 2s timeout after previous request.
-	fetchTrips = () => {
+	fetchTrips = async () => {
 		if (!this._isMounted) return;
 		
 		try {
-			this.setState(async (prevState) => ({ trips: await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${prevState.stop.id}`)).json(), isLoading: false }));
-		} catch (ex) {}
+			const trips = await (await fetch(`${process.env['REACT_APP_API']}/trips?stop_id=${this.state.stop.id}`)).json();
+			this.setState({ trips, isLoading: false });
+		} catch (ex) {
+			console.log(ex);
+		}
 		
 		setTimeout(this.fetchTrips, 2000);
 	}
