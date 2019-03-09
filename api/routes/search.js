@@ -1,8 +1,7 @@
 const db = require('../db.js');
 
-// Search stops by name, sort by coordinate points.
+// Search stops by name, sort by distance.
 async function getSearch(req, res) {
-	
 	const { query, lat, lng } = req.query;
 	const params = lat && lng ? [ lng, lat, `%${query || ''}%` ] : [ `%${query || ''}%` ];
 	
@@ -19,11 +18,9 @@ async function getSearch(req, res) {
 	`, params);
 	
 	res.send(stops);
-	
 }
 
 module.exports = (fastify, opts, next) => {
-	
 	fastify.get('/search', {
 		schema: {
 			querystring: {
@@ -44,5 +41,4 @@ module.exports = (fastify, opts, next) => {
 	}, getSearch);
 	
 	next();
-	
 };

@@ -46,7 +46,7 @@ async function update(id) {
 // Update stops in cache (2s interval).
 setInterval(update, 2000);
 
-// Get trips for stop by stop id.
+// Get trips for stop.
 async function getTrips(id) {
 	// Return trips from cache and increase rank if exists.
 	if (stops[id]) {

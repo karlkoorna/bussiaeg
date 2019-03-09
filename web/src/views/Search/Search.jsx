@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import Scroller from 'components/Scroller.jsx';
-import Icon, { colors as stopColors } from 'components/Icon.jsx';
+import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 import storeFavorites from 'stores/favorites.js';
 import { formatDistance } from 'utils.js';
@@ -67,9 +67,9 @@ class ViewSearch extends Component {
 								<div className="search-results-result-container" key={result.id}>
 									<Link className={`search-results-result ${storeFavorites.get(result.id) ? 'is-favorite' : ''}`} to={`/stop?id=${result.id}`}>
 										<Icon className="search-results-result-icon" shape="stop" type={result.type} />
-										<div style={{ color: stopColors[result.type][0] }}>
+										<div style={{ color: iconColors[result.type][0] }}>
 											<div className="search-results-result-name">{result.name}</div>
-											<div className="search-results-result-area">{result.description || (result.origin && result.destination ? `${result.origin} - ${result.destination}` : '')}</div>
+											<div className="search-results-result-description">{result.description || (result.origin && result.destination ? `${result.origin} - ${result.destination}` : '')}</div>
 										</div>
 										<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
 									</Link>

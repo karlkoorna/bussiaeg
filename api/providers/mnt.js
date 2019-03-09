@@ -1,5 +1,6 @@
 const db = require('../db.js');
 
+// Get trips for stop.
 async function getTrips(id, coachOnly) {
 	return (await db.query(`
 		SELECT TIME_TO_SEC(time) AS time, TIME_TO_SEC(time) - TIME_TO_SEC(NOW()) as countdown, route.name, trip.destination, route.type, 'mnt' AS provider FROM stops AS stop

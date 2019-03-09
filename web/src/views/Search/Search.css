@@ -105,7 +105,7 @@
 }
 
 .search-results-result:after {
-	content: '';
+	content: "";
 	position: absolute;
 	left: 0;
 	bottom: 0;
@@ -131,7 +131,7 @@
 	font-size: 21px;
 }
 
-.search-results-result-area {
+.search-results-result-description {
 	margin-bottom: 2px;
 	font-size: 15px;
 }

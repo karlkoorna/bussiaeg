@@ -160,29 +160,3 @@
 	color: var(--color-fg-light);
 	font-size: 19px;
 }
-
-/* Animations */
-
-@keyframes stop-fadeIn {
-	
-	to {
-		opacity: 1;
-	}
-	
-}
-
-@keyframes stop-urgent {
-	
-	from {
-		opacity: 1;
-	}
-	
-	50% {
-		opacity: 0;
-	}
-	
-	to {
-		opacity: 1;
-	}
-	
-}

@@ -1,6 +1,6 @@
 const db = require('../db.js');
 
-// Get all stops.
+// Get all stops inside geofence or one stop by id.
 async function getStops(req, res) {
 	const { id, lat_min, lat_max, lng_min, lng_max } = req.query;
 	
