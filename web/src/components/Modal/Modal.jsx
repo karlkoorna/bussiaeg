@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { CSSTransition } from 'react-transition-group';
 import Ink from 'react-ink';
 
@@ -45,4 +45,4 @@ class Modal extends Component {
 	
 }
 
-export default withNamespaces()(Modal);
+export default withTranslation()(Modal);

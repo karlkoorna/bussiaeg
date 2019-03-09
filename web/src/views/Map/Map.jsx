@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
 import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import Leaflet from 'leaflet';
 
@@ -276,4 +276,4 @@ class ViewMap extends Component {
 	
 }
 
-export default withNamespaces()(withRouter(withTheme(inject('storeCoords')(observer(ViewMap)))));
+export default withTranslation()(withRouter(withTheme(inject('storeCoords')(observer(ViewMap)))));

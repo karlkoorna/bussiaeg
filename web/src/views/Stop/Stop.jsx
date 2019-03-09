@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import { formatTime, formatCountdown } from 'utils.js';
@@ -144,4 +144,4 @@ class ViewStop extends Component {
 	
 }
 
-export default withNamespaces()(withRouter(inject('storeFavorites')(observer(ViewStop))));
+export default withTranslation()(withRouter(inject('storeFavorites')(observer(ViewStop))));

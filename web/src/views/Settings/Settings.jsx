@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import Scroller from 'components/Scroller.jsx';
@@ -76,4 +76,4 @@ class ViewSettings extends Component {
 	
 }
 
-export default withNamespaces()(inject('storeSettings')(observer(ViewSettings)));
+export default withTranslation()(inject('storeSettings')(observer(ViewSettings)));

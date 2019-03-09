@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import Scroller from 'components/Scroller.jsx';
@@ -88,4 +88,4 @@ class ViewSearch extends Component {
 	
 }
 
-export default withNamespaces()(inject('storeSearch')(observer(ViewSearch)));
+export default withTranslation()(inject('storeSearch')(observer(ViewSearch)));
