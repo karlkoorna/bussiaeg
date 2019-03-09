@@ -27,8 +27,12 @@ const stores = {
 	storeSettings
 };
 
+let hasRedirected = false;
 function redirectView() {
-	return window.performance.now() < 1000 ? <Redirect to={'/' + storeSettings.data.view} /> : null;
+	if (hasRedirected) return null;
+	
+	hasRedirected = true;
+	return <Redirect to={'/' + storeSettings.data.view} />;
 }
 
 render((
