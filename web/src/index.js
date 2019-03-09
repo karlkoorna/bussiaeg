@@ -27,7 +27,7 @@ const stores = {
 	storeSettings
 };
 
-let hasRedirected = false;
+let hasRedirected = window.location.pathname !== '/';
 function redirectView() {
 	if (hasRedirected) return null;
 	
