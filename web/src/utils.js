@@ -30,7 +30,7 @@ export function formatTime(seconds) {
 // Convert HMS to countdown format.
 export function formatCountdown(seconds) {
 	const shms = secondsToShms(seconds);
-	return (shms[0] ? '-' : '') + (shms[1] ? `${shms[1]}h ` : '') + (shms[2] ? `${shms[2]}m ` : '') + (seconds < 300 ? `${shms[3]}s` : '');
+	return (shms[0] ? '-' : '') + (shms[1] ? `${shms[1]}h ` : '') + (shms[2] ? `${shms[2]}m ` : '') + (shms[3] && seconds < 300 ? `${shms[3]}s` : '');
 }
 
 // Format meters to appropriate distance units.
