@@ -5,13 +5,23 @@
 
 /* Info */
 
+#stop-info-bar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 64px;
+	background-color: var(--color-bg-light);
+	box-shadow: var(--shadow-light);
+}
+
 #stop-info {
-	z-index: 1;
 	position: relative;
 	height: 64px;
 	background-color: var(--color-bg-light);
 	box-shadow: var(--shadow-light);
 	font-weight: bold;
+	animation: var(--animation-fadeIn);
 	overflow: hidden;
 }
 
@@ -79,6 +89,7 @@
 }
 
 .stop-trips-trip {
+	display: flex;
 	position: relative;
 	height: 80px;
 	transition: background-color .1s linear;
@@ -159,4 +170,22 @@
 	bottom: 11px;
 	color: var(--color-fg-light);
 	font-size: 19px;
+}
+
+/* Animations */
+
+@keyframes stop-urgent {
+	
+	from {
+		opacity: 1;
+	}
+	
+	50% {
+		opacity: .25;
+	}
+	
+	to {
+		opacity: 1;
+	}
+	
 }

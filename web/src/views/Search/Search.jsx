@@ -62,9 +62,9 @@ class ViewSearch extends Component {
 						</svg>
 					</div>
 					<Scroller>
-						<div id="search-results">
+						<ol id="search-results">
 							{results.length ? results.map((result) => (
-								<div className="search-results-result-container" key={result.id}>
+								<li key={result.id}>
 									<Link className={`search-results-result ${storeFavorites.get(result.id) ? 'is-favorite' : ''}`} to={`/stop?id=${result.id}`}>
 										<Icon className="search-results-result-icon" shape="stop" type={result.type} />
 										<div style={{ color: iconColors[result.type][0] }}>
@@ -73,13 +73,13 @@ class ViewSearch extends Component {
 										</div>
 										<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
 									</Link>
-								</div>
+								</li>
 							)) : (
 								<div className="view-empty">
 									{t('search.empty')}
 								</div>
 							)}
-						</div>
+						</ol>
 					</Scroller>
 				</main>
 			</>

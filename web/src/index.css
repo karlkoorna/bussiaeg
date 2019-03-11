@@ -31,7 +31,8 @@ select {
 	-webkit-appearance: none;
 }
 
-ul {
+ul,
+ol {
 	margin: 0;
 	padding: 0;
 }
@@ -65,6 +66,7 @@ a {
 #app[data-theme="dark"] {
 	--shadow-light: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	--shadow-dark: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
+	--animation-fadeIn: view-fadeIn .15s linear forwards;
 }
 
 #app[data-theme="light"] {
@@ -101,16 +103,19 @@ a {
 	color: var(--color-fg-light);
 	font-size: 20px;
 	font-weight: bold;
-	animation: view-fadeIn .15s linear forwards;
+	animation: var(--animation-fadeIn);
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	opacity: 0;
 }
 
 /* Animations */
 
 @keyframes view-fadeIn {
+	
+	from {
+		opacity: 0;
+	}
 	
 	to {
 		opacity: 1;

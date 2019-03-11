@@ -3,7 +3,7 @@
 	width: 256px;
 	height: 100%;
 	margin: 0 auto;
-	animation: loader-fadeIn .5s linear forwards .5s;
+	animation: var(--animation-fadeIn) .5s;
 	opacity: 0;
 }
 
@@ -25,14 +25,6 @@
 }
 
 /* Animations */
-
-@keyframes loader-fadeIn {
-	
-	to {
-		opacity: 1;
-	}
-	
-}
 
 @keyframes loader-bounce {
 	

@@ -98,11 +98,12 @@ class ViewStop extends Component {
 					<meta name="theme-color" content={id ? colors[type][1] : 'unknown'} />
 				</Helmet>
 				<main id="stop" className="view">
-					<div id="stop-info">
-						<Icon id="stop-info-icon" shape="stop" type={type || 'unknown'} />
-						<span id="stop-info-description">{description || ''}</span>
-						<span id="stop-info-name">{name || ''}</span>
-						{id ? (
+					<div id="stop-info-bar" />
+					{id ? (
+						<div id="stop-info">
+							<Icon id="stop-info-icon" shape="stop" type={type || 'unknown'} />
+							<span id="stop-info-description">{description || ''}</span>
+							<span id="stop-info-name">{name || ''}</span>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="stop-info-favorite" className={isFavorite ? 'is-active' : null} onClick={this.toggleFavorite}>
 								<path strokeWidth="100" d="M512 927.7l-65.7-59.8C213 656.3 58.9 516.3 58.9 345.5c0-140 109.6-249.2 249.2-249.2 78.8 0 154.5 36.7 203.9 94.2 49.4-57.5 125-94.2 203.9-94.2 139.5 0 249.2 109.2 249.2 249.2 0 170.8-154 310.8-387.4 522.4L512 927.7z" />
 							</svg>
