@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Scroller from 'components/Scroller.jsx';
-import Icon, { colors } from 'components/Icon.jsx';
+import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
 import './Favorites.css';
@@ -40,7 +40,7 @@ class ViewFavorites extends Component {
 										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
 											{(dragProvided) => (
 												<div className="favorites-stop-container" ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
-													<Link className="favorites-stop" style={{ backgroundColor: colors[favorite.type][0] }} to={`/stop?id=${favorite.id}`}>
+													<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`}>
 														<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
 														<div>
 															<div className="favorites-stop-name">{favorite.name}</div>
