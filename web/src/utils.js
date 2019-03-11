@@ -13,11 +13,6 @@ export function withTheme(C) {
 	};
 }
 
-// Format meters to appropriate distance units.
-export function formatDistance(meters) {
-	return meters ? meters >= 100000 ? `${Math.round(meters / 10000) * 10}km` : meters >= 10000 ? `${(meters / 1000).toFixed()}km` : meters >= 1000 ? `${(meters / 1000).toFixed(1)}km` : `${Math.round(meters / 10) * 10}m` : '';
-}
-
 // Converts seconds to sign, raw hour, minute and second values.
 function secondsToShms(seconds) {
 	const absSeconds = Math.abs(seconds);
@@ -36,4 +31,9 @@ export function formatTime(seconds) {
 export function formatCountdown(seconds) {
 	const shms = secondsToShms(seconds);
 	return (shms[0] ? '-' : '') + (shms[1] ? `${shms[1]}h ` : '') + (shms[2] ? `${shms[2]}m ` : '') + (seconds < 300 ? `${shms[3]}s` : '');
+}
+
+// Format meters to appropriate distance units.
+export function formatDistance(meters) {
+	return meters ? meters >= 100000 ? `${Math.round(meters / 10000) * 10}km` : meters >= 10000 ? `${(meters / 1000).toFixed()}km` : meters >= 1000 ? `${(meters / 1000).toFixed(1)}km` : `${Math.round(meters / 10) * 10}m` : '';
 }

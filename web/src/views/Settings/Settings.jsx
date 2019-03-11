@@ -56,7 +56,7 @@ class ViewSettings extends Component {
 						<label><i className="material-icons">people</i>{t('settings.credits')}</label>
 						<div>
 							<h1 className="first-party">{t('settings.credits-programmer')}</h1>
-							<a target="_blank" rel="noopener noreferrer" href="/">Karl Köörna</a>
+							<a target="_blank" rel="noopener noreferrer" href="https://github.com/karlkoorna">Karl Köörna<i className="material-icons">open_in_new</i></a>
 							<h1 className="first-party">{t('settings.credits-designer')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="/">Kaur Hendrikson</a>
 							<h1 className="third-party">{t('settings.credits-coach')}</h1>

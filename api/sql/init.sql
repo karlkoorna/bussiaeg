@@ -4,9 +4,9 @@ CREATE TABLE IF NOT EXISTS stops (
 	id NVARCHAR(32) NOT NULL,
 	name NVARCHAR(32) NOT NULL,
 	description NVARCHAR(48),
+	type VARCHAR(16),
 	lat DECIMAL(10, 8) NOT NULL,
 	lng DECIMAL(11, 8) NOT NULL,
-	type VARCHAR(16),
 	region VARCHAR(32),
 	PRIMARY KEY (id),
 	KEY (lat, lng)
