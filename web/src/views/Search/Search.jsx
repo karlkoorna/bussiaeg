@@ -14,7 +14,6 @@ import './Search.css';
 
 class ViewSearch extends Component {
 	
-	dispose = null
 	debounce = 0
 	
 	updateQuery = (e) => {
@@ -65,7 +64,7 @@ class ViewSearch extends Component {
 						<ol id="search-results">
 							{results.length ? results.map((result) => (
 								<li key={result.id}>
-									<Link className={`search-results-result ${storeFavorites.get(result.id) ? 'is-favorite' : ''}`} to={`/stop?id=${result.id}`}>
+									<Link className={'search-results-result' + (storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/stop?id=${result.id}`}>
 										<Icon className="search-results-result-icon" shape="stop" type={result.type} />
 										<div style={{ color: iconColors[result.type][0] }}>
 											<div className="search-results-result-name">{result.name}</div>
@@ -75,7 +74,7 @@ class ViewSearch extends Component {
 									</Link>
 								</li>
 							)) : (
-								<div className="view-empty">
+								<div className="view-empty" style={this.debounce ? {} : { animation: 'var(--animation-fadeIn) .75s', opacity: 0 }}>
 									{t('search.empty')}
 								</div>
 							)}

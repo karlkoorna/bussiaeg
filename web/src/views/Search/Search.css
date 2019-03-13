@@ -3,10 +3,11 @@
 	flex-direction: column;
 }
 
+/* Top */
+
 #search-top {
 	background-color: var(--color-bg-light);
 	box-shadow: var(--shadow-light);
-	font-weight: bold;
 	flex: 0;
 }
 
@@ -18,6 +19,7 @@
 	color: var(--color-fg-dark);
 	border-radius: 12px;
 	font-size: 16px;
+	font-weight: bold;
 }
 
 #search-top-input + svg {
@@ -89,6 +91,7 @@
 	padding: 8px;
 	font-weight: bold;
 	transition: background-color .1s linear;
+	animation: var(--animation-fadeIn);
 	align-items: center;
 	cursor: pointer;
 	pointer-events: all;

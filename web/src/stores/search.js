@@ -1,5 +1,7 @@
 import { decorate, observable, action, reaction } from 'mobx';
 
+import { opts as mapOpts } from 'views/Map/Map.jsx';
+
 import storeCoords from 'stores/coords.js';
 
 class StoreSearch {
@@ -34,10 +36,10 @@ class StoreSearch {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
 		
 		// Clear results if no query or coords.
-		if (!query && !lat) return void (this.results = []);
+		if (!query && lat === mapOpts.startLat) return void (this.results = []);
 		
 		try {
-			this.results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}${lat && lng ? `&lat=${lat}&lng=${lng}` : ''}`)).json();
+			this.results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}&lat=${lat}&lng=${lng}`)).json();
 		} catch (ex) {}
 	}
 	
