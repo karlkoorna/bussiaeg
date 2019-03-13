@@ -39,7 +39,7 @@ class ViewFavorites extends Component {
 									{favorites.length ? favorites.map((favorite, i) => (
 										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
 											{(dragProvided) => (
-												<div className="favorites-stop-container" ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
+												<article className="favorites-stop-container" ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
 													<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`}>
 														<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
 														<div>
@@ -47,7 +47,7 @@ class ViewFavorites extends Component {
 															<div className="favorites-stop-description">{favorite.description}</div>
 														</div>
 													</Link>
-												</div>
+												</article>
 											)}
 										</Draggable>
 									)) : (

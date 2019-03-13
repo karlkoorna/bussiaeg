@@ -19,12 +19,13 @@ body {
 
 input,
 select {
-	color: inherit;
 	background-color: transparent;
+	color: inherit;
 	border: none;
 	outline: none;
 	box-shadow: none;
 	font-size: inherit;
+	font-weight: inherit;
 }
 
 select {

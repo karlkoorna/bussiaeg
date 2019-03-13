@@ -1,12 +1,18 @@
 #!/bin/bash
 
-export NODE_ENV=production
-
-# Kill processes.
+# Kill old processes.
 killall caddy
 killall node
 
 # Start server.
 ulimit -n 8192
-caddy -conf $(pwd)/Caddypro &
-cd api && npm start
+if [ $1 ]; then
+	export NODE_ENV=development
+	caddy -conf Caddydev &
+	cd api && nodemon app.js &
+	cd web && npm start
+else
+	export NODE_ENV=production
+	caddy -conf Caddypro &
+	cd api && npm start
+fi

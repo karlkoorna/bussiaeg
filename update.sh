@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Kill processes.
+# Kill old processes.
 killall caddy
 killall node
 
-# Pull updates.
+# Discard local changes and pull updates from Git.
 git reset --hard origin/master
 git pull
 
-# Fix permissions
+# Make scripts executable.
 chmod +x update.sh
 chmod +x start.sh
 
-# Resolve packages.
+# Resolve module packages.
 cd api && npm install && cd ..
 cd web && npm install && npm run build && cd ..
 rm -rf {api,web}/package-lock.json

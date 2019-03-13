@@ -267,7 +267,7 @@ class ViewMap extends Component {
 				<div id="map-container" className="view">
 					<div id="map" />
 					<span id="map-message">{this.state.message}</span>
-					<i id="map-locate" className={`material-icons ${(this.props.storeCoords.accuracy < 512 ? 'is-visible' : '') + (this.state.isLocating ? ' is-active' : '')}`} onMouseDown={this.startLocating}>location_on</i>
+					<i id="map-locate" className={'material-icons' + (this.props.storeCoords.accuracy < 512 ? ' is-visible' : '') + (this.state.isLocating ? ' is-active' : '')} onMouseDown={this.startLocating}>location_on</i>
 					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} showCancel onCancel={this.modalHide} onConfirm={this.modalConfirm} />
 				</div>
 			</>

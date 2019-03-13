@@ -21,49 +21,49 @@
 	margin-right: 16px;
 }
 
-#settings select,
-#settings input,
-#settings div {
+#settings > select,
+#settings > input,
+#settings > div {
 	width: 100%;
 	padding: 12px 14px;
 	background-color: var(--color-bg-darker);
 	font-size: 15px;
 }
 
-#settings select {
+#settings > select {
 	cursor: pointer;
 }
 
-#settings select:-moz-focusring {
+#settings > select:-moz-focusring {
 	color: transparent;
 	text-shadow: 0 0 0 var(--color-fg-dark);
 }
 
-#settings div:last-of-type {
+#settings > div:last-of-type {
 	margin-bottom: 48px;
 }
 
 /* Info */
 
-#settings div h1 {
+#settings > div > h1 {
 	margin-top: 16px;
 	margin-bottom: 6px;
 	font-size: inherit;
 }
 
-#settings div h1:first-of-type {
+#settings > div > h1:first-of-type {
 	margin-top: 0;
 }
 
-#settings div h1.first-party {
+#settings > div > h1.first-party {
 	color: deepskyblue;
 }
 
-#settings div h1.third-party {
+#settings > div > h1.third-party {
 	color: #ffa94d;
 }
 
-#settings div a i {
+#settings > div > a > i {
 	margin-left: 4px;
 	color: var(--color-fg-light);
 	font-size: 18px;

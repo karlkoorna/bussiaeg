@@ -2,5 +2,4 @@ node_modules/
 build/
 tmp/
 package-lock.json
-*.mmdb
 .env
