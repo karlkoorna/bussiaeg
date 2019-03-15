@@ -1,8 +1,10 @@
 const db = require('../db.js');
+const cache = require('../utils/cache.js');
 
 // Get all stops inside geofence or one stop by id.
 async function getStops(req, res) {
 	const { id, lat_min, lat_max, lng_min, lng_max } = req.query;
+	
 	const stops = await db.query(`
 		SELECT * FROM stops
 		WHERE
@@ -16,13 +18,21 @@ async function getStops(req, res) {
 
 module.exports = (fastify, opts, next) => {
 	fastify.get('/stops', {
+		preHandler: cache.middleware,
 		schema: {
 			querystring: {
 				type: 'object',
 				anyOf: [
 					{ required: [ 'id' ] },
 					{ required: [ 'lat_min', 'lat_max', 'lng_min', 'lng_max' ] }
-				]
+				],
+				properties: {
+					id: { type: 'string' },
+					lat_min: { type: 'number' },
+					lat_max: { type: 'number' },
+					lng_min: { type: 'number' },
+					lng_max: { type: 'number' }
+				}
 			}
 		}
 	}, getStops);

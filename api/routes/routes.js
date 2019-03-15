@@ -1,17 +1,14 @@
+const db = require('../db.js');
 const cache = require('../utils/cache.js');
-const mnt = require('../providers/mnt.js');
-const elron = require('../providers/elron.js');
 
-// Get routes by stop id, trip name, type and provider.
+// Get routes by id.
 async function getRoutes(req, res) {
-	const { id } = req.query;
-	let routes = [];
+	const routes = await db.query(`
+		SELECT * FROM routes WHERE id = ?
+	`, [ req.query.id ]);
 	
-	if (id.length === 3) routes = res.send(await elron.getRoutes(id)); // Elron
-	else routes = (await mnt.getRoutes(id)); // MNT + TLT
-	
-	if (!Object.keys(routes).length) return void res.status(404).send('Vehicle not found.');
-	res.send(routes);
+	if (!routes.length) return void res.status(404).send('Route not found.');
+	return void res.send(routes);
 }
 
 module.exports = (fastify, opts, next) => {

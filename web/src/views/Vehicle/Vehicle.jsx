@@ -23,9 +23,7 @@ class ViewVehicle extends Component {
 	
 	// Navigate to route.
 	selectRoute = (e) => {
-		const { id, name, type } = this.state.vehicle;
-		
-		this.props.history.push(`/vehicle?id=${id}&name=${name}&type=${type}&variant=${e.target.selectedIndex + 1}`);
+		this.props.history.push(`/vehicle?id=${this.state.vehicle.id}&variant=${e.target.selectedIndex + 1}`);
 		this.hasInteracted = true;
 	}
 	
@@ -38,13 +36,11 @@ class ViewVehicle extends Component {
 	async componentDidMount() {
 		try {
 			const params = new URLSearchParams(window.location.search);
-			const routes = await (await fetch(`${process.env['REACT_APP_API']}/routes?id=${params.get('id')}&name=${params.get('name')}&type=${params.get('type')}`)).json();
+			const routes = await (await fetch(`${process.env['REACT_APP_API']}/routes?id=${params.get('id')}`)).json();
 			
 			this.setState({
 				vehicle: {
-					id: params.get('id'),
-					name: params.get('name'),
-					type: params.get('type')
+					id: params.get('id')
 				},
 				routes,
 				variant: Math.max(Number(params.get('variant')) - 1, 0) || 0,

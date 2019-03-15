@@ -32,9 +32,9 @@
 		transform: translateY(-32px);
 		animation-timing-function: cubic-bezier(.55, .085, .68, .53);
 	}
-   
+	
 	to {
 		transform: translateY(0);
 	}
-   
+	
 }

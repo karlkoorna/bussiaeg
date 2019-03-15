@@ -2,10 +2,10 @@ const got = require('got');
 
 const time = require('../utils/time.js');
 
-// Get trips for stop.
-async function getTrips(id) {
+// Get times for stop.
+async function getTimes(stopId) {
 	const now = time.getSeconds();
-	const trips = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
+	const trips = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(stopId)}`)).body).data;
 	
 	if (!trips) throw new Error("Provider 'Elron' is not returning data");
 	
@@ -22,9 +22,9 @@ async function getTrips(id) {
 	})).filter((trip) => now - trip.time < 600).slice(0, 15);
 }
 
-// Get routes for trip.
-async function getRoutes(id) {
-	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${id}`)).body).data;
+// Get trips for route.
+async function getTrips(routeId) {
+	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${routeId}`)).body).data;
 	
 	if (!stops) throw new Error("Provider 'Elron' is not returning data");
 	
@@ -39,6 +39,6 @@ async function getRoutes(id) {
 }
 
 module.exports = {
-	getTrips,
-	getRoutes
+	getTimes,
+	getTrips
 };

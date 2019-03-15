@@ -1,33 +1,28 @@
-const db = require('../db.js');
-const elron = require('../providers/elron.js');
-const tta = require('../providers/tta.js');
+const cache = require('../utils/cache.js');
 const mnt = require('../providers/mnt.js');
+const elron = require('../providers/elron.js');
 
-// Get trips for stop.
+// Get trips for route by id.
 async function getTrips(req, res) {
-	const { stop_id: stopId } = req.query;
-	
-	// Verify stop, get type and region.
-	const stop = (await db.query('SELECT type, region FROM stops WHERE id = ?', [ stopId ]))[0];
-	if (!stop) return void res.status(404).send('Stop not found.');
-	
-	// Elron
-	if (stop.type === 'train') return void res.send(await elron.getTrips(stopId));
-	
-	// MNT + TTA
+	const { route_id: routeId } = req.query;
 	let trips = [];
-	if (stop.region === 'tallinn') trips = await tta.getTrips(stopId);
-	res.send(trips.concat(await mnt.getTrips(stopId, trips.length)).sort((prev, next) => prev.countdown - next.countdown));
+	
+	if (routeId.length === 3) trips = res.send(await elron.getTrips(routeId)); // Elron
+	else trips = (await mnt.getTrips(routeId)); // MNT + TLT
+	
+	if (!Object.keys(trips).length) return void res.status(404).send('Trips not found.');
+	res.send(trips);
 }
 
 module.exports = (fastify, opts, next) => {
 	fastify.get('/trips', {
+		preHandler: cache.middleware,
 		schema: {
 			querystring: {
 				type: 'object',
-				required: [ 'stop_id' ],
+				required: [ 'route_id' ],
 				properties: {
-					stop_id: { type: 'string' }
+					route_id: { type: 'string' }
 				}
 			}
 		}

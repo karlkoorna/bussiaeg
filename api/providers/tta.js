@@ -7,22 +7,22 @@ const stops = {};
 let last = new Date();
 
 // Update stop/stops in cache.
-async function update(id) {
+async function update(stopId) {
 	// Add stop to cache.
-	if (id) stops[id] = {
+	if (stopId) stops[stopId] = {
 		rank: 5,
 		trips: []
 	};
 	
 	// Decrease ranks and remove stops if too low.
-	if (!id) for (const key in stops) if (stops[key].rank > 0) stops[key].rank--; else delete stops[key];
+	if (!stopId) for (const key in stops) if (stops[key].rank > 0) stops[key].rank--; else delete stops[key];
 	
 	try {
-		const data = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id || Object.keys(stops)}`, { retry: 0, timeout: 2000 + (125 * Object.keys(stops).length) })).body;
+		const data = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${stopId || Object.keys(stops)}`, { retry: 0, timeout: 2000 + (125 * Object.keys(stops).length) })).body;
 		
 		// Fallback to GTFS trips on error.
-		if (id || new Date() - last < 4200) if (data.split('\n').length === 2) {
-			if (id) stops[id].trips = []; else for (const key in stops) stops[key].trips = [];
+		if (stopId || new Date() - last < 4200) if (data.split('\n').length === 2) {
+			if (stopId) stops[stopId].trips = []; else for (const key in stops) stops[key].trips = [];
 			return;
 		}
 		
@@ -41,26 +41,26 @@ async function update(id) {
 		last = new Date();
 	} catch (ex) {
 		// Fallback to GTFS data on error.
-		if (id || new Date() - last < 4200) if (id) stops[id].trips = []; else for (const key in stops) stops[key].trips = [];
+		if (stopId || new Date() - last < 4200) if (stopId) stops[stopId].trips = []; else for (const key in stops) stops[key].trips = [];
 	}
 }
 
 // Update stops in cache (2s interval).
 setInterval(update, 2000);
 
-// Get trips for stop.
-async function getTrips(id) {
-	// Return trips from cache and increase rank if exists.
-	if (stops[id]) {
-		if (stops[id].rank <= 60) stops[id].rank++;
-		return [ ...stops[id].trips ];
+// Get times for stop.
+async function getTimes(stopId) {
+	// Return times from cache and increase rank if exists.
+	if (stops[stopId]) {
+		if (stops[stopId].rank <= 60) stops[stopId].rank++;
+		return [ ...stops[stopId].trips ];
 	}
 	
-	// Force cache update for stop and return trips.
-	await update(id);
-	return [ ...stops[id].trips ];
+	// Force cache update for stop and return times.
+	await update(stopId);
+	return [ ...stops[stopId].trips ];
 }
 
 module.exports = {
-	getTrips
+	getTimes
 };

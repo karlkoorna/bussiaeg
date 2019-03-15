@@ -6,11 +6,10 @@ module.exports = async () => {
 	const stops = await db.query(`
 		SELECT stop_id, GROUP_CONCAT(type, ':', destination) AS destinations FROM stop_times
 		JOIN trips AS trip ON trip.id = trip_id
-		JOIN routes AS route ON route.id = trip.route_id
+		JOIN routes AS route ON route.id = route_id
 		GROUP BY stop_id
 	`);
 	
-	// Start building transaction query.
 	let query = 'START TRANSACTION;';
 	
 	// Get the most common destination for all trips serving a stop with coaches having the least priority.
