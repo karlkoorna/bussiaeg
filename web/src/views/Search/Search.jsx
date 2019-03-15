@@ -32,7 +32,7 @@ class ViewSearch extends Component {
 		if (e.which === 13) e.target.blur();
 	}
 	
-	componentWillMount() {
+	componentDidMount() {
 		this.props.storeSearch.startScanning();
 	}
 	

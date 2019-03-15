@@ -51,7 +51,7 @@ class ViewMap extends Component {
 	modalConfirm = () => {
 		this.modalHide();
 		
-		const { map } = window;
+		const map = window.map;
 		const center = map.getCenter();
 		
 		localStorage.setItem('start', JSON.stringify({
@@ -63,7 +63,7 @@ class ViewMap extends Component {
 	
 	// Start locating at zoom where stops are visible.
 	startLocating = () => {
-		const { map } = window;
+		const map = window.map;
 		
 		this.setState({ isLocating: true }, () => {
 			map.setView([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.stopZoom, map.getZoom()));
@@ -77,8 +77,8 @@ class ViewMap extends Component {
 	
 	// Update message based on bounds and redraw stops.
 	fetchStops = async () => {
+		const map = window.map;
 		const { t } = this.props;
-		const { map } = window;
 		const { _southWest: { lat: lat_min, lng: lng_min }, _northEast: { lat: lat_max, lng: lng_max } } = map.getBounds();
 		
 		// Handle message cases.

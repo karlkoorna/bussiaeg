@@ -3,6 +3,16 @@ TRUNCATE TABLE routes;
 LOAD DATA LOCAL INFILE 'tmp/routes.csv' INTO TABLE routes FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES
 (@route_id, @agency_id, @route_short_name, @route_long_name, @route_type, @route_color, @competent_authority) SET
 id = @route_id,
+uid = MD5(CONCAT(@route_short_name, (
+	CASE
+		WHEN @route_color = 'F55ADC' OR @route_color = '00933C' THEN 'coach-c'
+		WHEN @route_color = 'E6FA32' THEN 'coach-cc'
+		WHEN @route_type = 0 THEN 'tram'
+		WHEN @route_type = 3 THEN 'bus'
+		WHEN @route_type = 800 THEN 'trol'
+		ELSE NULL
+	END
+), @agency_id, @competent_authority)),
 name = @route_short_name,
 type = (
 	CASE

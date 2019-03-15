@@ -19,7 +19,6 @@
 	color: var(--color-fg-dark);
 	border-radius: 12px;
 	font-size: 16px;
-	font-weight: bold;
 }
 
 #search-top-input + svg {

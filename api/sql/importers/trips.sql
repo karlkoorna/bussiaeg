@@ -5,5 +5,13 @@ LOAD DATA LOCAL INFILE 'tmp/trips.csv' INTO TABLE trips FIELDS TERMINATED BY ','
 id = @trip_id,
 route_id = @route_id,
 service_id = @service_id,
-origin = CUTLONGNAME(@trip_long_name, 1),
-destination = CUTLONGNAME(@trip_long_name, -1);
+origin = IF(
+	SUBSTRING_INDEX(REPLACE(@trip_long_name, '–', '-'), '- ', -1) != @trip_long_name,
+	TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(@trip_long_name, '–', '-'), '- ', 1), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)')),
+	TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(@trip_long_name, '–', '-'), '-', 1), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)'))
+),
+destination = IF(
+	SUBSTRING_INDEX(REPLACE(@trip_long_name, '–', '-'), '- ', -1) != @trip_long_name,
+	TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(@trip_long_name, '–', '-'), '- ', -1), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)')),
+	TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(@trip_long_name, '–', '-'), '-', -1), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)'))
+);

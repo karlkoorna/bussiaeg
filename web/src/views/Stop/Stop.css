@@ -16,17 +16,18 @@
 }
 
 #stop-info {
-	position: relative;
+	display: flex;
 	height: 64px;
-	background-color: var(--color-bg-light);
-	box-shadow: var(--shadow-light);
 	font-weight: bold;
 	animation: var(--animation-fadeIn);
 	overflow: hidden;
 }
 
-#stop-info > * {
-	position: absolute;
+#stop-info > div {
+	display: flex;
+	padding-bottom: 3px;
+	flex-direction: column;
+	justify-content: center;
 }
 
 #stop-info-icon {
@@ -36,27 +37,16 @@
 }
 
 #stop-info-name {
-	left: 64px;
-	top: 8px;
 	font-size: 22px;
 }
 
-#stop-info-description:empty + #stop-info-name {
-	top: 17px;
-}
-
 #stop-info-description {
-	left: 65px;
-	bottom: 12px;
 	color: var(--color-fg-light);
 	font-size: 14px;
 }
 
-#stop-info-description:empty {
-	display: none;
-}
-
 #stop-info-favorite {
+	position: absolute;
 	right: 0;
 	width: 64px;
 	height: 64px;
@@ -93,6 +83,11 @@
 	position: relative;
 	height: 80px;
 	transition: background-color .1s linear;
+	animation: var(--animation-fadeIn);
+}
+
+.stop-trips-trip:hover {
+	background-color: rgba(127, 127, 127, .1);
 }
 
 .stop-trips-trip:after {

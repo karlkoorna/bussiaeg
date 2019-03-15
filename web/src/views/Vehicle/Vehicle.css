@@ -1,0 +1,108 @@
+#vehicle {
+	display: flex;
+	flex-direction: column;
+}
+
+/* Info */
+
+#vehicle-info-bar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 64px;
+	background-color: var(--color-bg-light);
+	box-shadow: var(--shadow-light);
+}
+
+#vehicle-info {
+	display: flex;
+	height: 64px;
+	font-weight: bold;
+	animation: var(--animation-fadeIn);
+	overflow: hidden;
+}
+
+#vehicle-info > div {
+	display: flex;
+	padding-bottom: 3px;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#vehicle-info-icon {
+	width: 58px;
+	height: 64px;
+	padding: 6px;
+}
+
+#vehicle-info-name {
+	margin-top: 8px;
+	font-size: 22px;
+}
+
+#vehicle-info-description {
+	padding-bottom: 8px;
+	color: var(--color-fg-light);
+	font-size: 14px;
+}
+
+/* Stops */
+
+#vehicle-stops {
+	flex: 1;
+	overflow-y: auto;
+}
+
+.vehicle-stops-stop {
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 80px;
+	padding: 8px;
+	font-weight: bold;
+	transition: background-color .1s linear;
+	align-items: center;
+	cursor: pointer;
+	pointer-events: all;
+}
+
+.vehicle-stops-stop.has-fade {
+	animation: var(--animation-fadeIn);
+}
+
+.vehicle-stops-stop:hover {
+	background-color: rgba(127, 127, 127, .1);
+}
+	
+.vehicle-stops-stop:after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: calc(100% - 16px);
+	height: 1px;
+	margin: 0 8px;
+	background-color: rgba(127, 127, 127, .2);
+}
+
+.vehicle-stops-stop-icon {
+	height: 100%;
+	padding: 8px;
+	flex-shrink: 0;
+}
+
+.vehicle-stops-stop-icon + div {
+	padding-left: 8px;
+	flex: 1;
+}
+
+.vehicle-stops-stop-name {
+	margin-bottom: 4px;
+	font-size: 21px;
+}
+
+.vehicle-stops-stop-description {
+	margin-bottom: 2px;
+	font-size: 15px;
+}

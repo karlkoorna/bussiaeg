@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS trips (
 
 CREATE TABLE IF NOT EXISTS routes (
 	id CHAR(32) NOT NULL,
+	uid VARCHAR(32),
 	name NVARCHAR(16) NOT NULL,
 	type VARCHAR(16),
 	region VARCHAR(32),
@@ -54,17 +55,3 @@ CREATE TABLE IF NOT EXISTS service_exceptions (
 	PRIMARY KEY (service_id, date),
 	KEY (date, type)
 );
-
-/* Functions */
-
-DROP FUNCTION IF EXISTS CUTLONGNAME;
-CREATE FUNCTION CUTLONGNAME(str NVARCHAR(255), dir TINYINT(1))
-RETURNS NVARCHAR(255)
-DETERMINISTIC
-BEGIN
-	RETURN IF(
-		SUBSTRING_INDEX(REPLACE(str, '–', '-'), '- ', -1) != str,
-		TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(str, '–', '-'), '- ', dir), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)')),
-		TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(str, '–', '-'), '-', dir), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)'))
-	);
-END;

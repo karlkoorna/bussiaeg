@@ -8,10 +8,10 @@ async function getTrips(id) {
 	const trips = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`)).body).data;
 	
 	if (!trips) throw new Error("Provider 'Elron' is not returning data");
-	if (trips.text) throw new Error(trips.text);
 	
 	// Show not arrived trips until 10 minutes of being late.
 	return trips.filter((trip) => !trip.tegelik_aeg).map((trip) => ({
+		route_id: trip.reis,
 		time: time.toSeconds(trip.plaaniline_aeg),
 		countdown: time.toSeconds(trip.plaaniline_aeg) - now,
 		name: trip.reis,
@@ -22,6 +22,23 @@ async function getTrips(id) {
 	})).filter((trip) => now - trip.time < 600).slice(0, 15);
 }
 
+// Get routes for trip.
+async function getRoutes(id) {
+	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${id}`)).body).data;
+	
+	if (!stops) throw new Error("Provider 'Elron' is not returning data");
+	
+	return {
+		[`${stops[0].peatus} - ${stops[stops.length - 1].peatus}`]: stops.map((stop) => ({
+			id: stop.peatus,
+			name: stop.peatus,
+			description: '',
+			type: 'train'
+		}))
+	};
+}
+
 module.exports = {
-	getTrips
+	getTrips,
+	getRoutes
 };

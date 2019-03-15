@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const got = require('got');
 
 const time = require('../utils/time.js');
@@ -27,6 +28,7 @@ async function update(id) {
 		
 		// Add stops to cache.
 		for (const stop of data.split('\nstop,').slice(1)) stops[stop.split('\n', 1)[0]].trips = stop.split('\n').slice(1, -1).map((trip) => trip.split(',')).map((trip) => ({
+			route_id: crypto.createHash('md5').update(trip[1] + trip[0] + '56Tallinna TA').digest('hex'),
 			time: Number(trip[3]),
 			countdown: Number(trip[2]) - time.getSeconds(),
 			name: trip[1],

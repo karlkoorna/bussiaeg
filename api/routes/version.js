@@ -8,7 +8,7 @@ function getVersion(req, res) {
 
 module.exports = (fastify, opts, next) => {
 	fastify.get('/version', {
-		beforeHandler: cache.middleware
+		preHandler: cache.middleware
 	}, getVersion);
 	
 	next();

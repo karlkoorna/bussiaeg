@@ -12,6 +12,7 @@ import ViewFavorites from 'views/Favorites/Favorites.jsx';
 import ViewMap from 'views/Map/Map.jsx';
 import ViewSettings from 'views/Settings/Settings.jsx';
 import ViewStop from 'views/Stop/Stop.jsx';
+import ViewVehicle from 'views/Vehicle/Vehicle.jsx';
 
 import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
@@ -46,6 +47,7 @@ render((
 					<Route exact path="/favorites" component={ViewFavorites} />
 					<Route exact path="/settings" component={ViewSettings} />
 					<Route exact path="/stop" component={ViewStop} />
+					<Route exact path="/vehicle" component={ViewVehicle} />
 				</Switch>
 				<NavBar />
 			</>

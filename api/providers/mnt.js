@@ -1,9 +1,11 @@
+const _ = require('lodash');
+
 const db = require('../db.js');
 
 // Get trips for stop.
 async function getTrips(id, coachOnly) {
 	return (await db.query(`
-		SELECT TIME_TO_SEC(time) AS time, TIME_TO_SEC(time) - TIME_TO_SEC(NOW()) as countdown, route.name, trip.destination, route.type, 'mnt' AS provider FROM stops AS stop
+		SELECT uid AS route_id, TIME_TO_SEC(time) AS time, TIME_TO_SEC(time) - TIME_TO_SEC(NOW()) as countdown, route.name, trip.destination, route.type, 'mnt' AS provider FROM stops AS stop
 			JOIN stop_times ON stop_id = id
 			JOIN trips AS trip ON trip.id = trip_id
 			JOIN routes AS route ON route.id = route_id
@@ -29,6 +31,39 @@ async function getTrips(id, coachOnly) {
 	`, [ id ])).map((trip) => ({ ...trip, live: false }));
 }
 
+// Get routes for trip.
+async function getRoutes(stopId) {
+	const routes = _.groupBy(await db.query(`
+		SELECT stop.name, description, stop.type, origin, destination FROM routes AS route
+		JOIN trips AS trip ON trip.route_id = route.id
+		JOIN services AS service ON service.id = service_id
+		JOIN stop_times AS time On trip_id = trip.id
+		JOIN stops AS stop ON stop.id = stop_id
+		WHERE
+			uid = ?
+		    AND (
+				CURDATE() BETWEEN start AND end
+				AND SUBSTR(days, WEEKDAY(CURDATE()) + 1, 1) = 1
+				AND service_id NOT IN (
+					SELECT service_id FROM service_exceptions WHERE type = 0 AND date = CURDATE()
+				)
+			) OR service_id IN (
+				SELECT service_id FROM service_exceptions WHERE type = 1 AND date = CURDATE()
+			)
+		GROUP BY uid, origin, destination, sequence
+	`, [ stopId ]), (route) => `${route.origin} - ${route.destination}`);
+	
+	// Clean stop objects.
+	for (const key in routes) routes[key] = routes[key].map((stop) => {
+		delete stop.origin;
+		delete stop.destination;
+		return stop;
+	});
+	
+	return routes;
+}
+
 module.exports = {
-	getTrips
+	getTrips,
+	getRoutes
 };

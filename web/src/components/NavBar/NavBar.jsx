@@ -14,6 +14,8 @@ export const colors = {
 	settings: [ '#00bfff', '#00ace6' ]
 };
 
+const today = ((new Date()).getMonth() + 1).toString().padStart(2, '0') + (new Date()).getDate().toString().padStart(2, '0');
+
 class NavBarItem extends Component {
 	
 	state = {
@@ -84,6 +86,23 @@ const WrappedNavBarItem = withRouter(withTheme(NavBarItem));
 export default function NavBar() {
 	return (
 		<nav id="navbar">
+			{{
+				'0310': (
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 128" preserveAspectRatio="none" id="navbar-banner">
+						<style>{'.st0{fill:#007aff}.st1{fill:#f7f7f7}'}</style>
+						<path d="M0 49.5S64 36 135 36s135 13.5 135 13.5v9.3s-58.5-13.1-135-13.1S0 58.8 0 58.8v-9.3z" class="st0" />
+						<path d="M0 58.4s64-13.5 135-13.5 135 13.5 135 13.5v9.3s-58.5-13.1-135-13.1-135 13-135 13v-9.2z" />
+						<path d="M0 67.2s64-13.5 135-13.5 135 13.5 135 13.5v9.3s-58.5-13.1-135-13.1S0 76.5 0 76.5v-9.3z" class="st1" />
+						<path d="M540 58.8s-64 13.5-135 13.5-135-13.5-135-13.5v-9.3s58.5 13.1 135 13.1 135-13.1 135-13.1v9.3z" class="st0" />
+						<path d="M540 67.6s-64 13.5-135 13.5-135-13.5-135-13.5v-9.3s58.5 13.1 135 13.1 135-13.1 135-13.1v9.3z" />
+						<path d="M540 67.6s-64 13.5-135 13.5-135-13.5-135-13.5v-9.3s58.5 13.1 135 13.1 135-13.1 135-13.1v9.3z" />
+						<path d="M540 67.6s-64 13.5-135 13.5-135-13.5-135-13.5v-9.3s58.5 13.1 135 13.1 135-13.1 135-13.1v9.3z" />
+						<path d="M540 67.6s-64 13.5-135 13.5-135-13.5-135-13.5v-9.3s58.5 13.1 135 13.1 135-13.1 135-13.1v9.3z" />
+						<path d="M540 67.6s-64 13.5-135 13.5-135-13.5-135-13.5v-9.3s58.5 13.1 135 13.1 135-13.1 135-13.1v9.3z" />
+						<path d="M540 76.5S476 90 405 90 270 76.5 270 76.5v-9.3s58.5 13.1 135 13.1 135-13.1 135-13.1v9.3z" class="st1" />
+					</svg>
+				)
+			}[today]}
 			<ul>
 				<WrappedNavBarItem to="/search" colors={colors.search}>Search</WrappedNavBarItem>
 				<WrappedNavBarItem to="/favorites" colors={colors.favorites}>Favorites</WrappedNavBarItem>
