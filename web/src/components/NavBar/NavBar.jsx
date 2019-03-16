@@ -74,7 +74,7 @@ class NavBarItem extends Component {
 						)
 					}[children.toLowerCase()]}
 				</svg>
-				<Ink hasTouch={false} background={false} opacity={.5} style={{ color: colors[0] }} />
+				<Ink hasTouch={false} background={false} opacity={.5} style={{ color: _colors[0] }} />
 			</li>
 		);
 	}
