@@ -8,15 +8,26 @@ import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
 import './Settings.css';
 
+const $app = document.getElementById('app');
+
 class ViewSettings extends Component {
 	
 	state = {
 		version: '3.x.x'
 	}
 	
+	debug = 0
+	
+	// Update setting.
 	updateSetting = (e) => {
 		const target = e.target;
 		this.props.storeSettings.update(target.name, target.options[e.target.selectedIndex].value, true);
+	}
+	
+	// Switch debug mode.
+	switchDebug = () => {
+		this.debug++;
+		$app.className = 'is-debug-' + (this.debug % 3);
 	}
 	
 	async componentDidMount() {
@@ -67,7 +78,7 @@ class ViewSettings extends Component {
 							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i className="material-icons">open_in_new</i></a>
 						</div>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>
-						<div>{this.state.version}</div>
+						<div onMouseDown={this.switchDebug}>{this.state.version}</div>
 					</main>
 				</Scroller>
 			</>

@@ -40,6 +40,10 @@
 	flex: 1;
 }
 
+#app.is-debug-1 .navbar-item {
+	animation: navbar-debug 1.5s linear infinite;
+}
+
 .navbar-item > svg {
 	width: 32px;
 	transition: width .1s ease;
@@ -99,6 +103,24 @@
 	
 	to {
 		transform: rotate(180deg);
+	}
+	
+}
+
+@keyframes navbar-debug {
+	
+	from {
+		filter: hue-rotate(0);
+		transform: scale(1);
+	}
+	
+	50% {
+		transform: scale(1.15);
+	}
+	
+	to {
+		filter: hue-rotate(360deg);
+		transform: scale(1);
 	}
 	
 }

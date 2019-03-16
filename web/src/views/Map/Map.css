@@ -61,6 +61,10 @@
 	border-color: #00e6ad;
 }
 
+#app.is-debug-1 .leaflet-marker-icon {
+	animation: map-debug 1.5s linear infinite;
+}
+
 /* Leaflet */
 
 .leaflet-control-attribution {
@@ -87,4 +91,18 @@
 
 #map:not(.is-zooming) .leaflet-marker-icon:first-of-type {
 	transition: all .3s ease;
+}
+
+/* Keyframes */
+
+@keyframes map-debug {
+	
+	from {
+		filter: hue-rotate(0);
+	}
+	
+	to {
+		filter: hue-rotate(360deg);
+	}
+	
 }
