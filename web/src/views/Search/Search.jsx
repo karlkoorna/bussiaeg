@@ -66,9 +66,9 @@ class ViewSearch extends Component {
 								<li key={result.id}>
 									<Link className={'search-results-result' + (storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/stop?id=${result.id}`}>
 										<Icon className="search-results-result-icon" shape="stop" type={result.type} />
-										<div style={{ color: iconColors[result.type][0] }}>
-											<div className="search-results-result-name">{result.name}</div>
-											<div className="search-results-result-description">{result.description || (result.origin && result.destination ? `${result.origin} - ${result.destination}` : '')}</div>
+										<div>
+											<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
+											<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description || (result.origin && result.destination ? `${result.origin} - ${result.destination}` : '')}</div>
 										</div>
 										<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
 									</Link>

@@ -16,13 +16,13 @@ class ViewVehicle extends Component {
 	
 	state = {
 		vehicle: {},
-		routes: {},
+		trips: {},
 		variant: 0,
 		isLoading: true
 	};
 	
-	// Navigate to route.
-	selectRoute = (e) => {
+	// Navigate to trip.
+	selectTrip = (e) => {
 		this.props.history.push(`/vehicle?id=${this.state.vehicle.id}&variant=${e.target.selectedIndex + 1}`);
 		this.hasInteracted = true;
 	}
@@ -32,17 +32,16 @@ class ViewVehicle extends Component {
 		return { variant: Math.max(Number((new URLSearchParams(window.location.search)).get('variant')) - 1, 0) || 0 };
 	}
 	
-	// Fetch routes, redirect to default view if unsuccessful.
+	// Fetch trips, redirect to default view if unsuccessful.
 	async componentDidMount() {
 		try {
 			const params = new URLSearchParams(window.location.search);
-			const routes = await (await fetch(`${process.env['REACT_APP_API']}/routes?id=${params.get('id')}`)).json();
+			const route = await (await fetch(`${process.env['REACT_APP_API']}/routes?id=${params.get('id')}`)).json();
+			const trips = await (await fetch(`${process.env['REACT_APP_API']}/trips?route_id=${route.id}`)).json();
 			
 			this.setState({
-				vehicle: {
-					id: params.get('id')
-				},
-				routes,
+				vehicle: route,
+				trips,
 				variant: Math.max(Number(params.get('variant')) - 1, 0) || 0,
 				isLoading: false
 			});
@@ -52,9 +51,9 @@ class ViewVehicle extends Component {
 	}
 	
 	render() {
-		const { vehicle, routes, variant, isLoading } = this.state;
-		const keys = Object.keys(routes);
-		const description = keys[Math.min(variant, keys.length - 1)];
+		const { vehicle, trips, variant, isLoading } = this.state;
+		const descriptions = Object.keys(trips);
+		const description = descriptions[Math.min(variant, descriptions.length - 1)];
 		
 		return (
 			<>
@@ -72,12 +71,12 @@ class ViewVehicle extends Component {
 							<Icon id="vehicle-info-icon" shape="vehicle" type={vehicle.type} />
 							<div>
 								<div id="vehicle-info-name">{vehicle.name || ''}</div>
-								<select id="vehicle-info-description" onChange={this.selectRoute}>{keys.map((key, i) => <option key={key} {...(i === variant ? { selected: true } : {})}>{key}</option>)}</select>
+								<select id="vehicle-info-description" defaultValue={description} onChange={this.selectTrip}>{descriptions.map((key) => <option key={key}>{key}</option>)}</select>
 							</div>
 						</div>
 					) : null}
 					<ol id="vehicle-stops">
-						{isLoading ? <Loader /> : routes[description].map((stop) => (
+						{isLoading ? <Loader /> : trips[description].map((stop) => (
 							<li key={stop.id}>
 								<Link className={'vehicle-stops-stop' + (this.hasInteracted ? '' : ' has-fade')} to={`/stop?id=${stop.id}`}>
 									<Icon className="vehicle-stops-stop-icon" shape="stop" type={stop.type} />

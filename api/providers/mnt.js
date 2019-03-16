@@ -5,7 +5,7 @@ const db = require('../db.js');
 // Get times for stop.
 async function getTimes(stopId, coachOnly) {
 	return (await db.query(`
-		SELECT uid AS id, TIME_TO_SEC(time) AS time, TIME_TO_SEC(time) - TIME_TO_SEC(NOW()) as countdown, route.name, trip.destination, route.type, 'mnt' AS provider FROM stops AS stop
+		SELECT uid AS route_id, TIME_TO_SEC(time) AS time, TIME_TO_SEC(time) - TIME_TO_SEC(NOW()) as countdown, route.name, trip.destination, route.type, 'mnt' AS provider FROM stops AS stop
 			JOIN stop_times ON stop_id = id
 			JOIN trips AS trip ON trip.id = trip_id
 			JOIN routes AS route ON route.id = route_id
@@ -34,7 +34,7 @@ async function getTimes(stopId, coachOnly) {
 // Get trips for route.
 async function getTrips(routeId) {
 	const trips = _.groupBy(await db.query(`
-		SELECT stop.name, description, stop.type, origin, destination FROM routes AS route
+		SELECT stop.id, stop.name, description, stop.type, origin, destination FROM routes AS route
 		JOIN trips AS trip ON trip.route_id = route.id
 		JOIN services AS service ON service.id = service_id
 		JOIN stop_times AS time On trip_id = trip.id

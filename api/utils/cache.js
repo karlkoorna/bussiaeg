@@ -9,7 +9,8 @@ async function use(space, key, setter) {
 	if (!cache[space][key]) cache[space][key] = await setter();
 	
 	// Return new dereferenced item.
-	return [ ...cache[space][key] ];
+	const value = cache[space][key];
+	return Array.isArray(value) ? [ ...value ] : { ...value };
 }
 
 // Clear cache.
