@@ -14,6 +14,7 @@ import './Search.css';
 
 class ViewSearch extends Component {
 	
+	$input = React.createRef()
 	debounce = 0
 	
 	updateQuery = (e) => {
@@ -33,6 +34,7 @@ class ViewSearch extends Component {
 	}
 	
 	componentDidMount() {
+		if (navigator.userAgent.toLowerCase().indexOf('mobi') === -1) setTimeout(() => { this.$input.current.focus(); }, 0);
 		this.props.storeSearch.startScanning();
 	}
 	
@@ -51,7 +53,7 @@ class ViewSearch extends Component {
 				</Helmet>
 				<main id="search" className="view">
 					<div id="search-top">
-						<input id="search-top-input" value={query} placeholder={t('search.search')} autoComplete="off" required onKeyDown={this.hideKeyboard} onChange={this.updateQuery} />
+						<input id="search-top-input" value={query} placeholder={t('search.search')} autoComplete="off" required ref={this.$input} onKeyDown={this.hideKeyboard} onChange={this.updateQuery} />
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 							<path strokeWidth="125" d="M650.7 650.7l321 321" />
 							<circle fill="transparent" strokeWidth="100" cx="399.3" cy="399.3" r="347" />
