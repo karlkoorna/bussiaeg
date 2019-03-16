@@ -28,11 +28,11 @@ const stores = {
 	storeSettings
 };
 
-let hasRedirected = window.location.pathname !== '/';
+let hasRedirected = window.location.pathname !== '/' || storeSettings.data.view === 'map';
 function redirectView() {
 	if (hasRedirected) return null;
-	
 	hasRedirected = true;
+	
 	return <Redirect to={'/' + storeSettings.data.view} />;
 }
 
