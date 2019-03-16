@@ -3,7 +3,7 @@
 	width: 256px;
 	height: 100%;
 	margin: 0 auto;
-	animation: var(--animation-fadeIn) .5s;
+	animation: var(--animation-fadeIn) .3s;
 	opacity: 0;
 }
 

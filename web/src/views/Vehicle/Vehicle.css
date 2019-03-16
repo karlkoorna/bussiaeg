@@ -78,13 +78,10 @@
 	padding: 8px;
 	font-weight: bold;
 	transition: background-color .1s linear;
+	animation: var(--animation-fadeIn);
 	align-items: center;
 	cursor: pointer;
 	pointer-events: all;
-}
-
-.vehicle-stops-stop.has-fade {
-	animation: var(--animation-fadeIn);
 }
 
 .vehicle-stops-stop:hover {

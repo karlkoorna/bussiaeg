@@ -1,6 +1,6 @@
 const $app = document.getElementById('app');
 
-// Notify React component of theme change.
+// Notify component of theme change.
 export function withTheme(C) {
 	return class extends C {
 		

@@ -114,7 +114,7 @@ class ViewMap extends Component {
 					icon: new Leaflet.Icon({
 						iconSize: [ 26, 26 ],
 						iconAnchor: [ 13, 13 ],
-						iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type })))}`
+						iconUrl: 'data:image/svg+xml;base64,' + btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type })))
 					})
 				})).addTo(map).on('click', () => {
 					this.props.history.push(`/stop?id=${stop.id}`);

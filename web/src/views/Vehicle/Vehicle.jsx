@@ -12,8 +12,6 @@ import './Vehicle.css';
 
 class ViewVehicle extends Component {
 	
-	hasInteracted = false
-	
 	state = {
 		vehicle: {},
 		trips: {},
@@ -24,7 +22,6 @@ class ViewVehicle extends Component {
 	// Navigate to trip.
 	selectTrip = (e) => {
 		this.props.history.push(`/vehicle?id=${this.state.vehicle.id}&variant=${e.target.selectedIndex + 1}`);
-		this.hasInteracted = true;
 	}
 	
 	// Update stops on view navigation.
@@ -78,7 +75,7 @@ class ViewVehicle extends Component {
 					<ol id="vehicle-stops">
 						{isLoading ? <Loader /> : trips[description].map((stop) => (
 							<li key={stop.id}>
-								<Link className={'vehicle-stops-stop' + (this.hasInteracted ? '' : ' has-fade')} to={`/stop?id=${stop.id}`}>
+								<Link className="vehicle-stops-stop" to={`/stop?id=${stop.id}`}>
 									<Icon className="vehicle-stops-stop-icon" shape="stop" type={stop.type} />
 									<div>
 										<div className="vehicle-stops-stop-name" style={{ color: iconColors[stop.type][0] }}>{stop.name}</div>
