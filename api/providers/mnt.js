@@ -12,6 +12,7 @@ async function getTimes(stopId, coachOnly) {
 			JOIN services AS service ON service.id = trip.service_id
 		WHERE
 			stop.id = ?
+			AND stop.type IS NOT NULL
 			AND route.type IS NOT NULL
 			AND time > CURTIME()
 			AND (
@@ -34,27 +35,21 @@ async function getTimes(stopId, coachOnly) {
 // Get trips for route.
 async function getTrips(routeId) {
 	const trips = _.groupBy(await db.query(`
-		SELECT stop.id, stop.name, description, stop.type, origin, destination FROM routes AS route
+		SELECT stop.id, stop.name, description, stop.type, trip.origin, trip.destination FROM routes AS route
 		JOIN trips AS trip ON trip.route_id = route.id
 		JOIN services AS service ON service.id = service_id
 		JOIN stop_times AS time On trip_id = trip.id
 		JOIN stops AS stop ON stop.id = stop_id
 		WHERE
-			route.uid = ?
-			AND (
-				CURDATE() BETWEEN start AND end
-				AND SUBSTR(days, WEEKDAY(CURDATE()) + 1, 1) = 1
-				AND service_id NOT IN (
-					SELECT service_id FROM service_exceptions WHERE type = 0 AND date = CURDATE()
-				)
-			) OR service_id IN (
-				SELECT service_id FROM service_exceptions WHERE type = 1 AND date = CURDATE()
-			)
-		GROUP BY uid, origin, destination, sequence
+			uid = ?
+			AND stop.type IS NOT NULL
+			AND route.type IS NOT NULL
+			AND CURDATE() BETWEEN start AND end
+		GROUP BY uid, trip.origin, trip.destination, sequence
 	`, [ routeId ]), (trip) => `${trip.origin} - ${trip.destination}`);
 	
-	// Clean stop objects.
-	for (const key in trips) trips[key] = trips[key].map((stop) => {
+	// Trim and clean stops.
+	for (const key in trips) trips[key] = trips[key].filter((stop, i, stops) => stop.name !== (stops[i + 1] || {}).name).map((stop) => {
 		delete stop.origin;
 		delete stop.destination;
 		return stop;

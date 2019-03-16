@@ -8,16 +8,15 @@ export default class Scroller extends Component {
 	el = null
 	
 	updatePosition = () => {
-		const el = this.el;
-		positions[el.id] = el.scrollTop;
+		positions[this.el.id] = this.el.scrollTop;
 	}
 	
 	// On mount restore position.
 	// On scroll update position.
 	componentDidMount() {
-		const el = this.el = ReactDOM.findDOMNode(this);
-		el.scrollTop = positions[el.id];
-		el.addEventListener('scroll', this.updatePosition, { passive: true });
+		this.el = ReactDOM.findDOMNode(this);
+		this.el.scrollTop = positions[this.el.id];
+		this.el.addEventListener('scroll', this.updatePosition, { passive: true });
 	}
 	
 	componentWillUnmount() {

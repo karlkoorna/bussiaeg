@@ -35,6 +35,10 @@ CREATE TABLE IF NOT EXISTS routes (
 	uid VARCHAR(32),
 	name NVARCHAR(16) NOT NULL,
 	type VARCHAR(16),
+	lat DECIMAL(10, 8),
+	lng DECIMAL(11, 8),
+	origin NVARCHAR(32) NOT NULL,
+	destination NVARCHAR(32) NOT NULL,
 	region VARCHAR(32),
 	PRIMARY KEY (id)
 );

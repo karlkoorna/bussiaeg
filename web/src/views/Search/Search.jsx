@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
+import Ink from 'react-ink';
+import { Swipeable } from 'react-swipeable';
 
 import Scroller from 'components/Scroller.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
@@ -15,6 +17,7 @@ import './Search.css';
 class ViewSearch extends Component {
 	
 	$input = React.createRef()
+	$results = React.createRef()
 	debounce = 0
 	
 	updateQuery = (e) => {
@@ -29,12 +32,26 @@ class ViewSearch extends Component {
 		this.props.storeSearch.fetchResults();
 	}
 	
+	changeType = (index) => {
+		this.props.storeSearch.updateType(index ? 'vehicle' : 'stop');
+	}
+	
+	changeTypeStop = () => {
+		this.props.storeSearch.updateType('stop');
+	}
+	
+	changeTypeVehicle = () => {
+		this.props.storeSearch.updateType('vehicle');
+	}
+	
 	hideKeyboard = (e) => {
 		if (e.which === 13) e.target.blur();
 	}
 	
+	// Auto focus input if on desktop.
 	componentDidMount() {
-		if (navigator.userAgent.toLowerCase().indexOf('mobi') === -1) setTimeout(() => { this.$input.current.focus(); }, 0);
+		this.$results.current.id = 'search-results';
+		if (navigator.userAgent.toLowerCase().indexOf('mobi') === -1) setTimeout(() => { if (this.$input.current) this.$input.current.focus(); }, 0);
 		this.props.storeSearch.startScanning();
 	}
 	
@@ -44,7 +61,7 @@ class ViewSearch extends Component {
 	
 	render() {
 		const { t } = this.props;
-		const { query, results } = this.props.storeSearch;
+		const { query, type, results } = this.props.storeSearch;
 		
 		return (
 			<>
@@ -61,16 +78,24 @@ class ViewSearch extends Component {
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" onMouseDown={this.clearQuery}>
 							<path strokeWidth="128" d="M92 92l840 840M932 92L92 932" />
 						</svg>
+						<div id="search-top-types">
+							<div className={'search-top-types-item' + (type === 'stop' ? ' is-active' : '')} onMouseDown={this.changeTypeStop}>{t('search.stops')}
+								<Ink hasTouch={false} background={false} opacity={.5} style={{ color: viewColors.search[0] }} />
+							</div>
+							<div className={'search-top-types-item' + (type === 'vehicle' ? ' is-active' : '')} onMouseDown={this.changeTypeVehicle}>{t('search.vehicles')}
+								<Ink hasTouch={false} background={false} opacity={.5} style={{ color: viewColors.search[0] }} />
+							</div>
+						</div>
 					</div>
 					<Scroller>
-						<ol id="search-results">
-							{results.length ? results.map((result) => (
+						<Swipeable nodeName="ol" delta={16} innerRef={this.$results} onSwipedRight={this.changeTypeStop} onSwipedLeft={this.changeTypeVehicle} onSwiping={this.swipe}>
+							{results[type + 's'].length ? results[type + 's'].map((result) => (
 								<li key={result.id}>
-									<Link className={'search-results-result' + (storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/stop?id=${result.id}`}>
-										<Icon className="search-results-result-icon" shape="stop" type={result.type} />
-										<div>
+									<Link className={'search-results-result' + (type === 'stops' && storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/${type}?id=${result.id}`}>
+										<Icon className="search-results-result-icon" shape={type} type={result.type} />
+										<div className={type === 'vehicle' ? ' is-vehicle' : ''}>
 											<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
-											<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description || (result.origin && result.destination ? `${result.origin} - ${result.destination}` : '')}</div>
+											<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description || (result.origin ? `${result.origin} - ${result.destination}` : '')}</div>
 										</div>
 										<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
 									</Link>
@@ -80,7 +105,7 @@ class ViewSearch extends Component {
 									{t('search.empty')}
 								</div>
 							)}
-						</ol>
+						</Swipeable>
 					</Scroller>
 				</main>
 			</>

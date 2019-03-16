@@ -8,7 +8,7 @@ async function getTimes(req, res) {
 	const { stop_id: stopId } = req.query;
 	
 	// Verify stop, get type and region.
-	const stop = (await db.query('SELECT type, region FROM stops WHERE id = ?', [ stopId ]))[0];
+	const stop = (await db.query('SELECT type, region FROM stops WHERE id = ? AND type IS NOT NULL', [ stopId ]))[0];
 	if (!stop) return void res.status(404).send('Stop not found.');
 	
 	// Elron

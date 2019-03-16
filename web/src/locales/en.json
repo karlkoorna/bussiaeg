@@ -2,8 +2,8 @@
   "search": {
     "search": "Search...",
     "stops": "Stops",
-    "routes": "Routes",
-    "empty": "No stops found"
+    "vehicles": "Vehicles",
+    "empty": "No results found"
   },
   "favorites": {
     "empty": "No favorites added"

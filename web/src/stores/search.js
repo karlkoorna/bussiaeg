@@ -9,7 +9,11 @@ class StoreSearch {
 	dispose = 0
 	
 	query = ''
-	results = []
+	type = 'stop'
+	results = {
+		stops: [],
+		vehicles: []
+	}
 	
 	// Start fetching nearby search results on location update.
 	startScanning() {
@@ -31,12 +35,18 @@ class StoreSearch {
 		this.query = query;
 	}
 	
+	// Update search type.
+	updateType(type) {
+		console.log(type);
+		this.type = type;
+	}
+	
 	// Fetch search results.
 	async fetchResults() {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
 		
 		// Clear results if no query or coords.
-		if (!query && lat === mapOpts.startLat) return void (this.results = []);
+		if (!query && lat === mapOpts.startLat) return void (this.results = { stops: [], vehicles: [] });
 		
 		try {
 			this.results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}&lat=${lat}&lng=${lng}`)).json();
@@ -50,6 +60,7 @@ decorate(StoreSearch, {
 	type: observable,
 	results: observable.struct,
 	updateQuery: action,
+	updateType: action,
 	fetchResults: action.bound
 });
 

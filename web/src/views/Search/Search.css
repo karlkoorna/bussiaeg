@@ -14,6 +14,7 @@
 #search-top-input {
 	width: calc(100% - 32px);
 	margin: 16px;
+	margin-bottom: 0;
 	padding: 12px 48px;
 	background-color: var(--color-bg-dark);
 	color: var(--color-fg-dark);
@@ -75,6 +76,25 @@
 	transform: scale(1);
 }
 
+#search-top-types {
+	font-size: 17px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.search-top-types-item {
+	display: inline-block;
+	position: relative;
+	width: 50%;
+	padding: 16px;
+	transition: color .1s linear;
+	text-align: center;
+}
+
+.search-top-types-item.is-active {
+	color: #ffa94d;
+}
+
 /* Results */
 
 #search-results {
@@ -94,6 +114,10 @@
 	align-items: center;
 	cursor: pointer;
 	pointer-events: all;
+}
+
+.search-results-result:hover {
+	background-color: rgba(127, 127, 127, .1);
 }
 
 .search-results-result.is-favorite:before {
@@ -126,6 +150,10 @@
 .search-results-result-icon + div {
 	padding-left: 8px;
 	flex: 1;
+}
+
+.search-results-result-icon + div.is-vehicle {
+	padding-left: 0;
 }
 
 .search-results-result-name {

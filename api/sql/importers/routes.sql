@@ -24,6 +24,16 @@ type = (
 		ELSE NULL
 	END
 ),
+origin = IF(
+	SUBSTRING_INDEX(REPLACE(@route_long_name, '–', '-'), '- ', -1) != @route_long_name,
+	TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(@route_long_name, '–', '-'), '- ', 1), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)')),
+	TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(@route_long_name, '–', '-'), '-', 1), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)'))
+),
+destination = IF(
+	SUBSTRING_INDEX(REPLACE(@route_long_name, '–', '-'), '- ', -1) != @route_long_name,
+	TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(@route_long_name, '–', '-'), '- ', -1), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)')),
+	TRIM(REPLACE(REPLACE(REPLACE(SUBSTRING_INDEX(REPLACE(@route_long_name, '–', '-'), '-', -1), ' OSALISELT NÕUDELIIN', ' (osaliselt nõudeliin)'), ' NÕUDELIIN', ' (nõudeliin)'), '(kesklinna)', '(Kesklinna)'))
+),
 region = (
 	CASE
 		WHEN LOCATE('Tallinn', @competent_authority) > 0 THEN 'tallinn'
