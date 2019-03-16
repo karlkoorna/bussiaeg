@@ -64,6 +64,7 @@
 }
 
 #settings > div > a > i {
+	height: 0;
 	margin-left: 4px;
 	color: var(--color-fg-light);
 	font-size: 18px;
