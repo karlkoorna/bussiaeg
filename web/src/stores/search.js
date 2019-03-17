@@ -37,7 +37,6 @@ class StoreSearch {
 	
 	// Update search type.
 	updateType(type) {
-		console.log(type);
 		this.type = type;
 	}
 	
