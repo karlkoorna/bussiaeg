@@ -14,7 +14,7 @@ async function getSearch(req, res) {
 			WHERE
 				name LIKE ?
 				AND type IS NOT NULL
-			ORDER BY LENGTH(name),${lat ? ' distance,' : ''} name
+			ORDER BY ${query ? 'LENGTH(name), ' : ''} ${lat ? 'distance, ' : ''}name
 			LIMIT 15
 		`, params),
 		db.query(`
@@ -25,7 +25,7 @@ async function getSearch(req, res) {
 			WHERE
 				name LIKE ?
 				AND type IS NOT NULL
-			ORDER BY LENGTH(name),${lat ? ' distance,' : ''} name
+			ORDER BY ${query ? 'LENGTH(name), ' : ''} ${lat ? 'distance, ' : ''}name
 			LIMIT 15
 		`, params)
 	]);
