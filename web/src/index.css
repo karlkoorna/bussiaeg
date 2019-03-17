@@ -124,6 +124,7 @@ a {
 #app.is-debug-1 .search-top-types-item.is-active,
 #app.is-debug-1 .favorites-stop,
 #app.is-debug-1 #map-locate,
+#app.is-debug-1 .leaflet-control-attribution,
 #app.is-debug-1 .leaflet-marker-icon,
 #app.is-debug-1 .settings-first-party,
 #app.is-debug-1 .settings-third-party,
