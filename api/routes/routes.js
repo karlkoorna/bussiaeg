@@ -3,9 +3,20 @@ const cache = require('../utils/cache.js');
 
 // Get routes by id (uid).
 async function getRoutes(req, res) {
+	const { id } = req.query;
+	
+	// Elron
+	if (id.length === 3) return void res.send({
+		id,
+		name: id,
+		type: 'train',
+		region: null
+	});
+	
+	// MNT + TTA
 	const routes = await db.query(`
 		SELECT uid AS id, name, type, region FROM routes WHERE uid = ?
-	`, [ req.query.id ]);
+	`, [ id ]);
 	
 	if (!routes.length) return void res.status(404).send('Route not found.');
 	return void res.send(routes[0]);
