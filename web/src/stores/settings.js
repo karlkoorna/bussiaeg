@@ -9,10 +9,11 @@ class StoreSettings {
 	defaultData = {
 		lang: i18n.languages[0] || 'en',
 		theme: 'light',
-		view: 'map'
+		view: 'map',
+		debug: 0
 	}
 	
-	// Update setting.
+	// Update setting, optionally save to localStorage.
 	update(key, value, save) {
 		if (save) {
 			this.data[key] = value;
@@ -28,7 +29,8 @@ class StoreSettings {
 			case 'theme':
 				$app.setAttribute('data-theme', value);
 				break;
-			default:
+			case 'debug':
+				$app.className = 'is-debug-' + value;
 				break;
 		}
 	}

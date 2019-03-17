@@ -118,8 +118,10 @@ a {
 
 /* Debug */
 
+#app.is-debug-1 .navbar-item,
 #app.is-debug-1 #modal-buttons-cancel,
 #app.is-debug-1 #modal-buttons-confirm,
+#app.is-debug-1 .search-top-types-item.is-active,
 #app.is-debug-1 .favorites-stop,
 #app.is-debug-1 #map-locate,
 #app.is-debug-1 .leaflet-marker-icon,

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import Scroller from 'components/Scroller.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
-import './Settings.css';
+import storeSettings from 'stores/settings.js';
 
-const $app = document.getElementById('app');
+import './Settings.css';
 
 class ViewSettings extends Component {
 	
@@ -16,29 +15,30 @@ class ViewSettings extends Component {
 		version: '3.x.x'
 	}
 	
-	debug = 0
+	debug = storeSettings.data.debug
 	
 	// Update setting.
 	updateSetting = (e) => {
 		const target = e.target;
-		this.props.storeSettings.update(target.name, target.options[e.target.selectedIndex].value, true);
+		storeSettings.update(target.name, target.options[e.target.selectedIndex].value, true);
 	}
 	
 	// Switch debug mode.
 	switchDebug = () => {
 		this.debug++;
-		$app.className = 'is-debug-' + (this.debug % 3);
+		storeSettings.update('debug', this.debug % 3, true);
 	}
 	
 	async componentDidMount() {
 		try {
 			const res = await fetch(`${process.env['REACT_APP_API']}/version`);
-			if (res.ok) this.setState({ version: await res.text() });
+			this.setState({ version: await res.text() });
 		} catch {}
 	}
 	
 	render() {
-		const { t, storeSettings: { data } } = this.props;
+		const { t } = this.props;
+		const { data } = storeSettings;
 		
 		return (
 			<>
@@ -87,4 +87,4 @@ class ViewSettings extends Component {
 	
 }
 
-export default withTranslation()(inject('storeSettings')(observer(ViewSettings)));
+export default withTranslation()(ViewSettings);
