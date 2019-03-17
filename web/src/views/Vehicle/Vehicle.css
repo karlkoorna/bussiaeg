@@ -35,7 +35,7 @@
 	content: "▼";
 	display: flex;
 	position: absolute;
-	right: 0;
+	left: 0;
 	bottom: 14px;
 	width: 12px;
 	height: 12px;
@@ -57,10 +57,17 @@
 }
 
 #vehicle-info-description {
+	padding-left: 18px;
+	padding-right: 64px;
 	padding-bottom: 8px;
-	padding-right: 15px;
 	color: var(--color-fg-light);
 	font-size: 14px;
+}
+
+#vehicle-info-description > option {
+	background-color: var(--color-bg-light);
+	color: var(--color-fg-dark);
+	font-size: 16px;
 }
 
 /* Stops */
