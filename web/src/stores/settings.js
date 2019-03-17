@@ -32,6 +32,7 @@ class StoreSettings {
 			case 'debug':
 				$app.className = 'is-debug-' + value;
 				break;
+			default: break;
 		}
 	}
 	
