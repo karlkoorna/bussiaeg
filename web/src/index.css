@@ -29,6 +29,7 @@ select {
 }
 
 select {
+	cursor: pointer;
 	-webkit-appearance: none;
 }
 
@@ -115,6 +116,21 @@ a {
 	flex-direction: column;
 }
 
+/* Debug */
+
+#app.is-debug-1 #modal-buttons-cancel,
+#app.is-debug-1 #modal-buttons-confirm,
+#app.is-debug-1 .favorites-stop,
+#app.is-debug-1 #map-locate,
+#app.is-debug-1 .leaflet-marker-icon,
+#app.is-debug-1 .settings-first-party,
+#app.is-debug-1 .settings-third-party,
+#app.is-debug-1 svg:not(.loader-vehicle):not(.favorites-stop-icon),
+#app.is-debug-1 div[class$="name"],
+#app.is-debug-1 div[class$="description"] {
+	animation: view-debug-1 1.5s linear infinite;
+}
+
 /* Animations */
 
 @keyframes view-fadeIn {
@@ -125,6 +141,18 @@ a {
 	
 	to {
 		opacity: 1;
+	}
+	
+}
+
+@keyframes view-debug-1 {
+	
+	from {
+		filter: hue-rotate(0);
+	}
+	
+	to {
+		filter: hue-rotate(360deg);
 	}
 	
 }

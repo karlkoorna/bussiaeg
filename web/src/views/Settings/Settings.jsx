@@ -47,34 +47,34 @@ class ViewSettings extends Component {
 				</Helmet>
 				<Scroller>
 					<main id="settings" className="view">
-						<label htmlFor="input-lang"><i className="material-icons">public</i>{t('settings.language')}</label>
-						<select id="input-lang" name="lang" defaultValue={data.lang} onInput={this.updateSetting}>
+						<label htmlFor="settings-lang"><i className="material-icons">public</i>{t('settings.language')}</label>
+						<select id="settings-lang" name="lang" defaultValue={data.lang} onInput={this.updateSetting}>
 							<option value="et">Eesti keel</option>
 							<option value="en">English</option>
 							<option value="ru">Русский</option>
 						</select>
-						<label htmlFor="input-theme"><i className="material-icons">color_lens</i>{t('settings.theme')}</label>
-						<select id="input-theme" name="theme" defaultValue={data.theme} onInput={this.updateSetting}>
+						<label htmlFor="settings-theme"><i className="material-icons">color_lens</i>{t('settings.theme')}</label>
+						<select id="settings-theme" name="theme" defaultValue={data.theme} onInput={this.updateSetting}>
 							<option value="light">{t('settings.theme-light')}</option>
 							<option value="dark">{t('settings.theme-dark')}</option>
 						</select>
-						<label htmlFor="input-view"><i className="material-icons">view_carousel</i>{t('settings.view')}</label>
-						<select id="input-view" name="view" defaultValue={data.view} onInput={this.updateSetting}>
+						<label htmlFor="settings-view"><i className="material-icons">view_carousel</i>{t('settings.view')}</label>
+						<select id="settings-view" name="view" defaultValue={data.view} onInput={this.updateSetting}>
 							<option value="search">{t('settings.view-search')}</option>
 							<option value="favorites">{t('settings.view-favorites')}</option>
 							<option value="map">{t('settings.view-map')}</option>
 						</select>
 						<label><i className="material-icons">people</i>{t('settings.credits')}</label>
 						<div>
-							<h1 className="first-party">{t('settings.credits-programmer')}</h1>
+							<h1 className="settings-first-party">{t('settings.credits-programmer')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://github.com/karlkoorna">Karl Köörna<i className="material-icons">open_in_new</i></a>
-							<h1 className="first-party">{t('settings.credits-designer')}</h1>
+							<h1 className="settings-first-party">{t('settings.credits-designer')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://facebook.com/kaur.hendrikson">Kaur Hendrikson<i className="material-icons">open_in_new</i></a>
-							<h1 className="third-party">{t('settings.credits-coach')}</h1>
+							<h1 className="settings-third-party">{t('settings.credits-coach')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet<i className="material-icons">open_in_new</i></a>
-							<h1 className="third-party">{t('settings.credits-tallinn')}</h1>
+							<h1 className="settings-third-party">{t('settings.credits-tallinn')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://tallinn.ee/est/transpordiamet">Tallinna Transpordiamet<i className="material-icons">open_in_new</i></a>
-							<h1 className="third-party">{t('settings.credits-train')}</h1>
+							<h1 className="settings-third-party">{t('settings.credits-train')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i className="material-icons">open_in_new</i></a>
 						</div>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>

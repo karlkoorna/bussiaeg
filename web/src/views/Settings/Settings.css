@@ -16,7 +16,7 @@
 	margin-top: 16px;
 }
 
-#settings label i {
+#settings > label > i {
 	max-width: 24px;
 	margin-right: 16px;
 }
@@ -28,10 +28,6 @@
 	padding: 12px 14px;
 	background-color: var(--color-bg-darker);
 	font-size: 15px;
-}
-
-#settings > select {
-	cursor: pointer;
 }
 
 #settings > select:-moz-focusring {
@@ -55,11 +51,11 @@
 	margin-top: 0;
 }
 
-#settings > div > h1.first-party {
+.settings-first-party {
 	color: deepskyblue;
 }
 
-#settings > div > h1.third-party {
+.settings-third-party {
 	color: #ffa94d;
 }
 

@@ -41,7 +41,7 @@
 }
 
 #app.is-debug-1 .navbar-item {
-	animation: navbar-debug 1.5s linear infinite;
+	animation: navbar-debug-1 1.5s linear infinite;
 }
 
 .navbar-item > svg {
@@ -107,11 +107,11 @@
 	
 }
 
-@keyframes navbar-debug {
+@keyframes navbar-debug-1 {
 	
 	from {
-		filter: hue-rotate(0);
 		transform: scale(1);
+		filter: hue-rotate(0);
 	}
 	
 	50% {
@@ -119,8 +119,8 @@
 	}
 	
 	to {
-		filter: hue-rotate(360deg);
 		transform: scale(1);
+		filter: hue-rotate(360deg);
 	}
 	
 }
