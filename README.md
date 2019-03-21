@@ -84,7 +84,7 @@ Latest stable versions of all prerequisites are recommended.
 	
 ## Production
 
-Update all modules.
+Update modules.
 
 ```bash
 $ ./update.sh
@@ -92,7 +92,7 @@ $ ./update.sh
 
 Fill in `.env` file by example `.env.example` file for all modules.
 
-Start all modules.
+Start modules.
 
 ```bash
 $ ./start.sh
@@ -100,28 +100,14 @@ $ ./start.sh
 
 ## Development
 
-Redirect `devaeg.ee` and `api.devaeg.ee` to the local or public ip.
+Redirect `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
 
 Fill in `.env` file by example `.env.example` file for all modules.\
-*HTTP headers do not work properly if the HTTPS certificate is invalid.*
+*Note: HTTP headers do not work properly if the HTTPS certificate is invalid.*\
+*Note: Deleting `tmp/update` will force a data update next launch.*
 
-Start API module.
-
-```bash
-$ cd api
-$ npm start
-```
-
-Start Web module.\
-*Setting `NODE_ENV=development` will disable data updating.*
+Start modules in development mode.
 
 ```bash
-$ cd web
-$ npm start
-```
-
-Run Caddy with development config.
-
-```bash
-$ caddy -conf $(pwd)/Caddydev
+$ npm start dev
 ```
