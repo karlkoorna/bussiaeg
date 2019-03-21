@@ -1,5 +1,4 @@
 node_modules/
 build/
 tmp/
-package-lock.json
 .env
