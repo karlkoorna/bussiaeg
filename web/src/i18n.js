@@ -6,7 +6,7 @@ import en from './locales/en.json';
 import et from './locales/et.json';
 import ru from './locales/ru.json';
 
-function genResouces(langs) {
+function genResources(langs) {
 	const resources = {};
 	for (const lang of Object.entries(langs)) resources[lang[0]] = { translation: lang[1] };
 	return resources;
@@ -15,7 +15,7 @@ function genResouces(langs) {
 i18n.use(LanguageDetector)
 	.use(initReactI18next)
 	.init({
-		resources: genResouces({
+		resources: genResources({
 			en, et, ru
 		}),
 		load: 'languageOnly',

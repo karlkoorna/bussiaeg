@@ -29,6 +29,7 @@ const stores = {
 };
 
 let hasRedirected = window.location.pathname !== '/' || storeSettings.data.view === 'map';
+
 function redirectView() {
 	if (hasRedirected) return null;
 	hasRedirected = true;

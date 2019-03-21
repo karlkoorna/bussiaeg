@@ -87,7 +87,7 @@ class ViewMap extends Component {
 		else if (this.state.message) this.setState({ message: '' });
 		
 		try {
-			// Remove all markers if zoomed below treshold.
+			// Remove all markers if zoomed below threshold.
 			if (map.getZoom() < opts.stopZoom) {
 				for (const marker of this.markers) marker.remove();
 				return void (this.markers = []);
