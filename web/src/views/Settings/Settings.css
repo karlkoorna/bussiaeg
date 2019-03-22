@@ -66,3 +66,8 @@
 	font-size: 18px;
 	vertical-align: sub;
 }
+
+#settings > div > small {
+	color: var(--color-fg-light);
+	font-size: 12px;
+}

@@ -12,7 +12,7 @@ import './Settings.css';
 class ViewSettings extends Component {
 	
 	state = {
-		version: '3.x.x'
+		version: '3.y.z'
 	}
 	
 	debug = storeSettings.data.debug
@@ -30,10 +30,8 @@ class ViewSettings extends Component {
 	}
 	
 	async componentDidMount() {
-		try {
-			const res = await fetch(`${process.env['REACT_APP_API']}/version`);
-			this.setState({ version: await res.text() });
-		} catch {}
+		const res = await fetch(`${process.env['REACT_APP_API']}/version`);
+		if (res.ok) this.setState({ version: await res.text() });
 	}
 	
 	render() {
@@ -80,7 +78,7 @@ class ViewSettings extends Component {
 							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i className="material-icons">open_in_new</i></a>
 						</div>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>
-						<div onMouseDown={this.switchDebug}>{this.state.version}</div>
+						<div onMouseDown={this.switchDebug}>{process.env['REACT_APP_VERSION']} <small>(API {this.state.version})</small></div>
 					</main>
 				</Scroller>
 			</>

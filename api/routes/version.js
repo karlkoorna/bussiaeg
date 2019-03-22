@@ -1,4 +1,3 @@
-const cache = require('../utils/cache.js');
 const info = require('../package.json');
 
 // Get version from package file.
@@ -7,9 +6,7 @@ function getVersion(req, res) {
 }
 
 module.exports = (fastify, opts, next) => {
-	fastify.get('/version', {
-		preHandler: cache.middleware
-	}, getVersion);
+	fastify.get('/version', getVersion);
 	
 	next();
 };
