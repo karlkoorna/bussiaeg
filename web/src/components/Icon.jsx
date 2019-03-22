@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Colors for vehicles and stops.
+// Colors for stops and vehicles.
 export const colors = {
 	unknown: [ '#aaa', '#999' ],
 	bus: [ '#66bb6a', '#4caf50' ],

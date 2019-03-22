@@ -2,7 +2,7 @@
   "search": {
     "search": "Search...",
     "stops": "Stops",
-    "vehicles": "Routes",
+    "routes": "Routes",
     "empty": "No results found"
   },
   "favorites": {

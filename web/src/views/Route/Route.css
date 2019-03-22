@@ -1,18 +1,18 @@
-#vehicle {
+#route {
 	display: flex;
 	flex-direction: column;
 }
 
 /* Info */
 
-#vehicle-info-bar {
+#route-info-bar {
 	z-index: 1;
 	height: 64px;
 	background-color: var(--color-bg-light);
 	box-shadow: var(--shadow-light);
 }
 
-#vehicle-info {
+#route-info {
 	z-index: 2;
 	display: flex;
 	position: absolute;
@@ -22,7 +22,7 @@
 	overflow: hidden;
 }
 
-#vehicle-info > div {
+#route-info > div {
 	display: flex;
 	position: relative;
 	padding-bottom: 3px;
@@ -30,7 +30,7 @@
 	justify-content: center;
 }
 
-#vehicle-info > div:after {
+#route-info > div:after {
 	z-index: -1;
 	content: "▼";
 	display: flex;
@@ -45,18 +45,18 @@
 	align-items: center;
 }
 
-#vehicle-info-icon {
+#route-info-icon {
 	width: 58px;
 	height: 64px;
 	padding: 6px;
 }
 
-#vehicle-info-name {
+#route-info-name {
 	margin-top: 8px;
 	font-size: 22px;
 }
 
-#vehicle-info-description {
+#route-info-description {
 	padding-left: 18px;
 	padding-right: 64px;
 	padding-bottom: 8px;
@@ -64,7 +64,7 @@
 	font-size: 14px;
 }
 
-#vehicle-info-description > option {
+#route-info-description > option {
 	background-color: var(--color-bg-light);
 	color: var(--color-fg-dark);
 	font-size: 16px;
@@ -72,12 +72,12 @@
 
 /* Stops */
 
-#vehicle-stops {
+#route-stops {
 	flex: 1;
 	overflow-y: auto;
 }
 
-.vehicle-stops-stop {
+.route-stops-stop {
 	display: flex;
 	position: relative;
 	width: 100%;
@@ -91,11 +91,11 @@
 	pointer-events: all;
 }
 
-.vehicle-stops-stop:hover {
+.route-stops-stop:hover {
 	background-color: rgba(127, 127, 127, .1);
 }
 	
-.vehicle-stops-stop:after {
+.route-stops-stop:after {
 	content: "";
 	position: absolute;
 	left: 0;
@@ -106,23 +106,23 @@
 	background-color: rgba(127, 127, 127, .2);
 }
 
-.vehicle-stops-stop-icon {
+.route-stops-stop-icon {
 	height: 100%;
 	padding: 8px;
 	flex-shrink: 0;
 }
 
-.vehicle-stops-stop-icon + div {
+.route-stops-stop-icon + div {
 	padding-left: 8px;
 	flex: 1;
 }
 
-.vehicle-stops-stop-name {
+.route-stops-stop-name {
 	margin-bottom: 4px;
 	font-size: 21px;
 }
 
-.vehicle-stops-stop-description {
+.route-stops-stop-description {
 	margin-bottom: 2px;
 	font-size: 15px;
 }
@@ -131,7 +131,7 @@
 
 @media (max-width: 480px) {
 	
-	#vehicle-info > div:after {
+	#route-info > div:after {
 		bottom: 16px;
 	}
 	

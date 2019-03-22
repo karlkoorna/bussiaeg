@@ -105,7 +105,7 @@ class ViewStop extends Component {
 							
 							return (
 								<li key={`${time.name}${time.type}${time.time}`}>
-									<Link className="stop-times-time" to={`/vehicle?id=${time.route_id}`}>
+									<Link className="stop-times-time" to={`/route?id=${time.route_id}`}>
 										<Icon className="stop-times-time-icon" shape="vehicle" type={time.type} />
 										<div className="stop-times-time-name" style={{ color: primaryColor }}>{time.name}</div>
 										<div className="stop-times-time-destination" style={{ color: secondaryColor }}>

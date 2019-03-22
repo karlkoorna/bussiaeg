@@ -2,7 +2,7 @@
   "search": {
     "search": "Поиск...",
     "stops": "Остановки",
-    "vehicles": "Линии",
+    "routes": "Линии",
     "empty": "Результаты не найдены"
   },
   "favorites": {

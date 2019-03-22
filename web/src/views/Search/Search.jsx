@@ -33,15 +33,15 @@ class ViewSearch extends Component {
 	}
 	
 	changeType = (index) => {
-		this.props.storeSearch.updateType(index ? 'vehicle' : 'stop');
+		this.props.storeSearch.updateType(index ? 'route' : 'stop');
 	}
 	
 	changeTypeStop = () => {
 		this.props.storeSearch.updateType('stop');
 	}
 	
-	changeTypeVehicle = () => {
-		this.props.storeSearch.updateType('vehicle');
+	changeTypeRoute = () => {
+		this.props.storeSearch.updateType('route');
 	}
 	
 	hideKeyboard = (e) => {
@@ -84,18 +84,18 @@ class ViewSearch extends Component {
 							<div className={'search-top-types-item' + (type === 'stop' ? ' is-active' : '')} onMouseDown={this.changeTypeStop}>{t('search.stops')}
 								<Ink hasTouch={false} background={false} opacity={.5} style={{ color: viewColors.search[0] }} />
 							</div>
-							<div className={'search-top-types-item' + (type === 'vehicle' ? ' is-active' : '')} onMouseDown={this.changeTypeVehicle}>{t('search.vehicles')}
+							<div className={'search-top-types-item' + (type === 'route' ? ' is-active' : '')} onMouseDown={this.changeTypeRoute}>{t('search.routes')}
 								<Ink hasTouch={false} background={false} opacity={.5} style={{ color: viewColors.search[0] }} />
 							</div>
 						</div>
 					</div>
 					<Scroller>
-						<Swipeable nodeName="ol" delta={16} innerRef={this.$results} onSwipedRight={this.changeTypeStop} onSwipedLeft={this.changeTypeVehicle} onSwiping={this.swipe}>
+						<Swipeable nodeName="ol" delta={16} innerRef={this.$results} onSwipedRight={this.changeTypeStop} onSwipedLeft={this.changeTypeRoute} onSwiping={this.swipe}>
 							{results[type + 's'].length ? results[type + 's'].map((result) => (
 								<li key={result.id}>
 									<Link className={'search-results-result' + (type === 'stops' && storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/${type}?id=${result.id}`}>
 										<Icon className="search-results-result-icon" shape={type} type={result.type} />
-										<div className={type === 'vehicle' ? ' is-vehicle' : ''}>
+										<div className={type === 'route' ? ' is-vehicle' : ''}>
 											<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
 											<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description || (result.origin ? `${result.origin} - ${result.destination}` : '')}</div>
 										</div>

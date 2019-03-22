@@ -1,11 +1,11 @@
 const db = require('../db.js');
 
-// Search stops and vehicles by name, sort by distance.
+// Search stops and routes by name, sort by distance.
 async function getSearch(req, res) {
 	const { query, lat, lng } = req.query;
 	const params = lat ? [ lng, lat, `%${query || ''}%` ] : [ `%${query || ''}%` ];
 	
-	const [ stops, vehicles ] = await Promise.all([
+	const [ stops, routes ] = await Promise.all([
 		db.query(`
 			SELECT
 				id, name, description, type
@@ -32,7 +32,7 @@ async function getSearch(req, res) {
 	
 	res.send({
 		stops,
-		vehicles
+		routes
 	});
 }
 

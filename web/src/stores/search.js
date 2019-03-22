@@ -12,7 +12,7 @@ class StoreSearch {
 	type = 'stop'
 	results = {
 		stops: [],
-		vehicles: []
+		routes: []
 	}
 	
 	// Start fetching nearby search results on location update.
@@ -45,7 +45,7 @@ class StoreSearch {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
 		
 		// Clear results if no query or coords.
-		if (!query && lat === mapOpts.startLat) return void (this.results = { stops: [], vehicles: [] });
+		if (!query && lat === mapOpts.startLat) return void (this.results = { stops: [], routes: [] });
 		
 		try {
 			this.results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}&lat=${lat}&lng=${lng}`)).json();
