@@ -30,8 +30,7 @@ class ViewSettings extends Component {
 	}
 	
 	async componentDidMount() {
-		const res = await fetch(`${process.env['REACT_APP_API']}/version`);
-		if (res.ok) this.setState({ version: await res.text() });
+		this.setState({ version: await (await fetch(`${process.env['REACT_APP_API']}/version`)).text() });
 	}
 	
 	render() {
