@@ -77,7 +77,7 @@ class ViewSettings extends Component {
 							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i className="material-icons">open_in_new</i></a>
 						</div>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>
-						<div onMouseDown={this.switchDebug}>{process.env['REACT_APP_VERSION']} <small>(API {this.state.version})</small></div>
+						<div onMouseDown={this.switchDebug}>{process.env['REACT_APP_VERSION'] || '3.y.z'} <small>(API {this.state.version})</small></div>
 					</main>
 				</Scroller>
 			</>
