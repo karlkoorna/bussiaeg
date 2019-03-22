@@ -7,7 +7,7 @@ async function getTrips(req, res) {
 	const { route_id: routeId } = req.query;
 	
 	const trips = await cache.use('trips', routeId, () => {
-		if (routeId.length === 3) return elron.getTrips(routeId); // Elron
+		if (routeId.length <= 3) return elron.getTrips(routeId); // Elron
 		return mnt.getTrips(routeId); // MNT + TLT
 	});
 	
