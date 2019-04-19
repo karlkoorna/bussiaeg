@@ -90,7 +90,8 @@ export default class NavBar extends Component {
 	}
 	
 	async componentDidMount() {
-		this.setState({ banner: await (await fetch(`${process.env['REACT_APP_API']}/banner`)).text() });
+		const params = new URLSearchParams(window.location.search);
+		this.setState({ banner: await (await fetch(`${process.env['REACT_APP_API']}/banner${params.has('banner') ? '?type=' + params.get('banner') : ''}`)).text() });
 	}
 	
 	render() {
