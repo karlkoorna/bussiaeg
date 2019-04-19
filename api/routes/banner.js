@@ -59,13 +59,21 @@ async function update() {
 // Get banner for holiday or by type.
 function getBanner(req, res) {
 	res.header('Content-Type', 'image/svg+xml');
-	res.send(banner || '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" />');
+	res.send(banners[req.query.type] || banner || '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" />');
 }
 
 module.exports.update = update;
 module.exports = (fastify, opts, next) => {
 	fastify.get('/banner', {
-		preHandler: cache.middleware
+		preHandler: cache.middleware,
+		schema: {
+			querystring: {
+				type: 'object',
+				properties: {
+					type: { type: 'string' }
+				}
+			}
+		}
 	}, getBanner);
 	
 	next();
