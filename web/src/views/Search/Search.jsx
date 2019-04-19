@@ -90,7 +90,7 @@ class ViewSearch extends Component {
 						</div>
 					</div>
 					<Scroller>
-						<Swipeable nodeName="ol" delta={16} innerRef={this.$results} onSwipedRight={this.changeTypeStop} onSwipedLeft={this.changeTypeRoute} onSwiping={this.swipe}>
+						<Swipeable nodeName="ol" delta={16} ref={this.$results} onSwipedRight={this.changeTypeStop} onSwipedLeft={this.changeTypeRoute} onSwiping={this.swipe}>
 							{results[type + 's'].length ? results[type + 's'].map((result) => (
 								<li key={result.id}>
 									<Link className={'search-results-result' + (type === 'stops' && storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/${type}?id=${result.id}`}>
