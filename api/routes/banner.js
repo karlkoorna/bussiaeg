@@ -50,8 +50,8 @@ const holidays = {
 
 let banner = '';
 
-start();
-async function start() {
+update();
+async function update() {
 	const date = moment().format('YYYY-MM-DD');
 	banner = banners[holidays[(JSON.parse((await got('https://riigipühad.ee/?output=json')).body).find((_holiday) => _holiday.date === date) || { title: '' }).title.toLowerCase() || moment().format('MM-DD')]] || null;
 }
@@ -62,6 +62,7 @@ function getBanner(req, res) {
 	res.send(banner || '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" />');
 }
 
+module.exports.update = update;
 module.exports = (fastify, opts, next) => {
 	fastify.get('/banner', {
 		preHandler: cache.middleware

@@ -15,6 +15,7 @@ require('./db.js');
 const data = require('./data.js');
 const cache = require('./utils/cache.js');
 const debug = require('./utils/debug.js');
+const banner = require('./routes/banner.js');
 
 // Initialize HTTP server.
 const app = fastify();
@@ -40,8 +41,10 @@ data.update().then(async () => {
 // Scheduled functions.
 setInterval(() => {
 	switch (moment().format('HHmmss')) {
-		// Update data and clear caches at 6 AM.
-		case '060000':
+		case '000000': // Update banner at midnight.
+			banner.update();
+			break;
+		case '060000': // Update data and clear cache at 6 AM.
 			data.update();
 			cache.clear();
 			break;
