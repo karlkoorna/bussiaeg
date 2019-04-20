@@ -48,9 +48,9 @@ async function prepare(path, msgIncomplete, msgComplete) {
 // Start data update.
 async function update() {
 	let nextUpdate;
-	if (await fse.exists('tmp/update')) nextUpdate = await fse.readFile('tmp/update');
+	if (await fse.exists('tmp/update')) nextUpdate = (await fse.readFile('tmp/update')).toString();
 	
-	// Update data if outdated.
+	// Update stale data.
 	if (!nextUpdate || new Date(nextUpdate) <= new Date()) {
 		debug.log('Starting data update');
 		debug.time('data-update');
@@ -59,8 +59,8 @@ async function update() {
 		await prepare('sql/importers', 'Importing', 'Imported');
 		await prepare('sql/generators', 'Generating', 'Generated');
 		
+		await fse.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
 		debug.timeEnd('data-update', 'Data update completed');
-		fse.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
 	}
 }
 
