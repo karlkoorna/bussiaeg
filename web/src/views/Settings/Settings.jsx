@@ -17,16 +17,13 @@ class ViewSettings extends Component {
 	
 	debug = storeSettings.data.debug
 	
-	// Update setting.
 	updateSetting = (e) => {
 		const target = e.target;
 		storeSettings.update(target.name, target.options[e.target.selectedIndex].value, true);
 	}
 	
-	// Switch debug mode.
 	switchDebug = () => {
-		this.debug++;
-		storeSettings.update('debug', this.debug % 3, true);
+		storeSettings.update('debug', ++this.debug % 3, true);
 	}
 	
 	async componentDidMount() {
@@ -77,7 +74,7 @@ class ViewSettings extends Component {
 							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i className="material-icons">open_in_new</i></a>
 						</div>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>
-						<div onMouseDown={this.switchDebug}>{process.env['REACT_APP_VERSION'] || '3.y.z'} <small>(API {this.state.version})</small></div>
+						<section onClick={this.switchDebug}>{process.env['REACT_APP_VERSION'] || '3.y.z'} <small>(API {this.state.version})</small></section>
 					</main>
 				</Scroller>
 			</>

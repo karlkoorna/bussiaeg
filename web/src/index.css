@@ -60,7 +60,6 @@ a {
 	background-color: var(--color-bg-dark);
 	color: var(--color-fg-dark);
 	font-family: Arial, Helvetica, sans-serif;
-	transition: filter .5s linear;
 	flex-direction: column;
 	-webkit-tap-highlight-color: transparent;
 }
@@ -86,10 +85,6 @@ a {
 	--color-bg-light: #1e2529;
 	--color-bg-dark: #1b1c1d;
 	--color-bg-darker: #151516;
-}
-
-#app.is-debug-2 {
-	filter: grayscale(1);
 }
 
 /* View */
@@ -126,12 +121,16 @@ a {
 #app.is-debug-1 #map-locate,
 #app.is-debug-1 .leaflet-control-attribution,
 #app.is-debug-1 .leaflet-marker-icon,
-#app.is-debug-1 .settings-first-party,
-#app.is-debug-1 .settings-third-party,
+#app.is-debug-1 .settings-first_party,
+#app.is-debug-1 .settings-third_party,
 #app.is-debug-1 svg:not(.loader-vehicle):not(.favorites-stop-icon),
 #app.is-debug-1 div[class$="name"],
 #app.is-debug-1 div[class$="description"] {
 	animation: view-debug-1 1.5s linear infinite;
+}
+
+#app.is-debug-2 {
+	filter: grayscale(1);
 }
 
 /* Animations */
