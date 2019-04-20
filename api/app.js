@@ -26,7 +26,10 @@ app.setErrorHandler((err, req, res) => {
 });
 
 // Dynamically register routes from folder.
-for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${file}`));
+for (const file of fs.readdirSync('routes')) {
+	const route = require(`./routes/${file}`);
+	app.register(route.handler || route);
+}
 
 // Update data and start listening on port.
 data.update().then(async () => {
