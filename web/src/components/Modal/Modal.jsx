@@ -5,42 +5,29 @@ import Ink from 'react-ink';
 
 import './Modal.css';
 
-function preventDefault(e) {
-	e.preventDefault();
-}
-
 function stopPropagation(e) {
 	e.stopPropagation();
 }
 
 class Modal extends Component {
 	
-	// Cancel modal on escape key.
-	onKeyDown = (e) => {
-		if (e.which === 27) this.props.onCancel();
-	}
-	
-	// Toggle keydown listener based on visibility.
-	componentDidUpdate() {
-		if (this.props.isVisible) return document.addEventListener('keydown', this.onKeyDown);
-		document.removeEventListener('keydown', this.onKeyDown);
+	onCancel = (e) => {
+		if (e.button === 0) this.props.onCancel();
 	}
 	
 	render() {
-		const { t, title, text, showCancel, isVisible, onCancel, onConfirm } = this.props;
+		const { t, title, text, isVisible, onCancel, onConfirm } = this.props;
 		
 		return (
-			<CSSTransition in={isVisible} classNames={{ enter: 'is-entering', exit: 'is-exiting' }} timeout={{ enter: 150, exit: 75 }} onExited={this.onExited} unmountOnExit>
-				<div id="modal-container" onMouseDown={onCancel} onContextMenu={preventDefault}>
-					<div id="modal" onMouseDown={stopPropagation} onContextMenu={stopPropagation}>
+			<CSSTransition in={isVisible} timeout={{ enter: 150, exit: 75 }} onExited={this.onExited} unmountOnExit>
+				<div id="modal-container" onMouseDown={this.onCancel}>
+					<div id="modal" onMouseDown={stopPropagation}>
 						<div id="modal-title">{title}</div>
 						<div id="modal-text">{text}</div>
 						<div id="modal-buttons">
-							{showCancel ? (
-								<div id="modal-buttons-cancel" onClick={onCancel}>{t('modal.cancel')}
-									<Ink background={false} opacity={.5} />
-								</div>
-							) : null}
+							<div id="modal-buttons-cancel" onClick={onCancel}>{t('modal.cancel')}
+								<Ink background={false} opacity={.5} />
+							</div>
 							<div id="modal-buttons-confirm" onClick={onConfirm}>{t('modal.confirm')}
 								<Ink background={false} opacity={.5} />
 							</div>

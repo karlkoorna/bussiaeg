@@ -11,11 +11,11 @@
 	align-items: center;
 }
 
-#modal-container.is-entering {
+#modal-container.enter {
 	animation: modal-fadeIn .15s ease;
 }
 
-#modal-container.is-exiting {
+#modal-container.exit {
 	animation: modal-fadeOut .1s ease;
 }
 
@@ -47,10 +47,11 @@
 	display: flex;
 	padding: 8px;
 	font-size: 14px;
+	letter-spacing: 1px;
 	justify-content: flex-end;
 }
 
-#modal-buttons canvas {
+#modal-buttons > canvas {
 	color: rgba(0, 0, 0, .2);
 }
 
@@ -86,13 +87,13 @@
 	background-color: rgba(0, 0, 0, .175);
 }
 
-#app[data-theme="light"] #modal-buttons-cancel:hover canvas,
-#app[data-theme="light"] #modal-buttons-confirm:hover canvas {
+#app[data-theme="light"] #modal-buttons-cancel:hover > canvas,
+#app[data-theme="light"] #modal-buttons-confirm:hover > canvas {
 	color: rgba(0, 0, 0, .075);
 }
 
-#app[data-theme="dark"] #modal-buttons-cancel:hover canvas,
-#app[data-theme="dark"] #modal-buttons-confirm:hover canvas {
+#app[data-theme="dark"] #modal-buttons-cancel:hover > canvas,
+#app[data-theme="dark"] #modal-buttons-confirm:hover > canvas {
 	color: rgba(0, 0, 0, .5);
 }
 

@@ -61,6 +61,11 @@ window.addEventListener('keydown', (e) => {
 	if (e.which === 9) e.preventDefault();
 });
 
+// Disable context menu.
+window.addEventListener('contextmenu', (e) => {
+	e.preventDefault();
+});
+
 // Send analytics about active page.
 if (process.env['REACT_APP_GA']) {
 	let lastPath = '';
