@@ -24,7 +24,7 @@ async function getRoutes(req, res) {
 
 module.exports = (fastify, opts, next) => {
 	fastify.get('/routes', {
-		preHandler: cache.middleware,
+		preHandler: cache.middleware(6),
 		schema: {
 			querystring: {
 				type: 'object',

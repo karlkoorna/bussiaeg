@@ -18,13 +18,16 @@ function clear() {
 	cache = {};
 }
 
-// Add route to browser cache until 6 AM next day.
-function middleware(req, res, next) {
-	const date = new Date();
-	date.setDate(date.getDate() + 1);
-	date.setHours(6, 0, 0, 0);
-	res.header('Expires', date.toGMTString());
-	next();
+// Add route to browser cache until specified hour.
+function middleware(hour) {
+	return function(req, res, next) {
+		const date = new Date();
+		date.setDate(date.getDate() + 1);
+		date.setHours(hour, 0, 0, 0);
+		
+		res.header('Cache-Control', `max-age=${Math.ceil((date - new Date()) / 1000)}, private`);
+		next();
+	};
 }
 
 module.exports = {

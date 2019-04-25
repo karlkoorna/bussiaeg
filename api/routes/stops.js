@@ -18,7 +18,7 @@ async function getStops(req, res) {
 
 module.exports = (fastify, opts, next) => {
 	fastify.get('/stops', {
-		preHandler: cache.middleware,
+		preHandler: cache.middleware(6),
 		schema: {
 			querystring: {
 				type: 'object',

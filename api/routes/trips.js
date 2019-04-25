@@ -17,7 +17,7 @@ async function getTrips(req, res) {
 
 module.exports = (fastify, opts, next) => {
 	fastify.get('/trips', {
-		preHandler: cache.middleware,
+		preHandler: cache.middleware(6),
 		schema: {
 			querystring: {
 				type: 'object',
