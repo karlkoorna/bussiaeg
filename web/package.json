@@ -11,7 +11,8 @@
     "last 2 major versions",
     ">2%",
     "not dead",
-    "not ie <= 11"
+    "not ie <= 11",
+    "not op_mini all"
   ],
   "dependencies": {
     "i18next": "^15.0.9",
