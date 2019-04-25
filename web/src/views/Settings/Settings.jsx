@@ -61,18 +61,18 @@ class ViewSettings extends Component {
 							<option value="map">{t('settings.view-map')}</option>
 						</select>
 						<label><i className="material-icons">people</i>{t('settings.credits')}</label>
-						<div>
-							<h1 className="settings-first-party">{t('settings.credits-programmer')}</h1>
+						<section>
+							<h1 className="settings-first_party">{t('settings.credits-programmer')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://github.com/karlkoorna">Karl Köörna<i className="material-icons">open_in_new</i></a>
-							<h1 className="settings-first-party">{t('settings.credits-designer')}</h1>
+							<h1 className="settings-first_party">{t('settings.credits-designer')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://facebook.com/kaur.hendrikson">Kaur Hendrikson<i className="material-icons">open_in_new</i></a>
-							<h1 className="settings-third-party">{t('settings.credits-coach')}</h1>
+							<h1 className="settings-third_party">{t('settings.credits-coach')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://mnt.ee">Maanteeamet<i className="material-icons">open_in_new</i></a>
-							<h1 className="settings-third-party">{t('settings.credits-tallinn')}</h1>
+							<h1 className="settings-third_party">{t('settings.credits-tallinn')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="https://tallinn.ee/est/transpordiamet">Tallinna Transpordiamet<i className="material-icons">open_in_new</i></a>
-							<h1 className="settings-third-party">{t('settings.credits-train')}</h1>
+							<h1 className="settings-third_party">{t('settings.credits-train')}</h1>
 							<a target="_blank" rel="noopener noreferrer" href="http://elron.ee">Elron<i className="material-icons">open_in_new</i></a>
-						</div>
+						</section>
 						<label><i className="material-icons">memory</i>{t('settings.version')}</label>
 						<section onClick={this.switchDebug}>{process.env['REACT_APP_VERSION'] || '3.y.z'} <small>(API {this.state.version})</small></section>
 					</main>
