@@ -56,8 +56,8 @@ async function update() {
 		debug.time('data-update');
 		
 		await download();
-		await prepare('db/importers', 'Importing', 'Imported');
-		await prepare('db/processors', 'Generating', 'Generated');
+		await prepare('data/importers', 'Importing', 'Imported');
+		await prepare('data/processors', 'Generating', 'Generated');
 		
 		await fse.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
 		debug.timeEnd('data-update', 'Data update completed');

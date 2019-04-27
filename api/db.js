@@ -13,7 +13,7 @@ const db = mysql.createConnection({
 });
 
 // Initialize database if needed.
-db.query(fs.readFileSync('db/init.sql').toString());
+db.query(fs.readFileSync('data/init.sql').toString());
 
 // Promisify for async/await.
 db.query = promisify(db.query);
