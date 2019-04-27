@@ -1,41 +1,45 @@
 const chalk = require('chalk');
-const ora = require('ora');
 const moment = require('moment');
 
 const timers = {};
 
-// Log message with current time.
-function log(message) {
-	console.log(chalk`{cyan ℹ} {cyan ${message}}`, chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`));
+// Log info message with timestamp.
+function info(msg) {
+	console.info(chalk.blueBright('[INFO] ' + msg), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`));
 }
 
-// Start timing and display spinner if message provided.
-function time(id, message) {
-	const timer = {
-		time: new Date()
+// Log warning message with timestamp.
+function warn(msg, err) {
+	console.warn(chalk.yellowBright('[WARN] ' + msg), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`), err ? '\n' + chalk.yellow(err.stack) : '');
+}
+
+// Log error message with timestamp and stop process with error code.
+function error(msg, err, code = 1) {
+	console.error(chalk.redBright(`[ERR${code}] ` + msg), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`), '\n' + chalk.red(err.stack));
+	process.exit(code);
+}
+
+// Start timing, display message if provided.
+function time(id, msg) {
+	if (msg) process.stdout.write(chalk.yellow('[TIME] ' + msg));
+	
+	timers[id] = {
+		time: new Date(),
+		msg
 	};
-	
-	if (message) timer.spinner = ora({
-		text: chalk.yellow(`${message}...`),
-		color: 'yellow',
-		spinner: {
-			interval: 80,
-			frames: [ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' ]
-		}
-	}).start();
-	
-	timers[id] = timer;
 }
 
 // Display timing result.
-function timeEnd(id, message) {
+function timeEnd(id, msg) {
 	const timer = timers[id];
-	if (timer.spinner) timer.spinner.stop();
-	console.log(chalk.green('✔'), chalk`{green ${message}} {gray (${((new Date() - timer.time) / 1000).toFixed(3)}s)}`);
+	if (timer.msg) process.stdout.write('\r\x1b[K'); // Move to start of previous line.
+	console.log(chalk.green('[TIME] ' + msg), chalk.gray(`(${((new Date() - timer.time) / 1000).toFixed(3)}s)`));
 }
 
 module.exports = {
-	log,
+	info,
+	warn,
+	error,
 	time,
 	timeEnd
 };

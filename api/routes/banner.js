@@ -1,6 +1,7 @@
 const got = require('got');
 const moment = require('moment');
 
+const debug = require('../utils/debug.js');
 const cache = require('../utils/cache.js');
 
 const banners = {
@@ -51,9 +52,20 @@ const holidays = {
 let banner = '';
 
 update();
+
+// Update banner for holiday.
 async function update() {
-	const date = moment().format('YYYY-MM-DD');
-	banner = banners[holidays[(JSON.parse((await got('https://riigipühad.ee/?output=json')).body).find((_holiday) => _holiday.date === date) || { title: '' }).title.toLowerCase() || moment().format('MM-DD')]] || null;
+	const dateLong = moment().format('YYYY-MM-DD');
+	const dateShort = moment().format('MM-DD');
+	
+	try {
+		const holiday = JSON.parse((await got('https://riigipühad.ee/?output=json')).body).find((_holiday) => _holiday.date === dateLong);
+		if (holiday) return void (banner = banners[holiday.title.toLowerCase()]);
+	} catch (ex) {
+		debug.warn('Holiday info for banner could not be fetched', ex);
+	}
+	
+	banner = banners[holidays[dateShort]] || null;
 }
 
 // Get banner for holiday or by type.

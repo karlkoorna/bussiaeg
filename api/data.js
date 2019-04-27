@@ -30,7 +30,7 @@ async function prepare(path, msgIncomplete, msgComplete) {
 	for (const file of await fse.readdir(path)) {
 		const name = file.split('.')[0];
 		
-		debug.time(`data-prepare-${name}`, `${msgIncomplete} ${chalk.blue(name)}`);
+		debug.time('data-prepare-' + name, msgIncomplete + ' ' + chalk.white(name));
 		
 		switch (file.split('.')[1]) {
 			case 'sql':
@@ -41,7 +41,7 @@ async function prepare(path, msgIncomplete, msgComplete) {
 				break;
 		}
 		
-		debug.timeEnd(`data-prepare-${name}`, `${msgComplete} ${chalk.blue(name)}`);
+		debug.timeEnd('data-prepare-' + name, msgComplete + ' ' + chalk.white(name));
 	}
 }
 
@@ -52,7 +52,7 @@ async function update() {
 	
 	// Update stale data.
 	if (!nextUpdate || new Date(nextUpdate) <= new Date()) {
-		debug.log('Starting data update');
+		debug.info('Starting data update');
 		debug.time('data-update');
 		
 		await download();

@@ -6,16 +6,16 @@ const chalk = require('chalk');
 
 // Show splash.
 const splash = require('./package.json');
-console.log(chalk`\n{yellow ${splash.description}} {blue v${splash.version}} {gray (${splash.license})}\n`);
+console.log(chalk`\n{underline.magentaBright ${splash.description} v${splash.version}} {gray (${splash.license})}\n`);
 
-// Load environmental variables from file.
+// Load environment variables from file.
 dotenv.config();
 
 require('./db.js');
 const data = require('./data.js');
+const banner = require('./routes/banner.js');
 const cache = require('./utils/cache.js');
 const debug = require('./utils/debug.js');
-const banner = require('./routes/banner.js');
 
 // Initialize HTTP server.
 const app = fastify();
@@ -33,12 +33,14 @@ for (const file of fs.readdirSync('routes')) {
 
 // Update data and start listening on port.
 data.update().then(async () => {
-	const port = process.env['PORT'];
-	await app.listen(port, process.env['HOST']);
-	debug.log(`Started listening on port ${chalk.blue(port)}`);
+	try {
+		await app.listen(process.env['PORT'], process.env['HOST']);
+		debug.info('Started listening on port ' + process.env['PORT']);
+	} catch (ex) {
+		debug.error('Failed to start listening on port ' + process.env['PORT'], ex);
+	}
 }).catch((ex) => {
-	console.log(ex);
-	process.exit(1);
+	debug.error('Failed to update data', ex);
 });
 
 // Scheduled functions.
