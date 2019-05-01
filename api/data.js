@@ -1,40 +1,49 @@
-const fse = require('fs-extra');
+const fs = require('fs');
+const stream = require('stream');
+const chalk = require('chalk');
+const moment = require('moment');
 const got = require('got');
 const unzipper = require('unzipper');
-const moment = require('moment');
-const chalk = require('chalk');
 
-const debug = require('./utils/debug.js');
 const db = require('./db.js');
+const debug = require('./utils/debug.js');
+
+const fsp = fs.promises;
 
 // Download data into temporary folder.
 async function download() {
 	debug.time('data-download', 'Downloading data');
 	
-	// Download and extract GTFS data into temporary folder.
-	await got.stream('http://peatus.ee/gtfs/gtfs.zip').pipe(unzipper.Extract({ path: 'tmp' })).promise();
-	
-	// Correct GTFS filetypes.
-	for (const file of await fse.readdir('tmp')) await fse.rename(`tmp/${file}`, `tmp/${file.substr(0, file.lastIndexOf('.'))}.csv`);
+	// Download and extract MNT data into temporary folder.
+	await new Promise((resolve) => {
+		got.stream('http://peatus.ee/gtfs/gtfs.zip')
+			.pipe(unzipper.Parse())
+			.pipe(stream.Transform({
+				objectMode: true,
+				transform(entry, e, cb) {
+					entry.pipe(fs.createWriteStream(`tmp/${entry.path.split('.')[0]}.csv`)).on('finish', cb);
+				}
+			})).on('finish', resolve);
+	});
 	
 	// Download and write Elron stop data into temporary folder.
 	let data = 'name,desc,lat,lng\n';
 	for (const stop of JSON.parse((await got('https://elron.ee/api/v1/stops')).body).data) data += `${stop.peatus},${stop.teade},${stop.latitude},${stop.longitude}\n`;
-	await fse.writeFile('tmp/elron.csv', data);
+	await fsp.writeFile('tmp/elron.csv', data);
 	
 	debug.timeEnd('data-download', 'Downloaded data');
 }
 
-// Execute all SQL from folder.
-async function prepare(path, msgIncomplete, msgComplete) {
-	for (const file of await fse.readdir(path)) {
+// Execute scripts in folder.
+async function execute(path, msgIncomplete, msgComplete) {
+	for (const file of await fsp.readdir(path)) {
 		const name = file.split('.')[0];
 		
 		debug.time('data-prepare-' + name, msgIncomplete + ' ' + chalk.white(name));
 		
 		switch (file.split('.')[1]) {
 			case 'sql':
-				await db.query((await fse.readFile(`${path}/${file}`)).toString());
+				await db.query((await fsp.readFile(`${path}/${file}`)).toString());
 				break;
 			case 'js':
 				await (require(`./${path}/${file}`))();
@@ -45,22 +54,30 @@ async function prepare(path, msgIncomplete, msgComplete) {
 	}
 }
 
-// Start data update.
+// Update data.
 async function update() {
-	let nextUpdate;
-	if (await fse.exists('tmp/update')) nextUpdate = (await fse.readFile('tmp/update')).toString();
-	
-	// Update stale data.
-	if (!nextUpdate || new Date(nextUpdate) <= new Date()) {
-		debug.info('Starting data update');
-		debug.time('data-update');
+	try {
+		let nextUpdate;
 		
-		await download();
-		await prepare('data/importers', 'Importing', 'Imported');
-		await prepare('data/processors', 'Generating', 'Generated');
+		try {
+			await fsp.stat('tmp/update');
+			nextUpdate = (await fsp.readFile('tmp/update')).toString();
+		} catch {}
 		
-		await fse.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
-		debug.timeEnd('data-update', 'Data update completed');
+		// Update stale data.
+		if (!nextUpdate || new Date(nextUpdate) <= new Date()) {
+			debug.info('Starting data update');
+			debug.time('data-update');
+			
+			await download();
+			await execute('data/importers', 'Importing', 'Imported');
+			await execute('data/processors', 'Generating', 'Generated');
+			
+			await fsp.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
+			debug.timeEnd('data-update', 'Data update completed');
+		}
+	} catch (ex) {
+		debug.error('Failed to update data', ex);
 	}
 }
 

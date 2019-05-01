@@ -1,5 +1,4 @@
-const fs = require('fs');
-const { promisify } = require('util');
+const util = require('util');
 const mysql = require('mysql');
 
 // Open the database connection.
@@ -12,10 +11,7 @@ const db = mysql.createConnection({
 	multipleStatements: true
 });
 
-// Initialize database if needed.
-db.query(fs.readFileSync('data/init.sql').toString());
-
-// Promisify for async/await.
-db.query = promisify(db.query);
+// Promisify query function for async/await.
+db.query = util.promisify(db.query);
 
 module.exports = db;
