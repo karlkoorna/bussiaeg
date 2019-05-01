@@ -3,25 +3,31 @@ const moment = require('moment');
 
 const timers = {};
 
+// Inject parameters into message.
+function inject(msg, params) {
+	let i = 0;
+	return msg.replace(/\?/g, () => chalk.white(params[i++]));
+}
+
 // Log info message with timestamp.
-function info(msg) {
-	console.info(chalk.blueBright('[INFO] ' + msg), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`));
+function info(msg, ...params) {
+	console.info(chalk.blueBright('[INFO] ' + inject(msg, params), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`)));
 }
 
-// Log warning message with timestamp.
-function warn(msg, err) {
-	console.warn(chalk.yellowBright('[WARN] ' + msg), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`), err ? '\n' + chalk.yellow(err.stack) : '');
+// Log warning message with error object if provided and timestamp.
+function warn(msg, ...params) {
+	console.warn(chalk.yellowBright('[WARN] ' + inject(msg, params.slice(params[0] instanceof Error))), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`), params[0] instanceof Error ? '\n' + chalk.yellow(params[0].stack) : '');
 }
 
-// Log error message with timestamp and stop process with error code.
-function error(msg, err, code = 1) {
-	console.error(chalk.redBright(`[ERR${code}] ` + msg), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`), '\n' + chalk.red(err.stack));
-	process.exit(code);
+// Log error message with error object and timestamp, stop process with code 1.
+function error(msg, err, ...params) {
+	console.error(chalk.redBright('[ERR1] ' + inject(msg, params)), chalk.gray(`(${moment().format('DD.MM.YYYY-HH:mm:ss')})`), '\n' + chalk.red(err.stack));
+	process.exit(1);
 }
 
 // Start timing, display message if provided.
 function time(id, msg) {
-	if (msg) process.stdout.write(chalk.yellow('[TIME] ' + msg));
+	if (msg) console.log(chalk.yellow('[TIME] ' + msg));
 	
 	timers[id] = {
 		time: new Date(),
@@ -32,7 +38,8 @@ function time(id, msg) {
 // Display timing result.
 function timeEnd(id, msg) {
 	const timer = timers[id];
-	if (timer.msg) process.stdout.write('\r\x1b[K'); // Move to start of previous line.
+	delete timers[id];
+	
 	console.log(chalk.green('[TIME] ' + msg), chalk.gray(`(${((new Date() - timer.time) / 1000).toFixed(3)}s)`));
 }
 
