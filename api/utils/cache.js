@@ -1,6 +1,6 @@
 let cache = {};
 
-// Add/get to/from cache.
+// Get data from cache, add if not found.
 async function use(space, key, setter) {
 	// Create cache if not exists.
 	if (!cache[space]) cache[space] = {};
