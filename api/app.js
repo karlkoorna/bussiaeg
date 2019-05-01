@@ -11,9 +11,8 @@ console.log(chalk`\n{underline.magentaBright ${splash.description} v${splash.ver
 // Load environment variables from file.
 dotenv.config();
 
-require('./db.js');
+const db = require('./db.js');
 const data = require('./data.js');
-const banner = require('./routes/banner.js');
 const cache = require('./utils/cache.js');
 const debug = require('./utils/debug.js');
 
@@ -26,29 +25,29 @@ app.setErrorHandler((err, req, res) => {
 });
 
 // Dynamically register routes from folder.
-for (const file of fs.readdirSync('routes')) {
-	const route = require(`./routes/${file}`);
-	app.register(route.handler || route);
-}
+for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${file}`));
 
-// Update data and start listening on port.
-data.update().then(async () => {
+// Initialize database if needed, update data and start listening on port.
+(async function() {
+	try {
+		await db.query(fs.readFileSync('data/init.sql').toString());
+	} catch (ex) {
+		debug.error('Failed to initialize database', ex);
+	}
+	
+	await data.update();
+	
 	try {
 		await app.listen(process.env['PORT'], process.env['HOST']);
 		debug.info('Started listening on port ' + process.env['PORT']);
 	} catch (ex) {
 		debug.error('Failed to start listening on port ' + process.env['PORT'], ex);
 	}
-}).catch((ex) => {
-	debug.error('Failed to update data', ex);
-});
+})();
 
 // Scheduled functions.
 setInterval(() => {
 	switch (moment().format('HHmmss')) {
-		case '000000': // Update banner at midnight.
-			banner.update();
-			break;
 		case '060000': // Update data and clear cache at 6 AM.
 			data.update();
 			cache.clear();
