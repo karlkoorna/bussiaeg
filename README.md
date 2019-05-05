@@ -2,26 +2,24 @@
 
 Kogu Eesti ühistranspordi väljumisajad ühest kohast.
 
-## Prerequisites
+## Prerequisites :green_apple:
 
-Latest stable versions of all prerequisites are recommended.
+Having the latest stable version of all prerequisites is recommended.
 
-1) **Debian**
+1. **Debian** :peach:
 	
-	[Download](https://www.debian.org/distrib/) and install Debian.
-	
-	Install additional required tools.
+	[Download](https://www.debian.org/distrib/) and install Debian. Ensure additional packages.
 	
 	```bash
 	$ apt install curl git
 	```
+
+2. **MySQL** :banana:
 	
-2) **MySQL**
-	
-	Install and configure MySQL.
+	Install MySQL.
 	
 	```bash
-	$ curl -o mysql.deb https://repo.mysql.com/mysql-apt-config_0.8.10-1_all.deb
+	$ curl -o mysql.deb https://repo.mysql.com/mysql-apt-config_0.8.13-1_all.deb
 	$ dpkg -i mysql.deb
 	$ rm mysql.deb
 	$ apt update
@@ -32,16 +30,16 @@ Latest stable versions of all prerequisites are recommended.
 	Create the database and the user.
 	
 	```bash
-	$ mysql --password=password
+	$ mysql --password=1234
 	```
 	
 	```sql
 	CREATE DATABASE bussiaeg;
-	CREATE USER 'bussiaeg'@'%' IDENTIFIED BY 'password';
-	GRANT ALL PRIVILEGES ON bussiaeg.* TO 'bussiaeg'@'%';
+	CREATE USER 'bussiaeg'@'localhost' IDENTIFIED BY '1234';
+	GRANT ALL PRIVILEGES ON bussiaeg.* TO 'bussiaeg'@'localhost';
 	```
 	
-	Configure the database engine.
+	Configure the server.
 	
 	```bash
 	$ nano /etc/mysql/mysql.cnf
@@ -58,22 +56,22 @@ Latest stable versions of all prerequisites are recommended.
 	innodb_flush_method = O_DIRECT
 	```
 	
-	Restart the server.
+	Restart the daemon.
 	
 	```bash
 	$ systemctl restart mysql
 	```
-	
-3) **Node.js**
+
+3. **Node.js** :lemon:
 	
 	Install Node.js.
 	
 	```bash
-	$ curl https://deb.nodesource.com/setup_10.x | bash
+	$ curl https://deb.nodesource.com/setup_12.x | bash
 	$ apt install nodejs
 	```
-	
-4) **Caddy**
+
+4. **Caddy** :watermelon:
 	
 	Install Caddy with plugins.
 	
@@ -81,33 +79,40 @@ Latest stable versions of all prerequisites are recommended.
 	$ curl https://getcaddy.com | bash -s personal http.cors,http.ratelimit,http.expires
 	$ setcap cap_net_bind_service=+ep /usr/local/bin/caddy
 	```
-	
-## Production
 
-Update modules.
+## Production :grapes:
+
+Update all modules.
 
 ```bash
 $ ./update.sh
 ```
 
-Fill in `.env` file by example `.env.example` file for all modules.
+Fill `.env` by example in `.env.example` for all modules.
 
-Start modules.
+Start all modules in production mode.
 
 ```bash
 $ ./start.sh
 ```
 
-## Development
+## Development :cherries:
 
 Redirect `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
 
-Fill in `.env` file by example `.env.example` file for all modules.\
-*Note: HTTP headers do not work properly if the HTTPS certificate is invalid.*\
+Fill `.env` by example in `.env.example` for all modules.\
+*Note: HTTP headers do not work if the HTTPS certificate is invalid.*\
 *Note: Deleting `tmp/update` will force a data update next launch.*
 
-Start modules in development mode.
+Start all modules in development mode or...
 
 ```bash
-$ npm start dev
+$ ./start.sh dev
+```
+
+start server and/or client module in development mode.
+
+```bash
+$ cd api && npm run develop
+$ cd web && npm start
 ```

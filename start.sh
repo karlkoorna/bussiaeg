@@ -9,7 +9,7 @@ ulimit -n 8192
 if [ $1 ]; then
 	export NODE_ENV=development
 	caddy -conf Caddydev &
-	cd api && npm start:dev &
+	cd api && npm run develop &
 	cd web && npm start
 else
 	export NODE_ENV=production
