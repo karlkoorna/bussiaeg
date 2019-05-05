@@ -2,11 +2,11 @@
 
 Kogu Eesti ühistranspordi väljumisajad ühest kohast.
 
-## Prerequisites :green_apple:
+## Prerequisites :open_book:
 
 Having the latest stable version of all prerequisites is recommended.
 
-1. **Debian** :peach:
+1. **Debian** :penguin:
 	
 	[Download](https://www.debian.org/distrib/) and install Debian. Ensure additional packages.
 	
@@ -14,7 +14,7 @@ Having the latest stable version of all prerequisites is recommended.
 	$ apt install curl git
 	```
 
-2. **MySQL** :banana:
+2. **MySQL** :package:
 	
 	Install MySQL.
 	
@@ -62,7 +62,7 @@ Having the latest stable version of all prerequisites is recommended.
 	$ systemctl restart mysql
 	```
 
-3. **Node.js** :lemon:
+3. **Node.js** :zap:
 	
 	Install Node.js.
 	
@@ -71,7 +71,7 @@ Having the latest stable version of all prerequisites is recommended.
 	$ apt install nodejs
 	```
 
-4. **Caddy** :watermelon:
+4. **Caddy** :earth_americas:
 	
 	Install Caddy with plugins.
 	
@@ -80,7 +80,7 @@ Having the latest stable version of all prerequisites is recommended.
 	$ setcap cap_net_bind_service=+ep /usr/local/bin/caddy
 	```
 
-## Production :grapes:
+## Production :sweat_drops:
 
 Update all modules.
 
@@ -96,7 +96,7 @@ Start all modules in production mode.
 $ ./start.sh
 ```
 
-## Development :cherries:
+## Development :fire:
 
 Redirect `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
 

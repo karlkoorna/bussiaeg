@@ -1,2 +1,2 @@
-# Bussiaeg (API) :fallen_leaf:
+# Bussiaeg (API) :computer:
 Kogu Eesti ühistranspordi väljumisajad ühest kohast.
