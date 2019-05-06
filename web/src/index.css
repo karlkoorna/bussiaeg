@@ -28,6 +28,13 @@ select {
 	font-weight: inherit;
 }
 
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+	display: none;
+}
+
 select {
 	cursor: pointer;
 	-webkit-appearance: none;
@@ -66,9 +73,10 @@ a {
 
 #app[data-theme="light"],
 #app[data-theme="dark"] {
-	--shadow-light: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
-	--shadow-dark: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
+	--shadow-soft: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
+	--shadow-hard: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
 	--animation-fadeIn: view-fadeIn .15s linear forwards;
+	--animation-fadeOut: view-fadeOut .15s linear forwards;
 }
 
 #app[data-theme="light"] {
@@ -143,6 +151,18 @@ a {
 	
 	to {
 		opacity: 1;
+	}
+	
+}
+
+@keyframes view-fadeOut {
+	
+	from {
+		opacity: 1;
+	}
+	
+	to {
+		opacity: 0;
 	}
 	
 }

@@ -7,7 +7,7 @@
 
 #search-top {
 	background-color: var(--color-bg-light);
-	box-shadow: var(--shadow-light);
+	box-shadow: var(--shadow-soft);
 	flex: 0;
 }
 
@@ -30,7 +30,7 @@
 }
 
 #search-top-input + svg > * {
-	transition: stroke .15s linear;
+	transition: stroke .15s ease-in-out;
 }
 
 #search-top-input + svg > path,
@@ -97,7 +97,7 @@
 
 /* Results */
 
-#search-results {
+.search-results {
 	flex: 1;
 	overflow-y: auto;
 }
@@ -169,14 +169,4 @@
 .search-results-result-distance {
 	padding: 16px;
 	font-size: 18px;
-}
-
-/* Queries */
-
-@media (pointer: fine) {
-	
-	.search-results-result:hover {
-		background-color: rgba(127, 127, 127, .1);
-	}
-	
 }

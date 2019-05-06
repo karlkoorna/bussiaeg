@@ -6,10 +6,10 @@ import storeCoords from 'stores/coords.js';
 
 class StoreSearch {
 	
-	dispose = 0
+	dispose = null
 	
 	query = ''
-	type = 'stop'
+	type = 'stops'
 	results = {
 		stops: [],
 		routes: []
