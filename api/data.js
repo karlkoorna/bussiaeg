@@ -39,7 +39,7 @@ async function execute(path, msgIncomplete, msgComplete) {
 	for (const file of await fsp.readdir(path)) {
 		const name = file.split('.')[0];
 		
-		debug.time('data-prepare-' + name, msgIncomplete + ' ' + chalk.white(name));
+		debug.time('data-prepare-' + name, msgIncomplete + ' ' + chalk.white(name.replace(/.*-/, '')));
 		
 		switch (file.split('.')[1]) {
 			case 'sql':
@@ -50,7 +50,7 @@ async function execute(path, msgIncomplete, msgComplete) {
 				break;
 		}
 		
-		debug.timeEnd('data-prepare-' + name, msgComplete + ' ' + chalk.white(name));
+		debug.timeEnd('data-prepare-' + name, msgComplete + ' ' + chalk.white(name.replace(/.*-/, '')));
 	}
 }
 
@@ -71,7 +71,7 @@ async function update() {
 			
 			await download();
 			await execute('data/importers', 'Importing', 'Imported');
-			await execute('data/processors', 'Generating', 'Generated');
+			await execute('data/processors', 'Processing', 'Generated');
 			
 			await fsp.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
 			debug.timeEnd('data-update', 'Data update completed');
