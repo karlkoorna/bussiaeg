@@ -12,7 +12,7 @@ SET
 
 LOAD DATA LOCAL INFILE 'tmp/elron.csv' INTO TABLE stops
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES
-(@name, @desc, @lat, @lng)
+(@name, @lat, @lng)
 SET
 	id = @name,
 	name = @name,
