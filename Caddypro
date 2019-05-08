@@ -1,9 +1,10 @@
 https://api.bussiaeg.ee {
 	gzip
-	limits 1mb
+	header / Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	header / X-Content-Type-Options "nosniff"
+	limits 1KB
 	ratelimit * / 4 4 second
 	cors / https://bussiaeg.ee
-	header / X-Content-Type-Options "nosniff"
 	proxy / 127.0.0.1:81
 }
 
@@ -16,7 +17,7 @@ https://www.bussiaeg.ee {
 https://bussiaeg.ee {
 	gzip
 	header / Content-Security-Policy "default-src bussiaeg.ee api.bussiaeg.ee; script-src 'unsafe-inline' bussiaeg.ee googletagmanager.com www.google-analytics.com; style-src 'unsafe-inline' bussiaeg.ee fonts.googleapis.com; font-src fonts.gstatic.com; img-src * data:;"
-	header / Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	header / Strict-Transport-Security "max-age=31536000; includeSubDomains"
 	header / X-Content-Type-Options "nosniff"
 	header / X-XSS-Protection "1; mode=block"
 	header / X-Frame-Options "deny"

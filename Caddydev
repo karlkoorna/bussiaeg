@@ -2,11 +2,9 @@ https://api.devaeg.ee {
 	tls self_signed
 	cors / https://devaeg.ee
 	proxy / 127.0.0.1:81
-	log stdout
 }
 
 https://devaeg.ee {
 	tls self_signed
 	proxy / 127.0.0.1:3000
-	log stdout
 }
