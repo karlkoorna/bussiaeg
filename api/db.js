@@ -11,6 +11,12 @@ const db = mysql.createConnection({
 	multipleStatements: true
 });
 
+// Add support for named parameters in queries.
+db.config.queryFormat = (query, values) => {
+	if (!values) return query;
+	return query.replace(/:(\w+)/g, (match, key) => db.escape(values[key] || ''));
+};
+
 // Promisify query function for async/await.
 db.query = util.promisify(db.query);
 

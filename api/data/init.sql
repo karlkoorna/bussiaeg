@@ -22,6 +22,12 @@ CREATE TABLE IF NOT EXISTS stop_times (
 	KEY (trip_id, sequence)
 );
 
+CREATE TABLE IF NOT EXISTS stop_routes (
+	stop_id NVARCHAR(32) NOT NULL,
+	route_id CHAR(32) NOT NULL,
+	PRIMARY KEY (stop_id, route_id)
+);
+
 CREATE TABLE IF NOT EXISTS trips (
 	id MEDIUMINT(6) UNSIGNED NOT NULL,
 	route_id CHAR(32) NOT NULL,
@@ -37,8 +43,6 @@ CREATE TABLE IF NOT EXISTS routes (
 	id CHAR(32) NOT NULL,
 	name NVARCHAR(32) NOT NULL,
 	type VARCHAR(16),
-	lat DECIMAL(8, 6),
-	lng DECIMAL(8, 6),
 	region VARCHAR(16) NOT NULL,
 	origin NVARCHAR(48),
 	destination NVARCHAR(48),
