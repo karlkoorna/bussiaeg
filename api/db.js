@@ -14,6 +14,13 @@ const db = mysql.createConnection({
 // Add support for named parameters in queries.
 db.config.queryFormat = (query, values) => {
 	if (!values) return query;
+	
+	// Keep unnamed parameter support.
+	if (Array.isArray(values)) {
+		let i = 0;
+		return query.replace(/\?/g, () => values[i++]);
+	}
+	
 	return query.replace(/:(\w+)/g, (match, key) => db.escape(values[key] || ''));
 };
 
