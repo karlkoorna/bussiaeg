@@ -71,7 +71,7 @@ async function update() {
 			
 			await download();
 			await execute('data/importers', 'Importing', 'Imported');
-			await execute('data/processors', 'Processing', 'Generated');
+			await execute('data/processors', 'Processing', 'Processed');
 			
 			await fsp.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
 			debug.timeEnd('data-update', 'Data update completed');
