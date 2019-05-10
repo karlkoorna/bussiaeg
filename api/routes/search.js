@@ -19,7 +19,11 @@ async function getSearch(req, res) {
 				${query ? 'AND name LIKE :query' : ''}
 			ORDER BY ${query ? 'LENGTH(name), ' : ''}${lat ? 'distance, ' : ''}name
 			LIMIT 15
-		`, { query, lat, lng }),
+		`, {
+			query: `%${query}%`,
+			lat,
+			lng
+		}),
 		db.query(`
 			SELECT
 				route_id, name, type, origin, destination
@@ -43,7 +47,11 @@ async function getSearch(req, res) {
 			GROUP BY route_id
 			${lat ? 'ORDER BY distance' : ''}
 			LIMIT 15
-		`, { query, lat, lng })
+		`, {
+			query: `%${query}%`,
+			lat,
+			lng
+		})
 	]);
 	
 	res.send({
