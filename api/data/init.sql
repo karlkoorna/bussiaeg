@@ -3,11 +3,11 @@ SET sql_mode = (SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', '')); -- For MN
 CREATE TABLE IF NOT EXISTS stops (
 	id NVARCHAR(32) NOT NULL,
 	name NVARCHAR(48) NOT NULL,
-	direction NVARCHAR(48),
+	description NVARCHAR(48),
 	type VARCHAR(16),
 	lat DECIMAL(8, 6) NOT NULL,
 	lng DECIMAL(8, 6) NOT NULL,
-	area NVARCHAR(32),
+	alias NVARCHAR(48),
 	region VARCHAR(16),
 	PRIMARY KEY (id),
 	KEY (lat, lng)
@@ -36,16 +36,16 @@ CREATE TABLE IF NOT EXISTS trips (
 	wheelchair BOOLEAN NOT NULL,
 	origin NVARCHAR(48),
 	destination NVARCHAR(48),
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	KEY (route_id)
 );
 
 CREATE TABLE IF NOT EXISTS routes (
 	id CHAR(32) NOT NULL,
 	name NVARCHAR(32) NOT NULL,
+	description NVARCHAR(128),
 	type VARCHAR(16),
 	region VARCHAR(16) NOT NULL,
-	origin NVARCHAR(48),
-	destination NVARCHAR(48),
 	PRIMARY KEY (id)
 );
 

@@ -7,12 +7,12 @@ async function getSearch(req, res) {
 	const [ stops, routes ] = await Promise.all([
 		db.query(`
 			SELECT
-				id, name, direction, type
+				id, name, description, type
 				${lat ? ', ROUND(ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(:lng, :lat))) AS distance' : ''}
 			FROM stops
 			WHERE
 				TRUE
-				${lat ? `
+				${lat && !query ? `
 				AND lat BETWEEN :lat - .3 AND :lat + .3
 				AND lng BETWEEN :lng - .3 AND :lng + .3
 				` : ''}
@@ -26,7 +26,7 @@ async function getSearch(req, res) {
 		}),
 		db.query(`
 			SELECT
-				route_id, name, type, origin, destination
+				route_id, name, description, type
 				${lat ? ', distance' : ''}
 			FROM routes AS route
 			JOIN stop_routes ON route_id = route.id
@@ -35,17 +35,17 @@ async function getSearch(req, res) {
 					id
 					${lat ? ', ROUND(ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(:lng, :lat))) AS distance' : ''}
 			    FROM stops
-				${lat ? `
+				${lat && !query ? `
 				WHERE
 					lat BETWEEN :lat - .3 AND :lat + .3
 					AND lng BETWEEN :lng - .3 AND :lng + .3
-				ORDER BY distance
 				` : ''}
+				${lat ? 'ORDER BY distance' : ''}
 			    ${query ? '' : 'LIMIT 100'}
 			) AS stop ON stop.id = stop_id
-			${query ? 'WHERE name LIKE :query' : ''}
+			${query ? 'WHERE name LIKE :query OR description LIKE :query' : ''}
 			GROUP BY route_id
-			${lat ? 'ORDER BY distance' : ''}
+			ORDER BY ${query ? 'LENGTH(name), ' : ''}${lat ? 'distance, ' : ''}name
 			LIMIT 15
 		`, {
 			query: `%${query}%`,
