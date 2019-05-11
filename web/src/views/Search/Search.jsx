@@ -94,10 +94,10 @@ class ViewSearch extends Component {
 							{results[type].length ? results[type].map((result) => (
 								<li key={result.id}>
 									<Link className={'search-results-result' + (type === 'stop' && storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/${type}?id=${result.id}`}>
-										<Icon className="search-results-result-icon" shape={type} type={result.type} />
-										<div className={type === 'route' ? ' is-vehicle' : ''}>
+										<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} />
+										<div>
 											<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
-											<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.direction || (result.origin ? `${result.origin} - ${result.destination}` : '')}</div>
+											<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description}</div>
 										</div>
 										<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
 									</Link>
