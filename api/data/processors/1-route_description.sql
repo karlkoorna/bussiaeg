@@ -1,4 +1,5 @@
-UPDATE routes -- Left
+-- Start
+UPDATE routes
 JOIN (
     SELECT route_id, name, alias
     FROM trips AS trip
@@ -8,7 +9,8 @@ JOIN (
 ) AS stop ON route_id = id
 SET description = IF(LOCATE('coach', type) > 0, COALESCE(NULLIF(alias, ''), stop.name), stop.name);
 
-UPDATE routes -- Right
+-- End
+UPDATE routes
 JOIN (
     SELECT route_id, name, alias
     FROM trips AS trip
@@ -18,7 +20,8 @@ JOIN (
 ) AS stop ON route_id = id
 SET description = CONCAT(description, ' – ', IF(LOCATE('coach', type) > 0, COALESCE(NULLIF(alias, ''), stop.name), stop.name));
 
-UPDATE routes -- Center
+-- Middle
+UPDATE routes
 JOIN (
     SELECT route_id, name, alias
     FROM trips AS trip

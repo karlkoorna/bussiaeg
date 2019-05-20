@@ -1,3 +1,4 @@
+-- Origin
 UPDATE trips
 JOIN (
 	SELECT trip_id, name
@@ -7,6 +8,7 @@ JOIN (
 ) AS mapping ON trip_id = id
 SET origin = name;
 
+-- Destination
 UPDATE trips
 JOIN (
 	SELECT trip_id, name

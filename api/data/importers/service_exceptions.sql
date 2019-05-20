@@ -6,4 +6,4 @@ FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGN
 SET
 	service_id = @service_id,
 	date = @date,
-	active = -@exception_type + 2;
+	active = -@exception_type + 2; -- Convert type to boolean value.

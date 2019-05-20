@@ -8,7 +8,7 @@ SET
 	name = REPLACE(@stop_name, ' parkla', ''),
 	lat = @stop_lat,
 	lng = @stop_lon,
-	alias = SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(@alias, ',', 1), ';', 1), ' (', 1); -- Single alias without note.
+	alias = SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(@alias, ',', 1), ';', 1), ' (', 1); -- Keep only one alias, remove note.
 
 LOAD DATA LOCAL INFILE 'tmp/elron.csv' INTO TABLE stops
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES

@@ -5,6 +5,6 @@ FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGN
 (@service_id, @monday, @tuesday, @wednesday, @thursday, @friday, @saturday, @sunday, @start_date, @end_date)
 SET
 	id = @service_id,
-	days = CONCAT(@monday, @tuesday, @wednesday, @thursday, @friday, @saturday, @sunday),
+	days = CONCAT(@monday, @tuesday, @wednesday, @thursday, @friday, @saturday, @sunday), -- Concat weekdays into one column.
 	start = @start_date,
 	end = @end_date;
