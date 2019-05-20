@@ -18,10 +18,10 @@ db.config.queryFormat = (query, values) => {
 	// Keep unnamed parameter support.
 	if (Array.isArray(values)) {
 		let i = 0;
-		return query.replace(/\?/g, () => values[i++]);
+		return query.replace(/\?/g, () => db.escape(values[i++]));
 	}
 	
-	return query.replace(/:(\w+)/g, (match, key) => db.escape(values[key] || ''));
+	return query.replace(/:(\w+)/g, (match, key) => db.escape(values[key]));
 };
 
 // Promisify query function for async/await.
