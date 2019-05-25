@@ -82,6 +82,7 @@ nav li.separator {
 
 nav a {
 	padding: .75rem;
+	padding-right: .7rem;
 	border-radius: 4px;
 	transition: background-color .1s linear;
 }
@@ -150,7 +151,7 @@ main .wrapper {
 	}
 	
 	nav i {
-		margin-right: .75rem;
+		margin-right: .7rem;
 	}
 	
 	nav span {
