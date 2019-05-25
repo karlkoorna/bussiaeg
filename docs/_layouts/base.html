@@ -30,24 +30,14 @@
 				<img src="img/logo.svg" alt="Logo">
 				<div>
 					<ul>
-						{% assign pages = site.pages | where: "side", "left" | sort: "index" %}
-						{% for node in pages %}
-							{% if page.path == node.path %}
-								<li><a class="is-active" href="{{ node.path | base }}" title="{{ node.title }}" tabindex="-1"><i class="fas fa-fw fa-{{ node.icon }}" aria-hidden="true"></i><span aria-hidden="false">{{ node.title | upcase }}</span></a></li>
-							{% else %}
-								<li><a href="{{ node.path | base }}" title="{{ node.title }}"><i class="fas fa-fw fa-{{ node.icon }}" aria-hidden="true"></i><span aria-hidden="false">{{ node.title | upcase }}</span></a></li>
-							{% endif %}
-						{% endfor %}
+						<li><a{% if page.path == "index.html" %} class="is-active" tabindex="-1" {% endif %} href="index.html" title="Home"><i class="fas fa-fw fa-home" aria-hidden="true"></i><span aria-hidden="false">HOME</span></a></li>
+						<li><a{% if page.path == "merch.html" %} class="is-active" tabindex="-1" {% endif %} href="merch.html" title="Merch"><i class="fas fa-fw fa-tshirt" aria-hidden="true"></i><span aria-hidden="false">MERCH</span></a></li>
+						<li><a{% if page.path == "contact.html" %} class="is-active" tabindex="-1" {% endif %} href="contact.html" title="Contact"><i class="fas fa-fw fa-user-friends" aria-hidden="true"></i><span aria-hidden="false">CONTACT</span></a></li>
 					</ul>
 					<ul>
-						{% assign pages = site.pages | where: "side", "right" | sort: "index" %}
-						{% for node in pages %}
-							{% if page.path == node.path %}
-								<li><a class="is-active" href="{{ node.path | base }}" title="{{ node.title }}" tabindex="-1"><i class="fas fa-fw fa-{{ node.icon }}" aria-hidden="true"></i><span aria-hidden="false">{{ node.title | upcase }}</span></a></li>
-							{% else %}
-								<li><a href="{{ node.path | base }}" title="{{ node.title }}"><i class="fas fa-fw fa-{{ node.icon }}" aria-hidden="true"></i><span aria-hidden="false">{{ node.title | upcase }}</span></a></li>
-							{% endif %}
-						{% endfor %}
+						<li><a{% if page.path == "components.html" %} class="is-active" tabindex="-1" {% endif %} href="components.html" title="Components"><i class="fas fa-fw fa-cube" aria-hidden="true"></i><span aria-hidden="false">COMPONENTS</span></a></li>
+						<li><a{% if page.path == "views.html" %} class="is-active" tabindex="-1" {% endif %} href="views.html" title="Views"><i class="fas fa-fw fa-map" aria-hidden="true"></i><span aria-hidden="false">VIEWS</span></a></li>
+						<li><a{% if page.path == "archive.html" %} class="is-active" tabindex="-1" {% endif %} href="archive.html" title="Archive"><i class="fas fa-fw fa-archive" aria-hidden="true"></i><span aria-hidden="false">ARCHIVE</span></a></li>
 					</ul>
 				</div>
 			</div>
