@@ -51,7 +51,14 @@ nav .wrapper {
 	flex-direction: column;
 }
 
-nav .wrapper > ul {
+nav img {
+	min-width: 132px;
+	height: 2.5rem;
+	filter: brightness(0) invert(1);
+}
+
+nav .wrapper > div {
+	display: flex;
 	padding-top: .1rem;
 	padding-bottom: .2rem;
 	justify-content: space-around;
@@ -71,12 +78,6 @@ nav li {
 
 nav li.separator {
 	margin: 0 1rem;
-}
-
-nav img {
-	min-width: 132px;
-	height: 2.5rem;
-	filter: brightness(0) invert(1);
 }
 
 nav a {
@@ -123,7 +124,11 @@ main .wrapper {
 		flex-direction: row;
 	}
 	
-	nav .wrapper > ul {
+	nav img {
+		margin-right: .25rem;
+	}
+	
+	nav .wrapper > div {
 		padding: 0;
 		justify-content: space-between;
 	}
