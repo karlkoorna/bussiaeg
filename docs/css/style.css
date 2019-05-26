@@ -7,7 +7,6 @@ body {
 	margin: 0;
 	background-color: #fafafa;
 	font-family: "Open Sans", Arial, Helvetica, sans-serif;
-	text-align: center;
 	overflow-y: scroll;
 }
 
@@ -32,7 +31,10 @@ p {
 }
 
 .wrapper {
-	margin: 0 5%;
+	width: 100%;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /* Navbar */
@@ -118,7 +120,7 @@ nav a:focus {
 
 nav a.is-active {
 	background-color: white;
-	color: #0091ea;
+	color: #0277bd;
 }
 
 nav ul svg {
@@ -133,9 +135,19 @@ nav span {
 
 main {
 	margin-top: 6.6rem;
-	padding-top: 1.5rem;
-	padding-bottom: 4.5rem;
+	padding: 1rem;
+	padding-bottom: 3rem;
 	text-align: justify;
+}
+
+/* Footer */
+
+footer {
+	min-height: 128px;
+	padding: 1rem;
+	background-color: #eee;
+	color: #2f2b2b;
+	box-shadow: 0 50vh 0 50vh #eee;
 }
 
 /* Queries */
@@ -143,7 +155,7 @@ main {
 @media (min-width: 600px) {
 	
 	.wrapper {
-		margin: 0 7.5%;
+		width: 80%;
 	}
 	
 	/* Navbar */
@@ -165,11 +177,15 @@ main {
 	
 	main {
 		margin-top: 3.8rem;
+		padding-top: 3rem;
+		padding-bottom: 6rem;
 	}
 	
 }
 
 @media (min-width: 900px) {
+	
+	/* Navbar */
 	
 	nav ul:first-child svg {
 		margin-right: .7rem;
@@ -179,20 +195,9 @@ main {
 		display: inline;
 	}
 	
-	/* Main */
-	
-	main {
-		padding-top: 2.5rem;
-		padding-bottom: 8.5rem;
-	}
-	
 }
 
 @media (min-width: 1300px) {
-	
-	.wrapper {
-		margin: 0 10%;
-	}
 	
 	/* Navbar */
 	
@@ -200,32 +205,8 @@ main {
 		margin-right: .75rem;
 	}
 	
-	nav span {
+	nav ul:last-child span {
 		display: inline;
-	}
-	
-}
-
-@media (min-width: 1920px) {
-	
-	.wrapper {
-		margin: 0 15%;
-	}
-	
-}
-
-@media (min-width: 2560px) {
-	
-	html {
-		font-size: 1.5rem;
-	}
-	
-}
-
-@media (min-width: 3840px) {
-	
-	html {
-		font-size: 2.5rem;
 	}
 	
 }
