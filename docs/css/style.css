@@ -5,9 +5,15 @@
 
 body {
 	margin: 0;
-	background-color: #fafafa;
+	background-color: var(--color-bg-light);
+	color: var(--color-fg-dark);
 	font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	overflow-y: scroll;
+	--shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
+	--color-fg-light: #6b6666;
+	--color-fg-dark: #494343;
+	--color-bg-light: #fafafa;
+	--color-bg-dark: #eee;
 }
 
 body.is-loading * {
@@ -26,6 +32,7 @@ a {
 }
 
 h1,
+h2,
 p {
 	margin: 0;
 }
@@ -50,7 +57,7 @@ nav {
 	font-family: Handlee, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	line-height: 1.1rem;
-	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
+	box-shadow: var(--shadow);
 }
 
 nav .wrapper {
@@ -145,9 +152,9 @@ main {
 footer {
 	min-height: 128px;
 	padding: 1rem;
-	background-color: #eee;
-	color: #2f2b2b;
-	box-shadow: 0 50vh 0 50vh #eee;
+	background-color: var(--color-bg-dark);
+	color: var(--color-fg-light);
+	box-shadow: 0 50vw 0 50vw var(--color-bg-dark);
 }
 
 /* Queries */
