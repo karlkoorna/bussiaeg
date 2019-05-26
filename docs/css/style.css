@@ -8,7 +8,7 @@ body {
 	background-color: #fafafa;
 	font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	text-align: center;
-	letter-spacing: 1px;
+	overflow-y: scroll;
 }
 
 body.is-loading * {
@@ -26,6 +26,11 @@ a {
 	text-decoration: none;
 }
 
+h1,
+p {
+	margin: 0;
+}
+
 .wrapper {
 	margin: 0 5%;
 }
@@ -33,6 +38,7 @@ a {
 /* Navbar */
 
 nav {
+	z-index: 999;
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -41,17 +47,17 @@ nav {
 	color: white;
 	font-family: Handlee, Arial, Helvetica, sans-serif;
 	font-weight: bold;
-	line-height: 0;
+	line-height: 1.1rem;
 	box-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 }
 
 nav .wrapper {
 	display: flex;
-	justify-content: space-between;
 	flex-direction: column;
+	align-items: center;
 }
 
-nav img {
+nav .wrapper > svg {
 	min-width: 132px;
 	height: 2.5rem;
 	filter: brightness(0) invert(1);
@@ -61,12 +67,16 @@ nav .wrapper > div {
 	display: flex;
 	padding-top: .1rem;
 	padding-bottom: .2rem;
-	justify-content: space-around;
+	justify-content: center;
 	flex: 1;
 }
 
 nav ul {
 	display: flex;
+}
+
+nav ul:first-child {
+	margin-right: 1rem;
 }
 
 nav li {
@@ -76,15 +86,29 @@ nav li {
 	overflow: hidden;
 }
 
-nav li.separator {
-	margin: 0 1rem;
+nav ul:first-child li:first-child {
+	margin-left: 0;
+}
+
+nav ul:first-child li:last-child {
+	margin-right: 0;
+}
+
+nav ul:last-child li:first-child {
+	margin-left: 0;
+}
+
+nav ul:last-child li:last-child {
+	margin-right: 0;
 }
 
 nav a {
+	display: flex;
 	padding: .75rem;
 	padding-right: .7rem;
 	border-radius: 4px;
 	transition: background-color .1s linear;
+	align-items: center;
 }
 
 nav a:hover,
@@ -95,6 +119,10 @@ nav a:focus {
 nav a.is-active {
 	background-color: white;
 	color: #0091ea;
+}
+
+nav ul svg {
+	width: 1.25rem;
 }
 
 nav span {
@@ -115,18 +143,20 @@ main .wrapper {
 
 /* Queries */
 
-@media (min-width: 580px) {
+@media (min-width: 600px) {
 	
 	.wrapper {
 		margin: 0 7.5%;
 	}
 	
+	/* Navbar */
+	
 	nav .wrapper {
 		flex-direction: row;
 	}
 	
-	nav img {
-		margin-right: .25rem;
+	nav .wrapper > svg {
+		margin-right: .5rem;
 	}
 	
 	nav .wrapper > div {
@@ -134,29 +164,43 @@ main .wrapper {
 		justify-content: space-between;
 	}
 	
+	/* Main */
+	
 	main {
 		margin-top: 3.5rem;
 	}
 	
 }
 
-@media (min-width: 1337px) {
+@media (min-width: 900px) {
+	
+	nav ul:first-child svg {
+		margin-right: .7rem;
+	}
+	
+	nav ul:first-child span {
+		display: inline;
+	}
+	
+}
+
+@media (min-width: 1300px) {
 	
 	.wrapper {
 		margin: 0 10%;
 	}
 	
-	nav li.separator {
-		margin: 0 2rem;
-	}
+	/* Navbar */
 	
-	nav i {
+	nav ul svg {
 		margin-right: .7rem;
 	}
 	
 	nav span {
 		display: inline;
 	}
+	
+	/* Main */
 	
 	main {
 		padding-top: 3rem;
