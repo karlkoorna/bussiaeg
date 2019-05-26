@@ -132,13 +132,10 @@ nav span {
 /* Main */
 
 main {
-	margin-top: 6.3rem;
+	margin-top: 6.6rem;
 	padding-top: 1.5rem;
+	padding-bottom: 4.5rem;
 	text-align: justify;
-}
-
-main .wrapper {
-	min-height: 512px;
 }
 
 /* Queries */
@@ -156,7 +153,7 @@ main .wrapper {
 	}
 	
 	nav .wrapper > svg {
-		margin-right: .5rem;
+		margin-right: 1rem;
 	}
 	
 	nav .wrapper > div {
@@ -167,7 +164,7 @@ main .wrapper {
 	/* Main */
 	
 	main {
-		margin-top: 3.5rem;
+		margin-top: 3.8rem;
 	}
 	
 }
@@ -182,6 +179,13 @@ main .wrapper {
 		display: inline;
 	}
 	
+	/* Main */
+	
+	main {
+		padding-top: 2.5rem;
+		padding-bottom: 8.5rem;
+	}
+	
 }
 
 @media (min-width: 1300px) {
@@ -193,17 +197,11 @@ main .wrapper {
 	/* Navbar */
 	
 	nav ul svg {
-		margin-right: .7rem;
+		margin-right: .75rem;
 	}
 	
 	nav span {
 		display: inline;
-	}
-	
-	/* Main */
-	
-	main {
-		padding-top: 3rem;
 	}
 	
 }
