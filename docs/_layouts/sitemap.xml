@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="https://w3.org/1999/xhtml">
+	{% assign pages = site.pages | group_by: 'name' %}
+	{% for _page in pages %}
+	{% assign name = _page.name | remove: '.html' %}
+	{% assign langs = _page.items | map: 'lang' %}
+		{% if langs[0] %}
+	<url>
+		<loc>https://info.bussiaeg.ee{% if name != 'index' %}/{{ name }}{% endif %}</loc>
+		{% for lang in langs %}
+		<xhtml:link rel="alternate" hreflang="{{ lang }}" href="https://info.bussiaeg.ee{% if lang != 'et' %}/{{ lang }}{% endif %}{% if name != 'index' %}/{{ name }}{% endif %}" />
+		{% endfor %}
+	</url>
+		{% endif %}
+	{% endfor %}
+</urlset>
