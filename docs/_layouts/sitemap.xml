@@ -1,15 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="https://w3.org/1999/xhtml">
+<?xml version="1.0" encoding="UTF-8" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://w3.org/1999/xhtml">
 	{% assign pages = site.pages | group_by: 'name' %}
 	{% for _page in pages %}
-	{% assign name = _page.name | remove: '.html' %}
-	{% assign langs = _page.items | map: 'lang' %}
-		{% if langs[0] %}
+		{% if _page.items[0].layout contains 'pages/' %}
 	<url>
-		<loc>https://info.bussiaeg.ee{% if name != 'index' %}/{{ name }}{% endif %}</loc>
-		{% for lang in langs %}
-		<xhtml:link rel="alternate" hreflang="{{ lang }}" href="https://info.bussiaeg.ee{% if lang != 'et' %}/{{ lang }}{% endif %}{% if name != 'index' %}/{{ name }}{% endif %}" />
-		{% endfor %}
+		<loc>https://info.bussiaeg.ee{{ _page.name | prepend: '/' | remove: '/index' | remove: '.html' }}</loc>
+			{% for alt in _page.items %}
+		<xhtml:link rel="alternate" hreflang="{{ alt.dir | remove: '/' | default: site.data.config.lang }}" href="https://info.bussiaeg.ee{{ alt.path | prepend: '/' | remove: '/index' | remove: '.html' }}" />
+			{% endfor %}
 	</url>
 		{% endif %}
 	{% endfor %}
