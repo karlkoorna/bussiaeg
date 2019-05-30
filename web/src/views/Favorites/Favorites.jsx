@@ -29,8 +29,6 @@ class ViewFavorites extends Component {
 		return (
 			<>
 				<Helmet>
-					<title>Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast.</title>
-					<meta property="og:title" content="Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast." />
 					<meta name="theme-color" content={viewColors.favorites[0]} />
 				</Helmet>
 				<DragDropContext onDragEnd={this.reorder}>

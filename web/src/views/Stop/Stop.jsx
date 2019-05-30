@@ -80,8 +80,8 @@ class ViewStop extends Component {
 			<>
 				{stop.id ? (
 					<Helmet>
-						<title>{'Bussiaeg.ee: ' + stop.name + (stop.description ? ' – ' + stop.description : '')}</title>
-						<meta property="og:title" content={'Bussiaeg.ee: ' + stop.name + (stop.description ? ' – ' + stop.description : '')} />
+						<title>{stop.name + (stop.description ? ' – ' + stop.description : '')}</title>
+						<meta property="og:title" content={stop.name + (stop.description ? ' – ' + stop.description : '')} />
 						<meta name="theme-color" content={iconColors[stop.type][1]} />
 					</Helmet>
 				) : null}

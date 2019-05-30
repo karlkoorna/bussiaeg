@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'mobx-react';
+import { Helmet } from 'react-helmet';
 
 import 'i18n.js';
 
@@ -41,6 +42,7 @@ render((
 	<Provider {...stores}>
 		<BrowserRouter>
 			<>
+				<Helmet defaultTitle="Bussiaeg.ee" />
 				<ViewMap />
 				<Switch>
 					<Route exact path="/" component={redirectView} />

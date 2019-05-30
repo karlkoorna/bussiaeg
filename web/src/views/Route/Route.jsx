@@ -56,8 +56,8 @@ class ViewRoute extends Component {
 			<>
 				{route.id ? (
 					<Helmet>
-						<title>{`Bussiaeg.ee: ${route.name} – ${description}`}</title>
-						<meta property="og:title" content={`Bussiaeg.ee: ${route.name} – ${description}`} />
+						<title>{route.name + ' – ' + description}</title>
+						<meta property="og:title" content={route.name + ' – ' + description} />
 						<meta name="theme-color" content={iconColors[route.type][1]} />
 					</Helmet>
 				) : null}
