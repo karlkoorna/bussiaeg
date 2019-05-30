@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://w3.org/1999/xhtml">
-	{% assign pages = site.pages | group_by: 'name' %}
+	{% assign pages = site.pages | where_exp: '_page', '_page.layout contains "pages/"' | group_by: 'name' %}
 	{% for _page in pages %}
-		{% if _page.items[0].layout contains 'pages/' %}
 	<url>
 		<loc>https://info.bussiaeg.ee{{ _page.name | prepend: '/' | remove: '/index' | remove: '.html' }}</loc>
 			{% for alt in _page.items %}
 		<xhtml:link rel="alternate" hreflang="{{ alt.dir | remove: '/' | default: site.data.config.lang }}" href="https://info.bussiaeg.ee{{ alt.path | prepend: '/' | remove: '/index' | remove: '.html' }}" />
 			{% endfor %}
 	</url>
-		{% endif %}
 	{% endfor %}
 </urlset>
