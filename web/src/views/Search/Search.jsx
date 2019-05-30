@@ -66,8 +66,6 @@ class ViewSearch extends Component {
 		return (
 			<>
 				<Helmet>
-					<title>Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast.</title>
-					<meta property="og:title" content="Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast." />
 					<meta name="theme-color" content={viewColors.search[0]} />
 				</Helmet>
 				<main id="search" className="view">

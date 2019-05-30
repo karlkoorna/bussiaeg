@@ -1,6 +1,4 @@
 {
-  "short_name": "Bussiaeg.ee",
-  "name": "Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast.",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#1e2529",
