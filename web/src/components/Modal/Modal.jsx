@@ -19,7 +19,7 @@ class Modal extends Component {
 		const { t, title, text, isVisible, onCancel, onConfirm } = this.props;
 		
 		return (
-			<CSSTransition in={isVisible} timeout={{ enter: 150, exit: 75 }} onExited={this.onExited} unmountOnExit>
+			<CSSTransition in={isVisible} timeout={{ enter: 150, exit: 150 }} onExited={this.onExited} unmountOnExit>
 				<div id="modal-container" onMouseDown={this.onCancel}>
 					<div id="modal" onMouseDown={stopPropagation}>
 						<div id="modal-title">{title}</div>

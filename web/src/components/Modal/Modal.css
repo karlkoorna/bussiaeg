@@ -12,11 +12,11 @@
 }
 
 #modal-container.enter {
-	animation: modal-fadeIn .15s ease;
+	animation: var(--animation-fadeIn);
 }
 
 #modal-container.exit {
-	animation: modal-fadeOut .1s ease;
+	animation: var(--animation-fadeOut);
 }
 
 /* Panel */
@@ -95,30 +95,4 @@
 #app[data-theme="dark"] #modal-buttons-cancel:hover > canvas,
 #app[data-theme="dark"] #modal-buttons-confirm:hover > canvas {
 	color: rgba(0, 0, 0, .5);
-}
-
-/* Animations */
-
-@keyframes modal-fadeIn {
-	
-	from {
-		opacity: 0;
-	}
-	
-	to {
-		opacity: 1;
-	}
-	
-}
-
-@keyframes modal-fadeOut {
-	
-	from {
-		opacity: 1;
-	}
-	
-	to {
-		opacity: 0;
-	}
-	
 }
