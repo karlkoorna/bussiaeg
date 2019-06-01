@@ -18,7 +18,7 @@ function clear() {
 	cache = {};
 }
 
-// Add route to browser cache until specified hour.
+// Keep until browser cache until specified hour of next day.
 function middleware(hour) {
 	return function(req, res, next) {
 		const date = new Date();

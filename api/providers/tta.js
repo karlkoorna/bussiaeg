@@ -36,7 +36,7 @@ async function getStopDepartures(id, mntDepartures) {
 		});
 		
 		if (!ttaTime) continue;
-		console.log(mntDeparture);
+		
 		departures.push({
 			...mntDeparture,
 			time: ttaTime.time,

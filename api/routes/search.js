@@ -4,9 +4,8 @@ const db = require('../db.js');
 async function getSearch(req, res) {
 	const { query, lat, lng } = req.query;
 	
-	try {
-		const [ stops, routes ] = await Promise.all([
-			db.query(`
+	const [ stops, routes ] = await Promise.all([
+		db.query(`
 				SELECT
 					id, name, description, type
 					${lat ? ', ROUND(ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(:lng, :lat))) AS distance' : ''}
@@ -21,11 +20,11 @@ async function getSearch(req, res) {
 				ORDER BY ${query ? 'LENGTH(name), ' : ''}${lat ? 'distance, ' : ''}name
 				LIMIT 15
 			`, {
-				query: `%${query}%`,
-				lat,
-				lng
-			}),
-			db.query(`
+			query: `%${query}%`,
+			lat,
+			lng
+		}),
+		db.query(`
 				SELECT
 					route_id, name, description, type
 					${lat ? ', distance' : ''}
@@ -49,19 +48,16 @@ async function getSearch(req, res) {
 				ORDER BY ${query ? 'LENGTH(name), ' : ''}${lat ? 'distance, ' : ''}name
 				LIMIT 15
 			`, {
-				query: `%${query}%`,
-				lat,
-				lng
-			})
-		]);
+			query: `%${query}%`,
+			lat,
+			lng
+		})
+	]);
 		
-		res.send({
-			stops,
-			routes
-		});
-	} catch (ex) {
-		console.log('SERX', ex);
-	}
+	res.send({
+		stops,
+		routes
+	});
 }
 
 module.exports = (fastify, opts, next) => {
