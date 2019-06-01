@@ -2,7 +2,7 @@ const got = require('got');
 
 // Proxy request.
 async function getProxy(req, res) {
-	res.send((await got(req.query.url, { timeout: 1000, retry: 1 })).body);
+	res.send((await got(req.query.url, { timeout: 600, retry: 1 })).body);
 }
 
 module.exports = (fastify, opts, next) => {

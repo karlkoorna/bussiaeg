@@ -2,29 +2,28 @@ const got = require('got');
 
 const time = require('../utils/time.js');
 
-// Get times for stop.
-async function getTimes(stopId) {
+// Get trips for stop.
+async function getStopDepartures(stopId) {
 	const now = time.getSeconds();
-	const trips = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(stopId)}`)).body).data;
+	const departures = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(stopId)}`, { timeout: 600, retry: 1 })).body).data;
 	
-	if (!trips) throw new Error("Provider 'Elron' is not returning data");
+	if (!departures) throw new Error("Provider 'Elron' is not returning data");
 	
-	// Show not arrived trips until 10 minutes of being late.
-	return trips.filter((trip) => !trip.tegelik_aeg).map((trip) => ({
-		route_id: trip.reis,
-		time: time.toSeconds(trip.plaaniline_aeg),
-		countdown: time.toSeconds(trip.plaaniline_aeg) - now,
-		name: trip.reis,
-		destination: trip.liin,
+	return departures.filter((departure) => !departure.tegelik_aeg).map((departure) => ({
+		tripId: departure.reis,
+		time: time.toSeconds(departure.plaaniline_aeg),
+		countdown: time.toSeconds(departure.plaaniline_aeg) - now,
+		name: departure.reis,
+		destination: departure.liin,
 		type: 'train',
 		live: false,
 		provider: 'elron'
-	})).filter((trip) => now - trip.time < 600).slice(0, 15);
+	})).filter((departure) => now - departure.time < 600).slice(0, 15);
 }
 
 // Get trips for route.
-async function getTrips(routeId) {
-	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${routeId}`)).body).data;
+async function getRouteTrips(routeId) {
+	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${routeId}`, { timeout: 600, retry: 1 })).body).data;
 	
 	if (!stops) throw new Error("Provider 'Elron' is not returning data");
 	
@@ -39,6 +38,6 @@ async function getTrips(routeId) {
 }
 
 module.exports = {
-	getTimes,
-	getTrips
+	getStopDepartures,
+	getRouteTrips
 };

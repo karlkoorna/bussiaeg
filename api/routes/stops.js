@@ -1,41 +1,67 @@
-const db = require('../db.js');
 const cache = require('../utils/cache.js');
+const mnt = require('../providers/mnt.js');
+const tta = require('../providers/tta.js');
+const elron = require('../providers/elron.js');
 
-// Get all stops inside geofence or one stop by id.
+// Get all stops.
 async function getStops(req, res) {
-	const { id, lat_min, lat_max, lng_min, lng_max } = req.query;
+	res.send(await mnt.getStops());
+}
+
+// Get stop by id.
+async function getStop(req, res) {
+	const stop = await mnt.getStop(req.params.id);
+	if (!stop) return void res.status(404).send('Stop not found.');
+	res.send(stop);
+}
+
+// Get trips for stop.
+async function getStopDepartures(req, res) {
+	const { id } = req.params;
 	
-	const stops = await db.query(`
-		SELECT * FROM stops
-		WHERE
-			type IS NOT NULL
-			AND ${id ? 'id = ?' : 'lat BETWEEN ? AND ? AND lng BETWEEN ? AND ?'}
-	`, id ? [ id ] : [ lat_min, lat_max, lng_min, lng_max ]);
+	// Verify stop, get type and region.
+	const stop = await mnt.getStop(id);
+	if (!stop) return void res.status(404).send('Stop not found.');
 	
-	if (id && !stops.length) return void res.status(404).send('Stop not found.');
-	res.send(id ? stops[0] : stops);
+	// Elron TODO: Switch to MNT data, merge with data from Elron.
+	if (stop.type === 'train') return void res.send(await elron.getStopDepartures(id));
+	
+	// MNT + TLT
+	if (stop.region === 'tallinn') return void res.send(await tta.getStopDepartures(id, await mnt.getStopDepartures(id, true)));
+	
+	// MNT
+	res.send(await mnt.getStopDepartures(id));
 }
 
 module.exports = (fastify, opts, next) => {
 	fastify.get('/stops', {
+		preHandler: cache.middleware(6)
+	}, getStops);
+	
+	fastify.get('/stops/:id', {
 		preHandler: cache.middleware(6),
 		schema: {
-			querystring: {
+			params: {
 				type: 'object',
-				anyOf: [
-					{ required: [ 'id' ] },
-					{ required: [ 'lat_min', 'lat_max', 'lng_min', 'lng_max' ] }
-				],
+				required: [ 'id' ],
 				properties: {
-					id: { type: 'string' },
-					lat_min: { type: 'number' },
-					lat_max: { type: 'number' },
-					lng_min: { type: 'number' },
-					lng_max: { type: 'number' }
+					id: { type: 'string' }
 				}
 			}
 		}
-	}, getStops);
+	}, getStop);
+	
+	fastify.get('/stops/:id/departures', {
+		schema: {
+			params: {
+				type: 'object',
+				required: [ 'id' ],
+				properties: {
+					id: { type: 'string' }
+				}
+			}
+		}
+	}, getStopDepartures);
 	
 	next();
 };

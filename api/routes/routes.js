@@ -1,32 +1,25 @@
-const db = require('../db.js');
 const cache = require('../utils/cache.js');
+const mnt = require('../providers/mnt.js');
 
-// Get routes by id (uid).
-async function getRoutes(req, res) {
-	const { id } = req.query;
-	
-	// Elron
-	if (id.length === 3) return void res.send({
-		id,
-		name: id,
-		type: 'train',
-		region: null
-	});
-	
-	// MNT + TTA
-	const routes = await db.query(`
-		SELECT uid AS id, name, type, region FROM routes WHERE uid = ?
-	`, [ id ]);
-	
-	if (!routes.length) return void res.status(404).send('Route not found.');
-	return void res.send(routes[0]);
+// Get routes by id.
+async function getRoute(req, res) {
+	const route = await mnt.getRoute(req.params.id);
+	if (!route) return void res.status(404).send('Route not found.');
+	res.send(route);
+}
+
+// Get trips for route.
+async function getRouteTrips(req, res) {
+	const stop = await mnt.getRoute(req.params.id);
+	if (!stop) return void res.status(404).send('Route not found.');
+	res.send(await mnt.getRouteTrips(req.params.id, req.query.id));
 }
 
 module.exports = (fastify, opts, next) => {
-	fastify.get('/routes', {
+	fastify.get('/routes/:id', {
 		preHandler: cache.middleware(6),
 		schema: {
-			querystring: {
+			params: {
 				type: 'object',
 				required: [ 'id' ],
 				properties: {
@@ -34,7 +27,26 @@ module.exports = (fastify, opts, next) => {
 				}
 			}
 		}
-	}, getRoutes);
+	}, getRoute);
+	
+	fastify.get('/routes/:id/trips', {
+		preHandler: cache.middleware(6),
+		schema: {
+			params: {
+				type: 'object',
+				required: [ 'id' ],
+				properties: {
+					id: { type: 'string' }
+				}
+			},
+			querystring: {
+				type: 'object',
+				properties: {
+					id: { type: 'string' }
+				}
+			}
+		}
+	}, getRouteTrips);
 	
 	next();
 };
