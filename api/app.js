@@ -1,8 +1,12 @@
 const fs = require('fs');
+const tls = require('tls');
 const dotenv = require('dotenv');
 const fastify = require('fastify');
 const moment = require('moment');
 const chalk = require('chalk');
+
+// Allow requests to sites with TLSv1 certificates.
+tls.DEFAULT_MIN_VERSION = 'TLSv1';
 
 // Show splash.
 const splash = require('./package.json');
