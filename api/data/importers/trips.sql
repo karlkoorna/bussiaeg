@@ -7,5 +7,5 @@ SET
 	id = @trip_id,
 	route_id = @route_id,
 	service_id = @service_id,
-	shape_id = @shape_id,
+	direction = @direction_code,
 	wheelchair = @wheelchair_accessible;

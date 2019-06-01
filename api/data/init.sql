@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS trips (
 	id MEDIUMINT(6) UNSIGNED NOT NULL,
 	route_id CHAR(32) NOT NULL,
 	service_id MEDIUMINT(6) UNSIGNED NOT NULL,
-	shape_id MEDIUMINT(6) UNSIGNED NOT NULL,
-	wheelchair BOOLEAN NOT NULL,
+	direction VARCHAR(32) NOT NULL,
 	origin NVARCHAR(48),
 	destination NVARCHAR(48),
+	wheelchair BOOLEAN NOT NULL,
 	PRIMARY KEY (id),
 	KEY (route_id)
 );
@@ -64,12 +64,4 @@ CREATE TABLE IF NOT EXISTS service_exceptions (
 	active BOOL NOT NULL,
 	PRIMARY KEY (service_id, date),
 	KEY (date, active)
-);
-
-CREATE TABLE IF NOT EXISTS shapes (
-	id MEDIUMINT(6) UNSIGNED NOT NULL,
-	lat DECIMAL(8, 6) NOT NULL,
-	lng DECIMAL(8, 6) NOT NULL,
-	sequence TINYINT(3) UNSIGNED NOT NULL,
-	PRIMARY KEY (id, sequence)
 );
