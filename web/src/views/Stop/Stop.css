@@ -5,42 +5,51 @@
 
 /* Info */
 
-#stop-info-bar {
-	z-index: 1;
-	height: 64px;
-	background-color: var(--color-bg-light);
-	box-shadow: var(--shadow-light);
-}
-
 #stop-info {
-	z-index: 2;
+	z-index: 1;
 	display: flex;
-	position: absolute;
+	position: relative;
 	width: 100%;
+	height: 72px;
+	background-color: var(--color-bg-light);
+	box-shadow: var(--shadow-soft);
 	font-weight: bold;
+	transition: background-color .15s linear;
 	animation: var(--animation-fadeIn);
+	justify-content: center;
+	flex-direction: column;
 	overflow: hidden;
 }
 
-#stop-info > div {
-	display: flex;
-	padding-bottom: 3px;
-	flex-direction: column;
-	justify-content: center;
+#stop-info-icon {
+	z-index: -1;
+	position: absolute;
+	left: -50px;
+	bottom: -24px;
+	width: 192px;
+	height: 192px;
+	padding: 9px;
+	opacity: .25;
+	transform: rotate(10deg);
 }
 
-#stop-info-icon {
-	width: 64px;
-	height: 64px;
-	padding: 9px;
+#stop-info-details {
+	text-align: center;
+	align-self: center;
+}
+
+#stop-info-icon * {
+	fill: white;
 }
 
 #stop-info-name {
+	color: white;
 	font-size: 22px;
 }
 
 #stop-info-description {
-	color: var(--color-fg-light);
+	margin-top: 3px;
+	color: #f2f2f2;
 	font-size: 14px;
 }
 
@@ -50,15 +59,11 @@
 	width: 64px;
 	height: 64px;
 	padding: 16px;
-	fill: #bdbdbd;
-	stroke: #b3b3b3;
+	fill: #ddd;
+	stroke: white;
 	stroke-width: 100;
 	cursor: pointer;
-}
-
-#app[data-theme="dark"] #stop-info-favorite {
-	fill: #707070;
-	stroke: #606060;
+	opacity: .75;
 }
 
 #stop-info-favorite > path {
@@ -70,34 +75,43 @@
 	stroke: #f22559;
 }
 
-/* times */
+/* Times */
 
 #stop-times {
 	flex: 1;
+	padding: 6px;
 	overflow-y: scroll;
+}
+
+#stop-times > li {
+	padding: 6px 0;
+}
+
+#stop-times > li:first-child {
+	padding-top: 0;
 }
 
 .stop-times-time {
 	display: flex;
 	position: relative;
 	height: 80px;
+	border-radius: 6px;
 	transition: background-color .1s linear;
 	animation: var(--animation-fadeIn);
 }
 
-.stop-times-time:hover {
-	background-color: rgba(127, 127, 127, .1);
-}
-
-.stop-times-time:after {
+#stop-times > li:not(:last-child) .stop-times-time:after {
 	content: "";
 	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: calc(100% - 16px);
+	left: 6px;
+	right: 6px;
+	bottom: -7px;
 	height: 1px;
-	margin: 0 8px;
 	background-color: rgba(127, 127, 127, .2);
+}
+
+.stop-times-time:hover {
+	background-color: rgba(127, 127, 127, .1);
 }
 
 .stop-times-time > * {
@@ -109,8 +123,8 @@
 	margin-top: 3px;
 }
 
-.stop-times-time-countdown,
-.stop-times-time-name {
+.stop-times-time-name,
+.stop-times-time-countdown {
 	font-size: 28px;
 }
 
@@ -137,7 +151,7 @@
 
 .stop-times-time-countdown,
 .stop-times-time-time {
-	right: 14px;
+	right: 10px;
 }
 
 .stop-times-time-countdown {

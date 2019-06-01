@@ -9,7 +9,7 @@
 	z-index: 1;
 	height: 64px;
 	background-color: var(--color-bg-light);
-	box-shadow: var(--shadow-light);
+	box-shadow: var(--shadow-soft);
 }
 
 #route-info {
@@ -94,7 +94,11 @@
 .route-stops-stop:hover {
 	background-color: rgba(127, 127, 127, .1);
 }
-	
+
+.route-stops-stop.is-active {
+	background-color: #fafa5850;
+}
+
 .route-stops-stop:after {
 	content: "";
 	position: absolute;
@@ -117,6 +121,12 @@
 	flex: 1;
 }
 
+.route-stops-stop-icon + div + div {
+	padding-left: 8px;
+	text-align: right;
+	flex: 1;
+}
+
 .route-stops-stop-name {
 	margin-bottom: 4px;
 	font-size: 21px;
@@ -125,6 +135,42 @@
 .route-stops-stop-description {
 	margin-bottom: 2px;
 	font-size: 15px;
+}
+
+.route-stops-stop-countdown {
+	margin-bottom: 8px;
+	font-size: 28px;
+}
+
+.route-stops-stop-countdown.is-urgent {
+	animation: route-urgent 1s ease infinite;
+}
+
+.route-stops-stop-countdown.has-arrived {
+	color: lightgray;
+}
+
+.route-stops-stop-time {
+	color: var(--color-fg-light);
+	font-size: 19px;
+}
+
+/* Animations */
+
+@keyframes route-urgent {
+	
+	from {
+		opacity: 1;
+	}
+	
+	50% {
+		opacity: .25;
+	}
+	
+	to {
+		opacity: 1;
+	}
+	
 }
 
 /* Queries */
