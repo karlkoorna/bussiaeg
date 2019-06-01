@@ -6,9 +6,11 @@ import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import Leaflet from 'leaflet';
+import KDBush from 'kdbush';
 
 import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
+import Fab from 'components/Fab/Fab.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 
 import storeSettings from 'stores/settings.js';
@@ -29,6 +31,21 @@ export const opts = {
 	panTimeout: 1500
 };
 
+const markers = {
+	bus: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'bus' }))),
+	trol: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'trol' }))),
+	tram: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'tram' }))),
+	train: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'train' }))),
+	'coach-c': btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach-c' }))),
+	'coach-cc': btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach-cc' }))),
+	location: btoa(renderToStaticMarkup((
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+			<circle fill="#fff" cx="512" cy="512" r="512" />
+			<circle fill="#00e6ad" cx="512" cy="512" r="350" />
+		</svg>
+	)))
+};
+
 class ViewMap extends Component {
 	
 	state = {
@@ -39,9 +56,11 @@ class ViewMap extends Component {
 	
 	dispose = null
 	debounce = 0
-	
 	tileLayer = null
-	markers = []
+	
+	stops = []
+	spatial = []
+	markers = {} // new Leaflet.LayerGroup()
 	
 	modalHide = () => {
 		this.setState({ showModal: false });
@@ -76,51 +95,44 @@ class ViewMap extends Component {
 	}
 	
 	// Update message based on bounds and redraw stops.
-	fetchStops = async () => {
+	fetchStops = () => {
 		const map = window.map;
 		const { t } = this.props;
-		const { _southWest: { lat: lat_min, lng: lng_min }, _northEast: { lat: lat_max, lng: lng_max } } = map.getBounds();
+		const { _southWest: { lat: latMin, lng: lngMin }, _northEast: { lat: latMax, lng: lngMax } } = map.getBounds();
+		const zoom = map.getZoom();
 		
 		// Handle message cases.
 		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) this.setState({ message: t('map.zoom') });
-		else if (map.getZoom() < opts.stopZoom) this.setState({ message: t('map.bounds') });
+		else if (zoom < opts.stopZoom) this.setState({ message: t('map.bounds') });
 		else if (this.state.message) this.setState({ message: '' });
 		
-		try {
-			// Remove all markers if zoomed below threshold.
-			if (map.getZoom() < opts.stopZoom) {
-				for (const marker of this.markers) marker.remove();
-				return void (this.markers = []);
-			}
+		// Remove all markers if zoomed below threshold.
+		if (zoom < opts.stopZoom) {
+			for (const marker of Object.values(this.markers)) marker.remove();
+			return void (this.markers = {});
+		}
+		
+		// Remove out of bounds markers.
+		for (const id in this.markers) {
+			const marker = this.markers[id];
 			
-			const stops = await (await fetch(`${process.env['REACT_APP_API']}/stops?lat_min=${lat_min}&lat_max=${lat_max}&lng_min=${lng_min}&lng_max=${lng_max}`)).json();
+			if (marker._latlng.lat > latMin && marker._latlng.lat < latMax && marker._latlng.lng > lngMin && marker._latlng.lng < lngMax) continue;
 			
-			// Remove out of bounds markers.
-			for (const i in this.markers) {
-				const marker = this.markers[i];
-				
-				if (marker._latlng.lat > lat_min && marker._latlng.lat < lat_max && marker._latlng.lng > lng_min && marker._latlng.lng < lng_max) continue;
-				
-				marker.remove();
-				this.markers.splice(i, 1);
-			}
-			
-			// Add new stop markers.
-			for (const stop of stops) {
-				if (this.markers.find((marker) => marker.options.id === stop.id)) continue;
-				
-				this.markers.push((new Leaflet.Marker([ stop.lat, stop.lng ], {
-					id: stop.id,
-					icon: new Leaflet.Icon({
-						iconSize: [ 26, 26 ],
-						iconAnchor: [ 13, 13 ],
-						iconUrl: 'data:image/svg+xml;base64,' + btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type })))
-					})
-				})).addTo(map).on('click', () => {
-					this.props.history.push(`/stop?id=${stop.id}`);
-				}));
-			}
-		} catch (ex) {}
+			marker.remove();
+			delete this.markers[id];
+		}
+		
+		// Add new stop markers.
+		for (const stop of this.spatial.range(latMin, lngMin, latMax, lngMax).map((id) => this.stops[id])) if (!this.markers.hasOwnProperty(stop.id)) this.markers[stop.id] = (new Leaflet.Marker([ stop.lat, stop.lng ], {
+			id: stop.id,
+			icon: new Leaflet.Icon({
+				iconSize: [ 26, 26 ],
+				iconAnchor: [ 13, 13 ],
+				iconUrl: 'data:image/svg+xml;base64,' + markers[stop.type]
+			})
+		})).addTo(map).on('click', () => {
+			this.props.history.push(`/stop?id=${stop.id}`);
+		});
 	}
 	
 	// Update map tile layer.
@@ -129,9 +141,9 @@ class ViewMap extends Component {
 		this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + storeSettings.data.theme.toUpperCase()]).addTo(window.map);
 	}
 	
-	componentDidMount() {
+	async componentDidMount() {
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
-		
+		window.test = this.markers;
 		const map = window.map = new Leaflet.Map('map', {
 			center: [
 				start.lat || opts.startLat,
@@ -140,29 +152,26 @@ class ViewMap extends Component {
 			zoom: start.zoom || opts.startZoom,
 			minZoom: opts.minZoom,
 			maxZoom: opts.maxZoom,
-			preferCanvas: true,
 			zoomControl: false,
 			bounceAtZoomLimits: false,
 			attributionControl: false,
 			boxZoom: false,
 			keyboard: false,
-			inertia: false
+			zoomSnap: 0.1,
+			zoomDelta: .1
 		});
 		
 		const $map = map._container;
 		
+		this.stops = await (await fetch(`${process.env['REACT_APP_API']}/stops`)).json();
+		this.spatial = new KDBush(this.stops, (stop) => stop.lat, (stop) => stop.lng, 64, Float32Array);
+		
 		const marker = new Leaflet.Marker([ 0, 0 ], {
 			interactive: false,
-			renderer: new Leaflet.SVG(),
 			icon: new Leaflet.Icon({
 				iconSize: [ 20, 20 ],
 				iconAnchor: [ 10, 10 ],
-				iconUrl: `data:image/svg+xml;base64,${btoa(renderToStaticMarkup((
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-						<circle fill="#fff" cx="512" cy="512" r="512" />
-						<circle fill="#00e6ad" cx="512" cy="512" r="350" />
-					</svg>
-				)))}`
+				iconUrl: 'data:image/svg+xml;base64,' + markers['location']
 			})
 		}).addTo(map);
 		
@@ -184,24 +193,18 @@ class ViewMap extends Component {
 			map.on('moveend', this.fetchStops);
 			map.on('move', () => {
 				this.debounce++;
-				if (this.debounce < 15) return;
+				if (this.debounce < 3) return;
 				this.debounce = 0;
 				this.fetchStops();
 			});
 		});
 		
-		// Fix location marker and accuracy circle transition while zooming.
-		map.on('zoomstart', () => {
-			$map.classList.add('is-zooming');
-		});
-		map.on('zoomend', () => {
-			setTimeout(() => {
-				$map.classList.remove('is-zooming');
-			}, 0);
-		});
-		
 		// Open modal on right click (desktop) or hold (mobile).
-		map.on('contextmenu', () => {
+		map.on('mousedown contextmenu', (e) => {
+			if (e.type !== 'contextmenu' && e.originalEvent.button !== 2) return;
+			
+			map.dragging.disable();
+			map.dragging.enable();
 			this.setState({ showModal: true });
 		});
 		
@@ -258,6 +261,8 @@ class ViewMap extends Component {
 	
 	render() {
 		const { t } = this.props;
+		const { accuracy } = this.props.storeCoords;
+		const { isLocating } = this.state;
 		
 		return (
 			<>
@@ -267,7 +272,7 @@ class ViewMap extends Component {
 				<div id="map-container" className="view">
 					<div id="map" />
 					<span id="map-message">{this.state.message}</span>
-					<i id="map-locate" className={'material-icons' + (this.props.storeCoords.accuracy < 512 ? ' is-visible' : '') + (this.state.isLocating ? ' is-active' : '')} onMouseDown={this.startLocating}>location_on</i>
+					<Fab icon="location_on" color={viewColors.map[0]} isVisible={accuracy < 512} isActive={isLocating} onClick={this.startLocating} />
 					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} showCancel onCancel={this.modalHide} onConfirm={this.modalConfirm} />
 				</div>
 			</>
