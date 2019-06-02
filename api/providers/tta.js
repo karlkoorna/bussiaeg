@@ -28,13 +28,7 @@ async function getStopDepartures(id, mntDepartures) {
 		}
 		
 		// Add matched trip.
-		const ttaTime = ttaDepartures.find((departure, i) => {
-			if (departure.name !== mntDeparture.name || departure.type !== mntDeparture.type || Math.abs(departure.time - mntDeparture.time) > 60) return false;
-			
-			// ttaDepartures.splice(i, 1);
-			return true;
-		});
-		
+		const ttaTime = ttaDepartures.find((departure) => departure.name === mntDeparture.name && departure.type === mntDeparture.type && Math.abs(departure.time - mntDeparture.time) < 60);
 		if (!ttaTime) continue;
 		
 		departures.push({
