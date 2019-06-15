@@ -67,7 +67,27 @@ nav .wrapper {
 	align-items: center;
 }
 
-nav .wrapper > svg {
+nav a {
+	display: flex;
+	padding: .75rem;
+	padding-right: .7rem;
+	border-radius: 5px;
+	transition: background-color .1s linear;
+	align-items: center;
+}
+
+nav a:hover,
+nav a:focus {
+	background-color: rgba(0, 0, 0, .1);
+}
+
+nav a.is-active {
+	background-color: white;
+	color: #0277bd;
+}
+
+nav .wrapper > a,
+nav .wrapper > a > svg {
 	min-width: 132px;
 	height: 2.5rem;
 	filter: brightness(0) invert(1);
@@ -95,39 +115,12 @@ nav li {
 	overflow: hidden;
 }
 
-nav ul:first-child li:first-child {
+nav li:first-child {
 	margin-left: 0;
 }
 
-nav ul:first-child li:last-child {
+nav li:last-child {
 	margin-right: 0;
-}
-
-nav ul:last-child li:first-child {
-	margin-left: 0;
-}
-
-nav ul:last-child li:last-child {
-	margin-right: 0;
-}
-
-nav a {
-	display: flex;
-	padding: .75rem;
-	padding-right: .7rem;
-	border-radius: 5px;
-	transition: background-color .1s linear;
-	align-items: center;
-}
-
-nav a:hover,
-nav a:focus {
-	background-color: rgba(0, 0, 0, .1);
-}
-
-nav a.is-active {
-	background-color: white;
-	color: #0277bd;
 }
 
 nav ul svg {
@@ -171,13 +164,17 @@ footer {
 		flex-direction: row;
 	}
 	
-	nav .wrapper > svg {
-		margin-right: 1rem;
+	nav .wrapper > a {
+		margin-right: .5rem;
 	}
 	
 	nav .wrapper > div {
 		padding: 0;
 		justify-content: space-between;
+	}
+	
+	nav .wrapper > svg {
+		margin-right: 1rem;
 	}
 	
 	/* Main */
