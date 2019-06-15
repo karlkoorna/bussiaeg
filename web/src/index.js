@@ -30,7 +30,6 @@ const stores = {
 };
 
 let hasRedirected = window.location.pathname !== '/' || storeSettings.data.view === 'map';
-
 function redirectView() {
 	if (hasRedirected) return null;
 	hasRedirected = true;
@@ -58,7 +57,7 @@ render((
 	</Provider>
 ), document.getElementById('app'));
 
-// Disable navigating through elements with tab key.
+// Disable navigating through elements with tab.
 window.addEventListener('keydown', (e) => {
 	if (e.which === 9) e.preventDefault();
 });
