@@ -38,6 +38,10 @@ p {
 	margin: 0;
 }
 
+img {
+	background: radial-gradient(circle, var(--color-fg-light) 0, var(--color-fg-dark) 100%);
+}
+
 .wrapper {
 	width: 100%;
 	max-width: 1200px;
