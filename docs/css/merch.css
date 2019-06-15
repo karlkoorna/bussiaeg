@@ -10,6 +10,8 @@ article {
 	position: relative;
 	width: 100%;
 	border-radius: 5px;
+	box-shadow: var(--shadow);
+	cursor: default;
 }
 
 article div {
@@ -24,29 +26,34 @@ article img {
 	width: 100%;
 	height: 100%;
 	border-radius: 5px;
-	object-fit: contain;
 	transition: opacity .1s linear;
+	object-fit: contain;
 }
 
-article img:first-child {
-	box-shadow: var(--shadow);
-}
-
-article img:last-child:hover {
+article:hover img:last-child,
+article:focus img:last-child {
 	opacity: 0;
 }
 
-article h1 {
+article h1,
+article p {
 	position: absolute;
-	left: 0;
 	bottom: 0;
 	padding: .5rem 1rem;
-	background-color: rgba(0, 0, 0, .4);
+	background-color: rgba(0, 0, 0, .35);
 	color: white;
+}
+
+article h1 {
+	left: 0;
 	border-top-right-radius: 5px;
 	border-bottom-left-radius: 5px;
-	font-size: 1rem;
-	font-weight: normal;
+}
+
+article p {
+	right: 0;
+	border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 /* Queries */
