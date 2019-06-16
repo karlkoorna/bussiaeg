@@ -56,8 +56,6 @@ img {
 
 nav {
 	z-index: 999;
-	position: fixed;
-	top: 0;
 	width: 100%;
 	padding: .5rem 0;
 	background: #0081d1;
@@ -141,7 +139,6 @@ nav span {
 /* Main */
 
 main {
-	margin-top: 6.6rem;
 	padding: 1rem;
 	padding-bottom: 3rem;
 	text-align: justify;
@@ -187,9 +184,8 @@ footer {
 	/* Main */
 	
 	main {
-		margin-top: 3.8rem;
-		padding-top: 3rem;
-		padding-bottom: 6rem;
+		padding-top: 2rem;
+		padding-bottom: 5rem;
 	}
 	
 }
