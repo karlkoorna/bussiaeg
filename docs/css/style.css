@@ -50,6 +50,8 @@ img {
 	max-width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
 }
 
 /* Navbar */
@@ -139,7 +141,7 @@ nav span {
 /* Main */
 
 main {
-	padding: 1rem;
+	padding-top: 1rem;
 	padding-bottom: 3rem;
 	text-align: justify;
 }
@@ -206,7 +208,7 @@ footer {
 	
 }
 
-@media (min-width: 1300px) {
+@media (min-width: 1200px) {
 	
 	/* Navbar */
 	

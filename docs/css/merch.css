@@ -70,7 +70,7 @@ article p span {
 	
 }
 
-@media (min-width: 1300px) {
+@media (min-width: 1200px) {
 	
 	main {
 		grid-template-columns: repeat(3, 1fr);
