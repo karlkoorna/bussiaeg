@@ -4,7 +4,7 @@ main {
 	grid-gap: 1rem;
 }
 
-/* Products */
+/* Merch */
 
 article {
 	position: relative;
@@ -54,6 +54,10 @@ article p {
 	right: 0;
 	border-top-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+}
+
+article p span {
+	font-size: .75rem;
 }
 
 /* Queries */

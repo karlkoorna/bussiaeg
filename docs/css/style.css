@@ -42,6 +42,7 @@ p {
 
 img {
 	background: radial-gradient(circle, var(--color-fg-light) 0, var(--color-fg-dark) 100%);
+	font-size: 0;
 }
 
 .wrapper {
@@ -192,6 +193,8 @@ footer {
 	}
 	
 }
+
+/* Queries */
 
 @media (min-width: 900px) {
 	
