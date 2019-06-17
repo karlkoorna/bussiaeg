@@ -16,7 +16,7 @@ body {
 	--color-fore-dark: #494343;
 	--color-back-light: #fafafa;
 	--color-back-dark: #eee;
-	--shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
+	--shadow: 0 1px 6px rgba(0, 0, 0, .12), 0 1px 4px rgba(0, 0, 0, .12);
 }
 
 body.is-loading * {
@@ -36,7 +36,8 @@ a {
 
 h1,
 h2,
-p {
+p,
+blockquote {
 	margin: 0;
 	font-size: 1rem;
 	font-weight: normal;
@@ -62,7 +63,7 @@ nav {
 	z-index: 999;
 	width: 100%;
 	padding: .5rem 0;
-	background: var(--color-primary-light);
+	background-color: var(--color-primary-light);
 	color: white;
 	font-family: Handlee, Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -90,8 +91,8 @@ nav a:focus {
 }
 
 nav a.is-active {
-	background-color: white;
-	color: var(--color-primary-dark);
+	background-color: white !important;
+	color: var(--color-primary-dark) !important;
 }
 
 nav .wrapper > a,
@@ -153,6 +154,7 @@ footer {
 	display: flex;
 	position: relative;
 	padding: 1rem;
+	padding-bottom: 4rem;
 	background-color: var(--color-back-dark);
 	color: var(--color-fore-light);
 	box-shadow: 0 50vw 0 50vw var(--color-back-dark);

@@ -6,7 +6,7 @@ main {
 
 /* Merch */
 
-article {
+main article {
 	position: relative;
 	width: 100%;
 	border-radius: 5px;
@@ -14,12 +14,12 @@ article {
 	cursor: default;
 }
 
-article div {
+main article div {
 	position: relative;
 	padding-top: 66.67%;
 }
 
-article img {
+main article img {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -30,13 +30,13 @@ article img {
 	object-fit: contain;
 }
 
-article:hover img:last-child,
-article:focus img:last-child {
+main article:hover img:last-child,
+main article:focus img:last-child {
 	opacity: 0;
 }
 
-article h1,
-article p {
+main article h1,
+main article p {
 	position: absolute;
 	bottom: 0;
 	padding: .5rem 1rem;
@@ -44,19 +44,19 @@ article p {
 	color: white;
 }
 
-article h1 {
+main article h1 {
 	left: 0;
 	border-top-right-radius: 5px;
 	border-bottom-left-radius: 5px;
 }
 
-article p {
+main article p {
 	right: 0;
 	border-top-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
 
-article p span {
+main article p span {
 	font-size: .75rem;
 }
 
