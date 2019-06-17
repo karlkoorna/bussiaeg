@@ -104,8 +104,7 @@ nav .wrapper > a > svg {
 
 nav .wrapper > div {
 	display: flex;
-	padding-top: .5rem;
-	justify-content: center;
+	padding-top: .4rem;
 	flex: 1;
 }
 
@@ -154,7 +153,7 @@ footer {
 	display: flex;
 	position: relative;
 	padding: 1rem;
-	padding-bottom: 4rem;
+	padding-bottom: 3rem;
 	background-color: var(--color-back-dark);
 	color: var(--color-fore-light);
 	box-shadow: 0 50vw 0 50vw var(--color-back-dark);
@@ -170,23 +169,38 @@ footer a:nth-of-type(2) {
 
 footer a:nth-last-of-type(1),
 footer a:nth-last-of-type(2) {
-	margin-left: 1rem;
+	display: flex;
+	width: 32px;
+	height: 32px;
+	margin-left: .75rem;
+	padding: 1rem;
+	background-color: var(--color-fore-light);
+	color: var(--color-back-light);
+	border-radius: 100%;
 	font-family: Consolas, monospace;
 	font-weight: bold;
+	justify-content: center;
+	align-items: center;
+	line-height: 1;
 }
 
 footer a.is-active {
-	color: var(--color-primary-dark);
+	background-color: var(--color-primary-light);
 }
 
 footer svg {
 	height: 100%;
 }
 
-footer span {
+footer > span {
 	width: 100%;
+	padding: 0 1rem;
 	font-size: .75rem;
 	text-align: center;
+}
+
+footer > span span {
+	display: inline-block;
 }
 
 /* Queries */

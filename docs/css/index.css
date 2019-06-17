@@ -26,7 +26,7 @@ main {
 main blockquote {
 	display: flex;
 	width: 100%;
-	height: calc(30rem - 3.8rem);
+	height: calc(30rem - 6.7rem);
 	margin-bottom: 1rem;
 	color: white;
 	font-size: 1.5rem;
@@ -50,23 +50,24 @@ main header:before {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(0deg, rgba(0, 0, 0, .3) 60%, rgba(0, 0, 0, .6) 100%);
+	background: linear-gradient(0deg, rgba(0, 0, 0, .3) 60%, rgba(0, 0, 0, .5) 100%);
 }
 
 main img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	object-position: right bottom;
+	object-position: center top;
 }
 
 /* Queries */
 
 @media (min-width: 600px) {
 	
-	/* Main */
+	/* Banner */
 	
 	main blockquote {
+		height: calc(30rem - 3.8rem);
 		margin-bottom: 3rem;
 	}
 	
