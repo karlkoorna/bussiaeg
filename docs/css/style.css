@@ -11,7 +11,7 @@ body {
 	overflow-y: scroll;
 	-webkit-tap-highlight-color: transparent;
 	--color-primary-light: #0081d1;
-	--color-primary-dark: #0277bd;
+	--color-primary-dark: #0070b3;
 	--color-fore-light: #6b6666;
 	--color-fore-dark: #494343;
 	--color-back-light: #fafafa;
@@ -174,7 +174,7 @@ footer a:nth-last-of-type(2) {
 }
 
 footer a.is-active {
-	color: var(--color-primary-light);
+	color: var(--color-primary-dark);
 }
 
 footer svg {
