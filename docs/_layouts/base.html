@@ -52,7 +52,7 @@
 					{% assign pages = site.pages | where_exp: '_page', '_page.dir == page.dir' %}
 					<ul>
 						<li>{% assign _page = pages | where: 'name', 'index.html' | first %}
-							<a {% if page.name == "index.html" %}class="is-active" tabindex="-1" {% endif %}href="." title="{{ _page.title }}">
+							<a {% if page.name == 'index.html' %}class="is-active" tabindex="-1" {% endif %}href="." title="{{ _page.title }}">
 								<svg viewBox="0 0 576 512" role="img" aria-hidden="true">
 									<path fill="currentColor" d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path>
 								</svg>
@@ -60,7 +60,7 @@
 							</a>
 						</li>
 						<li>{% assign _page = pages | where: 'name', 'merch.html' | first %}
-							<a {% if page.name == "merch.html" %}class="is-active" tabindex="-1" {% endif %}href="merch" title="{{ _page.title }}">
+							<a {% if page.name == 'merch.html' %}class="is-active" tabindex="-1" {% endif %}href="merch" title="{{ _page.title }}">
 								<svg viewBox="0 0 640 512" role="img" aria-hidden="true">
 									<path fill="currentColor" d="M631.2 96.5L436.5 0C416.4 27.8 371.9 47.2 320 47.2S223.6 27.8 203.5 0L8.8 96.5c-7.9 4-11.1 13.6-7.2 21.5l57.2 114.5c4 7.9 13.6 11.1 21.5 7.2l56.6-27.7c10.6-5.2 23 2.5 23 14.4V480c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32V226.3c0-11.8 12.4-19.6 23-14.4l56.6 27.7c7.9 4 17.5.8 21.5-7.2L638.3 118c4-7.9.8-17.6-7.1-21.5z"></path>
 								</svg>
@@ -68,7 +68,7 @@
 							</a>
 						</li>
 						<li>{% assign _page = pages | where: 'name', 'contact.html' | first %}
-							<a {% if page.name == "contact.html" %}class="is-active" tabindex="-1" {% endif %}href="contact" title="{{ _page.title }}">
+							<a {% if page.name == 'contact.html' %}class="is-active" tabindex="-1" {% endif %}href="contact" title="{{ _page.title }}">
 								<svg viewBox="0 0 640 512" role="img" aria-hidden="true">
 									<path fill="currentColor" d="M192 256c61.9 0 112-50.1 112-112S253.9 32 192 32 80 82.1 80 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C51.6 288 0 339.6 0 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zM480 256c53 0 96-43 96-96s-43-96-96-96-96 43-96 96 43 96 96 96zm48 32h-3.8c-13.9 4.8-28.6 8-44.2 8s-30.3-3.2-44.2-8H432c-20.4 0-39.2 5.9-55.7 15.4 24.4 26.3 39.7 61.2 39.7 99.8v38.4c0 2.2-.5 4.3-.6 6.4H592c26.5 0 48-21.5 48-48 0-61.9-50.1-112-112-112z"></path>
 								</svg>
@@ -78,7 +78,7 @@
 					</ul>
 					<ul>
 						<li>{% assign _page = pages | where: 'name', 'palette.html' | first %}
-							<a {% if page.name == "palette.html" %}class="is-active" tabindex="-1" {% endif %}href="palette" title="{{ _page.title }}">
+							<a {% if page.name == 'palette.html' %}class="is-active" tabindex="-1" {% endif %}href="palette" title="{{ _page.title }}">
 								<svg viewBox="0 0 512 512" role="img" aria-hidden="true">
 									<path fill="currentColor" d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z" />
 								</svg>
@@ -86,7 +86,7 @@
 							</a>
 						</li>
 						<li>{% assign _page = pages | where: 'name', 'history.html' | first %}
-							<a {% if page.name == "history.html" %}class="is-active" tabindex="-1" {% endif %}href="history" title="{{ page.title }}">
+							<a {% if page.name == 'history.html' %}class="is-active" tabindex="-1" {% endif %}href="history" title="{{ page.title }}">
 								<svg viewBox="0 0 512 512" role="img" aria-hidden="true">
 									<path fill="currentColor" d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468-59.015.042-113.223-20.53-155.822-54.911-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184 0-101.705-82.311-184-184-184-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" />
 								</svg>
@@ -101,7 +101,19 @@
 			{% include {{ page.name }} %}
 		</main>
 		<footer class="wrapper">
-			Lorem Ipsum
+			<a href="https://facebook.com/bussiaeg" rel="noopener" title="Facebook">
+				<svg viewBox="0 0 512 512" role="img" aria-label="GitHub">
+					<path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
+				</svg>
+			</a>
+			<a href="https://github.com/karlkoorna/bussiaeg" rel="noopener" title="GitHub">
+				<svg viewBox="0 0 496 512" role="img" aria-label="Facebook">
+					<path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
+				</svg>
+			</a>
+			<span>Creative Work of Karl Köörna and Kaur Hendrikson, All Rights Reserved.</span>
+			<a {% if lang == 'et' %}class="is-active" {% endif %}href="/{{ page.name | remove: '.html' }}" title="Eesti keel">EST</a>
+			<a {% if lang == 'en' %}class="is-active" {% endif %}href="/en/{{ page.name | remove: '.html' }}" title="English">ENG</a>
 		</footer>
 	</body>
 </html>

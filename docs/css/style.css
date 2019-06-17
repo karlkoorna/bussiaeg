@@ -5,16 +5,18 @@
 
 body {
 	margin: 0;
-	background-color: var(--color-bg-light);
-	color: var(--color-fg-dark);
+	background-color: var(--color-back-light);
+	color: var(--color-fore-dark);
 	font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	overflow-y: scroll;
 	-webkit-tap-highlight-color: transparent;
+	--color-primary-light: #0081d1;
+	--color-primary-dark: #0277bd;
+	--color-fore-light: #6b6666;
+	--color-fore-dark: #494343;
+	--color-back-light: #fafafa;
+	--color-back-dark: #eee;
 	--shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
-	--color-fg-light: #6b6666;
-	--color-fg-dark: #494343;
-	--color-bg-light: #fafafa;
-	--color-bg-dark: #eee;
 }
 
 body.is-loading * {
@@ -41,7 +43,7 @@ p {
 }
 
 img {
-	background: radial-gradient(circle, var(--color-fg-light) 0, var(--color-fg-dark) 100%);
+	background: radial-gradient(circle, var(--color-fore-light) 0, var(--color-fore-dark) 100%);
 	font-size: 0;
 }
 
@@ -60,7 +62,7 @@ nav {
 	z-index: 999;
 	width: 100%;
 	padding: .5rem 0;
-	background: #0081d1;
+	background: var(--color-primary-light);
 	color: white;
 	font-family: Handlee, Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -77,7 +79,6 @@ nav .wrapper {
 nav a {
 	display: flex;
 	padding: .75rem;
-	padding-right: .7rem;
 	border-radius: 5px;
 	transition: background-color .1s linear;
 	align-items: center;
@@ -90,7 +91,7 @@ nav a:focus {
 
 nav a.is-active {
 	background-color: white;
-	color: #0277bd;
+	color: var(--color-primary-dark);
 }
 
 nav .wrapper > a,
@@ -149,11 +150,41 @@ main {
 /* Footer */
 
 footer {
-	min-height: 128px;
+	display: flex;
+	position: relative;
 	padding: 1rem;
-	background-color: var(--color-bg-dark);
-	color: var(--color-fg-light);
-	box-shadow: 0 50vw 0 50vw var(--color-bg-dark);
+	background-color: var(--color-back-dark);
+	color: var(--color-fore-light);
+	box-shadow: 0 50vw 0 50vw var(--color-back-dark);
+	align-items: center;
+}
+
+footer a:nth-of-type(1),
+footer a:nth-of-type(2) {
+	width: 2rem;
+	height: 2rem;
+	margin-right: .75rem;
+}
+
+footer a:nth-last-of-type(1),
+footer a:nth-last-of-type(2) {
+	margin-left: 1rem;
+	font-family: Consolas, monospace;
+	font-weight: bold;
+}
+
+footer a.is-active {
+	color: var(--color-primary-light);
+}
+
+footer svg {
+	height: 100%;
+}
+
+footer span {
+	width: 100%;
+	font-size: .75rem;
+	text-align: center;
 }
 
 /* Queries */
