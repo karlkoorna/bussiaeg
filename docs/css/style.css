@@ -68,6 +68,7 @@ nav {
 	font-family: Handlee, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	line-height: 1.1rem;
+	letter-spacing: 1px;
 	box-shadow: var(--shadow);
 }
 

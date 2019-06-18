@@ -23,24 +23,13 @@ main {
 
 /* Banner */
 
-main blockquote {
-	display: flex;
-	width: 100%;
-	height: calc(30rem - 6.7rem);
-	margin-bottom: 1rem;
-	color: white;
-	font-size: 1.5rem;
-	font-style: italic;
-	align-items: center;
-}
-
 main header {
 	z-index: -1;
 	position: absolute;
 	left: 0;
 	top: 0;
 	width: 100%;
-	height: 30rem;
+	height: 100vh;
 }
 
 main header:before {
@@ -50,14 +39,46 @@ main header:before {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(0deg, rgba(0, 0, 0, .3) 60%, rgba(0, 0, 0, .5) 100%);
+	background: linear-gradient(0deg, rgba(0, 0, 0, .2) 55%, rgba(0, 0, 0, .4) 100%);
 }
 
-main img {
+main header img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	object-position: center 20%;
+}
+
+main blockquote {
+	z-index: -1;
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	margin-top: -6.7rem;
+	margin-bottom: 1rem;
+	color: white;
+	font-size: 1.25rem;
+	font-weight: bold;
+	font-style: italic;
+	text-align: center;
+	text-shadow: .1rem .1rem .1rem black;
+	justify-content: center;
+	align-items: center;
+}
+
+main blockquote svg {
+	position: absolute;
+	left: 50%;
+	bottom: 1rem;
+	width: 3rem;
+	padding: .5rem;
+	color: white;
+	border-radius: 100%;
+	text-align: center;
+	font-size: 2rem;
+	transform: translateX(-50%);
+	filter: drop-shadow(0 .1rem .1rem black);
 }
 
 /* Queries */
@@ -67,8 +88,20 @@ main img {
 	/* Banner */
 	
 	main blockquote {
-		height: calc(30rem - 3.8rem);
+		margin-top: -3.8rem;
 		margin-bottom: 3rem;
+		padding-left: 15%;
+		font-size: 1.5rem;
+		text-align: left;
+		justify-content: flex-start;
+	}
+	
+}
+
+@media (min-width: 900px) {
+	
+	main blockquote {
+		font-size: 2rem;
 	}
 	
 }

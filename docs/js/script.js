@@ -15,3 +15,13 @@ const observer = new IntersectionObserver(((entries) => {
 
 // Observe lazy images.
 for (const image of [ ...document.querySelectorAll('img.is-lazy') ]) observer.observe(image);
+
+// Resize banner on home page.
+resizeBanner();
+function resizeBanner() {
+	const $banner = document.getElementById('banner');
+	if ($banner) $banner.style.height = $banner.nextElementSibling.style.height = innerHeight + 'px';
+}
+
+// Resize banner continuously on desktop browsers.
+if (navigator.userAgent.toLowerCase().indexOf('mobi') === -1) addEventListener('resize', resizeBanner);

@@ -112,8 +112,8 @@
 			<span>
 				Copyright © <div style="display: inline-block;">(2017-{{ site.time | date: '%Y' }})</div>
 			</span>
-			<a {% if lang == 'et' %}class="is-active" {% endif %}href="/{{ page.name | remove: '.html' }}" title="Eesti keel">ET</a>
-			<a {% if lang == 'en' %}class="is-active" {% endif %}href="/en/{{ page.name | remove: '.html' }}" title="English">EN</a>
+			<a {% if lang == 'et' %}class="is-active" {% endif %}href="/{{ page.name | remove: 'index' | remove: '.html' }}" title="Eesti keel">ET</a>
+			<a {% if lang == 'en' %}class="is-active" {% endif %}href="/en/{{ page.name | remove: 'index' | remove: '.html' }}" title="English">EN</a>
 		</footer>
 	</body>
 </html>
