@@ -30,9 +30,22 @@ main article img {
 	object-fit: contain;
 }
 
+main article img:last-child {
+	opacity: 0;
+}
+
 main article:hover img:last-child,
 main article:focus img:last-child {
-	opacity: 0;
+	opacity: 1;
+}
+
+main article img:first-child.is-lazy {
+	z-index: 998;
+}
+
+main article img:last-child.is-lazy,
+main article img:first-child.is-lazy + img {
+	z-index: 999;
 }
 
 main article h1,

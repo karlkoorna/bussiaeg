@@ -8,7 +8,9 @@ const observer = new IntersectionObserver(((entries) => {
 	for (const entry of entries) if (entry.isIntersecting) {
 		const image = entry.target;
 		image.src = image.getAttribute('data-src');
-		image.classList.remove('is-lazy');
+		image.addEventListener('load', () => {
+			image.classList.remove('is-lazy');
+		});
 		observer.unobserve(image);
 	}
 }));

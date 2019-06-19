@@ -100,6 +100,8 @@ main blockquote svg {
 
 @media (min-width: 900px) {
 	
+	/* Banner */
+	
 	main blockquote {
 		font-size: 2rem;
 	}
