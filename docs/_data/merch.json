@@ -5,40 +5,35 @@
       "name": {
         "et": "T-särk (Buss)",
         "en": "T-shirt (Bus)"
-      },
-      "price": 15.99
+      }
     },
     {
       "id": "tshirt_trol",
       "name": {
         "et": "T-särk (Troll)",
         "en": "T-shirt (Trol)"
-      },
-      "price": 15.99
+      }
     },
     {
       "id": "tshirt_tram",
       "name": {
         "et": "T-särk (Tramm)",
         "en": "T-shirt (Tram)"
-      },
-      "price": 15.99
+      }
     },
     {
       "id": "mug",
       "name": {
         "et": "Tass",
         "en": "Mug"
-      },
-      "price": 13.99
+      }
     },
     {
       "id": "lanyard",
       "name": {
         "et": "Kaelapael",
         "en": "Lanyard"
-      },
-      "price": 2.99
+      }
     }
   ]
 }

@@ -35,29 +35,15 @@ main article:focus picture:last-child {
 	opacity: 0;
 }
 
-main article h1,
-main article p {
+main article h1 {
 	position: absolute;
+	left: 0;
 	bottom: 0;
 	padding: .5rem 1rem;
-	background-color: rgba(0, 0, 0, .35);
+	background-color: rgba(0, 0, 0, .5);
 	color: white;
-}
-
-main article h1 {
-	left: 0;
 	border-top-right-radius: 5px;
 	border-bottom-left-radius: 5px;
-}
-
-main article p {
-	right: 0;
-	border-top-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-}
-
-main article p span {
-	font-size: .75rem;
 }
 
 /* Queries */
