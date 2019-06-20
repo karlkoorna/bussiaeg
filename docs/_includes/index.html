@@ -1,5 +1,7 @@
 <header id="banner">
-	<img class="is-lazy" src="/img/home/banner.svg" alt="Banner" data-src="/img/home/banner.jpg">
+	<picture>
+		<img class="is-lazy" src="{% include /img/home/banner.svg.b64 %}" alt="Banner" data-src="/img/home/banner.jpg">
+	</picture>
 </header>
 <blockquote>
 	{{ site.data.home.slogan[lang] }}

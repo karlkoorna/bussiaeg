@@ -1,8 +1,12 @@
 {% for merch in site.data.merch.merch %}
 <article tabindex="0">
 	<div>
-		<img class="is-lazy" src="/img/merch/{{ merch.id }}.svg" alt="{{ merch.name[lang] }}" data-src="/img/merch/{{ merch.id }}.jpg">
-		<img class="is-lazy" src="/img/merch/{{ merch.id }}@zoom.svg" alt="" aria-hidden="true" data-src="/img/merch/{{ merch.id }}@zoom.jpg">
+		<picture>
+			<img class="is-lazy" src="{% include /img/merch/{{ merch.id }}-zoom.svg.b64 %}" alt="" aria-hidden="true" data-src="/img/merch/{{ merch.id }}-zoom.jpg">
+		</picture>
+		<picture>
+			<img class="is-lazy" src="{% include /img/merch/{{ merch.id }}.svg.b64 %}" alt="{{ merch.name[lang] }}" data-src="/img/merch/{{ merch.id }}.jpg">
+		</picture>
 	</div>
 	<h1>{{ merch.name[lang] }}</h1>
 	<p>{{ merch.price | floor }}<span>{{ merch.price | slice: -3, 3 }}€</span></p>

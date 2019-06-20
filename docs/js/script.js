@@ -2,9 +2,12 @@
 const observer = new IntersectionObserver(((entries) => {
 	for (const entry of entries) if (entry.isIntersecting) {
 		const image = entry.target;
-		image.src = image.getAttribute('data-src');
-		image.addEventListener('load', () => {
-			image.classList.remove('is-lazy');
+		const img = document.createElement('img');
+		img.src = image.getAttribute('data-src');
+		img.addEventListener('load', () => {
+			image.parentElement.insertAdjacentElement('afterbegin', img);
+			image.classList.add('has-loaded');
+			image.addEventListener('transitionend', image.remove);
 		});
 		observer.unobserve(image);
 	}
