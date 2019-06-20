@@ -19,10 +19,6 @@ body {
 	--shadow: 0 1px 6px rgba(0, 0, 0, .12), 0 1px 4px rgba(0, 0, 0, .12);
 }
 
-body.is-loading * {
-	transition: none !important;
-}
-
 ul {
 	margin: 0;
 	padding: 0;

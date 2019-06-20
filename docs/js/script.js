@@ -1,8 +1,3 @@
-// Enable CSS transitions after page load.
-addEventListener('load', () => {
-	document.body.classList.remove('is-loading');
-});
-
 // Lazy load images.
 const observer = new IntersectionObserver(((entries) => {
 	for (const entry of entries) if (entry.isIntersecting) {
