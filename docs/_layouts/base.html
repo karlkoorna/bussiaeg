@@ -12,20 +12,20 @@
 		<meta property="og:title" content="Bussiaeg.ee">
 		<meta property="og:description" content="Veebirakendus, mis koondab üle Eesti sõitvate busside, rongide, trollide ja trammide väljumisajad, et lihtsustada ühistranspordi kasutamist. Saadaval eesti, inglise ja vene keeles.">
 		<meta property="og:site_name" content="Bussiaeg.ee">
-		<meta property="og:image" content="https://github.com/karlkoorna/bussiaeg/blob/master/web/public/assets/banner-double.png?raw=true">
+		<meta property="og:image" content="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/banner-double.png">
 		{% assign alts = site.pages | where: 'name', page.name %}
 		{% for alt in alts %}
 		<link rel="alternate" hreflang="{{ alt.dir | remove: '/' | default: site.data.config.lang }}" href="https://info.bussiaeg.ee{{ alt.path | prepend: '/' | remove: '/index' | remove: '.html' }}">
 		{% endfor %}
-		<link rel="icon" sizes="16x16" href="https://github.com/karlkoorna/bussiaeg/blob/master/web/public/assets/favicons/favicon-16.png?raw=true">
-		<link rel="icon" sizes="32x32" href="https://github.com/karlkoorna/bussiaeg/blob/master/web/public/assets/favicons/favicon-32.png?raw=true">
-		<link rel="icon" sizes="256x256" href="https://github.com/karlkoorna/bussiaeg/blob/master/web/public/assets/favicons/favicon-256.png?raw=true">
-		<link rel="apple-touch-icon" sizes="180x180" href="https://github.com/karlkoorna/bussiaeg/blob/master/web/public/assets/favicons/apple-touch.png?raw=true">
-		<link rel="mask-icon" href="https://github.com/karlkoorna/bussiaeg/blob/master/web/public/assets/favicons/safari-pinned.svg?raw=true" color="#0081d1">
+		<link rel="icon" sizes="16x16" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/favicon-16.png">
+		<link rel="icon" sizes="32x32" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/favicon-32.png">
+		<link rel="icon" sizes="256x256" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/favicon-256.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/apple-touch.png">
+		<link rel="mask-icon" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/safari-pinned.svg" color="#0081d1">
+		<script>if (!window.fetch || !window.Promise) window.location = 'http://outdatedbrowser.com';</script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Handlee:400,700|Open+Sans&display=block">
 		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/{{ page.name | remove: '.html' }}.css">
-		<script>if (!window.fetch || !window.Promise) window.location = 'http://outdatedbrowser.com';</script>
 		<script defer src="/js/script.js"></script>
 	</head>
 	<body class="is-loading">
