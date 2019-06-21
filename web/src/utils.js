@@ -33,7 +33,7 @@ export function formatCountdown(seconds, isLive) {
 	return ((shms[0] ? '-' : '') + (shms[1] ? `${shms[1]}h` : '') + (shms[2] ? ` ${shms[2]}m` : '') + (!shms[2] && !isLive || (shms[3] && isLive) ? ` ${shms[3]}s` : '')).trim();
 }
 
-// Format meters to appropriate distance units.
+// Format meters to suitable distance units.
 export function formatDistance(meters) {
 	return meters ? meters >= 100000 ? `${Math.round(meters / 10000) * 10}km` : meters >= 10000 ? `${(meters / 1000).toFixed()}km` : meters >= 1000 ? `${(meters / 1000).toFixed(1)}km` : `${Math.round(meters / 10) * 10}m` : '';
 }

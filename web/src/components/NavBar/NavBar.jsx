@@ -7,8 +7,6 @@ import { withTheme } from 'utils.js';
 
 import './NavBar.css';
 
-const $app = document.getElementById('app');
-
 export const colors = {
 	search: [ '#ffa94d', '#ff8400' ],
 	favorites: [ '#f5557e', '#f22559' ],
@@ -43,7 +41,7 @@ class NavBarItem extends Component {
 	
 	render() {
 		const { to, colors: _colors, children } = this.props;
-		const [ primaryColor, secondaryColor ] = window.location.pathname === to || $app.classList.contains('is-debug-1') ? _colors : storeSettings.data.theme === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
+		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? _colors : storeSettings.data.theme === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
 		
 		return (
 			<li className="navbar-item" onMouseDown={this.navigate} onTouchStart={this.navigate}>

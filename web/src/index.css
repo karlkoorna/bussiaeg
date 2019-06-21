@@ -120,28 +120,6 @@ img {
 	flex-direction: column;
 }
 
-/* Debug */
-
-#app.is-debug-1 .navbar-item,
-#app.is-debug-1 #modal-buttons-cancel,
-#app.is-debug-1 #modal-buttons-confirm,
-#app.is-debug-1 .search-top-types-item.is-active,
-#app.is-debug-1 .favorites-stop,
-#app.is-debug-1 #map-locate,
-#app.is-debug-1 .leaflet-control-attribution,
-#app.is-debug-1 .leaflet-marker-icon,
-#app.is-debug-1 .settings-first_party,
-#app.is-debug-1 .settings-third_party,
-#app.is-debug-1 svg:not(.loader-vehicle):not(.favorites-stop-icon),
-#app.is-debug-1 div[class$="name"],
-#app.is-debug-1 div[class$="description"] {
-	animation: view-debug-1 1.5s linear infinite;
-}
-
-#app.is-debug-2 {
-	filter: grayscale(1);
-}
-
 /* Animations */
 
 @keyframes view-fadeIn {
@@ -164,18 +142,6 @@ img {
 	
 	to {
 		opacity: 0;
-	}
-	
-}
-
-@keyframes view-debug-1 {
-	
-	from {
-		filter: hue-rotate(0);
-	}
-	
-	to {
-		filter: hue-rotate(360deg);
 	}
 	
 }
