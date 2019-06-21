@@ -13,7 +13,7 @@ class StoreFavorites {
 	
 	// Return stop if in favorites.
 	get(id) {
-		return Boolean(this.favorites.find((favorite) => favorite.id === id)) || null;
+		return this.favorites.find((favorite) => favorite.id === id) || null;
 	}
 	
 	constructor() {

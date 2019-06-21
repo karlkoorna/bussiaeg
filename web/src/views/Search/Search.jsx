@@ -91,7 +91,7 @@ class ViewSearch extends Component {
 						<Swipeable nodeName="ol" className="search-results" onSwipedLeft={this.changeTypeRoutes} onSwipedRight={this.changeTypeStops}>
 							{results[type].length ? results[type].map((result) => (
 								<li key={result.id}>
-									<Link className={'search-results-result' + (type === 'stop' && storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/${type.slice(0, -1)}?id=${result.id}`}>
+									<Link className={'search-results-result' + (type === 'stops' && storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/${type.slice(0, -1)}?id=${result.id}`}>
 										<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} />
 										<div>
 											<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
