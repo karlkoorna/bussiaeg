@@ -31,7 +31,7 @@ function redirectView() {
 }
 
 render((
-	<Provider {...stores}>
+	<Provider {...{ storeCoords, storeSearch, storeFavorites, storeSettings }}>
 		<BrowserRouter>
 			<>
 				<Helmet defaultTitle="Bussiaeg.ee" />

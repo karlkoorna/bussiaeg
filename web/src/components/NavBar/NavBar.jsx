@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Ink from 'react-ink';
 
-import storeSettings from 'stores/settings.js';
 import { withTheme } from 'utils.js';
+import storeSettings from 'stores/settings.js';
 
 import './NavBar.css';
 
@@ -30,10 +30,10 @@ class NavBarItem extends Component {
 	}
 	
 	navigate = () => {
-		const { to, children, history, location: { pathname } } = this.props;
+		const { to, children, history, location } = this.props;
 		
 		// Cancel if already active.
-		if (pathname === to) return;
+		if (location.pathname === to) return;
 		
 		// Navigate and play animation.
 		history.push(to);
@@ -54,7 +54,7 @@ class NavBarItem extends Component {
 		
 		return (
 			<li className="navbar-item" onMouseDown={this.navigate} onTouchStart={this.navigate}>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" className="navbar-item-icon" style={{ animation: this.state.animation }} onAnimationEnd={this.resetStyle}>
+				<svg viewBox="0 0 1024 1024" className="navbar-item-icon" style={{ animation: this.state.animation }} onAnimationEnd={this.resetStyle}>
 					{{
 						search: (
 							<>
@@ -104,7 +104,7 @@ export default class NavBar extends Component {
 	render() {
 		return (
 			<nav id="navbar">
-				<div id="navbar-banner" className={this.state.banner ? 'is-visible' : ''} style={{ backgroundImage: `url(data:image/svg+xml;base64,${btoa(this.state.banner)})` }} />
+				<div id="navbar-banner" className={this.state.banner ? 'is-visible' : ''} style={{ backgroundImage: `url("data:image/svg+xml;base64,${btoa(this.state.banner)}")` }} />
 				<ul>
 					<WrappedNavBarItem to="/search" colors={colors.search}>Search</WrappedNavBarItem>
 					<WrappedNavBarItem to="/favorites" colors={colors.favorites}>Favorites</WrappedNavBarItem>

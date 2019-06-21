@@ -71,11 +71,11 @@ class ViewSearch extends Component {
 				<main id="search" className="view">
 					<div id="search-top">
 						<input id="search-top-input" type="search" value={query} placeholder={t('search.search')} autoComplete="off" required ref={this.$input} onKeyDown={this.hideKeyboard} onChange={this.updateQuery} />
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+						<svg viewBox="0 0 1024 1024">
 							<path strokeWidth="125" d="M650.7 650.7l321 321" />
 							<circle fill="transparent" strokeWidth="100" cx="399.3" cy="399.3" r="347" />
 						</svg>
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" onMouseDown={this.clearQuery}>
+						<svg viewBox="0 0 1024 1024" onMouseDown={this.clearQuery}>
 							<path strokeWidth="128" d="M92 92l840 840M932 92L92 932" />
 						</svg>
 						<div id="search-top-types">
