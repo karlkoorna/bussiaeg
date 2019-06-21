@@ -5,15 +5,15 @@ const fastify = require('fastify');
 const moment = require('moment');
 const chalk = require('chalk');
 
-// Allow requests to sites with TLSv1 certificates.
-tls.DEFAULT_MIN_VERSION = 'TLSv1';
-
 // Show splash.
 const splash = require('./package.json');
 console.log(chalk`\n{underline.magentaBright ${splash.description} v${splash.version}} {gray (${splash.license})}\n`);
 
 // Load environment variables from file.
 dotenv.config();
+
+// Allow requests to sites with TLSv1 certificates.
+tls.DEFAULT_MIN_VERSION = 'TLSv1';
 
 const db = require('./db.js');
 const data = require('./data.js');
