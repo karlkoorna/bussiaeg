@@ -4,7 +4,7 @@
 	bottom: 0;
 	width: 100%;
 	height: 64px;
-	background-color: var(--color-bg-light);
+	background-color: var(--color-back-light);
 	box-shadow: var(--shadow-hard);
 	cursor: pointer;
 }

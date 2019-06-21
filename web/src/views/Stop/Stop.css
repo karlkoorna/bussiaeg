@@ -11,7 +11,7 @@
 	position: relative;
 	width: 100%;
 	height: 72px;
-	background-color: var(--color-bg-light);
+	background-color: var(--color-back-light);
 	box-shadow: var(--shadow-soft);
 	font-weight: bold;
 	transition: background-color .15s linear;
@@ -71,8 +71,8 @@
 }
 
 #stop-info-favorite.is-active > path {
-	fill: #f5557e;
-	stroke: #f22559;
+	fill: var(--color-view-favorites-light);
+	stroke: var(--color-view-favorites-dark);
 }
 
 /* Times */
@@ -176,7 +176,7 @@
 
 .stop-times-time-time {
 	bottom: 11px;
-	color: var(--color-fg-light);
+	color: var(--color-fore-light);
 	font-size: 19px;
 }
 

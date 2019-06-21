@@ -13,8 +13,8 @@ SET
 		CASE
 			WHEN LOCATE('trol', types) > 0 THEN 'trol'
 			WHEN LOCATE('bus', types) > 0 THEN 'bus' -- Coaches stops are also bus stops, bus stops take precedence.
-			WHEN LOCATE('coach-cc', types) > 0 THEN 'coach-cc'
-			WHEN LOCATE('coach-c', types) > 0 THEN 'coach-c'
+			WHEN LOCATE('coach_cc', types) > 0 THEN 'coach_cc'
+			WHEN LOCATE('coach_c', types) > 0 THEN 'coach_c'
 			WHEN LOCATE('tram', types) > 0 THEN 'tram'
 			WHEN LOCATE('ferry', types) > 0 THEN 'ferry'
 			ELSE NULL

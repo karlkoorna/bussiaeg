@@ -22,13 +22,6 @@ import storeSettings from 'stores/settings.js';
 
 import './index.css';
 
-const stores = {
-	storeCoords,
-	storeSearch,
-	storeFavorites,
-	storeSettings
-};
-
 let hasRedirected = window.location.pathname !== '/' || storeSettings.data.view === 'map';
 function redirectView() {
 	if (hasRedirected) return null;

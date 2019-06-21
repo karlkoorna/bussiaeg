@@ -64,8 +64,8 @@ img {
 
 #app {
 	display: flex;
-	background-color: var(--color-bg-dark);
-	color: var(--color-fg-dark);
+	background-color: var(--color-back-dark);
+	color: var(--color-fore-dark);
 	font-family: Arial, Helvetica, sans-serif;
 	flex-direction: column;
 	-webkit-tap-highlight-color: transparent;
@@ -75,24 +75,24 @@ img {
 #app[data-theme="dark"] {
 	--shadow-soft: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	--shadow-hard: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
-	--animation-fadeIn: view-fadeIn .15s linear forwards;
-	--animation-fadeOut: view-fadeOut .15s linear forwards;
+	--animation-fadeIn: view-fade .5s linear forwards;
+	--animation-fadeOut: view-fade .15s reverse forwards;
 }
 
 #app[data-theme="light"] {
-	--color-fg-light: #6a6b70;
-	--color-fg-dark: #34393d;
-	--color-bg-light: white;
-	--color-bg-dark: #f2f2f2;
-	--color-bg-darker: #ebebeb;
+	--color-fore-light: #6a6b70;
+	--color-fore-dark: #34393d;
+	--color-back-light: white;
+	--color-back-dark: #f2f2f2;
+	--color-back-darker: #ebebeb;
 }
 
 #app[data-theme="dark"] {
-	--color-fg-light: #bebebe;
-	--color-fg-dark: #eaeaea;
-	--color-bg-light: #1e2529;
-	--color-bg-dark: #1b1c1d;
-	--color-bg-darker: #151516;
+	--color-fore-light: #bebebe;
+	--color-fore-dark: #eaeaea;
+	--color-back-light: #1e2529;
+	--color-back-dark: #1b1c1d;
+	--color-back-darker: #151516;
 }
 
 /* View */
@@ -102,7 +102,7 @@ img {
 	position: absolute;
 	width: 100%;
 	height: calc(100% - 64px);
-	background-color: var(--color-bg-dark);
+	background-color: var(--color-back-dark);
 	flex-direction: column;
 	overflow-y: auto;
 }
@@ -111,7 +111,7 @@ img {
 	display: flex;
 	width: 100%;
 	height: 100%;
-	color: var(--color-fg-light);
+	color: var(--color-fore-light);
 	font-size: 20px;
 	font-weight: bold;
 	animation: var(--animation-fadeIn);
@@ -122,7 +122,7 @@ img {
 
 /* Animations */
 
-@keyframes view-fadeIn {
+@keyframes view-fade {
 	
 	from {
 		opacity: 0;
@@ -130,18 +130,6 @@ img {
 	
 	to {
 		opacity: 1;
-	}
-	
-}
-
-@keyframes view-fadeOut {
-	
-	from {
-		opacity: 1;
-	}
-	
-	to {
-		opacity: 0;
 	}
 	
 }

@@ -26,7 +26,7 @@
 #settings > section {
 	width: 100%;
 	padding: 12px 14px;
-	background-color: var(--color-bg-darker);
+	background-color: var(--color-back-darker);
 	font-size: 15px;
 }
 
@@ -45,18 +45,18 @@
 }
 
 .settings-third_party {
-	color: #ffa94d;
+	color: orangered;
 }
 
 #settings > section > a > i {
 	height: 0;
 	margin-left: 4px;
-	color: var(--color-fg-light);
+	color: var(--color-fore-light);
 	font-size: 18px;
 	vertical-align: sub;
 }
 
 #settings > section > small {
-	color: var(--color-fg-light);
+	color: var(--color-fore-light);
 	font-size: 12px;
 }

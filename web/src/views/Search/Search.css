@@ -6,7 +6,7 @@
 /* Top */
 
 #search-top {
-	background-color: var(--color-bg-light);
+	background-color: var(--color-back-light);
 	box-shadow: var(--shadow-soft);
 	flex: 0;
 }
@@ -16,8 +16,8 @@
 	margin: 16px;
 	margin-bottom: 0;
 	padding: 12px 48px;
-	background-color: var(--color-bg-dark);
-	color: var(--color-fg-dark);
+	background-color: var(--color-back-dark);
+	color: var(--color-fore-dark);
 	border-radius: 12px;
 	font-size: 16px;
 }
@@ -52,11 +52,11 @@
 }
 
 #search-top-input:focus + svg > path {
-	stroke: #ff8400 !important;
+	stroke: var(--color-view-search-dark) !important;
 }
 
 #search-top-input:focus + svg > circle {
-	stroke: #ffa94d !important;
+	stroke: var(--color-view-search-light) !important;
 }
 
 #search-top-input + svg + svg {
@@ -92,7 +92,7 @@
 }
 
 .search-top-types-item.is-active {
-	color: #ffa94d;
+	color: var(--color-view-search-light);
 }
 
 /* Results */
@@ -125,7 +125,7 @@
 	position: absolute;
 	left: 12px;
 	bottom: 12px;
-	color: #f5557e;
+	color: var(--color-view-favorites-light);
 	text-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	font-family: "Material Icons", sans-serif;
 }

@@ -7,12 +7,21 @@ import { withTheme } from 'utils.js';
 
 import './NavBar.css';
 
+const $app = document.getElementById('app');
+
+// View colors.
 export const colors = {
 	search: [ '#ffa94d', '#ff8400' ],
 	favorites: [ '#f5557e', '#f22559' ],
 	map: [ '#00e6ad', '#00cc9a' ],
 	settings: [ '#00bfff', '#00ace6' ]
 };
+
+// Add CSS variables for above colors.
+for (const view of Object.entries(colors)) {
+	$app.style.setProperty(`--color-view-${view[0]}-light`, view[1][0]);
+	$app.style.setProperty(`--color-view-${view[0]}-dark`, view[1][1]);
+}
 
 class NavBarItem extends Component {
 	

@@ -8,8 +8,8 @@ SET
 	name = @route_short_name,
 	type = (
 		CASE
-			WHEN @route_color = 'E6FA32' THEN 'coach-cc'
-			WHEN @route_color = 'F55ADC' OR @route_color = '00933C' THEN 'coach-c'
+			WHEN @route_color = 'E6FA32' THEN 'coach_cc'
+			WHEN @route_color = 'F55ADC' OR @route_color = '00933C' THEN 'coach_c'
 			WHEN @route_type = 3 THEN 'bus' -- Coaches are also buses, coaches take precedence.
 			WHEN @route_type = 800 THEN 'trol'
 			WHEN @route_type = 0 THEN 'tram'

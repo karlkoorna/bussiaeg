@@ -36,12 +36,12 @@ const markers = {
 	trol: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'trol' }))),
 	tram: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'tram' }))),
 	train: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'train' }))),
-	'coach-c': btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach-c' }))),
-	'coach-cc': btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach-cc' }))),
+	coach_c: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach_c' }))),
+	coach_cc: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach_cc' }))),
 	location: btoa(renderToStaticMarkup((
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 			<circle fill="#fff" cx="512" cy="512" r="512" />
-			<circle fill="#00e6ad" cx="512" cy="512" r="350" />
+			<circle fill={viewColors.map[0]} cx="512" cy="512" r="350" />
 		</svg>
 	)))
 };
@@ -178,9 +178,9 @@ class ViewMap extends Component {
 		const circle = new Leaflet.Circle([ 0, 0 ], {
 			interactive: false,
 			renderer: new Leaflet.SVG({ padding: 1 }),
-			fillColor: '#00e6ad',
+			fillColor: viewColors.map[0],
 			fillOpacity: .15,
-			color: '#00e6ad',
+			color: viewColors.map[0],
 			weight: 2
 		}).addTo(map);
 		

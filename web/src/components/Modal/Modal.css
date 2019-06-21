@@ -25,7 +25,7 @@
 	width: 80%;
 	max-width: 384px;
 	margin-bottom: 48px;
-	background-color: var(--color-bg-light);
+	background-color: var(--color-back-light);
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
 }
@@ -38,7 +38,7 @@
 
 #modal-text {
 	padding: 0 24px 24px;
-	color: var(--color-fg-light);
+	color: var(--color-fore-light);
 }
 
 /* Panel - Buttons */
@@ -70,7 +70,7 @@
 }
 
 #modal-buttons-cancel {
-	color: tomato;
+	color: orangered;
 }
 
 #modal-buttons-confirm {
