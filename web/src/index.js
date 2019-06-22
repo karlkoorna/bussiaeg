@@ -22,12 +22,21 @@ import storeSettings from 'stores/settings.js';
 
 import './index.css';
 
-let hasRedirected = window.location.pathname !== '/' || storeSettings.data.view === 'map';
-function redirectView() {
-	if (hasRedirected) return null;
+let hasRedirected = false;
+function handleRoute() {
+	// Send analytics about active page.
+	if (hasRedirected) {
+		if (process.env['REACT_APP_GA'] && window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
+			page_title: document.title,
+			page_path: window.location.pathname + window.location.search
+		});
+		
+		return null;
+	}
 	hasRedirected = true;
 	
-	return <Redirect to={'/' + storeSettings.data.view} />;
+	// Redirect to default view if different.
+	if (window.location.pathname !== '/' + storeSettings.data.view) return <Redirect to={'/' + storeSettings.data.view} />;
 }
 
 render((
@@ -36,8 +45,8 @@ render((
 			<>
 				<Helmet defaultTitle="Bussiaeg.ee" />
 				<ViewMap />
+				<Route render={handleRoute} />
 				<Switch>
-					<Route exact path="/" component={redirectView} />
 					<Route exact path="/search" component={ViewSearch} />
 					<Route exact path="/favorites" component={ViewFavorites} />
 					<Route exact path="/settings" component={ViewSettings} />
@@ -54,19 +63,3 @@ render((
 window.addEventListener('keydown', (e) => {
 	if (e.which === 9) e.preventDefault();
 });
-
-// Send analytics about active page.
-if (process.env['REACT_APP_GA']) {
-	let lastPath = '';
-	
-	setInterval(() => {
-		const path = window.location.pathname + window.location.search;
-		if (path === lastPath) return;
-		lastPath = path;
-		
-		if (window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
-			page_title: document.title,
-			page_path: path
-		});
-	}, 2000);
-}
