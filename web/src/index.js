@@ -35,8 +35,8 @@ function handleRoute() {
 	}
 	hasRedirected = true;
 	
-	// Redirect to default view if different.
-	if (window.location.pathname !== '/' + storeSettings.data.view) return <Redirect to={'/' + storeSettings.data.view} />;
+	// Redirect to default view from all navbar views.
+	if ([ '/stop', '/route', '/' + storeSettings.data.view ].indexOf(window.location.pathname) === -1) return <Redirect to={'/' + storeSettings.data.view} />;
 }
 
 render((
