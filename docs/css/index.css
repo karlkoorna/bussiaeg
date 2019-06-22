@@ -39,7 +39,7 @@ main header:after {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(0deg, rgba(0, 0, 0, .2) 55%, rgba(0, 0, 0, .4) 100%);
+	background: linear-gradient(0deg, rgba(0, 0, 0, .4) 55%, rgba(0, 0, 0, .6) 100%);
 }
 
 main header picture {
@@ -93,10 +93,7 @@ main blockquote svg {
 	main blockquote {
 		margin-top: -3.8rem;
 		margin-bottom: 3rem;
-		padding-left: 15%;
 		font-size: 1.5rem;
-		text-align: left;
-		justify-content: flex-start;
 	}
 	
 }

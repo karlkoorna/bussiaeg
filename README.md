@@ -1,4 +1,4 @@
-![Bussiaeg.ee logo](https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/banner-single.svg?sanitize=true)
+![Bussiaeg.ee logo](https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/logo-single.svg?sanitize=true)
 
 Kogu Eesti ühistranspordi väljumisajad ühest kohast.
 

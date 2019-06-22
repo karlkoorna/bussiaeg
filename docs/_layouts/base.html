@@ -1,21 +1,21 @@
-{% assign lang = page.dir | remove: '/' | default: site.data.config.lang %}
+{% assign lang = page.dir | remove: '/' | default: site.data.base.lang %}
 <!doctype html>
 <html lang="{{ lang }}">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Bussiaeg.ee: Kogu Eesti ühistranspordi väljumisajad ühest kohast.</title>
-		<meta name="description" content="Veebirakendus, mis koondab üle Eesti sõitvate busside, rongide, trollide ja trammide väljumisajad, et lihtsustada ühistranspordi kasutamist. Saadaval eesti, inglise ja vene keeles.">
+		<title>Bussiaeg.ee: {{ site.data.base.title[lang] }}</title>
+		<meta name="description" content="{{ site.data.base.title[lang] }} {{ site.data.base.description[lang] }}">
 		<meta name="author" content="Karl Köörna, Kaur Hendrikson">
 		<meta name="theme-color" content="#1e2529">
 		<meta property="og:type" content="website">
-		<meta property="og:title" content="Bussiaeg.ee">
-		<meta property="og:description" content="Veebirakendus, mis koondab üle Eesti sõitvate busside, rongide, trollide ja trammide väljumisajad, et lihtsustada ühistranspordi kasutamist. Saadaval eesti, inglise ja vene keeles.">
+		<meta property="og:title" content="Bussiaeg.ee: {{ site.data.base.title[lang] }}">
+		<meta property="og:description" content="{{ site.data.base.title[lang] }} {{ site.data.base.description[lang] }}">
 		<meta property="og:site_name" content="Bussiaeg.ee">
-		<meta property="og:image" content="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/banner-double.png">
+		<meta property="og:image" content="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/logo-double.png">
 		{% assign alts = site.pages | where: 'name', page.name %}
 		{% for alt in alts %}
-		<link rel="alternate" hreflang="{{ alt.dir | remove: '/' | default: site.data.config.lang }}" href="https://info.bussiaeg.ee{{ alt.path | prepend: '/' | remove: '/index' | remove: '.html' }}">
+		<link rel="alternate" hreflang="{{ alt.dir | remove: '/' | default: site.data.base.lang }}" href="https://info.bussiaeg.ee{{ alt.path | prepend: '/' | remove: '/index' | remove: '.html' }}">
 		{% endfor %}
 		<link rel="icon" sizes="16x16" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/favicon-16.png">
 		<link rel="icon" sizes="32x32" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/favicon-32.png">

@@ -1,0 +1,11 @@
+{
+  "lang": "et",
+  "title": {
+    "et": "Kogu Eesti ühistranspordi väljumisajad ühest kohast.",
+    "en": "Estonian public transport departure times all from one place."
+  },
+  "description": {
+    "et": "Veebirakendus, mis koondab üle Eesti sõitvate busside, trollide, trammide ja rongide väljumisaegu.",
+    "en": "A web app, which combines the departure times of buses, trolleys, trams and trains running across Estonia."
+  }
+}

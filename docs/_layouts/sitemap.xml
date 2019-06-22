@@ -5,7 +5,7 @@
 	<url>
 		<loc>https://info.bussiaeg.ee{{ _page.name | prepend: '/' | remove: '/index' | remove: '.html' }}</loc>
 		{% for alt in _page.items %}
-		<xhtml:link rel="alternate" hreflang="{{ alt.dir | remove: '/' | default: site.data.config.lang }}" href="https://info.bussiaeg.ee{{ alt.path | prepend: '/' | remove: '/index' | remove: '.html' }}" />
+		<xhtml:link rel="alternate" hreflang="{{ alt.dir | remove: '/' | default: site.data.base.lang }}" href="https://info.bussiaeg.ee{{ alt.path | prepend: '/' | remove: '/index' | remove: '.html' }}" />
 		{% endfor %}
 	</url>
 	{% endfor %}
