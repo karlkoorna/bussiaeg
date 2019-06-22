@@ -38,7 +38,7 @@ const markers = {
 	coach_c: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach_c' }))),
 	coach_cc: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach_cc' }))),
 	location: btoa(renderToStaticMarkup((
-		<svg viewBox="0 0 1024 1024">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
 			<circle fill="#fff" cx="512" cy="512" r="512" />
 			<circle fill={viewColors.map[0]} cx="512" cy="512" r="350" />
 		</svg>
