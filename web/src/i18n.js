@@ -15,9 +15,7 @@ function genResources(langs) {
 i18n.use(LanguageDetector)
 	.use(initReactI18next)
 	.init({
-		resources: genResources({
-			en, et, ru
-		}),
+		resources: genResources({ en, et, ru }),
 		load: 'languageOnly',
 		fallbackLng: 'en',
 		interpolation: {

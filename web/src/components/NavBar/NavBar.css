@@ -10,6 +10,7 @@
 }
 
 #navbar-banner {
+	z-index: 999;
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -18,12 +19,7 @@
 	background-repeat: round;
 	filter: drop-shadow(0 -2px 3px rgba(0, 0, 0, .16)) drop-shadow(0 1px 1px rgba(0, 0, 0, .16));
 	transform: translateY(-50%);
-	opacity: 0;
 	pointer-events: none;
-}
-
-#navbar-banner.is-visible {
-	animation: var(--animation-fadeIn);
 }
 
 #navbar ul {

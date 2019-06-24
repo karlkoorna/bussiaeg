@@ -8,14 +8,13 @@ import { Helmet } from 'react-helmet';
 import Leaflet from 'leaflet';
 import KDBush from 'kdbush';
 
+import { withTheme } from 'utils.js';
+import storeSettings from 'stores/settings.js';
 import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
 import Fab from 'components/Fab/Fab.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
-
-import storeSettings from 'stores/settings.js';
-import { withTheme } from 'utils.js';
-import dragZoom from './dragZoom.js';
+import addDragZoom from './dragZoom.js';
 
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
@@ -208,8 +207,8 @@ class ViewMap extends Component {
 			this.setState({ showModal: true });
 		});
 		
-		// Register drag zoom handler (mobile).
-		dragZoom(map);
+		// Add drag zoom handler (mobile).
+		addDragZoom(map);
 		
 		// Cancel locating on user interaction.
 		$map.addEventListener('mousedown', this.stopLocating, { passive: true });

@@ -4,6 +4,7 @@ import Ink from 'react-ink';
 
 import { withTheme } from 'utils.js';
 import storeSettings from 'stores/settings.js';
+import getBanner from './banner.js';
 
 import './NavBar.css';
 
@@ -90,29 +91,18 @@ class NavBarItem extends Component {
 
 const WrappedNavBarItem = withRouter(withTheme(NavBarItem));
 
-export default class NavBar extends Component {
+export default function NavBar() {
+	const banner = getBanner();
 	
-	state = {
-		banner: ''
-	}
-	
-	async componentDidMount() {
-		const params = new URLSearchParams(window.location.search);
-		this.setState({ banner: await (await fetch(`${process.env['REACT_APP_API']}/banner${params.has('banner') ? '?type=' + params.get('banner') : ''}`)).text() });
-	}
-	
-	render() {
-		return (
-			<nav id="navbar">
-				<div id="navbar-banner" className={this.state.banner ? 'is-visible' : ''} style={{ backgroundImage: `url("data:image/svg+xml;base64,${btoa(this.state.banner)}")` }} />
-				<ul>
-					<WrappedNavBarItem to="/search" colors={colors.search}>Search</WrappedNavBarItem>
-					<WrappedNavBarItem to="/favorites" colors={colors.favorites}>Favorites</WrappedNavBarItem>
-					<WrappedNavBarItem to="/" colors={colors.map}>Map</WrappedNavBarItem>
-					<WrappedNavBarItem to="/settings" colors={colors.settings}>Settings</WrappedNavBarItem>
-				</ul>
-			</nav>
-		);
-	}
-	
+	return (
+		<nav id="navbar">
+			{banner ? <div id="navbar-banner" style={{ backgroundImage: `url('assets/banners/${banner}.svg')` }} /> : null}
+			<ul>
+				<WrappedNavBarItem to="/search" colors={colors.search}>Search</WrappedNavBarItem>
+				<WrappedNavBarItem to="/favorites" colors={colors.favorites}>Favorites</WrappedNavBarItem>
+				<WrappedNavBarItem to="/" colors={colors.map}>Map</WrappedNavBarItem>
+				<WrappedNavBarItem to="/settings" colors={colors.settings}>Settings</WrappedNavBarItem>
+			</ul>
+		</nav>
+	);
 }
