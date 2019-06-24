@@ -142,7 +142,7 @@ class ViewMap extends Component {
 	
 	async componentDidMount() {
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
-		window.test = this.markers;
+		
 		const map = window.map = new Leaflet.Map('map', {
 			center: [
 				start.lat || opts.startLat,
@@ -214,10 +214,9 @@ class ViewMap extends Component {
 		$map.addEventListener('mousedown', this.stopLocating, { passive: true });
 		$map.addEventListener('touchstart', this.stopLocating, { passive: true });
 		
-		// Update location marker and accuracy circle.
-		
 		const timestamp = new Date();
 		
+		// Update location marker and accuracy circle.
 		this.dispose = reaction(() => ({
 			lat: this.props.storeCoords.lat,
 			lng: this.props.storeCoords.lng,

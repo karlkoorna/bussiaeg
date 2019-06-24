@@ -23,7 +23,7 @@ export default function Icon({ id, className, shape, type }) {
 	const [ primaryColor, secondaryColor ] = colors[type];
 	
 	return (
-		<svg viewBox="0 0 1024 1024" id={id} className={className} fill={shape === 'stop' ? 'white' : null}>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id={id} className={className} fill={shape === 'stop' ? 'white' : null}>
 			{shape === 'stop' ? <path fill={primaryColor} d="M640 1024.5H384c-211.2 0-384-172.8-384-384v-256C0 173.3 172.8.5 384 .5h256c211.2 0 384 172.8 384 384v256c0 211.2-172.8 384-384 384z" /> : null}
 			{{
 				unknown: [
