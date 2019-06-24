@@ -15,7 +15,8 @@ export default function banner() {
 			return 'symbols';
 		case '01.05': // Spring Day
 			return 'flowers';
-		case '24.06': // St. John's Day
+		case '23.06': // St. John's Day
+		case '24.06':
 			return 'campfires';
 		case '31.10': // Halloween
 			return 'ghosts';
