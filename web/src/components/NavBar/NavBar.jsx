@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 import Ink from 'react-ink';
 
-import { handleTheme } from 'utils.js';
 import getBanner from './banner.js';
 
 import './NavBar.css';
@@ -26,7 +26,6 @@ for (const view of Object.entries(colors)) {
 class NavBarItem extends Component {
 	
 	state = {
-		theme: '',
 		animation: ''
 	}
 	
@@ -45,15 +44,9 @@ class NavBarItem extends Component {
 		this.setState({ animation: '' });
 	}
 	
-	componentDidMount() {
-		handleTheme((theme) => {
-			this.setState({ theme });
-		});
-	}
-	
 	render() {
 		const { to, colors: _colors, children } = this.props;
-		const { theme } = this.state;
+		const { theme } = this.props.storeSettings.data;
 		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? _colors : theme === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
 		
 		return (
@@ -92,7 +85,7 @@ class NavBarItem extends Component {
 	
 }
 
-const WrappedNavBarItem = withRouter(NavBarItem);
+const WrappedNavBarItem = withRouter(inject('storeSettings')(observer(NavBarItem)));
 
 export default function NavBar() {
 	const banner = getBanner();

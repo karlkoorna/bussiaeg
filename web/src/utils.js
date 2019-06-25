@@ -1,13 +1,3 @@
-const $app = document.getElementById('app');
-
-// Listen for theme change.
-export function handleTheme(cb) {
-	(new MutationObserver(() => {
-		cb($app.getAttribute('data-theme'));
-	})).observe($app, { attributes: true });
-	cb($app.getAttribute('data-theme'));
-}
-
 // Converts seconds to sign, raw hour, minute and second values.
 function secondsToShms(seconds) {
 	const absSeconds = Math.abs(seconds);
