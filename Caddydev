@@ -1,6 +1,6 @@
 https://api.devaeg.ee {
 	tls tls.crt tls.key
-	cors / http://devaeg.ee https://devaeg.ee
+	cors / https://devaeg.ee
 	proxy / 127.0.0.1:81
 }
 

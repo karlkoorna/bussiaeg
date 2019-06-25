@@ -22,7 +22,7 @@
 		<link rel="icon" sizes="256x256" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/favicon-256.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/apple-touch.png">
 		<link rel="mask-icon" href="https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/favicons/safari-pinned.svg" color="#0081d1">
-		<script>if (!window.fetch || !window.Promise) window.location = 'http://outdatedbrowser.com';</script>
+		<script>if (!('fetch' in window) || !('Promise' in window)) window.location = 'http://outdatedbrowser.com';</script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Handlee:400,700|Open+Sans&display=block">
 		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="/css/{{ page.name | remove: '.html' }}.css">
