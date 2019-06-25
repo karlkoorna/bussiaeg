@@ -11,7 +11,7 @@ Having the latest stable version of all prerequisites is recommended.
 	[Download](https://www.debian.org/distrib/) and install Debian. Ensure additional packages.
 	
 	```bash
-	$ apt install curl git
+	$ apt install curl git openssl
 	```
 
 2. **MySQL** :package:
@@ -88,7 +88,7 @@ Update all modules.
 $ ./update.sh
 ```
 
-Fill `.env` by example in `.env.example` for all modules.
+Populate `.env` by example in `.env.example` for all modules.
 
 Start all modules in production mode.
 
@@ -98,19 +98,22 @@ $ ./start.sh
 
 ## Development :fire:
 
-Redirect `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
-
-Fill `.env` by example in `.env.example` for all modules.\
 *Note: HTTP headers do not work if the HTTPS certificate is invalid.*\
 *Note: Deleting `tmp/update` will force a data update next launch.*
 
-Start all modules in development mode or...
+Direct `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
+
+Add the generated `ca.crt` to the trusted certificate authorities list.
+
+Populate `.env` by example in `.env.example` for all modules.
+
+Start all modules in development mode...
 
 ```bash
 $ ./start.sh dev
 ```
 
-start server and/or client module in development mode.
+or start server and/or client module in development mode.
 
 ```bash
 $ cd api && npm run develop

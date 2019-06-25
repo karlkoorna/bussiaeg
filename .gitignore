@@ -2,4 +2,7 @@ node_modules/
 api/tmp/*
 build/
 !.gitkeep
+ca.*
+tls.*
+!tls.cfg
 .env
