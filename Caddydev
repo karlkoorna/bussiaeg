@@ -1,4 +1,3 @@
-http://api.devaeg.ee,
 https://api.devaeg.ee {
 	tls tls.crt tls.key
 	cors / http://devaeg.ee https://devaeg.ee
@@ -6,6 +5,12 @@ https://api.devaeg.ee {
 }
 
 http://devaeg.ee,
+http://www.devaeg.ee,
+https://www.devaeg.ee {
+	tls tls.crt tls.key
+	redir / https://devaeg.ee
+}
+
 https://devaeg.ee {
 	tls tls.crt tls.key
 	proxy / 127.0.0.1:3000

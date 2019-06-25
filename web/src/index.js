@@ -35,8 +35,8 @@ function handleRoute() {
 	}
 	hasRedirected = true;
 	
-	// Redirect to default view from all navbar views.
-	if ([ '/stop', '/route', '/' + storeSettings.data.view ].indexOf(window.location.pathname) === -1) return <Redirect to={'/' + storeSettings.data.view} />;
+	// Redirect to default view when launched as an app.
+	if ((new URLSearchParams(window.location.search).has('app'))) return <Redirect to={'/' + storeSettings.data.view.replace('map', '')} />;
 }
 
 render((
@@ -63,3 +63,7 @@ render((
 window.addEventListener('keydown', (e) => {
 	if (e.which === 9) e.preventDefault();
 });
+
+// Setup PWA requirements.
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('worker.js');
+window.addEventListener('beforeinstallprompt', () => {});

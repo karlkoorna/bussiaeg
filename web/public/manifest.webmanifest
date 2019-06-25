@@ -1,14 +1,18 @@
 {
+  "name": "Bussiaeg.ee",
+  "short_name": "Bussiaeg.ee",
+  "start_url": "/?app",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#1e2529",
+  "theme_color": "#1e2529",
   "icons": [
     {
-      "src": "mobile-192.png",
+      "src": "assets/favicons/mobile-192.png",
       "sizes": "192x192"
     },
     {
-      "src": "mobile-512.png",
+      "src": "assets/favicons/mobile-512.png",
       "sizes": "512x512"
     }
   ]
