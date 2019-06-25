@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Ink from 'react-ink';
 
-import { withTheme } from 'utils.js';
-import storeSettings from 'stores/settings.js';
+import { handleTheme } from 'utils.js';
 import getBanner from './banner.js';
 
 import './NavBar.css';
@@ -27,6 +26,7 @@ for (const view of Object.entries(colors)) {
 class NavBarItem extends Component {
 	
 	state = {
+		theme: '',
 		animation: ''
 	}
 	
@@ -45,13 +45,16 @@ class NavBarItem extends Component {
 		this.setState({ animation: '' });
 	}
 	
-	onThemeChange = () => {
-		this.forceUpdate();
+	componentDidMount() {
+		handleTheme((theme) => {
+			this.setState({ theme });
+		});
 	}
 	
 	render() {
 		const { to, colors: _colors, children } = this.props;
-		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? _colors : storeSettings.data.theme === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
+		const { theme } = this.state;
+		const [ primaryColor, secondaryColor ] = window.location.pathname === to ? _colors : theme === 'light' ? [ '#bdbdbd', '#b3b3b3' ] : [ '#707070', '#606060' ];
 		
 		return (
 			<li className="navbar-item" onMouseDown={this.navigate} onTouchStart={this.navigate}>
@@ -89,7 +92,7 @@ class NavBarItem extends Component {
 	
 }
 
-const WrappedNavBarItem = withRouter(withTheme(NavBarItem));
+const WrappedNavBarItem = withRouter(NavBarItem);
 
 export default function NavBar() {
 	const banner = getBanner();

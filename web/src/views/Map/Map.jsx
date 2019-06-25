@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet';
 import Leaflet from 'leaflet';
 import KDBush from 'kdbush';
 
-import { withTheme } from 'utils.js';
+import { handleTheme } from 'utils.js';
 import storeSettings from 'stores/settings.js';
 import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
@@ -134,12 +134,6 @@ class ViewMap extends Component {
 		});
 	}
 	
-	// Update map tile layer.
-	onThemeChange = () => {
-		if (this.tileLayer) this.tileLayer.remove();
-		this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + storeSettings.data.theme.toUpperCase()]).addTo(window.map);
-	}
-	
 	async componentDidMount() {
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
 		
@@ -184,7 +178,10 @@ class ViewMap extends Component {
 		}).addTo(map);
 		
 		// Load tile layer.
-		this.onThemeChange();
+		handleTheme((theme) => {
+			if (this.tileLayer) this.tileLayer.remove();
+			this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + theme.toUpperCase()]).addTo(window.map);
+		});
 		
 		// (Re)draw stops.
 		map.whenReady(() => {
@@ -279,4 +276,4 @@ class ViewMap extends Component {
 	
 }
 
-export default withTranslation()(withRouter(withTheme(inject('storeCoords')(observer(ViewMap)))));
+export default withTranslation()(withRouter(inject('storeCoords')(observer(ViewMap))));

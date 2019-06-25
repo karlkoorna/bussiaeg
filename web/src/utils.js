@@ -1,16 +1,11 @@
 const $app = document.getElementById('app');
 
-// Notify component of theme change.
-export function withTheme(C) {
-	return class extends C {
-		
-		componentDidMount() {
-			(new MutationObserver(() => {
-				if (this.onThemeChange) this.onThemeChange(); else this.wrappedInstance.onThemeChange();
-			})).observe($app, { attributes: true });
-		}
-		
-	};
+// Listen for theme change.
+export function handleTheme(cb) {
+	(new MutationObserver(() => {
+		cb($app.getAttribute('data-theme'));
+	})).observe($app, { attributes: true });
+	cb($app.getAttribute('data-theme'));
 }
 
 // Converts seconds to sign, raw hour, minute and second values.
