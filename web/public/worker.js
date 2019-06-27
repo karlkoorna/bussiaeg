@@ -15,6 +15,6 @@ self.addEventListener('fetch', (e) => {
 		fetch(e.request)
 	]));
 	
-	// Workaround for PWA.
+	// Workaround for PWA support.
 	e.respondWith(fetch(e.request).catch(() => new Response(null, { status: 404 })));
 });

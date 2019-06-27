@@ -8,11 +8,11 @@
   "theme_color": "#1e2529",
   "icons": [
     {
-      "src": "assets/favicons/mobile-192.png",
+      "src": "assets/favicons/icon-192.png",
       "sizes": "192x192"
     },
     {
-      "src": "assets/favicons/mobile-512.png",
+      "src": "assets/favicons/icon-512.png",
       "sizes": "512x512"
     }
   ]
