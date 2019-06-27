@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<title>Bussiaeg.ee</title>
+		<meta name="theme-color" content="#1e2529">
+		<style>
+			html,
+			body {
+				height: 100%;
+			}
+			
+			body {
+				display: flex;
+				margin: 0;
+				background-color: #1e2529;
+				font-family: Arial, sans-serif;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				transition: background-color .3s linear, opacity .3s linear;
+			}
+			
+			body.is-online {
+				background-color: white;
+				opacity: 0;
+			}
+			
+			svg {
+				width: 20vmin;
+				min-width: 128px;
+				max-width: 512px;
+				opacity: 0;
+				animation: pulse 5s ease-in-out infinite;
+			}
+			
+			h1 {
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				color: #293238;
+				font-family: Consolas, monospace;
+				font-size: 18px;
+				text-align: center;
+			}
+			
+			@keyframes pulse {
+				
+				from {
+					opacity: .25;
+				}
+				
+				50% {
+					opacity: 1;
+				}
+				
+				to {
+					opacity: .25;
+				}
+				
+			}
+		</style>
+	</head>
+	<body>
+		<svg viewBox="0 0 1024 1024">
+			<path fill="silver" d="M20.47 274.37a24.87 24.87 0 0 0-.55 35.95l53.57 53.14a25.39 25.39 0 0 0 35 .6 598.06 598.06 0 0 1 50.18-41.12L56 243.59q-18.13 14.71-35.53 30.78zM196.06 452a24.74 24.74 0 0 0-.89 36.22l53.88 53.17a25.54 25.54 0 0 0 34.5 1.25 347.42 347.42 0 0 1 87.69-55.38L262.25 403a475.65 475.65 0 0 0-66.19 49zM917.74 364.06a25.43 25.43 0 0 0 35-.6l53.56-53.14a24.88 24.88 0 0 0-.56-35.95c-211.46-195.59-512.49-241.86-766.38-139L71.13 5.28a25 25 0 0 0-35.14 4.39L5.26 49.21a25.05 25.05 0 0 0 4.41 35.12l920.44 711.4a25 25 0 0 0 35.14-4.4l30.73-39.53a25.05 25.05 0 0 0-4.4-35.12L770.72 546a25.15 25.15 0 0 0 6.47-4.62l53.88-53.18a24.74 24.74 0 0 0-.87-36.22c-95-84-215.84-123.67-335.29-119.17L358.48 227.37c191.83-50.9 404.19-5.37 559.26 136.69zM496.61 584.13a100.12 100.12 0 1 0 116.64 98.75c0-3-.15-6-.41-8.92z" />
+		</svg>
+		<h1>OFFLINE</h1>
+		<script>
+			// Try to restore connection.
+			(async function ping() {
+				fetch(location.origin + '/ping').then(() => {
+					document.body.classList.add('is-online');
+					document.body.addEventListener('transitionend', () => {
+						location = location.origin;
+					});
+				}).catch(ping);
+			})();
+		</script>
+	</body>
+</html>
