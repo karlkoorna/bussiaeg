@@ -1,16 +1,16 @@
 let cache = {};
 
-// Get data from cache, add if not found.
+// Get data from cache, add to cache if not found.
 async function use(space, key, setter) {
-	// Create cache if not exists.
+	// Ensure space exists.
 	if (!cache[space]) cache[space] = {};
 	
-	// Add item if doesn't exist.
-	if (!cache[space][key]) cache[space][key] = await setter();
+	// Set value if applicable.
+	if (!cache[space][key] && setter) cache[space][key] = await setter();
 	
-	// Return new dereferenced item.
+	// Return new dereferenced value.
 	const value = cache[space][key];
-	return Array.isArray(value) ? [ ...value ] : { ...value };
+	return typeof value === 'object' ? Array.isArray(value) ? [ ...value ] : { ...value } : value;
 }
 
 // Clear cache.
