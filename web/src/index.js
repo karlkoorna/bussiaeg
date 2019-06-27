@@ -6,7 +6,10 @@ import { Helmet } from 'react-helmet';
 
 import 'i18n.js';
 
-import NavBar from 'components/NavBar/NavBar.jsx';
+import storeCoords from 'stores/coords.js';
+import storeSearch from 'stores/search.js';
+import storeFavorites from 'stores/favorites.js';
+import storeSettings from 'stores/settings.js';
 
 import ViewSearch from 'views/Search/Search.jsx';
 import ViewFavorites from 'views/Favorites/Favorites.jsx';
@@ -15,10 +18,7 @@ import ViewSettings from 'views/Settings/Settings.jsx';
 import ViewStop from 'views/Stop/Stop.jsx';
 import ViewRoute from 'views/Route/Route.jsx';
 
-import storeCoords from 'stores/coords.js';
-import storeSearch from 'stores/search.js';
-import storeFavorites from 'stores/favorites.js';
-import storeSettings from 'stores/settings.js';
+import NavBar from 'components/NavBar/NavBar.jsx';
 
 import './index.css';
 
@@ -65,5 +65,9 @@ window.addEventListener('keydown', (e) => {
 });
 
 // Setup PWA requirements.
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('worker.js');
-window.addEventListener('beforeinstallprompt', () => {});
+if ('serviceWorker' in navigator) {
+	window.addEventListener('beforeinstallprompt', () => {});
+	window.addEventListener('load', () => {
+		navigator.serviceWorker.register('worker.js');
+	});
+}
