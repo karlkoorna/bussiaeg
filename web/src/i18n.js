@@ -1,5 +1,4 @@
 import i18n from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
 import en from './locales/en.json';
@@ -12,18 +11,12 @@ function genResources(langs) {
 	return resources;
 }
 
-i18n.use(LanguageDetector)
-	.use(initReactI18next)
-	.init({
-		resources: genResources({ en, et, ru }),
-		load: 'languageOnly',
-		fallbackLng: 'en',
-		interpolation: {
-			escapeValue: false
-		},
-		detection: {
-			lookupQuerystring: 'lang',
-			lookupCookie: 'lang',
-			lookupLocalStorage: 'lang'
-		}
-	});
+i18n.use(initReactI18next).init({
+	resources: genResources({ en, et, ru }),
+	load: 'languageOnly',
+	lng: navigator.languages.filter((language) => [ 'et', 'en', 'ru' ].some((lang) => language.indexOf(lang) > -1))[0].split('-')[0],
+	fallbackLng: 'et',
+	interpolation: {
+		escapeValue: false
+	}
+});
