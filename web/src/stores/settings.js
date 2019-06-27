@@ -1,13 +1,11 @@
-import { decorate, observable, action, reaction } from 'mobx';
+import { decorate, observable, action } from 'mobx';
 import i18n from 'i18next';
 
 const $app = document.getElementById('app');
 
 class StoreSettings {
 	
-	data = {}
-	
-	defaultData = {
+	data = {
 		lang: i18n.language,
 		theme: 'light',
 		view: 'map'
@@ -23,7 +21,6 @@ class StoreSettings {
 		// Handle setting side effects.
 		switch (key) {
 			case 'lang':
-				
 				i18n.changeLanguage(value);
 				document.body.parentElement.setAttribute('lang', value);
 				break;
@@ -36,8 +33,9 @@ class StoreSettings {
 	
 	// Load and apply settings.
 	constructor() {
-		this.data = { ...this.defaultData, ...JSON.parse(localStorage.getItem('settings') || '{}') };
-		for (const key of Object.keys(this.data)) this.update(key, this.data[key]);
+		const settings = localStorage.getItem('settings');
+		if (settings) this.data = { ...this.data, ...JSON.parse(settings) }; else localStorage.setItem('settings', JSON.stringify(this.data));
+		for (const [ key, value ] of Object.entries(this.data)) this.update(key, value);
 	}
 	
 }
