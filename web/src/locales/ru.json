@@ -29,11 +29,13 @@
     "view-favorites": "Любимые",
     "view-map": "Карта",
     "credits": "Исполнители",
-    "credits-programmer": "Программист",
-    "credits-designer": "Дизайнер",
-    "credits-coach": "Плановые времена",
-    "credits-tallinn": "Реальные времена в Таллинне",
-    "credits-train": "Времена поезда",
+    "creditees": {
+      "programmer": "Программист",
+      "designer": "Дизайнер",
+      "gtfs": "Плановые времена",
+      "siri": "Реальные времена в Таллинне",
+      "elron": "Времена поезда"
+    },
     "version": "Версия"
   },
   "modal": {

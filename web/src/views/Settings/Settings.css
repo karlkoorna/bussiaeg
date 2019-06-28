@@ -1,42 +1,43 @@
 #settings {
 	font-size: 17px;
-	padding-bottom: 48px;
+	padding-bottom: 32px;
 }
 
 /* Settings */
 
-#settings > label {
+#settings label {
 	display: flex;
 	margin: 16px;
-	margin-top: 24px;
+	margin-top: 32px;
 	font-weight: bold;
 	align-items: center;
 }
 
-#settings label:first-of-type {
-	margin-top: 16px;
-}
-
-#settings > label > i {
-	max-width: 24px;
+#settings svg {
+	width: 24px;
+	height: 24px;
 	margin-right: 16px;
+	margin-bottom: 1px;
 }
 
-#settings > select,
-#settings > section {
+#settings select,
+#settings section {
 	width: 100%;
 	padding: 12px 14px;
 	background-color: var(--color-back-darker);
 	font-size: 15px;
 }
 
-#settings > section > h1 {
-	margin-top: 16px;
-	margin-bottom: 6px;
-	font-size: inherit;
+#settings section:nth-last-of-type(2) {
+	padding: 24px 14px;
 }
 
-#settings > section > h1:first-of-type {
+#settings h1 {
+	margin-top: 24px;
+	margin-bottom: 6px;
+}
+
+#settings h1:first-of-type {
 	margin-top: 0;
 }
 
@@ -48,15 +49,7 @@
 	color: orangered;
 }
 
-#settings > section > a > i {
-	height: 0;
-	margin-left: 4px;
-	color: var(--color-fore-light);
-	font-size: 18px;
-	vertical-align: sub;
-}
-
-#settings > section > small {
+#settings small {
 	color: var(--color-fore-light);
 	font-size: 12px;
 }
