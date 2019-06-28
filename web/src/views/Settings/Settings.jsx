@@ -16,12 +16,13 @@ class ViewSettings extends Component {
 	}
 	
 	updateSetting = (e) => {
-		const target = e.target;
-		storeSettings.update(target.name, target.options[e.target.selectedIndex].value, true);
+		storeSettings.update(e.target.name, e.target.options[e.target.selectedIndex].value, true);
 	}
 	
 	async componentDidMount() {
-		this.setState({ version: await (await fetch(`${process.env['REACT_APP_API']}/version`)).text() });
+		try {
+			this.setState({ version: await (await fetch(`${process.env['REACT_APP_API']}/version`)).text() });
+		} catch {}
 	}
 	
 	render() {
