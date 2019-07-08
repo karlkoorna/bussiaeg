@@ -26,7 +26,7 @@ async function getSearch(req, res) {
 		}),
 		db.query(`
 				SELECT
-					route_id, name, description, type
+					route_id AS id, name, description, type
 					${lat ? ', distance' : ''}
 				FROM routes AS route
 				JOIN stop_routes ON route_id = route.id
