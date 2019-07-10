@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet';
 
 import Scroller from 'components/Scroller.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
-
 import storeSettings from 'stores/settings.js';
 
 import './Settings.css';

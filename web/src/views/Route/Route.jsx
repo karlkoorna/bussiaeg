@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet';
 import { formatTime, formatCountdown } from 'utils.js';
 import Loader from 'components/Loader/Loader.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
-
 import storeSettings from 'stores/settings.js';
 
 import './Route.css';
@@ -42,7 +41,7 @@ class ViewRoute extends Component {
 		try {
 			const params = new URLSearchParams(window.location.search);
 			const route = await (await fetch(`${process.env['REACT_APP_API']}/routes/${params.get('id')}`)).json();
-			const trips = await (await fetch(`${process.env['REACT_APP_API']}/routes/${params.get('id')}/trips?id=${params.get('trip_id')}`)).json();
+			const trips = await (await fetch(`${process.env['REACT_APP_API']}/routes/${params.get('id')}/trips`)).json();
 			
 			this.setState({
 				route,
@@ -85,8 +84,8 @@ class ViewRoute extends Component {
 						</div>
 					) : null}
 					<ol id="route-stops">
-						{isLoading ? <Loader /> : trips[description].map((stop) => (
-							<li key={stop.id}>
+						{isLoading ? <Loader /> : trips[description].map((stop, i) => (
+							<li key={String(variant) + String(i)}>
 								<Link className="route-stops-stop" to={`/stop?id=${stop.id}`}>
 									<Icon className="route-stops-stop-icon" shape="stop" type={stop.type} />
 									<div>
