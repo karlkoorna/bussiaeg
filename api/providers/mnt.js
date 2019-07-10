@@ -5,12 +5,12 @@ const db = require('../db.js');
 
 // Get all stops.
 function getStops() {
-	return db.query('SELECT * FROM stops');
+	return db.query('SELECT id, name, description, type, lat, lng, region FROM stops');
 }
 
 // Get stop by id.
 async function getStop(id) {
-	return (await db.query('SELECT * FROM stops WHERE id = ?', [ id ]))[0];
+	return (await db.query('SELECT id, name, description, type, lat, lng, region FROM stops WHERE id = ?', [ id ]))[0];
 }
 
 // Get trips for stop.
