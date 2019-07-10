@@ -120,7 +120,7 @@ class ViewMap extends Component {
 	async componentDidMount() {
 		const start = JSON.parse(localStorage.getItem('start') || '{}');
 		
-		const map = window.map = new Leaflet.Map('map', {
+		const map = window.map = new Leaflet.Map('map-leaflet', {
 			center: [
 				start.lat || opts.startLat,
 				start.lng || opts.startLng
@@ -245,8 +245,8 @@ class ViewMap extends Component {
 				<Helmet>
 					<meta name="theme-color" content={viewColors.map[0]} />
 				</Helmet>
-				<div id="map-container" className="view">
-					<div id="map" />
+				<div id="map" className="view">
+					<div id="map-leaflet" />
 					<span id="map-message">{this.state.message}</span>
 					<svg viewBox="0 0 24 24" id="map-locate" className={(isVisible ? ' is-visible' : '') + (isLocating ? ' is-active' : '')} onMouseDown={this.startLocating}>
 						<path fill={viewColors.map[0]} d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />

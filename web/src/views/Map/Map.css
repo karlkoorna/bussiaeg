@@ -1,4 +1,9 @@
 #map {
+	position: relative;
+	overflow: hidden;
+}
+
+#map-leaflet {
 	z-index: 0;
 	width: 100%;
 	height: 100%;
@@ -31,9 +36,9 @@
 
 #map-locate {
 	display: flex;
-	position: fixed;
+	position: absolute;
 	right: -48px;
-	bottom: 80px;
+	bottom: 16px;
 	width: 48px;
 	height: 48px;
 	padding: 8px;
@@ -67,7 +72,7 @@
 	opacity: .75;
 }
 
-.leaflet-control-attribution > a {
+.leaflet-control-attribution a {
 	color: inherit !important;
 	font-size: 12px;
 }
