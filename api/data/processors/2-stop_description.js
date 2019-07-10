@@ -1,5 +1,4 @@
 const _ = require('lodash');
-
 const db = require('../../db.js');
 
 module.exports = async () => {

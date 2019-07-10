@@ -12,6 +12,7 @@ async function getStops(req, res) {
 async function getStop(req, res) {
 	const stop = await mnt.getStop(req.params.id);
 	if (!stop) return void res.status(404).send('Stop not found.');
+	
 	res.send(stop);
 }
 
@@ -23,7 +24,7 @@ async function getStopDepartures(req, res) {
 	const stop = await mnt.getStop(id);
 	if (!stop) return void res.status(404).send('Stop not found.');
 	
-	// Elron TODO: Switch to MNT data, merge with data from Elron.
+	// Elron
 	if (stop.type === 'train') return void res.send(await elron.getStopDepartures(id));
 	
 	// MNT + TLT

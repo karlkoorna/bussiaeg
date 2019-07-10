@@ -25,6 +25,7 @@ const app = fastify();
 
 // Register custom error handler.
 app.setErrorHandler((err, req, res) => {
+	debug.warn(`Error in route "${decodeURIComponent(req.raw.url)}".`, err);
 	res.send(err.stack);
 });
 

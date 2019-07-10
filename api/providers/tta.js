@@ -1,20 +1,24 @@
 const got = require('got');
-
 const time = require('../utils/time.js');
 const cache = require('../utils/cache.js');
 const debug = require('../utils/debug.js');
 
+/* Stops */
+
 async function updateCache(id) {
 	try {
-		return (await got('https://transport.tallinn.ee/siri-stop-departures.php?stopid=' + id, { timeout: 1000, retry: 1 })).body.split('\n').map((line) => line.split(',')).slice(2, -1).map((departure) => ({
+		const body = (await got('https://transport.tallinn.ee/siri-stop-departures.php?stopid=' + id, { timeout: 1000, retry: 1 })).body;
+		if (body.indexOf('ERROR') > -1) throw new Error('Invalid response');
+		
+		return body.split('\n').map((line) => line.split(',')).slice(2, -1).map((departure) => ({
 			name: departure[1],
 			type: departure[0],
 			time: Number(departure[3]),
 			countdown: Number(departure[2] - 5)
 		}));
 	} catch (ex) {
-		debug.warn('Failed to fetch TTA data.', ex);
-		return [];
+		debug.warn('Failed to fetch TTA departures.', ex);
+		return null;
 	}
 }
 
@@ -23,7 +27,7 @@ async function getStopDepartures(id, mntDepartures) {
 	const ttaDepartures = await cache.use('tta', id, updateCache.bind(this, id));
 	const departures = [];
 	
-	// Asynchronously prefetch future TTA departures.
+	// Asynchronously fetch future TTA departures.
 	cache.use('tta', id, updateCache.bind(this, id));
 	
 	// Merge MNT departures with TTA departures if available.

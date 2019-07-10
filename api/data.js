@@ -4,7 +4,6 @@ const chalk = require('chalk');
 const moment = require('moment');
 const got = require('got');
 const unzipper = require('unzipper');
-
 const db = require('./db.js');
 const debug = require('./utils/debug.js');
 
