@@ -59,6 +59,11 @@ render((
 	</Provider>
 ), document.getElementById('app'));
 
+// Disable context menu.
+window.addEventListener('contextmenu', (e) => {
+	e.preventDefault();
+});
+
 // Disable navigating through elements with tab.
 window.addEventListener('keydown', (e) => {
 	if (e.which === 9) e.preventDefault();

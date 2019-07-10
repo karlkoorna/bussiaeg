@@ -62,10 +62,6 @@ a {
 	text-decoration: inherit;
 }
 
-img {
-	pointer-events: none;
-}
-
 svg {
 	overflow: visible;
 }
