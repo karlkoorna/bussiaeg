@@ -1,5 +1,4 @@
 const _ = require('lodash');
-
 const db = require('../db.js');
 
 /* Stops */
@@ -157,9 +156,7 @@ async function getRouteTrips(id, tripId) {
 				stop.description,
 				stop.type,
 				trip.origin,
-				trip.destination,
-				'' AS time,
-				'' AS countdown
+				trip.destination
 			FROM routes AS route
 			JOIN trips AS trip ON trip.route_id = route.id
 			JOIN services AS service ON service.id = service_id
@@ -170,41 +167,13 @@ async function getRouteTrips(id, tripId) {
 				${tripId ? 'AND direction NOT IN (SELECT direction FROM trips WHERE id = :tripId)' : ''}
 				AND CURDATE() BETWEEN start AND end
 			GROUP BY direction, sequence
-		)${tripId ? ` UNION (
-			SELECT
-				stop.id,
-				stop.name,
-				stop.description,
-				stop.type,
-				trip.origin,
-				trip.destination,
-				TIME_TO_SEC(time) AS time,
-				TIME_TO_SEC(time) - TIME_TO_SEC(NOW()) as countdown
-			FROM routes AS route
-			JOIN trips AS trip ON trip.route_id = route.id
-			JOIN services AS service ON service.id = service_id
-			JOIN stop_times AS time On trip_id = trip.id
-			JOIN stops AS stop ON stop.id = stop_id
-			WHERE
-				route_id = :id
-				AND trip_id = :tripId
-				AND CURDATE() BETWEEN start AND end
-			GROUP BY direction, sequence
-		)` : ''}
+		)
 	`, { id, tripId }), (trip) => `${trip.origin} - ${trip.destination}`);
 	
 	// Trim and clean stops.
 	for (const key in trips) trips[key] = trips[key].filter((stop, i, stops) => stop.name !== (stops[i + 1] || {}).name).map((stop) => {
 		delete stop.origin;
 		delete stop.destination;
-		
-		if (stop.time) {
-			stop.time = Number(stop.time);
-			stop.countdown = Number(stop.countdown);
-		} else {
-			delete stop.time;
-			delete stop.countdown;
-		}
 		
 		return stop;
 	});

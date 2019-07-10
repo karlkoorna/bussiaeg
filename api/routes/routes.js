@@ -1,18 +1,24 @@
 const cache = require('../utils/cache.js');
 const mnt = require('../providers/mnt.js');
+const elron = require('../providers/elron.js');
 
 // Get routes by id.
 async function getRoute(req, res) {
-	const route = await mnt.getRoute(req.params.id);
+	const { id } = req.params;
+	
+	const route = id.length < 5 ? await elron.getRoute(id) : await mnt.getRoute(id);
 	if (!route) return void res.status(404).send('Route not found.');
+	
 	res.send(route);
 }
 
 // Get trips for route.
 async function getRouteTrips(req, res) {
-	const stop = await mnt.getRoute(req.params.id);
+	const { id } = req.params;
+	const stop = id.length < 5 ? await elron.getRouteTrips(id) : await mnt.getRouteTrips(id);
 	if (!stop) return void res.status(404).send('Route not found.');
-	res.send(await mnt.getRouteTrips(req.params.id, req.query.id));
+	
+	res.send(stop);
 }
 
 module.exports = (fastify, opts, next) => {
@@ -35,12 +41,6 @@ module.exports = (fastify, opts, next) => {
 			params: {
 				type: 'object',
 				required: [ 'id' ],
-				properties: {
-					id: { type: 'string' }
-				}
-			},
-			querystring: {
-				type: 'object',
 				properties: {
 					id: { type: 'string' }
 				}

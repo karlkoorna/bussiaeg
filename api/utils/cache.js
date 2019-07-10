@@ -6,7 +6,7 @@ async function use(space, key, setter) {
 	if (!cache[space]) cache[space] = {};
 	
 	// Set value if applicable.
-	if (!cache[space][key] && setter) cache[space][key] = await setter();
+	if (cache[space][key] == null && setter) cache[space][key] = await setter();
 	
 	// Return new dereferenced value.
 	const value = cache[space][key];
