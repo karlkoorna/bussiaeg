@@ -22,7 +22,7 @@
 	overflow: hidden;
 }
 
-#route-info > div {
+#route-info div {
 	display: flex;
 	position: relative;
 	padding-bottom: 3px;
@@ -30,7 +30,7 @@
 	justify-content: center;
 }
 
-#route-info > div:after {
+#route-info div:after {
 	z-index: -1;
 	content: "▼";
 	display: flex;
@@ -64,7 +64,7 @@
 	font-size: 14px;
 }
 
-#route-info-description > option {
+#route-info-description option {
 	background-color: var(--color-back-light);
 	color: var(--color-fore-dark);
 	font-size: 16px;
@@ -177,7 +177,7 @@
 
 @media (max-width: 480px) {
 	
-	#route-info > div:after {
+	#route-info div:after {
 		bottom: 16px;
 	}
 	

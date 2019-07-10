@@ -36,12 +36,12 @@
 	flex: 1;
 }
 
-.navbar-item > svg {
+.navbar-item svg {
 	width: 32px;
 	transition: width .1s ease;
 }
 
-.navbar-item:hover > svg {
+.navbar-item:hover svg {
 	width: 38px;
 }
 

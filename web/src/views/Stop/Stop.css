@@ -66,11 +66,11 @@
 	opacity: .75;
 }
 
-#stop-info-favorite > path {
+#stop-info-favorite path {
 	transition: fill .1s linear, stroke .1s linear;
 }
 
-#stop-info-favorite.is-active > path {
+#stop-info-favorite.is-active path {
 	fill: var(--color-view-favorites-light);
 	stroke: var(--color-view-favorites-dark);
 }
@@ -83,11 +83,11 @@
 	overflow-y: scroll;
 }
 
-#stop-times > li {
+#stop-times li {
 	padding: 6px 0;
 }
 
-#stop-times > li:first-child {
+#stop-times li:first-child {
 	padding-top: 0;
 }
 
@@ -100,7 +100,7 @@
 	animation: var(--animation-fadeIn);
 }
 
-#stop-times > li:not(:last-child) .stop-departures-departure:after {
+#stop-times li:not(:last-child) .stop-departures-departure:after {
 	content: "";
 	position: absolute;
 	left: 6px;
@@ -143,7 +143,7 @@
 	bottom: 7px;
 }
 
-.stop-departures-departure-destination > svg {
+.stop-departures-departure-destination svg {
 	width: 16px;
 	margin-right: 8px;
 	margin-bottom: -2px;

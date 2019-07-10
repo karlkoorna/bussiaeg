@@ -49,7 +49,7 @@ class ViewSearch extends Component {
 	
 	// Start scanning routes on view mount.
 	componentDidMount() {
-		// Auto focus input when on desktop.
+		// Auto focus input (desktop).
 		if (!navigator.userAgent.toLowerCase().includes('mobi')) setTimeout(() => {
 			if (this.$input.current) this.$input.current.focus();
 		}, 0);

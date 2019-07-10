@@ -1,7 +1,6 @@
 import { decorate, observable, action, reaction } from 'mobx';
 
 import { opts as mapOpts } from 'views/Map/Map.jsx';
-
 import storeCoords from 'stores/coords.js';
 
 class StoreSearch {
@@ -21,7 +20,7 @@ class StoreSearch {
 			lat: storeCoords.lat,
 			lng: storeCoords.lng
 		}), () => {
-			if (!this.query) this.fetchResults();
+			this.fetchResults();
 		}, { fireImmediately: true });
 	}
 	

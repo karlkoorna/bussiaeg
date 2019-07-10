@@ -51,7 +51,7 @@
 	justify-content: flex-end;
 }
 
-#modal-buttons > canvas {
+#modal-buttons canvas {
 	color: rgba(0, 0, 0, .2);
 }
 
@@ -87,12 +87,12 @@
 	background-color: rgba(0, 0, 0, .175);
 }
 
-#app[data-theme="light"] #modal-buttons-cancel:hover > canvas,
-#app[data-theme="light"] #modal-buttons-confirm:hover > canvas {
+#app[data-theme="light"] #modal-buttons-cancel:hover canvas,
+#app[data-theme="light"] #modal-buttons-confirm:hover canvas {
 	color: rgba(0, 0, 0, .075);
 }
 
-#app[data-theme="dark"] #modal-buttons-cancel:hover > canvas,
-#app[data-theme="dark"] #modal-buttons-confirm:hover > canvas {
+#app[data-theme="dark"] #modal-buttons-cancel:hover canvas,
+#app[data-theme="dark"] #modal-buttons-confirm:hover canvas {
 	color: rgba(0, 0, 0, .5);
 }
