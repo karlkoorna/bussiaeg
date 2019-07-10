@@ -9,7 +9,6 @@ import { Swipeable } from 'react-swipeable';
 import Scroller from 'components/Scroller.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
-import storeFavorites from 'stores/favorites.js';
 import { formatDistance } from 'utils.js';
 
 import './Search.css';
@@ -95,8 +94,8 @@ class ViewSearch extends Component {
 						<Swipeable nodeName="ol" className="search-results" onSwipedLeft={this.changeTypeRoutes} onSwipedRight={this.changeTypeStops}>
 							{results[type].length ? results[type].map((result) => (
 								<li key={result.id}>
-									<Link className={'search-results-result' + (type === 'stops' && storeFavorites.get(result.id) ? ' is-favorite' : '')} to={`/${type.slice(0, -1)}?id=${result.id}`}>
-										<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} />
+									<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`}>
+										<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} checkFavorite={type === 'stops' ? result.id : null} />
 										<div>
 											<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
 											<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description}</div>

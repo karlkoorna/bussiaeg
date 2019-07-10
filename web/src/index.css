@@ -66,6 +66,10 @@ img {
 	pointer-events: none;
 }
 
+svg {
+	overflow: visible;
+}
+
 /* App */
 
 #app {

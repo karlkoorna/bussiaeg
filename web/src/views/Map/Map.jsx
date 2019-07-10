@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { withRouter } from 'react-router-dom';
 import { reaction } from 'mobx';
-import { inject, observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import Leaflet from 'leaflet';
 import KDBush from 'kdbush';
 
-import { handleTheme } from 'utils.js';
-import storeSettings from 'stores/settings.js';
 import Icon from 'components/Icon.jsx';
 import Modal from 'components/Modal/Modal.jsx';
-import Fab from 'components/Fab/Fab.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
+import storeCoords from 'stores/coords.js';
+import storeSettings from 'stores/settings.js';
+import storeFavorites from 'stores/favorites.js';
 import addDragZoom from './dragZoom.js';
 
 import './Map.css';
@@ -30,36 +29,21 @@ export const opts = {
 	panTimeout: 1500
 };
 
-const markers = {
-	bus: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'bus' }))),
-	trol: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'trol' }))),
-	tram: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'tram' }))),
-	train: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'train' }))),
-	coach_c: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach_c' }))),
-	coach_cc: btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: 'coach_cc' }))),
-	location: btoa(renderToStaticMarkup((
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-			<circle fill="#fff" cx="512" cy="512" r="512" />
-			<circle fill={viewColors.map[0]} cx="512" cy="512" r="350" />
-		</svg>
-	)))
-};
-
 class ViewMap extends Component {
 	
 	state = {
 		message: '',
 		showModal: false,
+		isVisible: false,
 		isLocating: false
 	}
 	
-	dispose = null
 	debounce = 0
 	tileLayer = null
 	
 	stops = []
 	spatial = []
-	markers = {} // new Leaflet.LayerGroup()
+	markers = {}
 	
 	modalHide = () => {
 		this.setState({ showModal: false });
@@ -84,7 +68,7 @@ class ViewMap extends Component {
 		const map = window.map;
 		
 		this.setState({ isLocating: true }, () => {
-			map.setView([ this.props.storeCoords.lat, this.props.storeCoords.lng ], Math.max(opts.stopZoom, map.getZoom()));
+			map.setView([ storeCoords.lat, storeCoords.lng ], Math.max(opts.stopZoom, map.getZoom()));
 		});
 	}
 	
@@ -94,7 +78,7 @@ class ViewMap extends Component {
 	}
 	
 	// Update message based on bounds and redraw stops.
-	fetchStops = () => {
+	fetchStops = (noCache) => {
 		const map = window.map;
 		const { t } = this.props;
 		const { _southWest: { lat: latMin, lng: lngMin }, _northEast: { lat: latMax, lng: lngMax } } = map.getBounds();
@@ -115,19 +99,18 @@ class ViewMap extends Component {
 		for (const id in this.markers) {
 			const marker = this.markers[id];
 			
-			if (marker._latlng.lat > latMin && marker._latlng.lat < latMax && marker._latlng.lng > lngMin && marker._latlng.lng < lngMax) continue;
+			if (!noCache && marker._latlng.lat > latMin && marker._latlng.lat < latMax && marker._latlng.lng > lngMin && marker._latlng.lng < lngMax) continue;
 			
 			marker.remove();
 			delete this.markers[id];
 		}
 		
-		// Add new stop markers.
-		for (const stop of this.spatial.range(latMin, lngMin, latMax, lngMax).map((id) => this.stops[id])) if (!this.markers.hasOwnProperty(stop.id)) this.markers[stop.id] = (new Leaflet.Marker([ stop.lat, stop.lng ], {
+		for (const stop of this.spatial.range(latMin, lngMin, latMax, lngMax).map((id) => this.stops[id])) if (!this.markers[stop.id]) this.markers[stop.id] = (new Leaflet.Marker([ stop.lat, stop.lng ], {
 			id: stop.id,
 			icon: new Leaflet.Icon({
 				iconSize: [ 26, 26 ],
 				iconAnchor: [ 13, 13 ],
-				iconUrl: 'data:image/svg+xml;base64,' + markers[stop.type]
+				iconUrl: 'data:image/svg+xml;base64,' + btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type, checkFavorite: stop.id, forMap: true })))
 			})
 		})).addTo(map).on('click', () => {
 			this.props.history.push(`/stop?id=${stop.id}`);
@@ -148,13 +131,19 @@ class ViewMap extends Component {
 			zoomControl: false,
 			bounceAtZoomLimits: false,
 			attributionControl: false,
-			boxZoom: false,
-			keyboard: false,
 			zoomSnap: 0.1,
-			zoomDelta: .1
+			zoomDelta: 1
 		});
 		
-		const $map = map._container;
+		// Load tile layer and update on theme change.
+		reaction(() => storeSettings.data.theme, (theme) => {
+			if (this.tileLayer) this.tileLayer.remove();
+			this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + theme.toUpperCase()]).addTo(window.map);
+		}, { fireImmediately: true });
+		
+		// Cancel locating on user interaction.
+		map._container.addEventListener('mousedown', this.stopLocating, { passive: true });
+		map._container.addEventListener('touchstart', this.stopLocating, { passive: true });
 		
 		this.stops = await (await fetch(`${process.env['REACT_APP_API']}/stops`)).json();
 		this.spatial = new KDBush(this.stops, (stop) => stop.lat, (stop) => stop.lng, 64, Float32Array);
@@ -164,7 +153,12 @@ class ViewMap extends Component {
 			icon: new Leaflet.Icon({
 				iconSize: [ 20, 20 ],
 				iconAnchor: [ 10, 10 ],
-				iconUrl: 'data:image/svg+xml;base64,' + markers['location']
+				iconUrl: 'data:image/svg+xml;base64,' + btoa(renderToStaticMarkup((
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+						<circle fill="#fff" cx="512" cy="512" r="512" />
+						<circle fill={viewColors.map[0]} cx="512" cy="512" r="350" />
+					</svg>
+				)))
 			})
 		}).addTo(map);
 		
@@ -177,19 +171,13 @@ class ViewMap extends Component {
 			weight: 2
 		}).addTo(map);
 		
-		// Load tile layer.
-		handleTheme((theme) => {
-			if (this.tileLayer) this.tileLayer.remove();
-			this.tileLayer = Leaflet.tileLayer(process.env['REACT_APP_MAP_' + theme.toUpperCase()]).addTo(window.map);
-		});
-		
 		// (Re)draw stops.
 		map.whenReady(() => {
-			map.on('zoomend', this.fetchStops);
+			reaction(() => storeFavorites.favorites.length, this.fetchStops.bind(this, true));
 			map.on('moveend', this.fetchStops);
 			map.on('move', () => {
 				this.debounce++;
-				if (this.debounce < 3) return;
+				if (this.debounce < 10) return;
 				this.debounce = 0;
 				this.fetchStops();
 			});
@@ -207,29 +195,27 @@ class ViewMap extends Component {
 		// Add drag zoom handler (mobile).
 		addDragZoom(map);
 		
-		// Cancel locating on user interaction.
-		$map.addEventListener('mousedown', this.stopLocating, { passive: true });
-		$map.addEventListener('touchstart', this.stopLocating, { passive: true });
-		
 		const timestamp = new Date();
 		
-		// Update location marker and accuracy circle.
-		this.dispose = reaction(() => ({
-			lat: this.props.storeCoords.lat,
-			lng: this.props.storeCoords.lng,
-			accuracy: this.props.storeCoords.accuracy
+		// Update location marker, accuracy circle and locate button.
+		reaction(() => ({
+			lat: storeCoords.lat,
+			lng: storeCoords.lng,
+			accuracy: storeCoords.accuracy
 		}), ({ lat, lng, accuracy }) => {
-			// Overlay accuracy cases.
-			if (accuracy < opts.accuracyTreshold) { // Show overlay on high accuracy.
+			if (accuracy < opts.accuracyTreshold) { // Show marker and circle on high accuracy.
 				marker.setLatLng([ lat, lng ]);
 				circle.setLatLng([ lat, lng ]);
-				circle.setRadius(accuracy <= 10 ? 0 : accuracy); // Hide accuracy circle on very high accuracy.
-			} else { // Hide overlay on low accuracy.
+				circle.setRadius(accuracy <= 10 ? 0 : accuracy); // Hide circle on very high accuracy.
+			} else { // Hide marker and circle on low accuracy.
 				marker.setLatLng([ 0, 0 ]);
 				circle.setRadius(0);
 			}
 			
-			// Pan map if GPS found on load within timeout.
+			// Show/hide button.
+			this.setState({ isVisible: accuracy < opts.accuracyTreshold });
+			
+			// Pan map if coords found on load within timeout.
 			if (new Date() - timestamp < opts.panTimeout) map.setView([ lat, lng ]);
 			
 			// Pan map if locating.
@@ -250,14 +236,9 @@ class ViewMap extends Component {
 		map.addControl(attribution);
 	}
 	
-	componentWillUnmount() {
-		this.dispose();
-	}
-	
 	render() {
 		const { t } = this.props;
-		const { accuracy } = this.props.storeCoords;
-		const { isLocating } = this.state;
+		const { isVisible, isLocating } = this.state;
 		
 		return (
 			<>
@@ -267,7 +248,9 @@ class ViewMap extends Component {
 				<div id="map-container" className="view">
 					<div id="map" />
 					<span id="map-message">{this.state.message}</span>
-					<Fab icon="location_on" color={viewColors.map[0]} isVisible={accuracy < 512} isActive={isLocating} onClick={this.startLocating} />
+					<svg viewBox="0 0 24 24" id="map-locate" className={(isVisible ? ' is-visible' : '') + (isLocating ? ' is-active' : '')} onMouseDown={this.startLocating}>
+						<path fill={viewColors.map[0]} d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+					</svg>
 					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} showCancel onCancel={this.modalHide} onConfirm={this.modalConfirm} />
 				</div>
 			</>
@@ -276,4 +259,4 @@ class ViewMap extends Component {
 	
 }
 
-export default withTranslation()(withRouter(inject('storeCoords')(observer(ViewMap))));
+export default withTranslation()(withRouter(ViewMap));

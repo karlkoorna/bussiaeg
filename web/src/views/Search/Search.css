@@ -120,16 +120,6 @@
 	background-color: rgba(127, 127, 127, .1);
 }
 
-.search-results-result.is-favorite:before {
-	content: "favorite";
-	position: absolute;
-	left: 12px;
-	bottom: 12px;
-	color: var(--color-view-favorites-light);
-	text-shadow: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
-	font-family: "Material Icons", sans-serif;
-}
-
 .search-results-result:after {
 	content: "";
 	position: absolute;
