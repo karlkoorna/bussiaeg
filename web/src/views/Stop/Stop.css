@@ -91,7 +91,7 @@
 	padding-top: 0;
 }
 
-.stop-times-time {
+.stop-departures-departure {
 	display: flex;
 	position: relative;
 	height: 80px;
@@ -100,7 +100,7 @@
 	animation: var(--animation-fadeIn);
 }
 
-#stop-times > li:not(:last-child) .stop-times-time:after {
+#stop-times > li:not(:last-child) .stop-departures-departure:after {
 	content: "";
 	position: absolute;
 	left: 6px;
@@ -110,63 +110,63 @@
 	background-color: rgba(127, 127, 127, .2);
 }
 
-.stop-times-time:hover {
+.stop-departures-departure:hover {
 	background-color: rgba(127, 127, 127, .1);
 }
 
-.stop-times-time > * {
+.stop-departures-departure > * {
 	position: absolute;
 }
 
-.stop-times-time-icon {
+.stop-departures-departure-icon {
 	width: 48px;
 	margin-top: 3px;
 }
 
-.stop-times-time-name,
-.stop-times-time-countdown {
+.stop-departures-departure-name,
+.stop-departures-departure-countdown {
 	font-size: 28px;
 }
 
-.stop-times-time-name,
-.stop-times-time-destination {
+.stop-departures-departure-name,
+.stop-departures-departure-destination {
 	font-weight: bold;
 }
 
-.stop-times-time-name {
+.stop-departures-departure-name {
 	left: 48px;
 	top: 12px;
 }
 
-.stop-times-time-destination {
+.stop-departures-departure-destination {
 	left: 10px;
 	bottom: 7px;
 }
 
-.stop-times-time-destination > svg {
+.stop-departures-departure-destination > svg {
 	width: 16px;
 	margin-right: 8px;
 	margin-bottom: -2px;
 }
 
-.stop-times-time-countdown,
-.stop-times-time-time {
+.stop-departures-departure-countdown,
+.stop-departures-departure-time {
 	right: 10px;
 }
 
-.stop-times-time-countdown {
+.stop-departures-departure-countdown {
 	top: 10px;
 }
 
-.stop-times-time-countdown.is-urgent {
+.stop-departures-departure-countdown.is-urgent {
 	animation: stop-urgent 1s ease infinite;
 }
 
-.stop-times-time-countdown span {
+.stop-departures-departure-countdown span {
 	font-size: 18px;
 }
 
-.stop-times-time-countdown > svg {
+.stop-departures-departure-countdown svg {
 	position: absolute;
 	right: -6px;
 	top: -1px;
@@ -174,10 +174,17 @@
 	transform: rotate(-15deg);
 }
 
-.stop-times-time-time {
+.stop-departures-departure-time {
 	bottom: 11px;
 	color: var(--color-fore-light);
 	font-size: 19px;
+}
+
+.stop-departures-departure-time svg {
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+	margin-bottom: -1px;
 }
 
 /* Animations */

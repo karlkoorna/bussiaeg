@@ -46,7 +46,7 @@ async function getStopDepartures(id, mntDepartures) {
 			...mntDeparture,
 			time: ttaDeparture.time,
 			countdown: ttaDeparture.countdown - time.getSeconds(),
-			live: ttaDeparture.time !== ttaDeparture.countdown,
+			live: ttaDeparture.time !== ttaDeparture.countdown + 5,
 			provider: 'tta'
 		}); else departures.push(mntDeparture);
 	}
