@@ -125,6 +125,7 @@ svg {
 	height: 100%;
 	background-color: var(--color-theme);
 	transition: background-color 1s linear;
+	filter: brightness(.3);
 }
 
 /* View */
