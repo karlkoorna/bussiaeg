@@ -112,6 +112,7 @@ svg {
 	height: 90%;
 	border-radius: 12px;
 	box-shadow: var(--shadow-hard);
+	transition: height .15s linear, border-radius .15s linear;
 	overflow: hidden;
 }
 
@@ -164,6 +165,17 @@ svg {
 	
 	to {
 		opacity: 1;
+	}
+	
+}
+
+/* Queries */
+
+@media (max-width: 512px) {
+	
+	#app.is-desktop {
+		height: 100%;
+		border-radius: 0;
 	}
 	
 }
