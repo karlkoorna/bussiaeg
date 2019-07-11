@@ -108,7 +108,7 @@ async function getStopDepartures(id, withBuffer) {
 					(SELECT COUNT(*) FROM stop_times WHERE stop_id = :id AND trip_id = trip.id + 1) = 0
 					OR destination != stop.name
 				)
-		        AND route.type LIKE 'coach%'
+				AND route.type LIKE 'coach%'
 				AND time > CURTIME()
 				AND (
 					(

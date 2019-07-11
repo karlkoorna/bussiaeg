@@ -5,7 +5,7 @@ module.exports = async () => {
 	const stops = await db.query(`
 		SELECT
 			stop.id,
-		    stop.name,
+			stop.name,
 			GROUP_CONCAT(route.type, ':', destination) AS destinations
 		FROM stops AS stop
 		JOIN stop_times AS time ON stop_id = stop.id
