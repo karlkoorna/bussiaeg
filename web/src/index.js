@@ -12,7 +12,7 @@ import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
 import storeSettings from 'stores/settings.js';
 import ViewSearch from 'views/Search/Search.jsx';
-import ViewFavorites, { reorderFavorites } from 'views/Favorites/Favorites.jsx';
+import ViewFavorites, { reorder as reorderFavorites } from 'views/Favorites/Favorites.jsx';
 import ViewMap from 'views/Map/Map.jsx';
 import ViewSettings from 'views/Settings/Settings.jsx';
 import ViewStop from 'views/Stop/Stop.jsx';
