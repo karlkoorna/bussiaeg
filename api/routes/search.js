@@ -16,11 +16,12 @@ async function getSearch(req, res) {
 					AND lat BETWEEN :lat - .3 AND :lat + .3
 					AND lng BETWEEN :lng - .3 AND :lng + .3
 					` : ''}
-					${query ? 'AND name LIKE :query' : ''}
+					${query ? 'AND name LIKE :query OR id LIKE :queryId' : ''}
 				ORDER BY ${query ? 'LENGTH(name), ' : ''}${lat ? 'distance, ' : ''}name
 				LIMIT 15
 			`, {
 			query: `%${query}%`,
+			queryId: query,
 			lat,
 			lng
 		}),
