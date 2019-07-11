@@ -5,14 +5,16 @@ import storeCoords from 'stores/coords.js';
 
 class StoreSearch {
 	
-	dispose = null
-	
 	query = ''
 	type = 'stops'
 	results = {
 		stops: [],
 		routes: []
 	}
+	
+	dispose = null
+	isLoading = true
+	hasErrored = false
 	
 	// Start fetching nearby search results on location update.
 	startScanning() {
@@ -40,15 +42,20 @@ class StoreSearch {
 	}
 	
 	// Fetch search results.
-	async fetchResults() {
+	async fetchResults(isManual) {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
 		
 		// Clear results if no query or coords.
 		if (!query && lat === mapOpts.startLat) return void (this.results = { stops: [], routes: [] });
 		
+		if (isManual) this.isLoading = true;
 		try {
 			this.results = await (await fetch(`${process.env['REACT_APP_API']}/search?${query ? `&query=${query}` : ''}&lat=${lat}&lng=${lng}`)).json();
-		} catch (ex) {}
+			this.isLoading = false;
+			this.hasErrored = false;
+		} catch {
+			this.hasErrored = true;
+		}
 	}
 	
 }
@@ -57,6 +64,8 @@ decorate(StoreSearch, {
 	query: observable,
 	type: observable,
 	results: observable.struct,
+	isLoading: observable,
+	hasErrored: observable,
 	updateQuery: action,
 	updateType: action,
 	fetchResults: action.bound

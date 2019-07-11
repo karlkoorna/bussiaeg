@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Scroller from 'components/Scroller.jsx';
+import Status from 'components/Status/Status.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
+import storeFavorites from 'stores/favorites.js';
 
 import './Favorites.css';
 
+// Update favorites afer reorder.
+export function reorder(result) {
+	if (!result.destination) return;
+	
+	const favorites = [ ...storeFavorites.favorites ];
+	favorites.splice(result.destination.index, 0, favorites.splice(result.source.index, 1)[0]);
+	storeFavorites.favorites = favorites;
+}
+
 class ViewFavorites extends Component {
 	
-	// Update favorites afer reorder.
-	reorder = (result) => {
-		if (!result.destination) return;
-		
-		const favorites = [ ...this.props.storeFavorites.favorites ];
-		favorites.splice(result.destination.index, 0, favorites.splice(result.source.index, 1)[0]);
-		this.props.storeFavorites.favorites = favorites;
-	}
-	
 	render() {
-		const { t } = this.props;
 		const { favorites } = this.props.storeFavorites;
 		
 		return (
@@ -31,12 +31,12 @@ class ViewFavorites extends Component {
 				<Helmet>
 					<meta name="theme-color" content={viewColors.favorites[0]} />
 				</Helmet>
-				<DragDropContext onDragEnd={this.reorder}>
-					<Droppable droppableId="favorites">
-						{(dropProvided) => (
-							<Scroller>
-								<main id="favorites" className="view" ref={dropProvided.innerRef}>
-									{favorites.length ? favorites.map((favorite, i) => (
+				<Droppable droppableId="favorites">
+					{(dropProvided) => (
+						<Scroller>
+							<main id="favorites" className="view" ref={dropProvided.innerRef}>
+								<Status space="favorites" isEmpty={!favorites.length}>
+									{favorites.map((favorite, i) => (
 										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
 											{(dragProvided) => (
 												<article className="favorites-stop-container" ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
@@ -50,21 +50,17 @@ class ViewFavorites extends Component {
 												</article>
 											)}
 										</Draggable>
-									)) : (
-										<div className="view-empty">
-											{t('favorites.empty')}
-										</div>
-									)}
+									))}
 									{dropProvided.placeholder}
-								</main>
-							</Scroller>
-						)}
-					</Droppable>
-				</DragDropContext>
+								</Status>
+							</main>
+						</Scroller>
+					)}
+				</Droppable>
 			</>
 		);
 	}
 	
 }
 
-export default withTranslation()(inject('storeFavorites')(observer(ViewFavorites)));
+export default inject('storeFavorites')(observer(ViewFavorites));

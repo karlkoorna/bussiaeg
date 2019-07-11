@@ -7,6 +7,7 @@ import Ink from 'react-ink';
 import { Swipeable } from 'react-swipeable';
 
 import Scroller from 'components/Scroller.jsx';
+import Status from 'components/Status/Status.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 import { formatDistance } from 'utils.js';
@@ -23,13 +24,13 @@ class ViewSearch extends Component {
 		this.props.storeSearch.updateQuery(e.target.value);
 		
 		clearTimeout(this.debounce);
-		this.debounce = setTimeout(this.props.storeSearch.fetchResults, 250);
+		this.debounce = setTimeout(this.props.storeSearch.fetchResults.bind(this, true), 500);
 	}
 	
 	// Clear query and fetch results.
 	clearQuery = () => {
 		this.props.storeSearch.updateQuery('');
-		this.props.storeSearch.fetchResults();
+		this.props.storeSearch.fetchResults(true);
 	}
 	
 	// Change search type to stop.
@@ -47,7 +48,7 @@ class ViewSearch extends Component {
 		if (e.which === 13) e.target.blur();
 	}
 	
-	// Start scanning routes on view mount.
+	// Start displaying nearby results.
 	componentDidMount() {
 		// Auto focus input (desktop).
 		if (!navigator.userAgent.toLowerCase().includes('mobi')) setTimeout(() => {
@@ -57,14 +58,14 @@ class ViewSearch extends Component {
 		this.props.storeSearch.startScanning();
 	}
 	
-	// Stop scanning routes on view unmount.
+	// Stop displaying nearby results.
 	componentWillUnmount() {
 		this.props.storeSearch.stopScanning();
 	}
 	
 	render() {
 		const { t } = this.props;
-		const { query, type, results } = this.props.storeSearch;
+		const { query, type, results, isLoading, hasErrored } = this.props.storeSearch;
 		
 		return (
 			<>
@@ -92,22 +93,20 @@ class ViewSearch extends Component {
 					</div>
 					<Scroller>
 						<Swipeable nodeName="ol" className="search-results" onSwipedLeft={this.changeTypeRoutes} onSwipedRight={this.changeTypeStops}>
-							{results[type].length ? results[type].map((result) => (
-								<li key={result.id}>
-									<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`}>
-										<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} checkFavorite={type === 'stops' ? result.id : null} />
-										<div>
-											<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
-											<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description}</div>
-										</div>
-										<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
-									</Link>
-								</li>
-							)) : (
-								<li className="view-empty" style={this.debounce ? {} : { animation: 'var(--animation-fadeIn) .75s', opacity: 0 }}>
-									{t('search.empty')}
-								</li>
-							)}
+							<Status space="search" hasErrored={hasErrored} isLoading={isLoading} isEmpty={!results[type].length}>
+								{results[type].map((result) => (
+									<li key={result.id}>
+										<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`}>
+											<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} checkFavorite={type === 'stops' ? result.id : null} />
+											<div>
+												<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
+												<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description}</div>
+											</div>
+											<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
+										</Link>
+									</li>
+								))}
+							</Status>
 						</Swipeable>
 					</Scroller>
 				</main>

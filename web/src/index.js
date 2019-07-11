@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import { Helmet } from 'react-helmet';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import 'i18n.js';
 
@@ -11,7 +12,7 @@ import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
 import storeSettings from 'stores/settings.js';
 import ViewSearch from 'views/Search/Search.jsx';
-import ViewFavorites from 'views/Favorites/Favorites.jsx';
+import ViewFavorites, { reorderFavorites } from 'views/Favorites/Favorites.jsx';
 import ViewMap from 'views/Map/Map.jsx';
 import ViewSettings from 'views/Settings/Settings.jsx';
 import ViewStop from 'views/Stop/Stop.jsx';
@@ -42,7 +43,7 @@ function handleRoute() {
 render((
 	<Provider {...{ storeCoords, storeSearch, storeFavorites, storeSettings }}>
 		<BrowserRouter>
-			<>
+			<DragDropContext onDragEnd={reorderFavorites}>
 				<Helmet defaultTitle="Bussiaeg.ee" />
 				<ViewMap />
 				<Route render={handleRoute} />
@@ -54,19 +55,19 @@ render((
 					<Route exact path="/route" component={ViewRoute} />
 				</Switch>
 				<NavBar />
-			</>
+			</DragDropContext>
 		</BrowserRouter>
 	</Provider>
 ), $app);
 
 // Enable desktop mode.
-if (!navigator.userAgent.toLowerCase().includes('mobi')) {
-	(new MutationObserver(() => {
-		$app.style.setProperty('--color-theme', document.querySelector('meta[name="theme-color"]').content);
-	})).observe(document.head, { childList: true });
-	
-	$app.classList.add('is-desktop');
-}
+if (!navigator.userAgent.toLowerCase().includes('mobi')) $app.classList.add('is-desktop');
+
+// Update current theme color CSS variable.
+(new MutationObserver(() => {
+	const el = document.querySelector('meta[name="theme-color"]');
+	if (el) $app.style.setProperty('--color-theme', el.content);
+})).observe(document.head, { childList: true });
 
 // Disable context menu.
 window.addEventListener('contextmenu', (e) => {

@@ -1,45 +1,46 @@
 {
-  "search": {
-    "search": "Search...",
-    "stops": "Stops",
-    "routes": "Routes",
-    "empty": "No results found"
-  },
-  "favorites": {
-    "empty": "No favorites added"
-  },
-  "stop": {
-    "empty": "No more arrivals today"
-  },
-  "map": {
-    "zoom": "Bussiaeg.ee does not work outside Estonia",
-    "bounds": "Zoom in to see stops",
-    "start": {
-      "title": "Confirm location?",
-      "text": "Starting location if GPS is unavailable."
-    }
-  },
-  "settings": {
-    "language": "Language",
-    "theme": "Theme",
-    "theme-light": "Light",
-    "theme-dark": "Dark",
-    "view": "Default view",
-    "view-search": "Search",
-    "view-favorites": "Favorites",
-    "view-map": "Map",
-    "credits": "Credits",
-    "creditees": {
-      "programmer": "Programmer",
-      "designer": "Designer",
-      "gtfs": "Plan times",
-      "siri": "Live times in Tallinn",
-      "elron": "Train times"
-    },
-    "version": "Version"
-  },
-  "modal": {
-    "cancel": "CANCEL",
-    "confirm": "CONFIRM"
-  }
+	"modal": {
+		"cancel": "CANCEL",
+		"confirm": "CONFIRM"
+	},
+	"status": {
+		"error": "An error has occurred",
+		"empty": {
+			"search": "No results found",
+			"favorites": "No favorites added",
+			"stop": "No more arrivals today"
+		}
+	},
+	"search": {
+		"search": "Search...",
+		"stops": "Stops",
+		"routes": "Routes"
+	},
+	"map": {
+		"zoom": "Bussiaeg.ee does not work outside Estonia",
+		"bounds": "Zoom in to see stops",
+		"start": {
+			"title": "Confirm location?",
+			"text": "Starting location if GPS is unavailable."
+		}
+	},
+	"settings": {
+		"language": "Language",
+		"theme": "Theme",
+		"theme-light": "Light",
+		"theme-dark": "Dark",
+		"view": "Default view",
+		"view-search": "Search",
+		"view-favorites": "Favorites",
+		"view-map": "Map",
+		"credits": "Credits",
+		"creditees": {
+			"programmer": "Programmer",
+			"designer": "Designer",
+			"gtfs": "Plan times",
+			"siri": "Live times in Tallinn",
+			"elron": "Train times"
+		},
+		"version": "Version"
+	}
 }

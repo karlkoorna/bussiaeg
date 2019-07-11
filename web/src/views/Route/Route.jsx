@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
 import { formatTime, formatCountdown } from 'utils.js';
-import Loader from 'components/Loader/Loader.jsx';
+import Status from 'components/Status/Status.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import storeSettings from 'stores/settings.js';
 
@@ -84,7 +84,7 @@ class ViewRoute extends Component {
 						</div>
 					) : null}
 					<ol id="route-stops">
-						{isLoading ? <Loader /> : trips[description].map((stop, i) => (
+						{isLoading ? <Status /> : trips[description].map((stop, i) => (
 							<li key={String(variant) + String(i)}>
 								<Link className="route-stops-stop" to={`/stop?id=${stop.id}`}>
 									<Icon className="route-stops-stop-icon" shape="stop" type={stop.type} />
