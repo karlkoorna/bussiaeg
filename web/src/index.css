@@ -43,6 +43,12 @@ select {
 	-webkit-appearance: none;
 }
 
+select option {
+	font-size: 20px;
+	background-color: var(--color-back-light);
+	color: var(--color-fore-dark);
+}
+
 ul,
 ol {
 	margin: 0;
