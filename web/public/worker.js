@@ -16,5 +16,12 @@ self.addEventListener('fetch', (e) => {
 	]));
 	
 	// Workaround for PWA support.
-	e.respondWith(fetch(e.request).catch(() => new Response(null, { status: 404 })));
+	e.respondWith(Promise.race([
+		new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(new Response(null, { status: 408 }));
+			}, 3000);
+		}),
+		fetch(e.request)
+	]));
 });
