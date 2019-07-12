@@ -7,7 +7,7 @@ async function getSearch(req, res) {
 	const [ stops, routes ] = await Promise.all([
 		db.query(`
 				SELECT
-					id, name, description, type
+					id, name, description, type, lat, lng
 					${lat ? ', ROUND(ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(:lng, :lat))) AS distance' : ''}
 				FROM stops
 				WHERE
