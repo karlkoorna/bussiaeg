@@ -9,6 +9,7 @@ import Status from 'components/Status/Status.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 import storeFavorites from 'stores/favorites.js';
+import { prepareViewData } from 'utils.js';
 
 import './Favorites.css';
 
@@ -40,7 +41,7 @@ class ViewFavorites extends Component {
 										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
 											{(dragProvided, dragSnapshot) => (
 												<article className={'favorites-stop-container' + (dragSnapshot.isDragging ? ' is-dragging' : '')} ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
-													<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`}>
+													<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`} onMouseDown={prepareViewData.bind(this, favorite)}>
 														<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
 														<div>
 															<div className="favorites-stop-name">{favorite.name}</div>

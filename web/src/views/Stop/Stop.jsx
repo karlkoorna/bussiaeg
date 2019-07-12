@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import Status from 'components/Status/Status.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import { opts as mapOpts } from 'views/Map/Map.jsx';
-import { formatTime, formatCountdown } from 'utils.js';
+import { formatTime, formatCountdown, prepareViewData, restoreViewData } from 'utils.js';
 
 import './Stop.css';
 
@@ -45,7 +45,7 @@ class ViewStop extends Component {
 		this._isMounted = true;
 		
 		try {
-			const stop = await (await fetch(`${process.env['REACT_APP_API']}/stops/${(new URLSearchParams(window.location.search)).get('id')}`)).json();
+			const stop = restoreViewData() || await (await fetch(`${process.env['REACT_APP_API']}/stops/${(new URLSearchParams(window.location.search)).get('id')}`)).json();
 			
 			this.setState({
 				stop,
@@ -85,14 +85,14 @@ class ViewStop extends Component {
 				<Helmet>
 					<title>{stop.name + (stop.description ? ' – ' + stop.description : '')}</title>
 					<meta property="og:title" content={stop.name + (stop.description ? ' – ' + stop.description : '')} />
-					<meta name="theme-color" content={iconColors[stop.type || 'unknown'][1]} />
+					<meta name="theme-color" content={stop.type ? iconColors[stop.type][1] : 'var(--color-back-light)'} />
 				</Helmet>
 				<main id="stop" className="view">
-					<div id="stop-info" style={{ backgroundColor: iconColors[stop.type || 'unknown'][0] }}>
+					<div id="stop-info" style={{ backgroundColor: stop.type ? iconColors[stop.type][0] : 'var(--color-back-light)' }}>
 						{stop.id ? (
 							<span>
-								<Icon id="stop-info-icon" shape="vehicle" type={stop.type || 'unknown'} />
-								<div id="stop-info-details">
+								<Icon id="stop-info-icon" shape="vehicle" type={stop.type} />
+								<div>
 									<div id="stop-info-name">{stop.name}</div>
 									<div id="stop-info-description">{stop.description}</div>
 								</div>
@@ -109,7 +109,7 @@ class ViewStop extends Component {
 								
 								return (
 									<li key={departure.tripId}>
-										<Link className="stop-departures-departure" to={`/route?id=${departure.routeId}&trip_id=${departure.tripId}&stop_id=${stop.id}`}>
+										<Link className="stop-departures-departure" to={`/route?id=${departure.routeId}&trip_id=${departure.tripId}&stop_id=${stop.id}`} onMouseDown={prepareViewData.bind(this, departure)}>
 											<Icon className="stop-departures-departure-icon" shape="vehicle" type={departure.type} />
 											<div className="stop-departures-departure-name" style={{ color: primaryColor }}>{departure.name}</div>
 											<div className="stop-departures-departure-destination" style={{ color: secondaryColor }}>

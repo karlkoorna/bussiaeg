@@ -10,7 +10,7 @@ import Scroller from 'components/Scroller.jsx';
 import Status from 'components/Status/Status.jsx';
 import Icon, { colors as iconColors } from 'components/Icon.jsx';
 import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
-import { formatDistance } from 'utils.js';
+import { formatDistance, prepareViewData } from 'utils.js';
 
 import './Search.css';
 
@@ -96,7 +96,7 @@ class ViewSearch extends Component {
 							<Status space="search" hasErrored={hasErrored} isLoading={isLoading} isEmpty={!results[type].length}>
 								{results[type].map((result) => (
 									<li key={result.id}>
-										<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`}>
+										<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`} onMouseDown={prepareViewData.bind(this, result)}>
 											<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} checkFavorite={type === 'stops' ? result.id : null} />
 											<div>
 												<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>

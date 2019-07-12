@@ -1,3 +1,5 @@
+let data = null;
+
 // Converts seconds to sign, raw hour, minute and second values.
 function secondsToShms(seconds) {
 	const absSeconds = Math.abs(seconds);
@@ -21,4 +23,14 @@ export function formatCountdown(seconds, isLive) {
 // Format meters to suitable distance units.
 export function formatDistance(meters) {
 	return meters ? meters >= 100000 ? `${Math.round(meters / 10000) * 10}km` : meters >= 10000 ? `${(meters / 1000).toFixed()}km` : meters >= 1000 ? `${(meters / 1000).toFixed(1)}km` : `${Math.round(meters / 10) * 10}m` : '';
+}
+
+// Save colors for use in next view.
+export function prepareViewData(obj) {
+	data = obj;
+}
+
+// Get colors from last view.
+export function restoreViewData(key) {
+	return data[key] || data;
 }
