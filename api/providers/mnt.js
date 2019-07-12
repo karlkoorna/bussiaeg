@@ -155,6 +155,8 @@ async function getRouteTrips(id, tripId) {
 				stop.name,
 				stop.description,
 				stop.type,
+				stop.lat,
+				stop.lng,
 				trip.origin,
 				trip.destination
 			FROM routes AS route

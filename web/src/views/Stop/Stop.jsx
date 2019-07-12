@@ -89,7 +89,7 @@ class ViewStop extends Component {
 				</Helmet>
 				<main id="stop" className="view">
 					<div id="stop-info" style={{ backgroundColor: stop.type ? iconColors[stop.type][0] : 'var(--color-back-light)' }}>
-						{stop.id ? (
+						{Object.keys(stop).length ? (
 							<span>
 								<Icon id="stop-info-icon" shape="vehicle" type={stop.type} />
 								<div>

@@ -31,6 +31,6 @@ export function prepareViewData(obj) {
 }
 
 // Get colors from last view.
-export function restoreViewData(key) {
-	return data[key] || data;
+export function restoreViewData() {
+	return data;
 }

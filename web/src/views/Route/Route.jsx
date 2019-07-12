@@ -73,7 +73,7 @@ class ViewRoute extends Component {
 				</Helmet>
 				<main id="route" className="view">
 					<div id="route-info" style={{ backgroundColor: route.type ? iconColors[route.type][0] : 'var(--color-back-light)' }}>
-						{route.id ? (
+						{Object.keys(route).length ? (
 							<span>
 								<Icon id="route-info-icon" shape="vehicle" type={route.type} />
 								<div>
