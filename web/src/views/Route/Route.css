@@ -6,6 +6,7 @@
 /* Info */
 
 #route-info {
+	z-index: 1;
 	display: flex;
 	position: relative;
 	width: 100%;
@@ -13,6 +14,7 @@
 	box-shadow: var(--shadow-soft);
 	font-weight: bold;
 	text-align: center;
+	transition: background-color .15s linear;
 	justify-content: center;
 	flex-direction: column;
 	overflow: hidden;
@@ -20,7 +22,6 @@
 
 #route-info span {
 	animation: var(--animation-fadeIn);
-	animation-duration: .3s;
 }
 
 #route-info-icon {
