@@ -8,7 +8,7 @@
 	justify-content: center;
 	align-items: center;
 	animation: var(--animation-fadeIn);
-	animation-delay: .25s;
+	animation-delay: .3s;
 	opacity: 0;
 }
 

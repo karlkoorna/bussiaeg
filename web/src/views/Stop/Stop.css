@@ -13,6 +13,7 @@
 	height: 72px;
 	box-shadow: var(--shadow-soft);
 	font-weight: bold;
+	text-align: center;
 	justify-content: center;
 	flex-direction: column;
 	overflow: hidden;
@@ -23,7 +24,6 @@
 }
 
 #stop-info-icon {
-	z-index: -1;
 	position: absolute;
 	left: -50px;
 	bottom: -32px;
@@ -38,12 +38,8 @@
 	fill: white;
 }
 
-#stop-info-details {
-	text-align: center;
-	align-self: center;
-}
-
 #stop-info-name {
+	margin-top: -3px;
 	color: white;
 	font-size: 22px;
 }

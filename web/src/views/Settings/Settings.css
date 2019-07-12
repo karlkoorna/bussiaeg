@@ -29,10 +29,6 @@
 	font-size: 15px;
 }
 
-#settings option {
-	font-size: 20px;
-}
-
 #settings section:nth-last-of-type(2) {
 	padding: 24px 14px;
 }

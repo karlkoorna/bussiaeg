@@ -77,8 +77,8 @@
 	color: deepskyblue;
 }
 
-#app[data-theme="light"] #modal-buttons-cancel:hover,
-#app[data-theme="light"] #modal-buttons-confirm:hover {
+#modal-buttons-cancel:hover,
+#modal-buttons-confirm:hover {
 	background-color: rgba(0, 0, 0, .075);
 }
 
@@ -87,8 +87,8 @@
 	background-color: rgba(0, 0, 0, .175);
 }
 
-#app[data-theme="light"] #modal-buttons-cancel:hover canvas,
-#app[data-theme="light"] #modal-buttons-confirm:hover canvas {
+#modal-buttons-cancel:hover canvas,
+#modal-buttons-confirm:hover canvas {
 	color: rgba(0, 0, 0, .075);
 }
 
