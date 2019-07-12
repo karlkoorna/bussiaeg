@@ -38,8 +38,8 @@ class ViewFavorites extends Component {
 								<Status space="favorites" isEmpty={!favorites.length}>
 									{favorites.map((favorite, i) => (
 										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
-											{(dragProvided) => (
-												<article className="favorites-stop-container" ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
+											{(dragProvided, dragSnapshot) => (
+												<article className={'favorites-stop-container' + (dragSnapshot.isDragging ? ' is-dragging' : '')} ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
 													<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`}>
 														<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
 														<div>

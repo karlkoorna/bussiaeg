@@ -17,6 +17,8 @@
 	width: 100%;
 	height: 100px;
 	box-shadow: var(--shadow-soft);
+	border: 3px solid transparent;
+	border-radius: 3px;
 	align-items: center;
 	cursor: pointer;
 	pointer-events: all;
@@ -27,7 +29,7 @@
 }
 
 .favorites-stop-container.is-dragging .favorites-stop {
-	box-shadow: var(--shadow-hard);
+	border: 3px solid rgba(255, 255, 255, .5);
 }
 
 .favorites-stop-icon {
