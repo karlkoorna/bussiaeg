@@ -21,7 +21,6 @@ class ViewStop extends Component {
 	}
 	
 	_isMounted = true
-	interval = 0
 	
 	// Toggle favorite status.
 	toggleFavorite = () => {
@@ -30,17 +29,15 @@ class ViewStop extends Component {
 	
 	// Update times if mounted with 2s timeout after previous request.
 	fetchTimes = async () => {
-		if (!this._isMounted) return;
-		
 		try {
 			const departures = await (await fetch(`${process.env['REACT_APP_API']}/stops/${this.state.stop.id}/departures`)).json();
 			this.setState({ departures, isLoading: false });
 		} catch {}
 		
-		setTimeout(this.fetchTimes, 2000);
+		if (this._isMounted) setTimeout(this.fetchTimes, 2000);
 	}
 	
-	// Fetch stop, redirect to default view if unsuccessful.
+	// Fetch stop.
 	async componentDidMount() {
 		this._isMounted = true;
 		
@@ -74,7 +71,6 @@ class ViewStop extends Component {
 	
 	componentWillUnmount() {
 		this._isMounted = false;
-		clearInterval(this.interval);
 	}
 	
 	render() {
