@@ -38,7 +38,7 @@ class StoreFavorites {
 					
 				localStorage.setItem('favorites', JSON.stringify(favorites));
 				localStorage.removeItem('bookmarks');
-			} catch (ex) {}
+			} catch {}
 		})();
 	}
 	
