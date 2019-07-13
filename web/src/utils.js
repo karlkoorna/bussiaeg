@@ -25,12 +25,14 @@ export function formatDistance(meters) {
 	return meters ? meters >= 100000 ? `${Math.round(meters / 10000) * 10}km` : meters >= 10000 ? `${(meters / 1000).toFixed()}km` : meters >= 1000 ? `${(meters / 1000).toFixed(1)}km` : `${Math.round(meters / 10) * 10}m` : '';
 }
 
-// Save colors for use in next view.
+// Save data for use in next view.
 export function prepareViewData(obj) {
 	data = obj;
 }
 
-// Get colors from last view.
+// Get data from last view and reset.
 export function restoreViewData() {
-	return data;
+	const _data = data;
+	data = null;
+	return _data;
 }
