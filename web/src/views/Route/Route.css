@@ -17,6 +17,7 @@
 	text-align: center;
 	transition: background-color .15s linear;
 	justify-content: center;
+	align-items: center;
 	flex-direction: column;
 	overflow: hidden;
 }
@@ -41,6 +42,11 @@
 	fill: white;
 }
 
+#route-info > span > div {
+	display: flex;
+	flex-direction: column;
+}
+
 #route-info-name {
 	margin-top: -3px;
 	color: white;
@@ -48,16 +54,18 @@
 }
 
 #route-info-description {
-	margin-top: 3px;
-	padding: 3px 12px;
+	height: 0;
 	color: #f2f2f2;
 	border-radius: 8px;
 	font-size: 14px;
 	text-align: center;
-	transition: background-color .15s linear;
+	transition: margin-top .15s linear, padding .15s linear, background-color .15s linear;
 }
 
 #route-info-description:not(:empty) {
+	height: 22px;
+	margin-top: 3px;
+	padding: 3px 12px;
 	background-color: rgba(0, 0, 0, .1);
 }
 

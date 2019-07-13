@@ -17,6 +17,7 @@
 	text-align: center;
 	transition: background-color .15s linear;
 	justify-content: center;
+	align-items: center;
 	flex-direction: column;
 	overflow: hidden;
 }
@@ -38,6 +39,11 @@
 
 #stop-info-icon * {
 	fill: white;
+}
+
+#route-info > span > div {
+	display: flex;
+	flex-direction: column;
 }
 
 #stop-info-name {
@@ -75,19 +81,19 @@
 	stroke: var(--color-view-favorites-dark);
 }
 
-/* Times */
+/* Departures */
 
-#stop-times {
+#stop-departures {
 	flex: 1;
 	padding: 6px;
 	overflow-y: scroll;
 }
 
-#stop-times li {
+#stop-departures li {
 	padding: 6px 0;
 }
 
-#stop-times li:first-child {
+#stop-departures li:first-child {
 	padding-top: 0;
 }
 
@@ -100,7 +106,7 @@
 	animation: var(--animation-fadeIn);
 }
 
-#stop-times li:not(:last-child) .stop-departures-departure:after {
+#stop-departures li:not(:last-child) .stop-departures-departure:after {
 	content: "";
 	position: absolute;
 	left: 6px;
