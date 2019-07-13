@@ -14,7 +14,7 @@ class ViewRoute extends Component {
 	state = {
 		route: {},
 		directions: [],
-		variant: 0,
+		variant: 1,
 		stopId: null,
 		isLoading: true,
 		hasErrored: false
