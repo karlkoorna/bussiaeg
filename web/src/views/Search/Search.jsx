@@ -94,7 +94,7 @@ class ViewSearch extends Component {
 					<Scroller>
 						<Swipeable nodeName="ol" className="search-results" onSwipedLeft={this.changeTypeRoutes} onSwipedRight={this.changeTypeStops}>
 							<Status space="search" hasErrored={hasErrored} isLoading={isLoading} isEmpty={!results[type].length}>
-								{results[type].map((result) => (
+								{() => results[type].map((result) => (
 									<li key={result.id}>
 										<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`} onMouseDown={prepareViewData.bind(this, result)}>
 											<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} checkFavorite={type === 'stops' ? result.id : null} />

@@ -20,7 +20,7 @@ function Status({ t, space, hasErrored, isLoading, isEmpty, children }) {
 		<li id="status" key="empty">
 			{t('status.empty.' + space)}
 		</li>
-	) : children;
+	) : children();
 }
 
 export default withTranslation()(Status);

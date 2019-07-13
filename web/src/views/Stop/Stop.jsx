@@ -104,7 +104,7 @@ class ViewStop extends Component {
 					</div>
 					<ol id="stop-times">
 						<Status space="stop" isLoading={isLoading} hasErrored={hasErrored} isEmpty={!departures.length}>
-							{departures.map((departure) => {
+							{() => departures.map((departure) => {
 								const [ primaryColor, secondaryColor ] = iconColors[departure.type];
 								
 								return (

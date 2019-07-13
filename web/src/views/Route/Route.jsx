@@ -84,8 +84,8 @@ class ViewRoute extends Component {
 						) : null}
 					</div>
 					<ol id="route-stops">
-						<Status isLoading={isLoading} hasErrored={hasErrored} isEmpty={!trips[description]}>
-							{(trips[description] || []).map((stop, i) => (
+						<Status isLoading={isLoading} hasErrored={hasErrored}>
+							{() => trip.stops.map((stop, i) => (
 								<li key={String(variant) + String(i)}>
 									<Link className="route-stops-stop" to={`/stop?id=${stop.id}`} onMouseDown={prepareViewData.bind(this, stop)}>
 										<Icon className="route-stops-stop-icon" shape="stop" type={stop.type} />

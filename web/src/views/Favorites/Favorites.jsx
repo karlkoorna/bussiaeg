@@ -37,7 +37,7 @@ class ViewFavorites extends Component {
 						<Scroller>
 							<main id="favorites" className="view" ref={dropProvided.innerRef}>
 								<Status space="favorites" isEmpty={!favorites.length}>
-									{favorites.map((favorite, i) => (
+									{() => favorites.map((favorite, i) => (
 										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
 											{(dragProvided, dragSnapshot) => (
 												<article className={'favorites-stop-container' + (dragSnapshot.isDragging ? ' is-dragging' : '')} ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
