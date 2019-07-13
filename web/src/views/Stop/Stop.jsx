@@ -78,11 +78,13 @@ class ViewStop extends Component {
 		
 		return (
 			<>
-				<Helmet>
-					<title>{stop.name + (stop.description ? ' – ' + stop.description : '')}</title>
-					<meta property="og:title" content={stop.name + (stop.description ? ' – ' + stop.description : '')} />
-					<meta name="theme-color" content={stop.type ? iconColors[stop.type][1] : 'var(--color-back-light)'} />
-				</Helmet>
+				{Object.keys(stop).length ? (
+					<Helmet>
+						<title>{stop.name + (stop.description ? ' – ' + stop.description : '')}</title>
+						<meta property="og:title" content={stop.name + (stop.description ? ' – ' + stop.description : '')} />
+						<meta name="theme-color" content={stop.type ? iconColors[stop.type][1] : 'var(--color-back-light)'} />
+					</Helmet>
+				) : null}
 				<main id="stop" className="view">
 					<div id="stop-info" style={{ backgroundColor: stop.type ? iconColors[stop.type][0] : 'var(--color-back-light)' }}>
 						{Object.keys(stop).length ? (
@@ -105,7 +107,7 @@ class ViewStop extends Component {
 								
 								return (
 									<li key={departure.tripId}>
-										<Link className="stop-departures-departure" to={`/route?id=${departure.routeId}&trip_id=${departure.tripId}&stop_id=${stop.id}`} onMouseDown={prepareViewData.bind(this, departure)}>
+										<Link className="stop-departures-departure" to={'/route?id=' + departure.routeId} onMouseDown={prepareViewData.bind(this, { ...departure, stopId: stop.id })}>
 											<Icon className="stop-departures-departure-icon" shape="vehicle" type={departure.type} />
 											<div className="stop-departures-departure-name" style={{ color: primaryColor }}>{departure.name}</div>
 											<div className="stop-departures-departure-destination" style={{ color: secondaryColor }}>

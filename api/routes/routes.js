@@ -12,13 +12,13 @@ async function getRoute(req, res) {
 	res.send(route);
 }
 
-// Get trips for route.
-async function getRouteTrips(req, res) {
+// Get directions for route.
+async function getRouteDirections(req, res) {
 	const { id } = req.params;
-	const stop = id.length < 5 ? await elron.getRouteTrips(id) : await mnt.getRouteTrips(id);
-	if (!stop) return void res.status(404).send('Route not found.');
+	const directions = id.length < 5 ? await elron.getRouteDirections(id) : await mnt.getRouteDirections(id, req.query.trip_id);
+	if (!directions) return void res.status(404).send('Route not found.');
 	
-	res.send(stop);
+	res.send(directions);
 }
 
 module.exports = (fastify, opts, next) => {
@@ -35,7 +35,7 @@ module.exports = (fastify, opts, next) => {
 		}
 	}, getRoute);
 	
-	fastify.get('/routes/:id/trips', {
+	fastify.get('/routes/:id/directions', {
 		preHandler: cache.middleware(6),
 		schema: {
 			params: {
@@ -45,8 +45,14 @@ module.exports = (fastify, opts, next) => {
 					id: { type: 'string' }
 				}
 			}
+		},
+		querystring: {
+			type: 'object',
+			properties: {
+				trip_id: { type: 'string' }
+			}
 		}
-	}, getRouteTrips);
+	}, getRouteDirections);
 	
 	next();
 };

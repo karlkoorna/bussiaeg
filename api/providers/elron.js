@@ -38,23 +38,26 @@ async function getRoute(id) {
 	};
 }
 
-// Get trips for route.
-async function getRouteTrips(id) {
+// Get directions for route.
+async function getRouteDirections(id) {
 	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${id}`, { timeout: 600, retry: 1 })).body).data;
 	if (!stops) throw new Error('Invalid response');
 	
-	return {
-		[stops[0].peatus + ' - ' + stops[stops.length - 1].peatus]: stops.map((stop) => ({
-			id: stop.peatus,
-			name: stop.peatus,
-			description: '',
-			type: 'train'
-		}))
-	};
+	return [
+		{
+			name: stops[0].peatus + ' - ' + stops[stops.length - 1].peatus,
+			stops: stops.map((stop) => ({
+				id: stop.peatus,
+				name: stop.peatus,
+				description: '',
+				type: 'train'
+			}))
+		}
+	];
 }
 
 module.exports = {
 	getStopDepartures,
 	getRoute,
-	getRouteTrips
+	getRouteDirections
 };

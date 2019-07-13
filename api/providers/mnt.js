@@ -146,19 +146,14 @@ async function getRoute(id) {
 	`, [ id ]))[0];
 }
 
-// Get trips for route.
-async function getRouteTrips(id, tripId) {
-	const trips = _.groupBy(await db.query(`
+// Get directions for route.
+async function getRouteDirections(id, tripId) {
+	const directions = _.groupBy(await db.query(`
 		(
 			SELECT
-				stop.id,
-				stop.name,
-				stop.description,
-				stop.type,
-				stop.lat,
-				stop.lng,
-				trip.origin,
-				trip.destination
+				stop.id, stop.name, stop.description, stop.type, stop.lat, stop.lng,
+				trip.origin, trip.destination
+				${tripId ? ', direction IN (SELECT direction FROM trips WHERE id = :tripId) AS marker' : ''}
 			FROM routes AS route
 			JOIN trips AS trip ON trip.route_id = route.id
 			JOIN services AS service ON service.id = service_id
@@ -166,21 +161,22 @@ async function getRouteTrips(id, tripId) {
 			JOIN stops AS stop ON stop.id = stop_id
 			WHERE
 				route_id = :id
-				${tripId ? 'AND direction NOT IN (SELECT direction FROM trips WHERE id = :tripId)' : ''}
 				AND CURDATE() BETWEEN start AND end
 			GROUP BY direction, sequence
 		)
-	`, { id, tripId }), (trip) => `${trip.origin} - ${trip.destination}`);
+	`, { id, tripId }), (stop) => stop.origin + ' - ' + stop.destination);
 	
-	// Trim and clean stops.
-	for (const key in trips) trips[key] = trips[key].filter((stop, i, stops) => stop.name !== (stops[i + 1] || {}).name).map((stop) => {
-		delete stop.origin;
-		delete stop.destination;
-		
-		return stop;
-	});
-	
-	return trips;
+	return Object.entries(directions).map(([ name, stops ]) => ({
+		name,
+		marker: Boolean(stops[0].marker),
+		stops: stops.filter((stop, i) => stop.name !== (stops[i + 1] || {}).name).map((stop) => {
+			delete stop.origin;
+			delete stop.destination;
+			delete stop.marker;
+			
+			return stop;
+		})
+	}));
 }
 
 module.exports = {
@@ -188,5 +184,5 @@ module.exports = {
 	getStop,
 	getStopDepartures,
 	getRoute,
-	getRouteTrips
+	getRouteDirections
 };
