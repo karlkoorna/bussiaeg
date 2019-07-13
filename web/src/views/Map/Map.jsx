@@ -13,6 +13,7 @@ import { colors as viewColors } from 'components/NavBar/NavBar.jsx';
 import storeCoords from 'stores/coords.js';
 import storeSettings from 'stores/settings.js';
 import storeFavorites from 'stores/favorites.js';
+import { prepareViewData } from 'utils.js';
 import addDragZoom from './dragZoom.js';
 
 import './Map.css';
@@ -113,6 +114,7 @@ class ViewMap extends Component {
 				iconUrl: 'data:image/svg+xml;base64,' + btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type, checkFavorite: stop.id, forMap: true })))
 			})
 		})).addTo(map).on('click', () => {
+			prepareViewData(stop);
 			this.props.history.push(`/stop?id=${stop.id}`);
 		});
 	}
