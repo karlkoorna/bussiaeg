@@ -52,8 +52,8 @@ class ViewFavorites extends Component {
 											)}
 										</Draggable>
 									))}
-									{dropProvided.placeholder}
 								</Status>
+								{dropProvided.placeholder}
 							</main>
 						</Scroller>
 					)}
