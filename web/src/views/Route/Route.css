@@ -72,22 +72,39 @@
 /* Stops */
 
 #route-stops {
+	padding: 6px;
 	flex: 1;
 	overflow-y: auto;
+}
+
+#route-stops li {
+	padding: 6px 0;
+}
+
+#route-stops li:first-child {
+	padding-top: 0;
 }
 
 .route-stops-stop {
 	display: flex;
 	position: relative;
-	width: 100%;
-	height: 80px;
-	padding: 8px;
+	height: 64px;
+	border-radius: 6px;
 	font-weight: bold;
 	transition: background-color .1s linear;
 	animation: var(--animation-fadeIn);
 	align-items: center;
 	cursor: pointer;
-	pointer-events: all;
+}
+
+#route-stops li:not(:last-child) .route-stops-stop:after {
+	content: "";
+	position: absolute;
+	left: 6px;
+	right: 6px;
+	bottom: -7px;
+	height: 1px;
+	background-color: rgba(127, 127, 127, .2);
 }
 
 .route-stops-stop:hover {
@@ -98,19 +115,8 @@
 	background-color: #fafa5850;
 }
 
-.route-stops-stop:after {
-	content: "";
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: calc(100% - 16px);
-	height: 1px;
-	margin: 0 8px;
-	background-color: rgba(127, 127, 127, .2);
-}
-
 .route-stops-stop-icon {
-	height: 100%;
+	width: 64px;
 	padding: 8px;
 	flex-shrink: 0;
 }
