@@ -70,7 +70,9 @@
 		<script>
 			// Try to restore connection.
 			(async function ping() {
-				fetch(location.origin + '/ping').then(() => {
+				fetch(location.origin + '/ping').then((res) => {
+					if (!res.ok) return;
+
 					document.body.classList.add('is-online');
 					document.body.addEventListener('transitionend', () => {
 						location = location.origin;
