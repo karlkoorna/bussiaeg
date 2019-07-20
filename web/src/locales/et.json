@@ -21,7 +21,7 @@
 		"bounds": "Suumige sisse, et näha peatusi",
 		"start": {
 			"title": "Kinnita asukoht?",
-			"text": "GPSi puudumisel kasutatav algasukoht."
+			"text": "Teie praegune asukoht seatakse algasukohaks GPSi puudumisel."
 		}
 	},
 	"settings": {

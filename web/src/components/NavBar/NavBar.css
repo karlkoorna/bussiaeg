@@ -38,7 +38,7 @@
 
 .navbar-item svg {
 	width: 32px;
-	transition: width .1s ease;
+	transition: width .15s ease;
 }
 
 .navbar-item:hover svg {

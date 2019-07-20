@@ -39,6 +39,7 @@
 #modal-text {
 	padding: 0 24px 24px;
 	color: var(--color-fore-light);
+	text-align: justify;
 }
 
 /* Panel - Buttons */

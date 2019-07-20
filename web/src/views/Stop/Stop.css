@@ -69,11 +69,17 @@
 	stroke: white;
 	stroke-width: 100;
 	cursor: pointer;
-	opacity: .75;
+	opacity: .35;
+	transition: opacity .15s linear;
+}
+
+#stop-info-favorite.is-active {
+	opacity: .7;
+	animation: navbar-favorites .5s linear forwards;
 }
 
 #stop-info-favorite path {
-	transition: fill .1s linear, stroke .1s linear;
+	transition: fill .15s linear, stroke .15s linear;
 }
 
 #stop-info-favorite.is-active path {
@@ -140,7 +146,7 @@
 }
 
 .stop-departures-departure-name {
-	left: 48px;
+	left: 50px;
 	top: 12px;
 }
 
