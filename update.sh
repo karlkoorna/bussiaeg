@@ -4,9 +4,10 @@
 killall caddy
 killall node
 
-# Discard local changes and pull updates from Git.
+# Discard local changes and pull latest release from GitHub.
 git reset --hard origin/master
 git pull
+git checkout tags/$(curl -s https://api.github.com/repos/karlkoorna/bussiaeg/releases/latest | grep -oP '(?<="tag_name": ")([0-9.]*)')
 
 # Make scripts executable.
 chmod +x update.sh
