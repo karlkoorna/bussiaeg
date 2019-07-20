@@ -41,7 +41,7 @@ class ViewFavorites extends Component {
 										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
 											{(dragProvided, dragSnapshot) => (
 												<article className={'favorites-stop-container' + (dragSnapshot.isDragging ? ' is-dragging' : '')} ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
-													<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`} onMouseDown={prepareViewData.bind(this, favorite)}>
+													<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`} onMouseDown={prepareViewData.bind(this, 'stop', favorite)}>
 														<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
 														<div>
 															<div className="favorites-stop-name">{favorite.name}</div>

@@ -79,7 +79,7 @@ class ViewMap extends Component {
 	}
 	
 	// Update message based on bounds and redraw stops.
-	fetchStops = (noCache) => {
+	fetchStops = (redraw) => {
 		const map = window.map;
 		const { t } = this.props;
 		const { _southWest: { lat: latMin, lng: lngMin }, _northEast: { lat: latMax, lng: lngMax } } = map.getBounds();
@@ -100,7 +100,7 @@ class ViewMap extends Component {
 		for (const id in this.markers) {
 			const marker = this.markers[id];
 			
-			if (!noCache && marker._latlng.lat > latMin && marker._latlng.lat < latMax && marker._latlng.lng > lngMin && marker._latlng.lng < lngMax) continue;
+			if (!redraw && marker._latlng.lat > latMin && marker._latlng.lat < latMax && marker._latlng.lng > lngMin && marker._latlng.lng < lngMax) continue;
 			
 			marker.remove();
 			delete this.markers[id];
@@ -114,7 +114,7 @@ class ViewMap extends Component {
 				iconUrl: 'data:image/svg+xml;base64,' + btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type, checkFavorite: stop.id, forMap: true })))
 			})
 		})).addTo(map).on('click', () => {
-			prepareViewData(stop);
+			prepareViewData('stop', stop);
 			this.props.history.push(`/stop?id=${stop.id}`);
 		});
 	}

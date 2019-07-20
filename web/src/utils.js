@@ -1,5 +1,3 @@
-let data = null;
-
 // Converts seconds to sign, raw hour, minute and second values.
 function secondsToShms(seconds) {
 	const absSeconds = Math.abs(seconds);
@@ -20,19 +18,34 @@ export function formatCountdown(seconds, isLive) {
 	return ((shms[0] ? '-' : '') + (shms[1] ? `${shms[1]}h` : '') + (shms[2] ? ` ${shms[2]}m` : '') + ((!shms[2] && !isLive) || (shms[3] && isLive) ? ` ${shms[3]}s` : '')).trim();
 }
 
+/* Distance */
+
 // Format meters to suitable distance units.
 export function formatDistance(meters) {
 	return meters ? meters >= 100000 ? `${Math.round(meters / 10000) * 10}km` : meters >= 10000 ? `${(meters / 1000).toFixed()}km` : meters >= 1000 ? `${(meters / 1000).toFixed(1)}km` : `${Math.round(meters / 10) * 10}m` : '';
 }
 
-// Save data for use in next view.
-export function prepareViewData(obj) {
-	data = obj;
+/* Data */
+
+// Load data from session storage
+const data = JSON.parse(sessionStorage.getItem('cache') || '{}');
+
+// Save data in session storage.
+window.addEventListener('beforeunload', () => {
+	const now = new Date();
+	now.setDate(now.getDate() + 1);
+	now.setHours(6, 0, 0, 0);
+	
+	sessionStorage.setItem('cache', now > new Date(sessionStorage.getItem('update') || 0) ? '{}' : JSON.stringify(data));
+	sessionStorage.setItem('update', now);
+});
+
+// Set data for view path.
+export function prepareViewData(type, obj) {
+	data[type + (obj.id || obj.routeId)] = obj;
 }
 
-// Get data from last view and reset.
-export function restoreViewData() {
-	const _data = data;
-	data = null;
-	return _data;
+// Get data for view path.
+export function restoreViewData(type, id) {
+	return data[type + id] || null;
 }

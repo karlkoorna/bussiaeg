@@ -42,7 +42,8 @@ class ViewStop extends Component {
 		this._isMounted = true;
 		
 		try {
-			const stop = restoreViewData() || await (await fetch(`${process.env['REACT_APP_API']}/stops/${(new URLSearchParams(window.location.search)).get('id')}`)).json();
+			const id = (new URLSearchParams(window.location.search)).get('id');
+			const stop = restoreViewData('stop', id) || await (await fetch(`${process.env['REACT_APP_API']}/stops/${id}`)).json();
 			
 			this.setState({
 				stop,
@@ -107,7 +108,7 @@ class ViewStop extends Component {
 								
 								return (
 									<li key={departure.tripId}>
-										<Link className="stop-departures-departure" to={'/route?id=' + departure.routeId} onMouseDown={prepareViewData.bind(this, { ...departure, stopId: stop.id })}>
+										<Link className="stop-departures-departure" to={'/route?id=' + departure.routeId} type="vehicle" onMouseDown={prepareViewData.bind(this, 'vehicle', departure)}>
 											<Icon className="stop-departures-departure-icon" shape="vehicle" type={departure.type} />
 											<div className="stop-departures-departure-name" style={{ color: primaryColor }}>{departure.name}</div>
 											<div className="stop-departures-departure-destination" style={{ color: secondaryColor }}>

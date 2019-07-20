@@ -39,7 +39,8 @@ class ViewRoute extends Component {
 	// Fetch directions.
 	async componentDidMount() {
 		try {
-			const route = restoreViewData() || await (await fetch(`${process.env['REACT_APP_API']}/routes/${(new URLSearchParams(window.location.search)).get('id')}`)).json();
+			const id = (new URLSearchParams(window.location.search)).get('id');
+			const route = restoreViewData('vehicle', id) || await (await fetch(`${process.env['REACT_APP_API']}/routes/${id}`)).json();
 			
 			this.setState({ route }, async () => {
 				const directions = await (await fetch(`${process.env['REACT_APP_API']}/routes/${route.id || route.routeId}/directions${route.tripId ? '?trip_id=' + route.tripId : ''}`)).json();
@@ -102,7 +103,7 @@ class ViewRoute extends Component {
 						<Status isLoading={isLoading} hasErrored={hasErrored}>
 							{() => direction.stops.map((stop, i) => (
 								<li key={String(variant) + String(i)}>
-									<Link className="route-stops-stop" to={`/stop?id=${stop.id}`} onMouseDown={prepareViewData.bind(this, stop)}>
+									<Link className="route-stops-stop" to={`/stop?id=${stop.id}`} onMouseDown={prepareViewData.bind(this, 'stop', stop)}>
 										<Icon className="route-stops-stop-icon" shape="stop" type={stop.type} />
 										<div>
 											<div className="route-stops-stop-name" style={{ color: iconColors[stop.type][0] }}>{stop.name}</div>
