@@ -92,20 +92,39 @@ class ViewSearch extends Component {
 						</div>
 					</div>
 					<Scroller>
-						<Swipeable nodeName="ol" className="search-results" onSwipedLeft={this.changeTypeRoutes} onSwipedRight={this.changeTypeStops}>
+						<Swipeable className="search-results" nodeName="ol" onSwipedLeft={this.changeTypeRoutes} onSwipedRight={this.changeTypeStops}>
 							<Status space="search" hasErrored={hasErrored} isLoading={isLoading} isEmpty={!results[type].length}>
-								{() => results[type].map((result) => (
-									<li key={result.id}>
-										<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`} type={type.slice(0, -1)} onMouseDown={prepareViewData.bind(this, type.slice(0, -1), result)}>
-											<Icon className="search-results-result-icon" shape={type.slice(0, -1)} type={result.type} checkFavorite={type === 'stops' ? result.id : null} />
-											<div>
-												<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
-												<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description}</div>
-											</div>
-											<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
-										</Link>
-									</li>
-								))}
+								{() => results[type].map((result) => {
+									const [ primaryColor, secondaryColor ] = iconColors[result.type];
+									
+									return (
+										<li key={result.id}>
+											{type === 'stops' ? (
+												<Link className="search-results-result" to={`/stop?id=${result.id}`} data-type="stop" onMouseDown={prepareViewData.bind(this, 'stop', result)}>
+													<Icon className="search-results-result-icon" shape="stop" type={result.type} checkFavorite={type === 'stops' ? result.id : null} />
+													<div>
+														<div className="search-results-result-name" style={{ color: primaryColor }}>{result.name}</div>
+														<div className="search-results-result-description" style={{ color: secondaryColor }}>{result.description}</div>
+													</div>
+													<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
+												</Link>
+											) : (
+												<Link className="search-results-result" to={`/route?id=${result.id}`} data-type="route" onMouseDown={prepareViewData.bind(this, 'route', result)}>
+													<Icon className="search-results-result-icon" shape="vehicle" type={result.type} />
+													<div className="search-results-result-name" style={{ color: primaryColor }}>{result.name}</div>
+													<div className="search-results-result-destination" style={{ color: secondaryColor }}>
+														<svg viewBox="0 0 1024 1024">
+															<path fill={primaryColor} d="M1024 512l-337.6 512H462l338.2-512L462 0h224.4z" />
+															<path fill={secondaryColor} d="M562 512l-337.6 512H0l338.2-512L0 0h224.4z" />
+														</svg>
+														{result.description}
+													</div>
+													<div className="search-results-result-distance">~{formatDistance(result.distance)}</div>
+												</Link>
+											)}
+										</li>
+									);
+								})}
 							</Status>
 						</Swipeable>
 					</Scroller>

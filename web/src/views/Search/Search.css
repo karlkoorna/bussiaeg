@@ -112,6 +112,10 @@
 	padding-top: 0;
 }
 
+.search-results li:last-child {
+	padding-bottom: 0;
+}
+
 .search-results-result {
 	display: flex;
 	position: relative;
@@ -137,36 +141,73 @@
 	background-color: rgba(127, 127, 127, .2);
 }
 
-.search-results-result-icon {
+.search-results-result-distance {
+	right: 0;
+	padding: 16px;
+	font-size: 18px;
+}
+
+/* Results - Stops */
+
+.search-results-result[data-type="stop"] .search-results-result-icon {
 	height: 100%;
 	padding: 10px;
 	flex-shrink: 0;
 }
 
-.search-results-result[type="route"] .search-results-result-icon {
-	padding: 6px;
-}
-
-.search-results-result-icon + div {
-	padding-left: 8px;
+.search-results-result[data-type="stop"] .search-results-result-icon + div {
+	padding-left: 6px;
 	flex: 1;
 }
 
-.search-results-result-icon + div.is-vehicle {
-	padding-left: 0;
-}
-
-.search-results-result-name {
+.search-results-result[data-type="stop"] .search-results-result-name {
 	margin-bottom: 3px;
 	font-size: 21px;
 }
 
-.search-results-result-description {
-	margin-bottom: 3px;
+.search-results-result[data-type="stop"] .search-results-result-description {
+	margin-bottom: 1px;
 	font-size: 15px;
 }
 
-.search-results-result-distance {
-	padding: 16px;
-	font-size: 18px;
+/* Results - Routes */
+
+.search-results-result[data-type="route"] {
+	height: 80px;
+}
+
+.search-results-result[data-type="route"] > * {
+	position: absolute;
+}
+
+.search-results-result[data-type="route"] .search-results-result-icon {
+	top: 0;
+	width: 48px;
+	margin-top: 3px;
+}
+
+.search-results-result[data-type="route"] .search-results-result-name,
+.search-results-result[data-type="route"] .search-results-result-countdown {
+	font-size: 28px;
+}
+
+.search-results-result[data-type="route"] .search-results-result-name,
+.search-results-result[data-type="route"] .search-results-result-destination {
+	font-weight: bold;
+}
+
+.search-results-result[data-type="route"] .search-results-result-name {
+	left: 50px;
+	top: 12px;
+}
+
+.search-results-result[data-type="route"] .search-results-result-destination {
+	left: 10px;
+	bottom: 7px;
+}
+
+.search-results-result[data-type="route"] .search-results-result-destination svg {
+	width: 16px;
+	margin-right: 8px;
+	margin-bottom: -2px;
 }

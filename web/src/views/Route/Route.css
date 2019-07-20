@@ -85,10 +85,14 @@
 	padding-top: 0;
 }
 
+#route-stops li:last-child {
+	padding-bottom: 0;
+}
+
 .route-stops-stop {
 	display: flex;
 	position: relative;
-	height: 64px;
+	height: 72px;
 	border-radius: 6px;
 	font-weight: bold;
 	transition: background-color .1s linear;
@@ -115,8 +119,8 @@
 }
 
 .route-stops-stop-icon {
-	width: 64px;
-	padding: 8px;
+	height: 100%;
+	padding: 10px;
 	flex-shrink: 0;
 }
 
@@ -125,19 +129,13 @@
 	flex: 1;
 }
 
-.route-stops-stop-icon + div + div {
-	padding-left: 8px;
-	text-align: right;
-	flex: 1;
-}
-
 .route-stops-stop-name {
-	margin-bottom: 4px;
+	margin-bottom: 3px;
 	font-size: 21px;
 }
 
 .route-stops-stop-description {
-	margin-bottom: 2px;
+	margin-bottom: 1px;
 	font-size: 15px;
 }
 
@@ -157,32 +155,4 @@
 .route-stops-stop-time {
 	color: var(--color-fore-light);
 	font-size: 19px;
-}
-
-/* Animations */
-
-@keyframes route-urgent {
-	
-	from {
-		opacity: 1;
-	}
-	
-	50% {
-		opacity: .25;
-	}
-	
-	to {
-		opacity: 1;
-	}
-	
-}
-
-/* Queries */
-
-@media (max-width: 480px) {
-	
-	#route-info div:after {
-		bottom: 16px;
-	}
-	
 }

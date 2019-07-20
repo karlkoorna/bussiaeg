@@ -40,12 +40,12 @@
 
 .favorites-stop-icon + div {
 	width: 100%;
+	margin-left: 3px;
 	overflow: hidden;
 }
 
 .favorites-stop-name,
 .favorites-stop-description {
-	margin-left: 3px;
 	margin-right: 10px;
 	white-space: nowrap;
 	overflow: hidden;
