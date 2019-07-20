@@ -4,10 +4,10 @@
 killall caddy
 killall node
 
-# Discard local changes and pull latest release from GitHub.
+# Discard local changes...
 git reset --hard origin/master
 git pull
-if [ ! $1 ]; then
+if [ ! $1 ]; then # and in production mode pull latest release from GitHub.
 git checkout tags/$(curl -s https://api.github.com/repos/karlkoorna/bussiaeg/releases/latest | grep -oP '(?<="tag_name": ")([0-9.]*)')
 fi
 

@@ -82,7 +82,7 @@ Having the latest stable version of all prerequisites is recommended.
 
 ## Production :sweat_drops:
 
-Update all modules.
+Update all modules in production mode.
 
 ```bash
 $ ./update.sh
@@ -99,13 +99,21 @@ $ ./start.sh
 ## Development :fire:
 
 *Note: HTTP headers do not work if the HTTPS certificate is invalid.*\
-*Note: Deleting `tmp/update` will force a data update next launch.*
+*Note: Deleting `tmp/update` will force a data update next launch.*\
+*Note: Updating in production mode will pull the latest release tag.*\
+*Note: Updating in development mode will pull the origin master branch.*
 
 Direct `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
 
 Add the generated `ca.crt` to the trusted certificate authorities list.
 
 Populate `.env` by example in `.env.example` for all modules.
+
+Update all modules in development mode.
+
+```bash
+$ ./update.sh dev
+```
 
 Start all modules in development mode...
 
