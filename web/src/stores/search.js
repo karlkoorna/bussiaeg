@@ -54,7 +54,7 @@ class StoreSearch {
 			this.isLoading = false;
 			this.hasErrored = false;
 		} catch {
-			this.hasErrored = true;
+			if (isManual || !this.results.stops.length) this.hasErrored = true;
 		}
 	}
 	
