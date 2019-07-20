@@ -13,7 +13,6 @@ SET
 			WHEN @route_type = 3 THEN 'bus' -- Coaches are also buses, coaches take precedence.
 			WHEN @route_type = 800 THEN 'trol'
 			WHEN @route_type = 0 THEN 'tram'
-			WHEN @route_type = 4 THEN 'ferry'
 			ELSE NULL
 		END
 	),

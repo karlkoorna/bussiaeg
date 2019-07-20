@@ -16,7 +16,6 @@ SET
 			WHEN LOCATE('coach_cc', types) > 0 THEN 'coach_cc'
 			WHEN LOCATE('coach_c', types) > 0 THEN 'coach_c'
 			WHEN LOCATE('tram', types) > 0 THEN 'tram'
-			WHEN LOCATE('ferry', types) > 0 THEN 'ferry'
 			ELSE NULL
 		END
 	)
