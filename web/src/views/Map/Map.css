@@ -18,6 +18,7 @@
 	padding: 8px;
 	background-color: rgba(0, 0, 0, .45);
 	color: white;
+	box-shadow: var(--shadow-soft);
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;

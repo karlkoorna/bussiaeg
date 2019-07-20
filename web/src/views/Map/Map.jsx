@@ -26,8 +26,9 @@ export const opts = {
 	startLng: 24.753,
 	minZoom: 8,
 	maxZoom: 18,
-	accuracyTreshold: 512,
-	panTimeout: 1500
+	panTimeout: 1500,
+	panAccuracy: 1000,
+	locateAccuracy: 150
 };
 
 class ViewMap extends Component {
@@ -109,8 +110,8 @@ class ViewMap extends Component {
 		for (const stop of this.spatial.range(latMin, lngMin, latMax, lngMax).map((id) => this.stops[id])) if (!this.markers[stop.id]) this.markers[stop.id] = (new Leaflet.Marker([ stop.lat, stop.lng ], {
 			id: stop.id,
 			icon: new Leaflet.Icon({
-				iconSize: [ 26, 26 ],
-				iconAnchor: [ 13, 13 ],
+				iconSize: [ 32, 32 ],
+				iconAnchor: [ 16, 16 ],
 				iconUrl: 'data:image/svg+xml;base64,' + btoa(renderToStaticMarkup(Icon({ shape: 'stop', type: stop.type, checkFavorite: stop.id, forMap: true })))
 			})
 		})).addTo(map).on('click', () => {
@@ -133,7 +134,7 @@ class ViewMap extends Component {
 			zoomControl: false,
 			bounceAtZoomLimits: false,
 			attributionControl: false,
-			zoomSnap: 0.1,
+			zoomSnap: .1,
 			zoomDelta: 1
 		});
 		
@@ -183,6 +184,7 @@ class ViewMap extends Component {
 				this.debounce = 0;
 				this.fetchStops();
 			});
+			this.fetchStops();
 		});
 		
 		// Open modal on right click (desktop) or hold (mobile).
@@ -205,7 +207,7 @@ class ViewMap extends Component {
 			lng: storeCoords.lng,
 			accuracy: storeCoords.accuracy
 		}), ({ lat, lng, accuracy }) => {
-			if (accuracy < opts.accuracyTreshold) { // Show marker and circle on high accuracy.
+			if (accuracy < opts.locateAccuracy) { // Show marker and circle on high accuracy.
 				marker.setLatLng([ lat, lng ]);
 				circle.setLatLng([ lat, lng ]);
 				circle.setRadius(accuracy <= 10 ? 0 : accuracy); // Hide circle on very high accuracy.
@@ -214,14 +216,14 @@ class ViewMap extends Component {
 				circle.setRadius(0);
 			}
 			
-			// Show/hide button.
-			this.setState({ isVisible: accuracy < opts.accuracyTreshold });
-			
-			// Pan map if coords found on load within timeout.
-			if (new Date() - timestamp < opts.panTimeout) map.setView([ lat, lng ]);
+			// Show/hide locate button.
+			this.setState({ isVisible: accuracy < opts.locateAccuracy });
 			
 			// Pan map if locating.
-			if (accuracy < opts.accuracyTreshold && this.state.isLocating) map.panTo([ lat, lng ], { duration: .5 });
+			if (this.state.isLocating) return void map.panTo([ lat, lng ], { duration: .5 });
+			
+			// Pan map if coords found within timeout.
+			if (accuracy < opts.panAccuracy && new Date() - timestamp < opts.panTimeout) map.setView([ lat, lng ]);
 		}, { fireImmediately: true });
 		
 		// Setup attribution.
