@@ -1,4 +1,6 @@
 const got = require('got');
+const db = require('../db.js');
+const cache = require('../utils/cache.js');
 const time = require('../utils/time.js');
 
 /* Stops */
@@ -42,16 +44,23 @@ async function getRoute(id) {
 async function getRouteDirections(id) {
 	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${id}`, { timeout: 600, retry: 1 })).body).data;
 	if (!stops) throw new Error('Invalid response');
+	const coords = await cache.use('elron', 'coords', () => db.query("SELECT id, lat, lng FROM stops WHERE type = 'train'"));
 	
 	return [
 		{
 			name: stops[0].peatus + ' - ' + stops[stops.length - 1].peatus,
-			stops: stops.map((stop) => ({
-				id: stop.peatus,
-				name: stop.peatus,
-				description: '',
-				type: 'train'
-			}))
+			stops: stops.map((stop) => {
+				const { lat, lng } = coords.find((coord) => coord.id === stop.peatus);
+				
+				return {
+					id: stop.peatus,
+					name: stop.peatus,
+					description: '',
+					type: 'train',
+					lat,
+					lng
+				};
+			})
 		}
 	];
 }
