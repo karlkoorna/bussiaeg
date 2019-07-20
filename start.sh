@@ -33,5 +33,5 @@ else # in production mode.
 	export NODE_ENV=production
 	
 	caddy -conf Caddypro &
-	cd api && npm start
+	cd api && npm start && npm start && npm start
 fi
