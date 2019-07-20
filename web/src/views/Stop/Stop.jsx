@@ -108,7 +108,7 @@ class ViewStop extends Component {
 								
 								return (
 									<li key={departure.tripId}>
-										<Link className="stop-departures-departure" to={'/route?id=' + departure.routeId} onMouseDown={prepareViewData.bind(this, 'route', departure)}>
+										<Link className="stop-departures-departure" to={`/route?id=${departure.routeId}&trip_id=${departure.tripId}&stop_id=${stop.id}`} onMouseDown={prepareViewData.bind(this, 'route', departure)}>
 											<Icon className="stop-departures-departure-icon" shape="vehicle" type={departure.type} />
 											<div className="stop-departures-departure-name" style={{ color: primaryColor }}>{departure.name}</div>
 											<div className="stop-departures-departure-destination" style={{ color: secondaryColor }}>

@@ -39,19 +39,22 @@ class ViewRoute extends Component {
 	// Fetch directions.
 	async componentDidMount() {
 		try {
-			const id = (new URLSearchParams(window.location.search)).get('id');
+			const params = new URLSearchParams(window.location.search);
+			const id = params.get('id');
+			const tripId = params.get('trip_id');
+			const stopId = params.get('stop_id');
 			const route = restoreViewData('route', id) || await (await fetch(`${process.env['REACT_APP_API']}/routes/${id}`)).json();
 			
 			this.setState({ route }, async () => {
-				const directions = await (await fetch(`${process.env['REACT_APP_API']}/routes/${route.id || route.routeId}/directions${route.tripId ? '?trip_id=' + route.tripId : ''}`)).json();
+				const directions = await (await fetch(`${process.env['REACT_APP_API']}/routes/${route.id || route.routeId}/directions${tripId ? '?trip_id=' + tripId : ''}`)).json();
 				
 				this.setState({
 					directions,
 					variant: directions.findIndex((direction) => direction.marker) + 1 || 1,
-					stopId: route.stopId,
+					stopId,
 					isLoading: false
 				}, () => {
-					if (route.stopId) this.focusStop(route.stopId);
+					if (tripId && stopId) this.focusStop(stopId);
 				});
 			});
 		} catch {
@@ -101,17 +104,21 @@ class ViewRoute extends Component {
 					</div>
 					<ol id="route-stops">
 						<Status isLoading={isLoading} hasErrored={hasErrored}>
-							{() => direction.stops.map((stop, i) => (
-								<li key={String(variant) + String(i)}>
-									<Link className="route-stops-stop" to={`/stop?id=${stop.id}`} onMouseDown={prepareViewData.bind(this, 'stop', stop)}>
-										<Icon className="route-stops-stop-icon" shape="stop" type={stop.type} />
-										<div>
-											<div className="route-stops-stop-name" style={{ color: iconColors[stop.type][0] }}>{stop.name}</div>
-											<div className="route-stops-stop-description" style={{ color: iconColors[stop.type][1] }}>{stop.description}</div>
-										</div>
-									</Link>
-								</li>
-							))}
+							{() => direction.stops.map((stop, i) => {
+								const [ primaryColor, secondaryColor ] = iconColors[stop.type];
+								
+								return (
+									<li key={String(variant) + String(i)}>
+										<Link className="route-stops-stop" to={`/stop?id=${stop.id}`} onMouseDown={prepareViewData.bind(this, 'stop', stop)}>
+											<Icon className="route-stops-stop-icon" shape="stop" type={stop.type} />
+											<div>
+												<div className="route-stops-stop-name" style={{ color: primaryColor }}>{stop.name}</div>
+												<div className="route-stops-stop-description" style={{ color: secondaryColor }}>{stop.description}</div>
+											</div>
+										</Link>
+									</li>
+								);
+							})}
 						</Status>
 					</ol>
 				</main>
