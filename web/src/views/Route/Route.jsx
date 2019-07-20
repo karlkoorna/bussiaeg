@@ -40,7 +40,7 @@ class ViewRoute extends Component {
 	async componentDidMount() {
 		try {
 			const id = (new URLSearchParams(window.location.search)).get('id');
-			const route = restoreViewData('vehicle', id) || await (await fetch(`${process.env['REACT_APP_API']}/routes/${id}`)).json();
+			const route = restoreViewData('route', id) || await (await fetch(`${process.env['REACT_APP_API']}/routes/${id}`)).json();
 			
 			this.setState({ route }, async () => {
 				const directions = await (await fetch(`${process.env['REACT_APP_API']}/routes/${route.id || route.routeId}/directions${route.tripId ? '?trip_id=' + route.tripId : ''}`)).json();

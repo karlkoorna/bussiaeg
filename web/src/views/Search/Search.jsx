@@ -96,8 +96,8 @@ class ViewSearch extends Component {
 							<Status space="search" hasErrored={hasErrored} isLoading={isLoading} isEmpty={!results[type].length}>
 								{() => results[type].map((result) => (
 									<li key={result.id}>
-										<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`} type={type === 'stops' ? 'stop' : 'vehicle'} onMouseDown={prepareViewData.bind(this, type === 'stops' ? 'stop' : 'vehicle', result)}>
-											<Icon className="search-results-result-icon" shape={type === 'stops' ? 'stop' : 'vehicle'} type={result.type} checkFavorite={type === 'stops' ? result.id : null} />
+										<Link className="search-results-result" to={`/${type.slice(0, -1)}?id=${result.id}`} type={type.slice(0, -1)} onMouseDown={prepareViewData.bind(this, type.slice(0, -1), result)}>
+											<Icon className="search-results-result-icon" shape={type.slice(0, -1)} type={result.type} checkFavorite={type === 'stops' ? result.id : null} />
 											<div>
 												<div className="search-results-result-name" style={{ color: iconColors[result.type][0] }}>{result.name}</div>
 												<div className="search-results-result-description" style={{ color: iconColors[result.type][1] }}>{result.description}</div>
