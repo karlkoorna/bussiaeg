@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Disable shell path expansion.
-export MSYS_NO_PATHCONV=1
-
 # Kill old processes.
 killall caddy
 killall node
@@ -16,9 +13,9 @@ if [ $1 ]; then # in development mode.
 		openssl genrsa -out ca.key
 		openssl genrsa -out tls.key
 		
-		openssl req -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/CN=Bussiaeg.ee"
-		openssl req -new -key tls.key -out tls.csr -subj "/CN=*.devaeg.ee"
-		openssl x509 -req -days 3650 -CA ca.crt -CAkey ca.key -CAcreateserial -in tls.csr -out tls.crt -extfile tls.cfg
+		MSYS_NO_PATHCONV=1 openssl req -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/CN=Bussiaeg.ee"
+		MSYS_NO_PATHCONV=1 openssl req -new -key tls.key -out tls.csr -subj "/CN=*.devaeg.ee"
+		MSYS_NO_PATHCONV=1 openssl x509 -req -days 3650 -CA ca.crt -CAkey ca.key -CAcreateserial -in tls.csr -out tls.crt -extfile tls.cfg
 		
 		rm ca.key
 		rm ca.srl
