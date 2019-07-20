@@ -138,6 +138,11 @@ class ViewMap extends Component {
 			zoomDelta: 1
 		});
 		
+		// Fix map size.
+		setTimeout(() => {
+			map.invalidateSize();
+		}, 0);
+		
 		// Load tile layer and update on theme change.
 		reaction(() => storeSettings.data.theme, (theme) => {
 			if (this.tileLayer) this.tileLayer.remove();
