@@ -15,7 +15,7 @@
 .favorites-stop {
 	display: flex;
 	width: 100%;
-	height: 100px;
+	height: 80px;
 	box-shadow: var(--shadow-soft);
 	border: 3px solid transparent;
 	border-radius: 3px;
@@ -34,7 +34,7 @@
 
 .favorites-stop-icon {
 	height: 100%;
-	padding: 8px;
+	padding: 4px;
 	flex-shrink: 0;
 }
 
@@ -45,6 +45,7 @@
 
 .favorites-stop-name,
 .favorites-stop-description {
+	margin-left: 3px;
 	margin-right: 10px;
 	white-space: nowrap;
 	overflow: hidden;
@@ -52,11 +53,12 @@
 }
 
 .favorites-stop-name {
-	font-size: 24px;
+	margin-bottom: 3px;
+	font-size: 21px;
 }
 
 .favorites-stop-description:not(:empty) {
-	margin-top: 8px;
-	margin-bottom: 4px;
+	margin-bottom: 3px;
+	color: #eee;
 	font-size: 15px;
 }

@@ -94,7 +94,6 @@
 	transition: background-color .1s linear;
 	animation: var(--animation-fadeIn);
 	align-items: center;
-	cursor: pointer;
 }
 
 #route-stops li:not(:last-child) .route-stops-stop:after {
