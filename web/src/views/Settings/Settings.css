@@ -5,6 +5,13 @@
 
 /* Settings */
 
+#settings-logo {
+	width: 101%;
+	height: 80px;
+	margin-top: 24px;
+	padding: 8px;
+}
+
 #settings label {
 	display: flex;
 	margin: 16px;
@@ -13,7 +20,7 @@
 	align-items: center;
 }
 
-#settings svg {
+#settings svg:not(#settings-logo) {
 	width: 24px;
 	height: 24px;
 	margin-right: 16px;
