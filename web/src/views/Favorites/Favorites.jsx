@@ -36,24 +36,26 @@ class ViewFavorites extends Component {
 					{(dropProvided) => (
 						<Scroller>
 							<main id="favorites" className="view" ref={dropProvided.innerRef}>
-								<Status space="favorites" isEmpty={!favorites.length}>
-									{() => favorites.map((favorite, i) => (
-										<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
-											{(dragProvided, dragSnapshot) => (
-												<article className={'favorites-stop-container' + (dragSnapshot.isDragging ? ' is-dragging' : '')} ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
-													<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`} onMouseDown={prepareViewData.bind(this, 'stop', favorite)}>
-														<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
-														<div>
-															<div className="favorites-stop-name">{favorite.name}</div>
-															<div className="favorites-stop-description">{favorite.description}</div>
-														</div>
-													</Link>
-												</article>
-											)}
-										</Draggable>
-									))}
-								</Status>
-								{dropProvided.placeholder}
+								<ol>
+									<Status space="favorites" isEmpty={!favorites.length}>
+										{() => favorites.map((favorite, i) => (
+											<Draggable draggableId={`favorites-${favorite.id}`} index={i} key={favorite.id}>
+												{(dragProvided, dragSnapshot) => (
+													<li className={dragSnapshot.isDragging ? ' is-dragging' : ''} ref={dragProvided.innerRef} {...dragProvided.draggableProps} {...dragProvided.dragHandleProps}>
+														<Link className="favorites-stop" style={{ backgroundColor: iconColors[favorite.type][0] }} to={`/stop?id=${favorite.id}`} onMouseDown={prepareViewData.bind(this, 'stop', favorite)}>
+															<Icon className="favorites-stop-icon" shape="stop" type={favorite.type} />
+															<div>
+																<div className="favorites-stop-name">{favorite.name}</div>
+																<div className="favorites-stop-description">{favorite.description}</div>
+															</div>
+														</Link>
+													</li>
+												)}
+											</Draggable>
+										))}
+									</Status>
+									{dropProvided.placeholder}
+								</ol>
 							</main>
 						</Scroller>
 					)}

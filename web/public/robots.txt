@@ -1,4 +1,4 @@
 Sitemap: https://bussiaeg.ee/sitemap.xml
 
 User-agent: *
-Disallow: /
+Disallow:

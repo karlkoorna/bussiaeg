@@ -7,7 +7,11 @@
 
 /* Favorites */
 
-.favorites-stop-container {
+#favorites ol {
+	height: 100%;
+}
+
+#favorites li {
 	padding: 8px;
 	pointer-events: none;
 }
@@ -28,7 +32,7 @@
 	box-shadow: var(--shadow-hard);
 }
 
-.favorites-stop-container.is-dragging .favorites-stop {
+#favorites li.is-dragging .favorites-stop {
 	border: 3px solid rgba(255, 255, 255, .5);
 }
 

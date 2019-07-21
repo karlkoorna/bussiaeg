@@ -117,7 +117,7 @@ svg {
 	min-width: 420px;
 	height: 90%;
 	margin: 16px;
-	border-radius: 6px;
+	border-radius: 7px;
 	box-shadow: var(--shadow-hard);
 	flex: 0 1 calc(90vh / 16 * 9);
 	overflow: hidden;
