@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Kill old processes.
-killall caddy
-killall node
+# Ensure all children are killed.
+trap 'kill -SIGTERM $(jobs -p %1)' SIGINT
 
 # Start all modules...
 ulimit -n 8192
