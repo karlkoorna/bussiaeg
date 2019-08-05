@@ -10,10 +10,12 @@ import 'i18n.js';
 import storeCoords from 'stores/coords.js';
 import storeSearch from 'stores/search.js';
 import storeFavorites from 'stores/favorites.js';
+import storeCards from 'stores/cards.js';
 import storeSettings from 'stores/settings.js';
 import ViewSearch from 'views/Search/Search.jsx';
 import ViewFavorites, { reorder as reorderFavorites } from 'views/Favorites/Favorites.jsx';
 import ViewMap from 'views/Map/Map.jsx';
+import ViewCards from 'views/Cards/Cards.jsx';
 import ViewSettings from 'views/Settings/Settings.jsx';
 import ViewStop from 'views/Stop/Stop.jsx';
 import ViewRoute from 'views/Route/Route.jsx';
@@ -41,7 +43,7 @@ function handleRoute() {
 }
 
 render((
-	<Provider {...{ storeCoords, storeSearch, storeFavorites, storeSettings }}>
+	<Provider {...{ storeCoords, storeSearch, storeFavorites, storeCards, storeSettings }}>
 		<BrowserRouter>
 			<DragDropContext onDragEnd={reorderFavorites}>
 				<Helmet defaultTitle="Bussiaeg.ee" />
@@ -50,6 +52,7 @@ render((
 				<Switch>
 					<Route exact path="/search" component={ViewSearch} />
 					<Route exact path="/favorites" component={ViewFavorites} />
+					<Route exact path="/cards" component={ViewCards} />
 					<Route exact path="/settings" component={ViewSettings} />
 					<Route exact path="/stop" component={ViewStop} />
 					<Route exact path="/route" component={ViewRoute} />

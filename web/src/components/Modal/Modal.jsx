@@ -15,15 +15,33 @@ class Modal extends Component {
 		if (e.button === 0) this.props.onCancel();
 	}
 	
+	// Try calling input action callback.
+	onAction = async (e) => {
+		const target = e.target;
+		if (target.nodeName !== 'svg') return;
+		
+		const value = await this.props.children.find((input) => input.key === target.parentElement.getAttribute('data-key')).action.cb();
+		if (value) target.previousElementSibling.value = value;
+	}
+	
 	render() {
-		const { t, title, text, isVisible, onCancel, onConfirm } = this.props;
+		const { t, title, isVisible, onCancel, onConfirm, children } = this.props;
 		
 		return (
 			<CSSTransition in={isVisible} timeout={{ enter: 150, exit: 150 }} onExited={this.onExited} unmountOnExit>
 				<div id="modal-container" onMouseDown={this.onCancel}>
 					<div id="modal" onMouseDown={stopPropagation}>
 						<div id="modal-title">{title}</div>
-						<div id="modal-text">{text}</div>
+						<div id="modal-content" onMouseDown={this.onAction}>
+							{
+								Array.isArray(children) ? children.map((input) => (
+									<div className="modal-content-input" data-key={input.key} key={input.key}>
+										{input.action ? input.action.icon : null}
+										<input name={input.name} type={input.type} placeholder={input.name} />
+									</div>
+								)) : children
+							}
+						</div>
 						<div id="modal-buttons">
 							<div id="modal-buttons-cancel" onClick={onCancel}>{t('modal.cancel')}
 								<Ink background={false} opacity={.5} />

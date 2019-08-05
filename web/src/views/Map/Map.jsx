@@ -260,7 +260,7 @@ class ViewMap extends Component {
 					<svg viewBox="0 0 24 24" id="map-locate" className={(isVisible ? ' is-visible' : '') + (isLocating ? ' is-active' : '')} onMouseDown={this.startLocating}>
 						<path fill={viewColors.map[0]} d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
 					</svg>
-					<Modal isVisible={this.state.showModal} title={t('map.start.title')} text={t('map.start.text')} showCancel onCancel={this.modalHide} onConfirm={this.modalConfirm} />
+					<Modal isVisible={this.state.showModal} title={t('map.start.title')} showCancel onCancel={this.modalHide} onConfirm={this.modalConfirm}>{t('map.start.text')}</Modal>
 				</div>
 			</>
 		);
