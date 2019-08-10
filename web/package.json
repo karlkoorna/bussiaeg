@@ -36,6 +36,6 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build && cd build/ && rm precache*.js & rm service-worker.js & rm asset-manifest.json"
+		"build": "react-scripts build"
 	}
 }
