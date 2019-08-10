@@ -6,7 +6,7 @@
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, .6);
+	background-color: rgba(0, 0, 0, .5);
 	justify-content: center;
 	align-items: center;
 }
@@ -19,82 +19,37 @@
 	animation: var(--animation-fadeOut);
 }
 
-/* Modal */
+/* Panel */
 
 #modal {
 	width: 80%;
-	max-width: 350px;
+	max-width: 384px;
 	margin-bottom: 48px;
 	background-color: var(--color-back-light);
-	border-radius: 5px;
-	box-shadow: var(--shadow-hard);
-	overflow: hidden;
+	border-radius: 3px;
+	box-shadow: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
 }
 
 #modal-title {
-	padding: 12px;
-	background-color: var(--color-back-dark);
-	border-bottom: 1px solid rgba(127, 127, 127, .2);
-	font-size: 20px;
+	padding: 24px 24px 20px;
+	font-size: 22px;
 	font-weight: bold;
-	text-align: center;
 }
 
-/* Modal - Content */
-
-#modal-content {
-	padding: 16px;
+#modal-text {
+	padding: 0 24px 24px;
 	color: var(--color-fore-light);
 	text-align: justify;
 }
 
-.modal-content-input {
-	position: relative;
-	height: 42px;
-	padding: 12px;
-	border: 1px solid rgba(127, 127, 127, .2);
-	border-radius: 6px;
-	transition: border-color .15s linear;
-}
-
-.modal-content-input:not(:last-child) {
-	margin-bottom: 16px;
-}
-
-.modal-content-input:focus {
-	border-color: var(--color-theme);
-}
-
-.modal-content-input input {
-	width: 100%;
-}
-
-.modal-content-input svg + input {
-	padding-right: 28px;
-}
-
-.modal-content-input svg {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	padding: 8px;
-	transition: color .15s linear;
-	cursor: pointer;
-}
-
-.modal-content-input svg:hover {
-	color: var(--color-fore-dark);
-}
-
-/* Modal - Buttons */
+/* Panel - Buttons */
 
 #modal-buttons {
 	display: flex;
-	color: white;
+	padding: 8px;
 	font-size: 14px;
 	letter-spacing: 1px;
-	justify-content: space-around;
+	justify-content: flex-end;
 }
 
 #modal-buttons canvas {
@@ -107,28 +62,38 @@
 	display: flex;
 	height: 36px;
 	padding: 0 16px;
+	border-radius: 3px;
 	font-weight: bold;
 	justify-content: center;
 	align-items: center;
 	transition: background-color .25s ease;
-	flex: 1;
 	cursor: pointer;
 }
 
 #modal-buttons-cancel {
-	background-color: var(--color-back-dark);
-	color: indianred;
-	border-top: 1px solid rgba(127, 127, 127, .2);
-}
-
-#modal-buttons-cancel:hover {
-	background-color: rgba(0, 0, 0, .075);
-}
-
-#app[data-theme="dark"] #modal-buttons-cancel:hover {
-	background-color: rgba(0, 0, 0, .175);
+	color: orangered;
 }
 
 #modal-buttons-confirm {
-	background-color: dodgerblue;
+	color: deepskyblue;
+}
+
+#modal-buttons-cancel:hover,
+#modal-buttons-confirm:hover {
+	background-color: rgba(0, 0, 0, .075);
+}
+
+#app[data-theme="dark"] #modal-buttons-cancel:hover,
+#app[data-theme="dark"] #modal-buttons-confirm:hover {
+	background-color: rgba(0, 0, 0, .175);
+}
+
+#modal-buttons-cancel:hover canvas,
+#modal-buttons-confirm:hover canvas {
+	color: rgba(0, 0, 0, .075);
+}
+
+#app[data-theme="dark"] #modal-buttons-cancel:hover canvas,
+#app[data-theme="dark"] #modal-buttons-confirm:hover canvas {
+	color: rgba(0, 0, 0, .5);
 }
