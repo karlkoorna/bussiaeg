@@ -1,7 +1,7 @@
 const got = require('got');
 const time = require('../utils/time.js');
 const cache = require('../utils/cache.js');
-const debug = require('../utils/debug.js');
+const log = require('../utils/log.js');
 
 /* Stops */
 
@@ -17,7 +17,7 @@ async function updateCache(id) {
 			countdown: Number(departure[2] - 5)
 		}));
 	} catch (ex) {
-		debug.warn('Failed to fetch TTA departures.', ex);
+		log.warn`Failed to fetch TTA departures.${ex}`;
 		return null;
 	}
 }

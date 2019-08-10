@@ -5,13 +5,14 @@ const moment = require('moment');
 const got = require('got');
 const unzipper = require('unzipper');
 const db = require('./db.js');
-const debug = require('./utils/debug.js');
+const log = require('./utils/log.js');
 
 const fsp = fs.promises;
 
 // Download data into temporary folder.
 async function download() {
-	debug.time('data-download', 'Downloading data');
+	log.info`Downloading data`;
+	log.time('data-download');
 	
 	// Download and extract MNT data into temporary folder.
 	await new Promise((resolve) => {
@@ -30,15 +31,17 @@ async function download() {
 	for (const stop of JSON.parse((await got('https://elron.ee/api/v1/stops')).body).data) data += `${stop.peatus},${stop.latitude},${stop.longitude}\n`;
 	await fsp.writeFile('tmp/elron.csv', data);
 	
-	debug.timeEnd('data-download', 'Downloaded data');
+	log.timeEnd('data-download')`Downloaded data`;
 }
 
 // Execute scripts in folder.
-async function execute(path, msgIncomplete, msgComplete) {
+async function execute(path, type) {
 	for (const file of await fsp.readdir(path)) {
 		const name = file.split('.')[0];
 		
-		debug.time('data-prepare-' + name, msgIncomplete + ' ' + chalk.white(name.replace(/.*-/, '')));
+		log.time('data-prepare-' + name);
+		if (type === 'import') log.info`Importing ${name.replace(/.*-/, '')}`;
+		else log.info`Processing ${name.replace(/.*-/, '')}`;
 		
 		switch (file.split('.')[1]) {
 			case 'sql':
@@ -49,7 +52,8 @@ async function execute(path, msgIncomplete, msgComplete) {
 				break;
 		}
 		
-		debug.timeEnd('data-prepare-' + name, msgComplete + ' ' + chalk.white(name.replace(/.*-/, '')));
+		if (type === 'import') log.timeEnd('data-prepare-' + name)`Imported ${name.replace(/.*-/, '')}`;
+		else log.timeEnd('data-prepare-' + name)`Processed ${name.replace(/.*-/, '')}`;
 	}
 }
 
@@ -65,18 +69,18 @@ async function update() {
 		
 		// Update stale data.
 		if (!nextUpdate || new Date(nextUpdate) <= new Date()) {
-			debug.info('Starting data update');
-			debug.time('data-update');
+			log.info`Updating data`;
+			log.time('data-update');
 			
 			await download();
-			await execute('data/importers', 'Importing', 'Imported');
-			await execute('data/processors', 'Processing', 'Processed');
+			await execute('data/importers', 'import');
+			await execute('data/processors', 'process');
 			
 			await fsp.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
-			debug.timeEnd('data-update', 'Data update completed');
+			log.timeEnd('data-update')`Updated data`;
 		}
 	} catch (ex) {
-		debug.error('Failed to update data', ex);
+		log.error`Failed to update data${ex}`;
 	}
 }
 

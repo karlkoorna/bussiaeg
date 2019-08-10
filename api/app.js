@@ -18,14 +18,14 @@ tls.DEFAULT_MIN_VERSION = 'TLSv1';
 const db = require('./db.js');
 const data = require('./data.js');
 const cache = require('./utils/cache.js');
-const debug = require('./utils/debug.js');
+const log = require('./utils/log.js');
 
 // Initialize HTTP server.
 const app = fastify();
 
 // Register custom error handler.
 app.setErrorHandler((err, req, res) => {
-	debug.warn(`Error in route "${decodeURIComponent(req.raw.url)}".`, err);
+	log.warn`Error in route "${decodeURIComponent(req.raw.url)}".${err}`;
 	res.send(err.stack);
 });
 
@@ -37,16 +37,16 @@ for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${fi
 	try {
 		await db.query(fs.readFileSync('data/init.sql').toString());
 	} catch (ex) {
-		debug.error('Failed to initialize database', ex);
+		log.error`Failed to initialize database${ex}`;
 	}
 	
 	await data.update();
 	
 	try {
 		await app.listen(process.env['PORT'], process.env['HOST']);
-		debug.info('Started listening on port ' + process.env['PORT']);
+		log.info`Started listening on port ${process.env['PORT']}`;
 	} catch (ex) {
-		debug.error('Failed to start listening on port ' + process.env['PORT'], ex);
+		log.error`Failed to start listening on port ${process.env['PORT']}${ex}`;
 	}
 })();
 
