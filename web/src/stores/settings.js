@@ -7,7 +7,7 @@ class StoreSettings {
 	
 	data = {
 		lang: i18n.language,
-		theme: 'light',
+		theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
 		view: 'map'
 	}
 	
