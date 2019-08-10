@@ -115,7 +115,8 @@
 }
 
 .route-stops-stop.is-active {
-	background-color: rgb(250, 250, 88, .5);
+	padding-left: 16px;
+	border-left: 2px solid rgba(127, 127, 127, .3);
 }
 
 .route-stops-stop-icon {
