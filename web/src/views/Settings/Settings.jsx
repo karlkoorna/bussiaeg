@@ -11,7 +11,7 @@ import './Settings.css';
 class ViewSettings extends Component {
 	
 	state = {
-		version: '3.y.z'
+		version: '4.y.z'
 	}
 	
 	updateSetting = (e) => {
