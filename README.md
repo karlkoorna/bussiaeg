@@ -30,12 +30,12 @@ Having the latest stable version of all prerequisites is recommended.
 	Create the database and the user.
 	
 	```bash
-	$ mysql --password=1234
+	$ mysql --password=pA$$w0rD
 	```
 	
 	```sql
 	CREATE DATABASE bussiaeg;
-	CREATE USER 'bussiaeg'@'localhost' IDENTIFIED BY '1234';
+	CREATE USER 'bussiaeg'@'localhost' IDENTIFIED BY 'pA$$w0rD';
 	GRANT ALL PRIVILEGES ON bussiaeg.* TO 'bussiaeg'@'localhost';
 	```
 	
@@ -88,7 +88,7 @@ Update all modules in production mode.
 $ ./update.sh
 ```
 
-Populate `.env` by example in `.env.example` for all modules.
+Populate `.env` by example `.env.example` for all modules.
 
 Start all modules in production mode.
 
@@ -107,7 +107,7 @@ Direct `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
 
 Add the generated `ca.crt` to the trusted certificate authorities list.
 
-Populate `.env` by example in `.env.example` for all modules.
+Populate `.env` by example `.env.example` for all modules.
 
 Update all modules in development mode.
 
