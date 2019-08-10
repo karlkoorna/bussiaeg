@@ -15,7 +15,7 @@ export function formatTime(seconds) {
 // Convert HMS to countdown format.
 export function formatCountdown(seconds, isLive) {
 	const shms = secondsToShms(seconds);
-	return ((shms[0] ? '-' : '') + (shms[1] ? `${shms[1]}h` : '') + (shms[2] ? ` ${shms[2]}m` : '') + ((!shms[2] && !isLive) || (shms[3] && isLive) ? ` ${shms[3]}s` : '')).trim();
+	return ((shms[0] ? '-' : '') + (shms[1] ? `${shms[1]}h` : '') + (shms[2] ? ` ${shms[2]}m` : '') + ((!shms[1] && !shms[2] && !isLive) || (shms[3] && isLive) ? ` ${shms[3]}s` : '')).trim();
 }
 
 /* Distance */
