@@ -70,14 +70,16 @@
 		<script>
 			// Try to restore connection.
 			(async function ping() {
-				fetch(location.origin + '/ping').then((res) => {
-					if (!res.ok) return;
-
+				try {
+					if (!(await fetch(location.origin + '/ping')).ok) return void setTimeout(ping, 1000);
+					
 					document.body.classList.add('is-online');
 					document.body.addEventListener('transitionend', () => {
 						location = location.origin;
 					});
-				}).catch(ping);
+				} catch {
+					setTimeout(ping, 1000);
+				}
 			})();
 		</script>
 	</body>

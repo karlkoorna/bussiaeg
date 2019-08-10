@@ -12,7 +12,7 @@ self.addEventListener('fetch', (e) => {
 				resolve(caches.match('offline.html'));
 			}, 3000);
 		}),
-		fetch(e.request)
+		fetch(e.request).catch(() => caches.match('offline.html'))
 	]));
 	
 	// Workaround for PWA support.
@@ -22,6 +22,6 @@ self.addEventListener('fetch', (e) => {
 				resolve(new Response(null, { status: 408 }));
 			}, 3000);
 		}),
-		fetch(e.request)
+		fetch(e.request).catch(() => new Response(null, { status: 408 }))
 	]));
 });
