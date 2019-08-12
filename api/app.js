@@ -25,7 +25,7 @@ const app = fastify();
 
 // Register custom error handler.
 app.setErrorHandler((err, req, res) => {
-	log.warn`Error in route "${decodeURIComponent(req.raw.url)}".${err}`;
+	if (err.message !== 'Not Found') log.warn`Error in route ${decodeURIComponent(req.raw.url)}.${err}`;
 	res.send(err.stack);
 });
 
