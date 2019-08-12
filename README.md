@@ -1,6 +1,6 @@
 ![Bussiaeg.ee logo](https://raw.githubusercontent.com/karlkoorna/bussiaeg/master/web/public/assets/logo-single.svg?sanitize=true)
 
-Kogu Eesti ühistranspordi väljumisajad ühest kohast.
+Kogu Eesti ühistranspordi väljumisajad ühes kohas.
 
 ## Prerequisites :open_book:
 
