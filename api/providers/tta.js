@@ -8,7 +8,10 @@ const log = require('../utils/log.js');
 async function updateCache(id) {
 	try {
 		const body = (await got('https://transport.tallinn.ee/siri-stop-departures.php?stopid=' + id, { timeout: 1000, retry: 1 })).body;
-		if (body.indexOf('ERROR') > -1) throw new Error('Invalid response');
+		if (body.indexOf('ERROR') > -1) {
+			log.warn`Failed to fetch TTA departures.${new Error(body)}`;
+			return [];
+		}
 		
 		return body.split('\n').map((line) => line.split(',')).slice(2, -1).map((departure) => ({
 			name: departure[1],
@@ -18,7 +21,7 @@ async function updateCache(id) {
 		}));
 	} catch (ex) {
 		log.warn`Failed to fetch TTA departures.${ex}`;
-		return null;
+		return [];
 	}
 }
 
