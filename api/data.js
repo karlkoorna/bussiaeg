@@ -1,6 +1,5 @@
 const fs = require('fs');
 const stream = require('stream');
-const chalk = require('chalk');
 const moment = require('moment');
 const got = require('got');
 const unzipper = require('unzipper');

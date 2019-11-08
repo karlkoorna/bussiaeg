@@ -1,9 +1,3 @@
-#!/bin/bash
-
-# Kill old processes.
-killall caddy
-killall node
-
 # Discard local changes...
 git reset --hard origin/master
 git pull

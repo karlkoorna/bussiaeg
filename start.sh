@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Ensure all children are killed.
 trap 'kill -SIGTERM $(jobs -p %1)' SIGINT
 

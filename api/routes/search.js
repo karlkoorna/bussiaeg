@@ -35,14 +35,14 @@ async function getSearch(req, res) {
 					SELECT
 						id
 						${lat ? ', ROUND(ST_DISTANCE_SPHERE(POINT(lng, lat), POINT(:lng, :lat))) AS distance' : ''}
-				    FROM stops
+					FROM stops
 					${lat && !query ? `
 					WHERE
 						lat BETWEEN :lat - .3 AND :lat + .3
 						AND lng BETWEEN :lng - .3 AND :lng + .3
 					` : ''}
 					${lat ? 'ORDER BY distance' : ''}
-				    ${query ? '' : 'LIMIT 100'}
+					${query ? '' : 'LIMIT 100'}
 				) AS stop ON stop.id = stop_id
 				${query ? 'WHERE name LIKE :query OR description LIKE :query' : ''}
 				GROUP BY route_id
