@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Discard local changes...
 git reset --hard origin/master
 git pull
