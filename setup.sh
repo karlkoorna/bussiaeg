@@ -23,4 +23,4 @@ if [[ $1 ]]; then # Development mode
 		rm tls.csr
 	fi
 	
-then
+fi
