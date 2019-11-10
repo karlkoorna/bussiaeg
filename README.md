@@ -40,10 +40,10 @@ innodb_flush_method = O_DIRECT
 
 ## Production 💦
 
-Update all modules in production mode.
+Run setup in production mode.
 
 ```bash
-$ ./update.sh
+$ ./setup.sh
 ```
 
 Populate `.env` by example `.env.example` in all modules.
@@ -67,10 +67,10 @@ Add the generated `ca.crt` to the trusted certificate authorities list.
 
 Populate `.env` by example `.env.example` in all modules.
 
-Update all modules in development mode.
+Run setup in development mode.
 
 ```bash
-$ ./update.sh dev
+$ ./setup.sh dev
 ```
 
 Start all modules in development mode...
