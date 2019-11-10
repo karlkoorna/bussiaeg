@@ -1,9 +1,8 @@
-# SQIP (https://github.com/axe312ger/sqip)
-# Primitive (https://github.com/fogleman/primitive)
+#!/bin/bash
 
-# Fetch Node and Go dependencies on first run.
-if [ "$(find _includes/sqip -iname *.sqip)" == "" ]; then
-	npm install -g sqip@canary sqip-plugin-primitive@canary sqip-plugin-svgo@canary sqip-plugin-data-uri@canary
+# Fetch Node and Go dependencies when needed.
+if [[ $1 ]]; then
+	npm install -g sqip@canary sqip-cli@canary sqip-plugin-pixels@canary
 	go get -u github.com/fogleman/primitive
 fi
 
@@ -16,7 +15,7 @@ for file in $(find img/**/*.jpg -printf "%p %k\n"); do
 	path=$(echo $file | cut -d . -f 1 | cut -c5-)
 	shapes=$(($(echo $file | cut -d " " -f 2) / 5))
 	
-	sqip -i img/$path.jpg -n $shapes -b 8 -o img/$path.tmp > /dev/null
+	sqip -i img/$path.jpg -o img/$path.tmp -p pixels > /dev/null
 	echo -n "data:image/svg+xml;base64," > _includes/sqip/$path.sqip
 	base64 -w 0 img/$path.tmp >> _includes/sqip/$path.sqip
 	rm img/$path.tmp
