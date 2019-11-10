@@ -66,7 +66,12 @@ if (!navigator.userAgent.toLowerCase().includes('mobi')) $app.classList.add('is-
 // Update current theme color CSS variable.
 (new MutationObserver(() => {
 	const el = document.querySelector('meta[name="theme-color"]');
-	if (el) $app.style.setProperty('--color-theme', el.content);
+	if (!el) return;
+	
+	$app.style.setProperty('--color-theme', el.content);
+	setTimeout(() => {
+		$app.style.setProperty('--trans-background', 'background-color 1s');
+	}, 0);
 })).observe(document.head, { childList: true });
 
 // Disable context menu.
