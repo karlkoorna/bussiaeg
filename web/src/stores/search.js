@@ -46,7 +46,11 @@ class StoreSearch {
 		const [ query, lat, lng ] = [ this.query, storeCoords.lat, storeCoords.lng ];
 		
 		// Clear results if no query or coords.
-		if (!query && lat === mapOpts.startLat) return void (this.results = { stops: [], routes: [] });
+		if (!query && lat === mapOpts.startLat) {
+			this.results = { stops: [], routes: [] };
+			this.isLoading = false;
+			return;
+		}
 		
 		if (isManual) this.isLoading = true;
 		try {
@@ -54,7 +58,10 @@ class StoreSearch {
 			this.isLoading = false;
 			this.hasErrored = false;
 		} catch {
-			if (isManual || !this.results.stops.length) this.hasErrored = true;
+			if (!isManual && this.results.stops.length) return;
+			
+			this.isLoading = false;
+			this.hasErrored = true;
 		}
 	}
 	
