@@ -94,7 +94,7 @@ nav a {
 	display: flex;
 	padding: .75rem;
 	border-radius: 5px;
-	transition: background-color .1s linear;
+	transition: background-color .1s;
 	align-items: center;
 }
 
@@ -185,7 +185,7 @@ footer svg {
 }
 
 footer a {
-	transition: .15s border-radius, .15s box-shadow, .15s transform;
+	transition: border-radius .15s, box-shadow .15s, transform .15s;
 }
 
 footer a:hover,

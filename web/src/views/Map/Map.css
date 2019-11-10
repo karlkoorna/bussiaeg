@@ -48,7 +48,7 @@
 	border-radius: 100%;
 	box-shadow: var(--shadow-soft);
 	font-size: 28px;
-	transition: right .25s ease, border-width .1s linear;
+	transition: right .25s ease, border-width .1s;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;

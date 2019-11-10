@@ -12,11 +12,11 @@
 }
 
 #modal-container.enter {
-	animation: var(--animation-fadeIn);
+	animation: var(--anim-fadeIn);
 }
 
 #modal-container.exit {
-	animation: var(--animation-fadeOut);
+	animation: var(--anim-fadeOut);
 	animation-duration: .25s;
 	animation-delay: .125s;
 }

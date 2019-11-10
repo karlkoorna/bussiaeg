@@ -7,7 +7,7 @@
 	font-weight: bold;
 	justify-content: center;
 	align-items: center;
-	animation: var(--animation-fadeIn);
+	animation: var(--anim-fadeIn);
 	animation-delay: .3s;
 	opacity: 0;
 }

@@ -15,7 +15,7 @@
 	box-shadow: var(--shadow-soft);
 	font-weight: bold;
 	text-align: center;
-	transition: background-color .15s linear;
+	transition: background-color .15s;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
@@ -23,7 +23,7 @@
 }
 
 #route-info span {
-	animation: var(--animation-fadeIn);
+	animation: var(--anim-fadeIn);
 }
 
 #route-info-icon {
@@ -59,7 +59,7 @@
 	border-radius: 8px;
 	font-size: 14px;
 	text-align: center;
-	transition: margin-top .15s linear, padding .15s linear, background-color .15s linear;
+	transition: margin-top .15s, padding .15s, background-color .15s;
 }
 
 #route-info-description:not(:empty) {
@@ -95,8 +95,8 @@
 	height: 72px;
 	border-radius: 6px;
 	font-weight: bold;
-	transition: background-color .1s linear;
-	animation: var(--animation-fadeIn);
+	transition: background-color .1s;
+	animation: var(--anim-fadeIn);
 	align-items: center;
 }
 

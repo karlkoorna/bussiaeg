@@ -15,7 +15,7 @@
 	box-shadow: var(--shadow-soft);
 	font-weight: bold;
 	text-align: center;
-	transition: background-color .15s linear;
+	transition: background-color .15s;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
@@ -23,7 +23,7 @@
 }
 
 #stop-info span {
-	animation: var(--animation-fadeIn);
+	animation: var(--anim-fadeIn);
 }
 
 #stop-info-icon {
@@ -70,7 +70,7 @@
 	stroke-width: 100;
 	cursor: pointer;
 	opacity: .35;
-	transition: opacity .15s linear;
+	transition: opacity .15s;
 }
 
 #stop-info-favorite.is-active {
@@ -79,7 +79,7 @@
 }
 
 #stop-info-favorite path {
-	transition: fill .15s linear, stroke .15s linear;
+	transition: fill .15s, stroke .15s;
 }
 
 #stop-info-favorite.is-active path {
@@ -112,8 +112,8 @@
 	position: relative;
 	height: 80px;
 	border-radius: 6px;
-	transition: background-color .1s linear;
-	animation: var(--animation-fadeIn);
+	transition: background-color .1s;
+	animation: var(--anim-fadeIn);
 }
 
 #stop-departures li:not(:last-child) .stop-departures-departure:after {

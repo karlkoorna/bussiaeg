@@ -92,8 +92,8 @@ svg {
 	--color-theme: #1e2529;
 	--shadow-soft: rgba(0, 0, 0, .12) 0 1px 6px, rgba(0, 0, 0, .12) 0 1px 4px;
 	--shadow-hard: rgba(0, 0, 0, .16) 0 3px 10px, rgba(0, 0, 0, .23) 0 3px 10px;
-	--animation-fadeIn: view-fade .15s linear forwards;
-	--animation-fadeOut: view-fade .15s reverse forwards;
+	--anim-fadeIn: view-fade .15s linear forwards;
+	--anim-fadeOut: view-fade .15s reverse forwards;
 }
 
 #app[data-theme="light"] {
@@ -156,7 +156,7 @@ svg {
 	color: var(--color-fore-light);
 	font-size: 20px;
 	font-weight: bold;
-	animation: var(--animation-fadeIn);
+	animation: var(--anim-fadeIn);
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
