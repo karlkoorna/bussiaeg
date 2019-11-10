@@ -14,14 +14,4 @@ self.addEventListener('fetch', (e) => {
 		}),
 		fetch(e.request).catch(() => caches.match('offline.html'))
 	]));
-	
-	// Workaround for PWA support.
-	e.respondWith(Promise.race([
-		new Promise((resolve) => {
-			setTimeout(() => {
-				resolve(new Response(null, { status: 408 }));
-			}, 3000);
-		}),
-		fetch(e.request).catch(() => new Response(null, { status: 408 }))
-	]));
 });
