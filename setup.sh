@@ -6,7 +6,7 @@
 
 # Add NGINX server blocks.
 [[ $1 ]] && ENV=dev || ENV=pro
-cp -f nginx.$ENV.conf /etc/nginx/sites-enabled/
+cp -f nginx.$ENV.conf /etc/nginx/sites-enabled/bussiaeg.$ENV.conf
 sed -i "s@tls.@$PWD/tls.@g" /etc/nginx/sites-enabled/bussiaeg.$ENV.conf
 sed -i "s@web/build/@$PWD/web/build/@g" /etc/nginx/sites-enabled/bussiaeg.$ENV.conf
 sed -i "s/API_PORT/$(cat api/.env | grep ^PORT | cut -d '=' -f2)/g" /etc/nginx/sites-enabled/bussiaeg.$ENV.conf
