@@ -77,9 +77,9 @@ nav {
 	padding: .5rem 0;
 	background-color: var(--color-primary-light);
 	color: white;
-	font-family: Handlee, Arial, Helvetica, sans-serif;
+	font-family: Handlee, cursive;
 	font-weight: bold;
-	line-height: 1.1rem;
+	line-height: 1.1;
 	letter-spacing: 1px;
 	box-shadow: var(--shadow);
 }
