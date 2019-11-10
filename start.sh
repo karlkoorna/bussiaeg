@@ -15,6 +15,8 @@ else # in production mode.
 	# Build client if needed.
 	if [[ ! -e "web/build/" ]]; then
 		npm run build
+		rm web/build/*-manifest.*
+		rm web/build/service-worker.js
 		find build/** -type f | xargs -I{} brotli -Z {}
 	fi
 	
