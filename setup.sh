@@ -7,7 +7,7 @@
 # Add NGINX server blocks.
 [[ $1 ]] && ENV=dev || ENV=pro
 cp -f nginx.$ENV.conf /etc/nginx/sites-enabled/
-sed -i "s@tls@$PWD/tls@g" /etc/nginx/sites-enabled/nginx.$ENV.conf
+sed -i "s@tls.@$PWD/tls.@g" /etc/nginx/sites-enabled/nginx.$ENV.conf
 sed -i "s@web/build/@$PWD/web/build/@g" /etc/nginx/sites-enabled/nginx.$ENV.conf
 sed -i "s/API_PORT/$(cat api/.env | grep ^PORT | cut -d '=' -f2)/g" /etc/nginx/sites-enabled/nginx.$ENV.conf
 sed -i "s/WEB_PORT/$(cat web/.env | grep ^PORT | cut -d '=' -f2)/g" /etc/nginx/sites-enabled/nginx.$ENV.conf
@@ -32,7 +32,7 @@ if [[ $1 ]]; then # in development mode.
 	fi
 	
 	# Remove inactive NGINX server blocks.
-	rm -f /etc/nginx/sites-enabled/nginx.bussiaeg.conf
+	rm -f /etc/nginx/sites-enabled/nginx.pro.conf
 	nginx -s reload
 else # in production mode.
 	# Install SystemD service.
@@ -40,6 +40,6 @@ else # in production mode.
 	sed -i "s@start.sh@$PWD/start.sh@g" /etc/systemd/system/bussiaeg.service
 	
 	# Remove inactive NGINX server blocks.
-	rm -f /etc/nginx/sites-enabled/nginx.devaeg.conf
+	rm -f /etc/nginx/sites-enabled/nginx.dev.conf
 	nginx -s reload
 fi
