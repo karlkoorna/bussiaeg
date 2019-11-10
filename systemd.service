@@ -1,0 +1,9 @@
+[Unit]
+Description=Bussiaeg.ee
+After=mysql.service
+
+[Service]
+ExecStart=/bin/bash start.sh
+
+[Install]
+WantedBy=multi-user.target

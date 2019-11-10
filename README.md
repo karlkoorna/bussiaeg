@@ -2,85 +2,43 @@
 
 Kogu Eesti ühistranspordi väljumisajad ühes kohas.
 
-## Prerequisites :open_book:
+## Prerequisites 📄
 
-Having the latest stable version of all prerequisites is recommended.
+|    Name    | Version |
+| :--------: | :-----: |
+|  Node.js   |   12    |
+|   MySQL    |   8.3   |
+|    Curl    |  7.58   |
+|    Git     |  2.17   |
+|  OpenSSL   |   1.1   |
+|   NGINX    |  1.17   |
+| NGX Brotli |         |
+|   Brotli   |   1.0   |
 
-1. **Debian** :penguin:
-	
-	[Download](https://www.debian.org/distrib/) and install Debian. Ensure additional packages.
-	
-	```bash
-	$ apt install curl git openssl
-	```
+### MySQL
 
-2. **MySQL** :package:
-	
-	Install MySQL.
-	
-	```bash
-	$ curl -o mysql.deb https://repo.mysql.com/mysql-apt-config_0.8.13-1_all.deb
-	$ dpkg -i mysql.deb
-	$ rm mysql.deb
-	$ apt update
-	$ apt install mysql-server
-	$ mysql_secure_installation
-	```
-	
-	Create the database and the user.
-	
-	```bash
-	$ mysql --password=pA$$w0rD
-	```
-	
-	```sql
-	CREATE DATABASE bussiaeg;
-	CREATE USER 'bussiaeg'@'localhost' IDENTIFIED BY 'pA$$w0rD';
-	GRANT ALL PRIVILEGES ON bussiaeg.* TO 'bussiaeg'@'localhost';
-	```
-	
-	Configure the server.
-	
-	```bash
-	$ nano /etc/mysql/mysql.cnf
-	```
-	
-	```ini
-	[mysqld]
-	local-infile = 1
-	secure-file-priv = ""
-	group_concat_max_len = 65536
-	innodb_buffer_pool_size = 2G
-	innodb_log_file_size = 256M
-	innodb_flush_log_at_trx_commit = 2
-	innodb_flush_method = O_DIRECT
-	```
-	
-	Restart the daemon.
-	
-	```bash
-	$ systemctl restart mysql
-	```
+**Database and user**
 
-3. **Node.js** :zap:
-	
-	Install Node.js.
-	
-	```bash
-	$ curl https://deb.nodesource.com/setup_12.x | bash
-	$ apt install nodejs
-	```
+```sql
+CREATE DATABASE bussiaeg;
+CREATE USER 'bussiaeg'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pA$$w0rD';
+GRANT ALL PRIVILEGES ON bussiaeg.* TO 'bussiaeg'@'localhost';
+```
 
-4. **Caddy** :earth_americas:
-	
-	Install Caddy with plugins.
-	
-	```bash
-	$ curl https://getcaddy.com | bash -s personal http.cors,http.ratelimit,http.expires
-	$ setcap cap_net_bind_service=+ep /usr/local/bin/caddy
-	```
+**Server configuration**
 
-## Production :sweat_drops:
+```ini
+[mysqld]
+local-infile = 1
+secure-file-priv = ""
+group_concat_max_len = 65536
+innodb_buffer_pool_size = 2G
+innodb_log_file_size = 256M
+innodb_flush_log_at_trx_commit = 2
+innodb_flush_method = O_DIRECT
+```
+
+## Production 💦
 
 Update all modules in production mode.
 
@@ -88,7 +46,7 @@ Update all modules in production mode.
 $ ./update.sh
 ```
 
-Populate `.env` by example `.env.example` for all modules.
+Populate `.env` by example `.env.example` in all modules.
 
 Start all modules in production mode.
 
@@ -96,7 +54,7 @@ Start all modules in production mode.
 $ ./start.sh
 ```
 
-## Development :fire:
+## Development 🔥
 
 *Note: HTTP headers do not work if the HTTPS certificate is invalid.*\
 *Note: Deleting `tmp/update` will force a data update next launch.*\
@@ -107,7 +65,7 @@ Direct `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
 
 Add the generated `ca.crt` to the trusted certificate authorities list.
 
-Populate `.env` by example `.env.example` for all modules.
+Populate `.env` by example `.env.example` in all modules.
 
 Update all modules in development mode.
 
@@ -121,7 +79,7 @@ Start all modules in development mode...
 $ ./start.sh dev
 ```
 
-or start server and/or client module in development mode.
+or start them separately.
 
 ```bash
 $ cd api && npm run develop
