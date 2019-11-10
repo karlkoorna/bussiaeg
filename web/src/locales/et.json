@@ -18,6 +18,7 @@
 	},
 	"map": {
 		"zoom": "Bussiaeg.ee ei tööta väljaspool Eestit",
+		"gps": "Praegune asukoht pole saadaval",
 		"bounds": "Suumige sisse, et näha peatusi",
 		"start": {
 			"title": "Kinnita asukoht?",

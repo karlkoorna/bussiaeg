@@ -7,11 +7,15 @@ class StoreCoords {
 	lat = mapOpts.startLat
 	lng = mapOpts.startLng
 	accuracy = 9999
+	enabled = true
 	
 	constructor() {
 		if (navigator.geolocation) navigator.geolocation.watchPosition((e) => {
+			this.enabled = true;
 			this.update(e.coords);
-		}, () => {}, {
+		}, (err) => {
+			if (err.code < 3) this.enabled = false;
+		}, {
 			enableHighAccuracy: true,
 			timeout: 300
 		});

@@ -23,6 +23,7 @@ class StoreSettings {
 			case 'lang':
 				i18n.changeLanguage(value);
 				document.body.parentElement.setAttribute('lang', value);
+				if (window.map) window.map.updateMessage();
 				break;
 			case 'theme':
 				$app.setAttribute('data-theme', value);

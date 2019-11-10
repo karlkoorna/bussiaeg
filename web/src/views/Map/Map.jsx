@@ -79,17 +79,22 @@ class ViewMap extends Component {
 		if (this.state.isLocating) this.setState({ isLocating: false });
 	}
 	
-	// Update message based on bounds and redraw stops.
-	fetchStops = (redraw) => {
-		const map = window.map;
+	// Update map message.
+	updateMessage = () => {
 		const { t } = this.props;
+		const map = window.map;
+		
+		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) this.setState({ message: t('map.zoom') });
+		else if (!storeCoords.enabled) this.setState({ message: t('map.gps') });
+		else if (map.getZoom() < opts.stopZoom) this.setState({ message: t('map.bounds') });
+		else if (this.state.message) this.setState({ message: '' });
+	}
+	
+	// Update map stops.
+	updateStops = (redraw) => {
+		const map = window.map;
 		const { _southWest: { lat: latMin, lng: lngMin }, _northEast: { lat: latMax, lng: lngMax } } = map.getBounds();
 		const zoom = map.getZoom();
-		
-		// Handle message cases.
-		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) this.setState({ message: t('map.zoom') });
-		else if (zoom < opts.stopZoom) this.setState({ message: t('map.bounds') });
-		else if (this.state.message) this.setState({ message: '' });
 		
 		// Remove all markers if zoomed below threshold.
 		if (zoom < opts.stopZoom) {
@@ -138,6 +143,9 @@ class ViewMap extends Component {
 			zoomDelta: 1
 		});
 		
+		// Expose function to global map variable.
+		map.updateMessage = this.updateMessage;
+		
 		// Fix map size.
 		setTimeout(() => {
 			map.invalidateSize();
@@ -181,15 +189,17 @@ class ViewMap extends Component {
 		
 		// (Re)draw stops.
 		map.whenReady(() => {
-			reaction(() => storeFavorites.favorites.length, this.fetchStops.bind(this, true));
-			map.on('moveend', this.fetchStops);
+			reaction(() => storeFavorites.favorites.length, this.updateStops.bind(this, true));
+			map.on('moveend', this.updateStops);
 			map.on('move', () => {
 				this.debounce++;
 				if (this.debounce < 10) return;
 				this.debounce = 0;
-				this.fetchStops();
+				this.updateMessage();
+				this.updateStops();
 			});
-			this.fetchStops();
+			this.updateMessage();
+			this.updateStops();
 		});
 		
 		// Open modal on right click (desktop) or hold (mobile).
