@@ -8,11 +8,9 @@ Kogu Eesti ühistranspordi väljumisajad ühes kohas.
 | :--------: | :-----: |
 |  Node.js   |   12    |
 |   MySQL    |   8.3   |
-|    Curl    |  7.58   |
-|    Git     |  2.17   |
-|  OpenSSL   |   1.1   |
 |   NGINX    |  1.17   |
 | NGX Brotli |         |
+|  OpenSSL   |   1.1   |
 |   Brotli   |   1.0   |
 
 ### MySQL
@@ -38,15 +36,19 @@ innodb_flush_log_at_trx_commit = 2
 innodb_flush_method = O_DIRECT
 ```
 
+### NGINX
+
+Template files for development (`nginx.dev.conf`) and production (`nginx.pro.conf`) to be adapted to installed NGINX.
+
 ## Production 💦
+
+Populate `.env` by example `.env.example` in all modules.
 
 Run setup in production mode.
 
 ```bash
 $ ./setup.sh
 ```
-
-Populate `.env` by example `.env.example` in all modules.
 
 Start all modules in production mode.
 
@@ -56,14 +58,11 @@ $ ./start.sh
 
 ## Development 🔥
 
-*Note: HTTP headers do not work if the HTTPS certificate is invalid.*\
-*Note: Deleting `tmp/update` will force a data update next launch.*\
-*Note: Updating in production mode will pull the latest release tag.*\
-*Note: Updating in development mode will pull the origin master branch.*
+*Note: For secure development `ca.crt` must be added to the trusted authorities store.*\
+*Note: HTTP headers do not work if the HTTPS certificate is insecure.*\
+*Note: Deleting `tmp/update` will force a data update on next launch.*
 
 Direct `devaeg.ee` and `api.devaeg.ee` to the local or public IP.
-
-Add the generated `ca.crt` to the trusted certificate authorities list.
 
 Populate `.env` by example `.env.example` in all modules.
 
@@ -73,15 +72,8 @@ Run setup in development mode.
 $ ./setup.sh dev
 ```
 
-Start all modules in development mode...
+Start all modules in development mode.
 
 ```bash
 $ ./start.sh dev
-```
-
-or start them separately.
-
-```bash
-$ cd api && npm run develop
-$ cd web && npm start
 ```
