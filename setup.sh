@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Install node modules if missing.
-cd api/node_modules/ && npm install
-cd web/node_modules/ && npm install
+mkdir -p api/node_modules/ && cd api/node_modules/ && npm install
+mkdir -p web/node_modules/ && cd web/node_modules/ && npm install
 
 # Add NGINX server blocks.
 [[ $1 ]] && ENV=dev || ENV=pro
