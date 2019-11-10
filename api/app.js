@@ -23,6 +23,11 @@ const log = require('./utils/log.js');
 // Initialize HTTP server.
 const app = fastify();
 
+// Register custom not found handler.
+app.setNotFoundHandler((req, res) => {
+	res.status(404).send();
+});
+
 // Register custom error handler.
 app.setErrorHandler((err, req, res) => {
 	if (err.message !== 'Not Found') log.warn`Error in route ${decodeURIComponent(req.raw.url)}.${err}`;
