@@ -9,7 +9,7 @@ function secondsToShms(seconds) {
 // Convert HMS to time format.
 export function formatTime(seconds) {
 	const shms = secondsToShms(seconds);
-	return shms[1].toString().padStart(2, '0') + ':' + shms[2].toString().padStart(2, '0');
+	return (shms[1] % 24).toString().padStart(2, '0') + ':' + shms[2].toString().padStart(2, '0');
 }
 
 // Convert HMS to countdown format.
