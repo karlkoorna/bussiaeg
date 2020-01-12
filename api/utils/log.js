@@ -3,12 +3,12 @@ const moment = require('moment');
 
 const times = {};
 
-// Return current timestamp.
+// Current timestamp.
 function timestamp() {
 	return `[${moment().format('YY-MM-DDTHH:mm:ssZ')}]`;
 }
 
-// Return concatenated string with highlighted parameters.
+// Concatenate string and highlight parameters.
 function highlight(parts, params) {
 	return parts.reduce((prev, next, i) => {
 		const param = params[i - 1];
@@ -17,10 +17,10 @@ function highlight(parts, params) {
 	});
 }
 
-// Return colored stacktrace form parameters if found.
-function stack(color, params) {
+// Format error stacktrace form parameters.
+function stacktrace(colorFn, params) {
 	const err = params.find((param) => param instanceof Error);
-	if (err) return '\n' + chalk[color](err.stack);
+	if (err) return '\n' + colorFn(err.stack);
 	return '';
 }
 
@@ -29,22 +29,22 @@ function info(parts, ...params) {
 	console.info(chalk.blueBright(timestamp(), '[INFO] ' + highlight(parts, params)));
 }
 
-// Log warning message with optional error object.
+// Log warning message with optional stacktrace.
 function warn(parts, ...params) {
-	console.warn(chalk.yellowBright(timestamp(), '[WARN] ' + highlight(parts, params), stack('yellow', params)));
+	console.warn(chalk.yellowBright(timestamp(), '[WARN] ' + highlight(parts, params), stacktrace(chalk.yellow, params)));
 }
 
-// Log error message with error object, stop process with exit code 1.
+// Log error message with optional stacktrace.
 function error(parts, ...params) {
-	console.error(chalk.redBright(timestamp(), '[ERR1] ' + highlight(parts, params), stack('red', params)));
+	console.error(chalk.redBright(timestamp(), '[ERR] ' + highlight(parts, params), stacktrace(chalk.red, params)));
 }
 
-// Save timestamp for future reference.
+// Set time reference message.
 function time(id) {
 	times[id] = new Date();
 }
 
-// Log time message with duration.
+// Log time message.
 function timeEnd(id) {
 	return (parts, ...params) => {
 		console.info(chalk.green(timestamp(), '[TIME] ' + highlight(parts, params), chalk.gray(`(${((new Date() - times[id]) / 1000).toFixed(2) + 's'})`)));
