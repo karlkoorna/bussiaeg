@@ -1,5 +1,5 @@
-const got = require('got');
 const db = require('../db.js');
+const got = require('../utils/got.js');
 const cache = require('../utils/cache.js');
 const time = require('../utils/time.js');
 
@@ -8,7 +8,7 @@ const time = require('../utils/time.js');
 // Get trips for stop.
 async function getStopDepartures(id) {
 	const now = time.getSeconds();
-	const departures = JSON.parse((await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`, { timeout: 1000, retry: 1 })).body).data;
+	const departures = (await got(`http://elron.ee/api/v1/stop?stop=${encodeURIComponent(id)}`).json()).data;
 	if (!departures) throw new Error('Invalid response');
 	
 	return departures.filter((departure) => !departure.tegelik_aeg).map((departure) => ({
@@ -28,7 +28,7 @@ async function getStopDepartures(id) {
 
 // Get route by id.
 async function getRoute(id) {
-	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${id}`, { timeout: 600, retry: 1 })).body).data;
+	const stops = (await got(`http://elron.ee/api/v1/trip?id=${id}`).json()).data;
 	if (!stops) throw new Error('Invalid response');
 	if (!stops.length) return null;
 	
@@ -42,7 +42,7 @@ async function getRoute(id) {
 
 // Get directions for route.
 async function getRouteDirections(id) {
-	const stops = JSON.parse((await got(`http://elron.ee/api/v1/trip?id=${id}`, { timeout: 600, retry: 1 })).body).data;
+	const stops = (await got(`http://elron.ee/api/v1/trip?id=${id}`).json()).data;
 	if (!stops) throw new Error('Invalid response');
 	const coords = await cache.use('elron', 'coords', () => db.query("SELECT id, lat, lng FROM stops WHERE type = 'train'"));
 	

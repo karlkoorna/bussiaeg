@@ -1,9 +1,10 @@
 const fs = require('fs');
 const stream = require('stream');
 const moment = require('moment');
-const got = require('got');
 const unzipper = require('unzipper');
+
 const db = require('./db.js');
+const got = require('./utils/got.js');
 const log = require('./utils/log.js');
 
 const fsp = fs.promises;
@@ -27,7 +28,7 @@ async function download() {
 	
 	// Download and write Elron stop data into temporary folder.
 	let data = 'name,lat,lng\n';
-	for (const stop of JSON.parse((await got('https://elron.ee/api/v1/stops')).body).data) data += `${stop.peatus},${stop.latitude},${stop.longitude}\n`;
+	for (const stop of (await got('https://elron.ee/api/v1/stops').json()).data) data += `${stop.peatus},${stop.latitude},${stop.longitude}\n`;
 	await fsp.writeFile('tmp/elron.csv', data);
 	
 	log.timeEnd('data-download')`Downloaded data`;

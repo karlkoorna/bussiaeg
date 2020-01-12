@@ -1,13 +1,13 @@
-const got = require('got');
+const got = require('../utils/got.js');
+const log = require('../utils/log.js');
 const time = require('../utils/time.js');
 const cache = require('../utils/cache.js');
-const log = require('../utils/log.js');
 
 /* Stops */
 
 async function updateCache(id) {
 	try {
-		const body = (await got('https://transport.tallinn.ee/siri-stop-departures.php?stopid=' + id, { timeout: 1000, retry: 1 })).body;
+		const body = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id}`)).body;
 		if (body.indexOf('ERROR') > -1) {
 			log.warn`Failed to fetch TTA departures.${new Error(body)}`;
 			return [];
