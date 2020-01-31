@@ -26,7 +26,7 @@ export default function banner() {
 			return 'vehicles';
 		case '31.12': // New Year's Eve
 			return 'rockets';
-		default:
+		default: {
 			if (date > 22 && date < 25 && month === 12) return 'presents'; // Christmas
 			if (month === 12) return 'snow'; // Winter
 			
@@ -64,5 +64,6 @@ export default function banner() {
 			if (holiday.getDate() === date && holiday.getMonth() + 1 === month) return 'crosses'; // Good Friday
 			
 			return '';
+		}
 	}
 }
