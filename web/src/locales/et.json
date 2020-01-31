@@ -17,9 +17,9 @@
 		"routes": "Liinid"
 	},
 	"map": {
-		"zoom": "Bussiaeg.ee ei tööta väljaspool Eestit",
+		"bounds": "Ei tööta väljaspool Eestit",
+		"zoom": "Suumige sisse, et näha peatusi",
 		"gps": "Praegune asukoht pole saadaval",
-		"bounds": "Suumige sisse, et näha peatusi",
 		"start": {
 			"title": "Kinnita asukoht?",
 			"text": "Teie praegune asukoht seatakse algasukohaks GPSi puudumisel."

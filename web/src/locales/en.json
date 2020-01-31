@@ -17,9 +17,9 @@
 		"routes": "Routes"
 	},
 	"map": {
-		"zoom": "Bussiaeg.ee does not work outside Estonia",
+		"bounds": "Does not work outside Estonia",
+		"zoom": "Zoom in to see stops",
 		"gps": "Could not get current location",
-		"bounds": "Zoom in to see stops",
 		"start": {
 			"title": "Confirm location?",
 			"text": "Your current location will be set as the starting location, if GPS is unavailable."

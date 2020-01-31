@@ -84,9 +84,9 @@ class ViewMap extends Component {
 		const { t } = this.props;
 		const map = window.map;
 		
-		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) this.setState({ message: t('map.zoom') });
+		if (!(new Leaflet.LatLngBounds([ 57.57, 21.84 ], [ 59.7, 28 ])).contains(map.getCenter())) this.setState({ message: t('map.bounds') });
+		else if (map.getZoom() < opts.stopZoom) this.setState({ message: t('map.zoom') });
 		else if (!storeCoords.enabled) this.setState({ message: t('map.gps') });
-		else if (map.getZoom() < opts.stopZoom) this.setState({ message: t('map.bounds') });
 		else if (this.state.message) this.setState({ message: '' });
 	}
 	
