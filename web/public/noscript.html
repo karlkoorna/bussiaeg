@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>Bussiaeg.ee</title>
-		<meta name="theme-color" content="#1e2529">
+		<meta name="theme-color" content="#1b1c1d">
 		<style>
 			html,
 			body {
@@ -14,11 +14,16 @@
 			body {
 				display: flex;
 				margin: 0;
-				background-color: #1e2529;
+				background-color: #1b1c1d;
 				font-family: Arial, sans-serif;
 				justify-content: center;
 				align-items: center;
 				flex-direction: column;
+				overflow: hidden;
+				user-select: none;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-webkit-tap-highlight-color: transparent;
 			}
 			
 			svg {
@@ -29,12 +34,14 @@
 			
 			h1 {
 				position: absolute;
-				bottom: 0;
+				left: 0;
+				bottom: 8px;
 				width: 100%;
-				color: #293238;
+				color: lightslategray;
 				font-family: Consolas, monospace;
-				font-size: 18px;
+				font-size: 16px;
 				text-align: center;
+				letter-spacing: 3px;
 			}
 			
 			a {
