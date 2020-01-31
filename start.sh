@@ -8,14 +8,14 @@ if [[ $1 ]]; then # in development mode.
 	export NODE_ENV=development
 	
 	# Start api and web.
-	cd api && npm run develop & cd web && npm start
+	cd api && yarn run develop & cd web && yarn start
 else # in production mode.
 	export NODE_ENV=production
 	
 	# Build client if needed.
 	if [[ ! -e "web/build/" ]]; then
 		cd web/
-		npm run build
+		yarn run build
 		rm build/*-manifest.*
 		rm build/service-worker.js
 		find build/** -type f | xargs -I{} brotli -Z {}
@@ -23,5 +23,5 @@ else # in production mode.
 	fi
 	
 	# Start api.
-	cd api && npm start && npm start && npm start
+	cd api && yarn start && yarn start && yarn start
 fi

@@ -21,7 +21,7 @@ import NavBar from 'components/NavBar/NavBar.jsx';
 
 import './index.css';
 
-const $app = document.getElementById('app');
+const $app = document.getElementById('app') as HTMLElement;
 
 let hasRedirected = false;
 function handleRoute() {
@@ -65,7 +65,7 @@ if (!navigator.userAgent.toLowerCase().includes('mobi')) $app.classList.add('is-
 
 // Update current theme color CSS variable.
 (new MutationObserver(() => {
-	const el = document.querySelector('meta[name="theme-color"]');
+	const el = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
 	if (!el) return;
 	
 	$app.style.setProperty('--color-theme', el.content);
