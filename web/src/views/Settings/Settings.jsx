@@ -91,7 +91,7 @@ class ViewSettings extends Component {
 						</label>
 						<section>
 							<h1 className="settings-first_party">{t('settings.creditees.programmer')}</h1>
-							<a href="https://github.com/karlkoorna" target="_blank" rel="noopener noreferrer">Karl Köörna</a>
+							<a href="https://facebook.com/karlkoorna" target="_blank" rel="noopener noreferrer">Karl Köörna</a>
 							<h1 className="settings-first_party">{t('settings.creditees.designer')}</h1>
 							<a href="https://facebook.com/kaur.hendrikson" target="_blank" rel="noopener noreferrer">Kaur Hendrikson</a>
 							<h1 className="settings-third_party">{t('settings.creditees.gtfs')}</h1>
