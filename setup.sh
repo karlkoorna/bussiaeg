@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Install node modules if missing.
-[[ ! -e "api/node_modules" ]] && mkdir api/node_modules/ && (cd api/node_modules/ && yarn install)
-[[ ! -e "web/node_modules" ]] && mkdir web/node_modules/ && (cd web/node_modules/ && yarn install)
+[[ ! -e "api/node_modules" ]] && mkdir api/node_modules/ && (cd api/node_modules/ && npm install)
+[[ ! -e "web/node_modules" ]] && mkdir web/node_modules/ && (cd web/node_modules/ && npm install)
 
 if [[ $1 ]]; then # Development mode
 	

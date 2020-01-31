@@ -17,7 +17,7 @@
 	"dependencies": {
 		"i18next": "^19.0.0",
 		"kdbush": "^3.0.0",
-		"leaflet": "^1.5.1",
+		"leaflet": "^1.6.0",
 		"mobx": "^5.15.0",
 		"mobx-react": "^6.1.4",
 		"react": "^16.11.0",
