@@ -7,7 +7,7 @@ trap 'kill -SIGTERM $(jobs -p %1)' SIGINT
 if [[ $1 ]]; then # in development mode.
 	export NODE_ENV=development
 	
-	# Start api and web.
+	# Start API and Web.
 	cd api && npm run develop & cd web && npm start
 else # in production mode.
 	export NODE_ENV=production
@@ -22,6 +22,6 @@ else # in production mode.
 		cd ..
 	fi
 	
-	# Start api.
+	# Start API.
 	cd api && npm start && npm start && npm start
 fi
