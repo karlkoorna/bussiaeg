@@ -1,0 +1,28 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"react-app"
+	],
+	"rules": {
+		"no-empty": [
+			"error",
+			{
+				"allowEmptyCatch": true
+			}
+		],
+		"eqeqeq": [
+			"error",
+			"always",
+			{
+				"null": "ignore"
+			}
+		]
+	},
+	"overrides": [
+		{
+			"files": [
+				"src/**/*.jsx?"
+			]
+		}
+	]
+}
