@@ -118,7 +118,6 @@ svg {
 
 #app.is-desktop {
 	position: relative;
-	min-width: 420px;
 	height: 90%;
 	margin: 16px;
 	border-radius: 7px;
