@@ -88,6 +88,7 @@ svg {
 	font-family: Arial, Helvetica, sans-serif;
 	flex-direction: column;
 	flex: 1;
+	transition: flex-basis .2s cubic-bezier(.25, .1, 0, 1);
 	-webkit-tap-highlight-color: transparent;
 }
 
@@ -137,6 +138,10 @@ svg {
 	background-color: var(--color-theme);
 	transition: var(--trans-background);
 	filter: brightness(.5);
+}
+
+#app[data-path=""] {
+	flex-basis: calc(90vh / 9 * 16);
 }
 
 /* View */

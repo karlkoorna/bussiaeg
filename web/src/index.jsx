@@ -25,6 +25,8 @@ const $app = document.getElementById('app');
 
 let hasRedirected = false;
 function handleRoute() {
+	$app.setAttribute('data-path', window.location.pathname.slice(1));
+	
 	// Send analytics about active page.
 	if (hasRedirected) {
 		if (process.env['REACT_APP_GA'] && window.gtag) window.gtag('config', process.env['REACT_APP_GA'], {
@@ -32,7 +34,7 @@ function handleRoute() {
 			page_path: window.location.pathname + window.location.search
 		});
 		
-		return null;
+		return;
 	}
 	hasRedirected = true;
 	

@@ -19,6 +19,8 @@ import interactions from './interactions.js';
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
 
+const $app = document.getElementById('app');
+
 export const opts = {
 	startZoom: 15,
 	stopZoom: 15,
@@ -147,10 +149,10 @@ class ViewMap extends Component {
 		// Expose function to global map variable.
 		map.updateMessage = this.updateMessage;
 		
-		// Fix map size.
-		setTimeout(() => {
-			map.invalidateSize();
-		}, 0);
+		// Update map size on container resize.
+		$app.addEventListener('transitionend', () => {
+			setTimeout(window.map.invalidateSize, 0);
+		});
 		
 		// Load tile layer and update on theme change.
 		reaction(() => storeSettings.data.theme, (theme) => {
