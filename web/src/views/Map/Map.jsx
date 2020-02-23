@@ -14,7 +14,7 @@ import storeCoords from 'stores/coords.js';
 import storeSettings from 'stores/settings.js';
 import storeFavorites from 'stores/favorites.js';
 import { prepareViewData } from 'utils.js';
-import addDragZoom from './dragZoom.js';
+import interactions from './interactions.js';
 
 import './Map.css';
 import 'leaflet/dist/leaflet.css';
@@ -141,8 +141,7 @@ class ViewMap extends Component {
 			zoomControl: false,
 			bounceAtZoomLimits: false,
 			attributionControl: false,
-			zoomSnap: .1,
-			zoomDelta: 1
+			zoomSnap: .1
 		});
 		
 		// Expose function to global map variable.
@@ -163,7 +162,9 @@ class ViewMap extends Component {
 		map._container.addEventListener('mousedown', this.stopLocating, { passive: true });
 		map._container.addEventListener('touchstart', this.stopLocating, { passive: true });
 		
-		this.stops = await (await fetch(`${process.env['REACT_APP_API']}/stops`)).json();
+		try {
+			this.stops = await (await fetch(`${process.env['REACT_APP_API']}/stops`)).json();
+		} catch (ex) {}
 		this.spatial = new KDBush(this.stops, (stop) => stop.lat, (stop) => stop.lng, 64, Float32Array);
 		
 		const marker = new Leaflet.Marker([ 0, 0 ], {
@@ -202,17 +203,8 @@ class ViewMap extends Component {
 			this.updateStops();
 		});
 		
-		// Open modal on right click (desktop) or hold (mobile).
-		map.on('mousedown contextmenu', (e) => {
-			if (e.type !== 'contextmenu' && e.originalEvent.button !== 2) return;
-			
-			map.dragging.disable();
-			map.dragging.enable();
-			this.setState({ showModal: true });
-		});
-		
-		// Add drag zoom handler (mobile).
-		addDragZoom(map);
+		// Drag zoom and location modal.
+		interactions(map, this);
 		
 		const timestamp = new Date();
 		

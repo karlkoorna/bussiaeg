@@ -37,7 +37,7 @@ function handleRoute() {
 	hasRedirected = true;
 	
 	// Redirect to default view when launched as an app.
-	//if ((new URLSearchParams(window.location.search).has('app'))) return <Redirect to={'/' + storeSettings.data.view.replace('map', '')} />;
+	if ((new URLSearchParams(window.location.search).has('app'))) return <Redirect to={'/' + storeSettings.data.view.replace('map', '')} />;
 }
 
 render((
