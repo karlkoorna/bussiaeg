@@ -9,7 +9,7 @@ async function updateCache(id) {
 	try {
 		const body = (await got(`https://transport.tallinn.ee/siri-stop-departures.php?stopid=${id}`)).body;
 		if (body.indexOf('ERROR') > -1) {
-			log.warn`Failed to fetch TTA departures.${new Error(body)}`;
+			log.warn`Failed to fetch TTA departures for ${id}.${new Error(body)}`;
 			return [];
 		}
 		
@@ -20,7 +20,7 @@ async function updateCache(id) {
 			countdown: Number(departure[2] - 5)
 		}));
 	} catch (ex) {
-		log.warn`Failed to fetch TTA departures.${ex}`;
+		log.warn`Failed to fetch TTA departures for ${id}.${ex}`;
 		return [];
 	}
 }
