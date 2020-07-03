@@ -8,17 +8,17 @@
 	"license": "AGPL-3.0",
 	"version": "4.1.5",
 	"dependencies": {
-		"chalk": "^3.0.0",
+		"chalk": "^4.1.0",
 		"dotenv": "^8.2.0",
-		"fastify": "^2.12.0",
-		"got": "^10.6.0",
+		"fastify": "^2.15.1",
+		"got": "^11.3.0",
 		"lodash": "^4.17.15",
-		"moment": "^2.24.0",
+		"moment": "^2.27.0",
 		"mysql": "^2.17.1",
-		"unzipper": "^0.10.9"
+		"unzipper": "^0.10.11"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.2"
+		"nodemon": "^2.0.4"
 	},
 	"scripts": {
 		"start": "node app.js --color",
