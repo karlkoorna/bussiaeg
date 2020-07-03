@@ -150,7 +150,8 @@
 /* Results - Stops */
 
 .search-results-result[data-type="stop"] .search-results-result-icon {
-	height: 100%;
+	width: 72px;
+	height: 72px;
 	padding: 10px;
 	flex-shrink: 0;
 }

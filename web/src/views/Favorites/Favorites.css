@@ -37,7 +37,8 @@
 }
 
 .favorites-stop-icon {
-	height: 100%;
+	width: 72px;
+	height: 72px;
 	padding: 4px;
 	flex-shrink: 0;
 }
