@@ -28,7 +28,8 @@ class StoreSettings {
 			case 'theme':
 				$app.setAttribute('data-theme', value);
 				break;
-			default: break;
+			default:
+				break;
 		}
 	}
 	
