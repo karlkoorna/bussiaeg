@@ -18,7 +18,6 @@ else # in production mode.
 		npm run build
 		rm build/*-manifest.*
 		rm build/service-worker.js
-		find build/** -type f | xargs -I{} brotli -Z {}
 		cd ..
 	fi
 	

@@ -4,14 +4,12 @@ Kogu Eesti ühistranspordi väljumisajad ühes kohas.
 
 ## Prerequisites 📄
 
-|    Name    | Version |
-| :--------: | :-----: |
-|  Node.js   |   12    |
-|   MySQL    |   8.3   |
-|   NGINX    |  1.17   |
-| NGX Brotli |         |
-|  OpenSSL   |   1.1   |
-|   Brotli   |   1.0   |
+|  Name   | Version |
+| :-----: | :-----: |
+| Node.js |   12    |
+|  MySQL  |   8.3   |
+|  NGINX  |  1.17   |
+| OpenSSL |   1.1   |
 
 ### MySQL
 
