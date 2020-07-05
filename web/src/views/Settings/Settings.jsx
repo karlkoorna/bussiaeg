@@ -10,18 +10,8 @@ import './Settings.css';
 
 class ViewSettings extends Component {
 	
-	state = {
-		version: '4.y.z'
-	}
-	
 	updateSetting = (e) => {
 		storeSettings.update(e.target.name, e.target.options[e.target.selectedIndex].value, true);
-	}
-	
-	async componentDidMount() {
-		try {
-			this.setState({ version: await (await fetch(`${process.env['REACT_APP_API']}/version`)).text() });
-		} catch {}
 	}
 	
 	render() {
@@ -107,7 +97,7 @@ class ViewSettings extends Component {
 							</svg>
 							{t('settings.version')}
 						</label>
-						<section>{process.env['REACT_APP_VERSION'] || '3.y.z'} <small>(API {this.state.version})</small></section>
+						<section>{process.env['REACT_APP_VER_WEB']} <small>(API {process.env['REACT_APP_VER_API']})</small></section>
 					</main>
 				</Scroller>
 			</>

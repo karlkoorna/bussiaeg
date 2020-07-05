@@ -3,6 +3,10 @@
 # Ensure all children are killed.
 trap 'kill -SIGTERM $(jobs -p %1)' SIGINT
 
+# Expose version to web.
+export REACT_APP_VER_API=$(grep -oP '(?<="version": ")[^"]*' api/package.json)
+export REACT_APP_VER_WEB=$(grep -oP '(?<="version": ")[^"]*' web/package.json)
+
 # Start all modules...
 if [[ $1 ]]; then # in development mode.
 	export NODE_ENV=development
