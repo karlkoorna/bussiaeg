@@ -31,7 +31,7 @@ app.setNotFoundHandler((req, res) => {
 // Register custom error handler.
 app.setErrorHandler((err, req, res) => {
 	if (err.message !== 'Not Found') log.warn`Error in route ${decodeURIComponent(req.raw.url)}.${err}`;
-	res.send(err.stack);
+	res.send(err.message);
 });
 
 // Dynamically register routes from folder.
