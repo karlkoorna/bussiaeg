@@ -28,7 +28,7 @@ async function download() {
 	
 	// Download and write Elron stop data into temporary folder.
 	let data = 'name,lat,lng\n';
-	for (const stop of (await got('https://elron.ee/api/v1/stops').json()).data) data += `${stop.peatus},${stop.latitude},${stop.longitude}\n`;
+	for (const stop of (await got('https://elron.ee/stops_data.json').json()).data) data += `${stop.peatus},${stop.latitude},${stop.longitude}\n`;
 	await fsp.writeFile('tmp/elron.csv', data);
 	
 	log.timeEnd('data-download')`Downloaded data`;
