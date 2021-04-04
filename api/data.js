@@ -76,7 +76,7 @@ async function update() {
 			await execute('data/importers', 'import');
 			await execute('data/processors', 'process');
 			
-			await fsp.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toDate());
+			await fsp.writeFile('tmp/update', moment().add(1, 'day').hour(6).minute(0).second(0).toISOString());
 			log.timeEnd('data-update')`Updated data`;
 		}
 	} catch (ex) {
