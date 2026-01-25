@@ -2,7 +2,7 @@ TRUNCATE TABLE routes;
 
 LOAD DATA LOCAL INFILE 'tmp/routes.csv' INTO TABLE routes
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES
-(@route_id, @agency_id, @route_short_name, @route_long_name, @route_type, @route_color, @competent_authority)
+(@route_id, @agency_id, @route_short_name, @route_long_name, @route_type, @route_color, @route_text_color, @route_desc, @route_url, @continuous_pickup, @continuous_drop_off, @competent_authority, @contract)
 SET
 	id = @route_id,
 	name = @route_short_name,

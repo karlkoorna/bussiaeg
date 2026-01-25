@@ -1,5 +1,4 @@
 const fs = require('fs');
-const tls = require('tls');
 const dotenv = require('dotenv');
 const fastify = require('fastify');
 const moment = require('moment');
@@ -11,9 +10,6 @@ console.log(chalk`\n{underline.magentaBright ${splash.description} v${splash.ver
 
 // Load environment variables from file.
 dotenv.config();
-
-// Allow requests to sites with TLSv1 certificates.
-tls.DEFAULT_MIN_VERSION = 'TLSv1';
 
 const db = require('./db.js');
 const data = require('./data.js');
@@ -44,9 +40,9 @@ for (const file of fs.readdirSync('routes')) app.register(require(`./routes/${fi
 	} catch (ex) {
 		log.error`Failed to initialize database${ex}`;
 	}
-	
+
 	await data.update();
-	
+
 	try {
 		await app.listen(process.env['PORT'], process.env['HOST']);
 		log.info`Started listening on port ${process.env['PORT']}`;

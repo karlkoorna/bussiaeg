@@ -2,7 +2,7 @@ TRUNCATE TABLE trips;
 
 LOAD DATA LOCAL INFILE 'tmp/trips.csv' INTO TABLE trips
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES
-(@route_id, @service_id, @trip_id, @trip_headsign, @trip_long_name, @direction_code, @shape_id, @wheelchair_accessible)
+(@trip_id, @route_id, @service_id, @direction_id, @shape_id, @trip_headsign, @trip_headsign_code, @trip_short_name, @wheelchair_accessible, @bikes_allowed, @block_id)
 SET
 	id = @trip_id,
 	route_id = @route_id,
